@@ -1,0 +1,37 @@
+$white :          #FFFFFF;
+$grey :           #E1E1E1;
+$greyDark :       #545453;
+$suppGrey :       mix( $grey, $white, 50 );
+$black :          #000000;
+$yellow :         #ffd179;
+$body :           #605848;
+$bodyDark :       #424242;
+$icon :           #696c73;
+$interviews :     #0c4d93;
+$interviewsBg :   #f3f6fc;
+$interviewsAlt :  #95d8fb;
+$interviewsLight: #225f9e;
+$collections :    #da8217;
+$collectionsBg :  #fef7ec;
+$collectionsAlt : #ffc179;
+$timelines :      #5f8950;
+$timelinesBg :    #eff3ed;
+$timelinesAlt :   #cce6a4;
+$link :           #3870d0;
+$linkLight :      #fdd778; //for use on dark colored backgrounds
+
+$border :  10px solid rgba( $white, .1 );
+
+// sm is modified from bootstrap 4
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 569px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px
+) !default;

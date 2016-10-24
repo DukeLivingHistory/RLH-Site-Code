@@ -1,0 +1,123 @@
+.transcript,
+.timeline {
+  @include make-col();
+  @include make-col-span(10);
+  @include media-breakpoint-up(sm){
+    @include make-col-span(8);
+  }
+  padding-left: 0;
+}
+
+.transcript,
+.transcript ~ .suppContent {
+  padding: 2em 0;
+}
+
+.transcript {
+  line-height: 1.5;
+  top: auto!important; // override what ableplayer does when exiting fullscreen
+}
+
+.transcript-node {
+  text-decoration: none;
+  -webkit-user-drag: none;
+  color: $body;
+}
+
+.transcript-section {
+  font-size: 22px;
+  margin: 0;
+  padding: 1em 0 .5em;
+  line-height: 1.1;
+  @include media-breakpoint-up(md){
+    margin: 0;
+    padding: 1.5em 0 .5em;
+    text-indent: -21px;
+  }
+}
+
+.transcript-speaker {
+  text-transform: uppercase;
+  font-size: 14px;
+  margin: 0;
+  padding: 0 0 .25em;
+  @include media-breakpoint-up(md){
+    //margin: 1.5em 0 .25em;
+    text-indent: -21px;
+  }
+}
+
+.transcript-node + .transcript-speaker {
+  margin-top: .75em;
+}
+
+.transcript-jumpToActive {
+  display: inline-block;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  color: #000;
+  background: $interviewsAlt;
+  border: none;
+  font-size: 14px;
+  padding: .5em;
+  max-width: 10em;
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  z-index: 9999999;
+  margin: 0;
+}
+
+.icon--jump {
+  display: block;
+}
+
+// node states
+
+span.transcript-node {
+  color: $body!important;
+}
+
+span.transcript-node:focus,
+span.transcript-node:active,
+span.transcript-node--suppHover  {
+  outline: none;
+  background: rgba( $grey, .7 );
+}
+
+.transcript ::selection {
+  background: $yellow!important;
+}
+
+.able-highlight {
+  background: rgba( $interviewsAlt, .5 )!important;
+  &:focus {
+    background: mix( rgba( $grey, .7), rgba( $interviewsAlt, .8 ) )!important;
+  }
+}
+
+.transcript .able-highlight::selection {
+  background: rgba( $greyDark, .5 );
+}
+
+span.transcript-node:hover {
+  background: rgba( $yellow, .5 );
+}
+
+//span.transcript-node:hover,
+.suppCont-single:hover,
+.suppCont-single:focus,
+.suppCont-inner--suppHover .suppCont-single, {
+  background: mix( $yellow, $white );
+  outline: none;
+  &:before {
+    border-color: transparent mix( $yellow, $white ) transparent transparent;
+  }
+  &.expand {
+    background: $suppGrey;
+    &:before {
+      border-color: transparent $suppGrey transparent transparent;
+    }
+  }
+}

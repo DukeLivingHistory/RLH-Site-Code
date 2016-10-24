@@ -1,0 +1,39 @@
+.relatedItem-wrapper {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.relatedItem {
+  display: inline-block;
+  margin: 0 10px 10px 0;
+  color: #000;
+  &:last-of-type {
+    margin-bottom: 30px;
+  }
+}
+
+.relatedItem a {
+  display: inline-block;
+  padding: 8px 11px 11px;
+}
+
+.relatedItem,
+.relatedItem a {
+  color: #000;
+  text-decoration: none;
+}
+
+.relatedItem svg {
+  position: relative;
+  top: -2px;
+  fill: #000;
+}
+
+.relatedItem--interview {
+  background-color: $interviewsAlt;
+}
+
+.relatedItem--timeline {
+   background-color: $timelinesAlt;
+}

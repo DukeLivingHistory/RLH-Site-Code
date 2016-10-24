@@ -1,0 +1,14 @@
+@mixin antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: $link;
+}
+
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.1;
+}

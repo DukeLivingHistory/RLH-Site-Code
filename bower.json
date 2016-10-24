@@ -1,0 +1,22 @@
+{
+  "name": "rlh",
+  "description": "",
+  "main": "bower.json",
+  "authors": [
+    "Ethan Butler"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/cuberis/rlh",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.2"
+  }
+}

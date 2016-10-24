@@ -1,0 +1,92 @@
+.footer {
+  color: $white;
+  padding: 50px 0 100px;
+  font-size: 14px;
+  @include antialiased;
+  @include extendo_clip( $interviews );
+  @include make-container();
+  @include make-container-max-widths();
+}
+
+.footer a {
+  color: $white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.footer-logo,
+.footer-info {
+  @include media-breakpoint-up(md){
+    @include make-col();
+    @include make-col-span(3);
+  }
+}
+
+.footer-logo {
+  margin: 0;
+  padding: 0 2em 0 0;
+  max-width: 278px;
+}
+
+.footer-logo img {
+  position: relative;
+  top: -20px;
+  max-width: 80%;
+  @include media-breakpoint-up(md){
+    top: -9px;
+    max-width: none;
+  }
+  @include media-breakpoint-up(lg){
+    top: -17px;
+  }
+  @include media-breakpoint-up(xl){
+    top: -24px;
+  }
+}
+
+.footer-info {
+  font-weight: 300;
+}
+
+.footer-info p {
+  margin: 0 0 10px;
+}
+
+.footer-nav {
+  margin: 0 0 1.5em 0;
+  @include media-breakpoint-up(md){
+    @include make-col(0);
+    @include make-col-span(6);
+  }
+}
+
+.footer .menu {
+  margin: 0 .5em 0 0;
+  padding: 0;
+  list-style: none;
+  @include media-breakpoint-up(sm){
+    display: inline;
+  }
+}
+
+.footer .menu li {
+  margin: 0 0 .6em;
+  display: block;
+  @include media-breakpoint-up(md){
+    display: inline-block;
+    margin: 0 .8em .5em 0;
+    font-weight: 500;
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+.footer .menu--primary {
+  font-weight: 700;
+  @include media-breakpoint-up(md){
+    font-weight: inherit;
+  }
+}

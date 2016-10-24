@@ -1,0 +1,117 @@
+.heroImg {
+  background: $interviews;
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 102vw;
+  transform: translateX(-51vw);
+  margin: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  opacity: .1;
+}
+
+.respImg,
+.respImg-defer {
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  cursor: pointer;
+}
+
+.respImg-defer--loaded,
+.respImg--loaded {
+  opacity: 1;
+}
+
+.respImg-credit {
+  font-size: 14px;
+  display: block;
+  text-align: right;
+  line-height: 1;
+  margin-bottom: .25em;
+  font-style: italic;
+  a {
+    color: $yellow;
+  }
+}
+
+// lightbox
+
+.featherlight-next:hover,
+.featherlight-previous:hover {
+  background: none;
+}
+
+.featherlight-next span,
+.featherlight-previous span {
+  font-size: 2rem;
+  width: auto;
+  text-shadow: none;
+}
+
+.img-caption {
+  position: absolute;
+  bottom: 0;
+  left: 25px; // from featherlight css
+  right: 25px; // from featherlight css
+  padding: .5em 1em;
+  color: $white;
+  background: rgba( $greyDark, .9 );
+  line-height: 24px;
+}
+
+.img-credit {
+  float: right;
+  font-size: 12px;
+  line-height: 24px;
+  margin-left: 1em;
+  a {
+    color: $yellow;
+  }
+}
+
+.featherlight {
+  background: rgba( $greyDark, .5 );
+}
+
+.featherlight .featherlight-close-icon {
+  top: 25px;
+  right: 25px;
+  color: $black;
+  @include media-breakpoint-down(lg){
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.featherlight .featherlight-content {
+  max-width: 100vw;
+  overflow: hidden;
+  @include media-breakpoint-down(sm){
+    overflow: scroll;
+  }
+}
+
+.featherlight-textarea {
+  background: $white;
+  padding: 10px;
+}
+
+.featherlight-textarea > p {
+  color: $body;
+}
+
+.featherlight-textarea> textarea {
+  padding: 5px 10px;
+  font-size: 16px;
+  max-height: 50vh;
+  @include media-breakpoint-up(md){
+    font-size: 2rem;
+  }
+}
+
+.featherlight .featherlight-close--textarea {
+  color: $black;
+  top: 25px;
+  right: 25px;
+}

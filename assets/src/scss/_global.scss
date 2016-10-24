@@ -1,0 +1,90 @@
+@mixin extendo_clip( $color ){
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0; right: -100vw; bottom: 0; left: -100vw;
+    background: $color;
+    z-index: -10;
+  }
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html[lang] {
+  margin: 0!important;
+}
+
+body {
+  margin: 0;
+  background: $interviews;
+  line-height: 1.5;
+}
+
+main {
+  display: block; //IE11 fix
+  &:focus {
+    outline: none;
+  }
+}
+
+.body-wrap {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+select {
+  font-family: 'Roboto', sans-serif;
+}
+
+.header,
+.main,
+.footer {
+  @include make-container();
+  @include make-container-max-widths();
+}
+
+.main {
+  @include extendo_clip( $white );
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.page + .page {
+  display: none; // safari!
+}
+
+.app-wrapper {
+  min-height: 500px;
+}
+
+.pageTrans {
+  transition: transform .5s ease-in-out, opacity .3s ease;
+  display: block!important; //safarai!
+}
+
+.pageTrans--left {
+  transform: translateX( -100% );
+  opacity: 0;
+}
+
+.pageTrans--right {
+  transform: translateX( 100% );
+  opacity: 0;
+}

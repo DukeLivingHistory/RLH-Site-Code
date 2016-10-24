@@ -1,0 +1,122 @@
+.shareLinks {
+  font-style: italic;
+  font-size: 15px;
+  text-align: right;
+  padding: .75em 0;
+}
+
+.social {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social li {
+  display: inline-block;
+  padding: 0 5px;
+  span {
+    position: absolute;
+    left: -99999vw;
+  }
+}
+
+.social svg {
+  cursor: pointer;
+}
+
+.social--inline {
+  display: inline;
+  position: relative;
+  top: 4px;
+  margin: 0 0 0 3px;
+}
+
+.icon--social {
+  width: 18px;
+  height: 18px;
+}
+
+.socialPopup {
+  transform: translate(-50%,150%);
+  background: $interviews;
+  color: $white;
+  display: block;
+  font-size: 14px;
+  font-style: italic;
+  padding: .5em 1em;
+  min-width: 180px;
+  @include antialiased;
+  &:after {
+    content: '';
+    display: block;
+    border: 10px solid;
+    border-color: transparent transparent $interviews;
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translateX(-50%);
+  }
+  @include media-breakpoint-up(md){
+    transform: translate(-50%,-150%);
+    min-width: 167px;
+    &:after {
+      bottom: auto;
+      top: 100%;
+      border-color: $interviews transparent transparent;
+    }
+  }
+}
+
+.socialPopup--inverse {
+  &:after {
+    top: auto;
+    bottom: 100%;
+    border-color: transparent transparent $interviews;
+  }
+}
+
+.socialPopup svg {
+  fill: $white;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: -2px;
+  @include media-breakpoint-down(sm){
+    width: 18px;
+    height: 18px;
+    top: 0px;
+  }
+}
+
+.socialCopy {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  max-width: 10em;
+  padding: .25em .75em .5em;
+  color: $white;
+  opacity: 0;
+  animation: fade 2s ease 1;
+  z-index: 100000;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.socialCopy--success {
+  background: $timelines;
+}
+
+.socialCopy--error {
+  background: $interviews;
+}

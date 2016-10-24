@@ -1,0 +1,119 @@
+.buckets {
+  @include make-container(0);
+  margin: 0 -5px 75px;
+}
+
+.buckets-bucket {
+  background-clip: content-box;
+  position: relative;
+  margin-bottom: 1em;
+  @include make-col(10px);
+  @include media-breakpoint-up(md){
+    margin: 0;
+    @include make-col-span(4);
+  }
+}
+
+.buckets-hero {
+  position: absolute;
+  top: 0; right: 5px; left: 5px;
+  height: 170px;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  opacity: .2;
+}
+
+.buckets-head {
+  color: $white;
+  margin: 0 18px;
+  line-height: 170px;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: 500;
+  letter-spacing: .1em;
+  svg {
+    fill: $white;
+    width: .8em;
+    height: .8em;
+  }
+  font-size: 27px;
+  @include media-breakpoint-up(md){
+    font-size: 20px;
+  }
+  @include media-breakpoint-up(lg){
+    font-size: 28px;
+  }
+  @include media-breakpoint-up(xl){
+    font-size: 33px;
+  }
+}
+
+.buckets-text {
+  margin: 20px 18px 20px;
+  color: $white;
+  font-size: 14px;
+  @include antialiased;
+  @include media-breakpoint-up(md){
+  margin: 40px 18px 30px;
+  }
+}
+
+.buckets-linkWrapper {
+  display: block;
+  padding: 0 18px 30px;
+  @include media-breakpoint-up(md){
+    padding: 0 18px 55px;
+  }
+}
+
+.buckets-link {
+  display: inline-block;
+  border: 2px solid $white;
+  color: $white;
+  padding: 3px 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  &:hover {
+    background: $white;
+  }
+  svg {
+    fill: $white;
+    width: .5em;
+    height: .5em;
+  }
+}
+
+.buckets-bucket--interviews {
+  background-color: $interviews;
+}
+
+.buckets-bucket--interviews .buckets-link:hover {
+  color: $interviews;
+  svg {
+    fill: $interviews;
+  }
+}
+
+.buckets-bucket--collections {
+  background-color: $collections;
+}
+
+.buckets-bucket--collections .buckets-link:hover {
+  color: $collections;
+  svg {
+    fill: $collections;
+  }
+}
+
+.buckets-bucket--timelines {
+  background-color: $timelines;
+}
+
+.buckets-bucket--timelines .buckets-link:hover {
+  color: $timelines;
+  svg {
+    fill: $timelines;
+  }
+}

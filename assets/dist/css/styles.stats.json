@@ -1,0 +1,137 @@
+{
+  "published": "2016-09-30T17:03:50.861Z",
+  "paths": [
+    "/Users/Ethan/vagrant-projects/rlh/www/wordpress-default/wp-content/themes/rlh/assets/dist/css/styles.min.css"
+  ],
+  "stylesheets": 1,
+  "styleElements": 0,
+  "size": 59018,
+  "dataUriSize": 0,
+  "ratioOfDataUriSize": 0,
+  "gzippedSize": 11890,
+  "rules": 744,
+  "selectors": 955,
+  "declarations": 1971,
+  "simplicity": 0.7790575916230367,
+  "averageOfIdentifier": 1.8638743455497382,
+  "mostIdentifier": 5,
+  "mostIdentifierSelector": ".able-player .able-playlist li.able-current:after",
+  "averageOfCohesion": 2.649193548387097,
+  "lowestCohesion": 14,
+  "lowestCohesionSelector": [
+    ".featherlight-next",
+    ".featherlight-previous"
+  ],
+  "totalUniqueFontSizes": 28,
+  "uniqueFontSizes": [
+    "0",
+    ".9em",
+    "1em",
+    "1.1em",
+    "1.15em",
+    "1.2em",
+    "1.4em",
+    "1.5em",
+    "1.8em",
+    "8em",
+    "1rem",
+    "2rem",
+    "3rem",
+    "12px",
+    "14px",
+    "15px",
+    "16px",
+    "17px",
+    "20px",
+    "21px",
+    "22px",
+    "27px",
+    "28px",
+    "33px",
+    "36px",
+    "40px",
+    "50px",
+    "80px"
+  ],
+  "totalUniqueFontFamilies": 3,
+  "uniqueFontFamilies": [
+    "Arial,sans-serif",
+    "Roboto,sans-serif",
+    "able"
+  ],
+  "totalUniqueColors": 19,
+  "uniqueColors": [
+    "#000000",
+    "#0C4D93",
+    "#3870D0",
+    "#424242",
+    "#5F8950",
+    "#605848",
+    "#666666",
+    "#696C73",
+    "#AAAAAA",
+    "#CCCCCC",
+    "#DA8217",
+    "#FDD778",
+    "#FDFDFD",
+    "#FFD179",
+    "#FFFF66",
+    "#FFFFFF",
+    "RED",
+    "RGBA(255,255,255,.7)",
+    "RGBA(255,255,255,.8)"
+  ],
+  "totalUniqueBackgroundImages": 1,
+  "uniqueBackgroundImages": [
+    "../images/wingrip.png"
+  ],
+  "idSelectors": 1,
+  "universalSelectors": 5,
+  "unqualifiedAttributeSelectors": 13,
+  "javascriptSpecificSelectors": 0,
+  "importantKeywords": 31,
+  "floatProperties": 30,
+  "propertiesCount": [
+    {
+      "property": "position",
+      "count": 129
+    },
+    {
+      "property": "padding",
+      "count": 123
+    },
+    {
+      "property": "margin",
+      "count": 121
+    },
+    {
+      "property": "display",
+      "count": 109
+    },
+    {
+      "property": "color",
+      "count": 103
+    },
+    {
+      "property": "width",
+      "count": 100
+    },
+    {
+      "property": "font-size",
+      "count": 96
+    },
+    {
+      "property": "background",
+      "count": 79
+    },
+    {
+      "property": "top",
+      "count": 71
+    },
+    {
+      "property": "left",
+      "count": 64
+    }
+  ],
+  "mediaQueries": 76
+}

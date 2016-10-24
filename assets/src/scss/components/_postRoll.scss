@@ -1,0 +1,43 @@
+@import '_post';
+
+.postRoll {
+  @include clearfix;
+  @include make-container(0);
+  margin: 0 -9px 45px;
+}
+
+.postRoll-inner {
+  overflow: hidden;
+}
+
+.postRoll .post {
+  margin: 0 0 20px;
+  transition: opacity .2s ease;
+  @include media-breakpoint-up(md){
+    @include make-col-span(3);
+    //opacity: 0;
+  }
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.postRoll .post--loaded {
+  opacity: 1;
+}
+
+.postRoll--featured {
+  margin: 0 -9px 65px;
+  padding: 50px 0 45px;
+  @include extendo_clip( $grey );
+}
+
+.postRoll--featured .post {
+  @include media-breakpoint-up(md){
+      @include make-col-span(4);
+  }
+}
+
+.postRoll--home .post-image {
+  display: none;
+}

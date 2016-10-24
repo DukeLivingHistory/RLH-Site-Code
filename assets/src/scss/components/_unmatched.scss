@@ -1,0 +1,62 @@
+.unmatched {
+  clear: both;
+  padding: 66px 0;
+  cursor: pointer;
+}
+
+.unmatched-head {
+  margin: 0;
+  padding: 16px 0 10px;
+  font-weight: 300;
+  font-size: 21px;
+  border-top: 10px solid $grey;
+  @include antialiased;
+}
+
+.unmatched-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.unmatched-item {
+  background-color: $grey;
+  padding: 6px 10px;
+  margin: 0 .5em .5em 0;
+  max-width: 20em;
+  &:first-of-type {
+    margin-left: 0;
+  }
+}
+
+.unmatched-item svg {
+  vertical-align: middle;
+}
+
+.unmatched-item {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+//.unmatched-item,
+.unmatched-item--blockquote,
+.unmatched-item p {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 15em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.unmatched-item p {
+  margin: 0;
+  max-width: 11em;
+  position: relative;
+  top: -1px;
+  line-height: 1;
+}
+
+.contentIntroduction + .unmatched .unmatched-head {
+  border-top: none;
+}

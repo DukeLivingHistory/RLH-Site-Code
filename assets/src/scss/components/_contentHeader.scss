@@ -1,0 +1,282 @@
+.contentHeader {
+  @include extendo_clip( $interviews );
+  @include antialiased;
+  @include clearfix;
+  color: $white;
+  svg {
+    fill: $white;
+  }
+  a {
+    color: $white;
+  }
+  padding-top: 42px;
+  @include media-breakpoint-up(sm){
+    margin: 0 $grid-gutter-width/-2;
+  }
+}
+
+.contentHeader--archive {
+  @include extendo_clip( $greyDark );
+  margin: 0 0 50px;
+}
+
+.contentHeader--archive h2 {
+  font-size: 36px;
+  font-weight: 300;
+}
+
+.contentHeader--archive .heroImg {
+  filter: grayscale(1);
+}
+
+.contentHeader-type {
+  border-bottom: $border;
+  display: block;
+  padding: 0 0 16px;
+  margin: 0 0 20px;
+  text-transform: uppercase;
+  font-weight: 500;
+  @include media-breakpoint-up(md){
+    margin: 0 0 30px $grid-gutter-width/2;
+  }
+}
+
+.contentHeader-type svg {
+  position: relative;
+  top: -2px;
+}
+
+.contentHeader--collection .contentHeader-img {
+  min-height: 200px;
+  max-height: 350px;
+}
+
+.contentHeader-type--collection {
+  border: none;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.contentHeader-collectionsList {
+  font-size: 17px;
+  font-weight: 300;
+  margin: 10px 0 20px;
+  @include antialiased;
+  @include media-breakpoint-up(sm){
+    font-size: 21px;
+    margin: 10px 0 25px;
+  }
+}
+
+.contentHeader-collectionsList a {
+  text-decoration: none;
+}
+
+.contentheader-collectionsAnd {
+  font-weight: 300;
+}
+
+.contentHeader-head {
+  font-size: 28px;
+  margin: 0;
+  padding: 0 0 0;
+  @include media-breakpoint-up(sm){
+    font-size: 33px;
+  }
+}
+
+.contentHeader-inner,
+.contentHeader-imgWrapper {
+  @include media-breakpoint-up(md){
+    @include make-col();
+    @include make-col-span(6);
+  }
+}
+
+.contentHeader-img {
+  width: 100%;
+  height: auto;
+}
+
+.collection-head {
+  padding-right: 1em;
+  margin: 0 0 30px;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  @include media-breakpoint-up(lg){
+    font-size: 50px;
+    margin: 0;
+  }
+}
+
+.contentHeader-relatedHead {
+  font-style: italic;
+  font-size: 14px;
+  color: rgba( $white, .7 );
+  margin: 0 0 10px;
+}
+
+.contentHeader-introduction {
+  font-style: italic;
+  margin: 0 0 25px;
+}
+
+.contentHeader-select {
+  border: none;
+  width: 15em;
+  background: $white;
+  color: $link;
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  //text-transform: uppercase;
+  &:focus {
+    outline: none;
+    //text-decoration: underline;
+    color: $interviews;
+  }
+}
+
+.contentHeader-selectWrapper {
+  background: $white;
+  border: 2px solid $link;
+  margin: .3em 0 .75em;
+  padding: .3em .75em;
+  display: inline-block;
+}
+
+@include media-breakpoint-up(lg){
+  .contentHeader-inner--hasBottom {
+    position: static;
+  }
+
+  .contentHeader-bottom {
+    position: absolute;
+    bottom: 50px;
+    width: 50%;
+  }
+}
+
+.contentHeaderOuter .able-wrapper {
+
+}
+
+.contentHeaderOuter .contentHeader {
+  transition: padding .5s ease;
+}
+
+.contentHeaderOuter .contentHeader-backToTop,
+.contentHeaderOuter .contentHeader-toggleVid {
+  opacity: 0;
+  height: 0;
+  font-size: 0;
+  padding: 0;
+  border: none;
+  display: block;
+  color: $white;
+  background: none;
+  cursor: pointer;
+}
+
+.contentHeaderOuter .contentHeader-toggleVid {
+  padding: 10px;
+  text-align: right;
+  label {
+    margin: 0 .5em 0 0;
+  }
+  select {
+    background: $white;
+    border: none;
+    position: relative;
+    top: -1px;
+  }
+}
+
+.contentHeaderOuter .contentHeader-imgWrapper {
+  transition: left .6s ease, transform .6s ease;
+  padding-bottom: 1em;
+  padding-right: 0;
+}
+
+.contentHeaderOuter--sticky {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  //height: 25vh;
+  z-index: 99999;
+
+  .contentHeader {
+    padding-top: 14px;
+  }
+
+  .contentHeader-head {
+    font-size: 28px;
+    margin-bottom: .25em;
+  }
+
+  .contentHeader-imgWrapper {
+    position: absolute;
+    top: 0;
+    width: 30vw;
+    padding: 0;
+    // variables from bootstrap _variables.scss in bower_components
+    // offsets left position by distance from edge of container
+    // to edge of viewport so that when we transition from
+    // static to absolute position, we can fluidly transition
+    // the right edge of element while also changing the left padding
+    @each $breakpoint, $container-max-width in $container-max-widths {
+      @include media-breakpoint-up($breakpoint) {
+        left: calc( 50% - ( 100vw - #{$container-max-width} ) / 2 );
+        margin-left: calc( (140vw - #{$container-max-width} ) / 2 );
+      }
+    }
+    // offset the transition so that element doesn't jump left due a left
+    // position of <50%
+    transition: margin .6s ease, left .6s ease, transform .6s ease;
+    transition-delay: -.2s;
+  }
+
+  .contentHeader-imgWrapper--large {
+    width: 50vw;
+    @each $breakpoint, $container-max-width in $container-max-widths {
+      @include media-breakpoint-up($breakpoint) {
+        margin-left: calc( (100vw - #{$container-max-width} ) / 2 );
+      }
+    }
+  }
+
+  .contentHeader-imgWrapper--default {
+    //margin-left: 20vw;
+  }
+
+  .contentHeader-imgWrapper--hidden .able-wrapper {
+    width: 0;
+    height: 0;
+  }
+
+  .contentHeader {
+    @include make-container(0);
+    @include make-container-max-widths();
+  }
+
+  .contentHeader-toggleVid {
+    font-size: 14px;
+    height: auto;
+    opacity: 1;
+  }
+
+  .contentHeader-type,
+  .contentHeader-collectionsList,
+  .contentHeader-relatedHead,
+  .contentHeader-introduction,
+  .relatedItem-wrapper,
+  .shareLinks {
+    display: none;
+  }
+
+  .able-wrapper {
+    margin: 0;
+  }
+
+
+}

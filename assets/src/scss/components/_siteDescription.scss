@@ -1,0 +1,53 @@
+.siteDescription {
+  padding: 0 $grid-gutter-width/2;
+  color: $bodyDark;
+  @include media-breakpoint-up(md){
+    padding-right: 33.3%;
+  }
+}
+
+.siteDescription h2 {
+  font-size: 33px;
+  color: $black;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-weight: 500;
+  @include media-breakpoint-up(md){
+    margin-top: 28px;
+  }
+}
+
+.siteDescription p {
+  margin-top: 0;
+}
+
+.siteDescription-links {
+  padding: 0;
+  margin: 0 0 28px;
+  list-style: none;
+}
+
+.siteDescription-link {
+  display: inline-block;
+  border: 1px solid $interviews;
+  padding: 3px 22px;
+  font-size: 14px;
+  &:hover {
+    background: $link;
+    svg {
+      fill: $white;
+    }
+    a {
+      color: $white;
+    }
+  }
+  margin: 0 0 8px 0;
+  @include media-breakpoint-up(md){
+    margin: 0 16px 8px 0;
+  }
+}
+
+.siteDescription-link a {
+  text-decoration: none;
+  text-transform: uppercase;
+}

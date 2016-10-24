@@ -1,0 +1,269 @@
+$suppContPrevHeight : 36px;
+$suppContArrowWidth : 10px;
+
+.suppCont {
+  position: relative;
+  left: 1rem;
+  @include make-col();
+  @include make-col-span(2);
+  @include media-breakpoint-up(sm){
+    left: 2rem;
+    @include make-col-span(4);
+  }
+}
+
+.suppCont-inner {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.suppCont-single {
+  position: relative;
+  margin: 0 0 .5em 0;
+  background: $suppGrey;
+  cursor: pointer;
+  &:before {
+    content: '';
+    position: absolute;
+    left: -2*$suppContArrowWidth;
+    width: 2*$suppContArrowWidth;
+    top: ($suppContPrevHeight - 2*$suppContArrowWidth )/2;
+    border: $suppContArrowWidth solid transparent;
+    border-color: transparent $suppGrey transparent transparent;
+  }
+  @include media-breakpoint-down(xs){
+    width: 28px;
+    height: 28px;
+    left: -5px;
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.suppCont-single--interview {
+  background: $interviewsBg;
+  &:before {
+    border-color: transparent $interviewsBg transparent transparent;
+  }
+}
+
+.suppCont-single--timeline {
+  background: $timelinesBg;
+  &:before {
+    border-color: transparent $timelinesBg transparent transparent;
+  }
+}
+
+.suppCont-singleInner {
+  max-height: $suppContPrevHeight;
+  overflow: hidden;
+  transition: max-height .2s ease-in-out;
+}
+
+.suppCont-preview {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: opacity .2s ease;
+  padding: 0 .25em;
+  line-height: $suppContPrevHeight;
+  @include media-breakpoint-down(xs){
+    display: none;
+  }
+}
+
+.suppCont-content {
+  margin: $suppContPrevHeight 2em 0;
+  padding: 0 .25em;
+  //transition: margin .2s ease;
+  * {
+    visibility: hidden;
+  }
+}
+
+.expand .suppCont-content * {
+  visibility: visible;
+}
+
+.suppCont-expand {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 0; right: 0;
+  width: 30px;
+  height: 30px;
+  display: block;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+    svg {
+      fill: $white;
+    }
+  }
+  @include media-breakpoint-down(xs){
+    display: none;
+  }
+}
+
+.suppCont-expand--type {
+  left: 0;
+}
+
+.suppCont-preview {
+  position: absolute;
+  top: 0; right: 2em; bottom: 0; left: 2em;
+  font-size: 14px;
+}
+
+.suppCont-single.expand {
+  z-index: 1000;
+  cursor: default;
+  .suppCont-singleInner {
+    max-height: 400px;
+  }
+  .suppCont-preview {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .suppCont-content {
+    margin-top: $suppContPrevHeight/2;
+  }
+  box-shadow: 0 3px 20px rgba(0,0,0,.2);
+  transform: scale(1.05);
+  transition: transform .2s ease;
+}
+
+.suppCont-contentTitle {
+  display: block;
+  margin: 0 0 10px;
+  padding: 0 0 10px;
+  font-size: 17px;
+  font-weight: 500;
+  border-bottom: 3px solid $white;
+}
+
+.suppCont-content p,
+.suppCont-content blockquote,
+.suppCont-content ul {
+  margin: 0;
+  padding: 0;
+}
+
+.suppCont-content p {
+  margin-bottom: .5em;
+  font-size: 15px;
+}
+
+.suppCont-content a {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+
+.suppCont-content a svg {
+  width: .5em;
+}
+
+.suppCont-share {
+  padding: 10px 0 5px;
+  text-align: right;
+  font-style: italic;
+  font-size: 14px;
+  color: $icon;
+  position: relative;
+  left: 28px;
+  .social {
+    top: 1px;
+  }
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: $icon;
+  }
+}
+
+.suppCont-gallery {
+  @include clearfix;
+  margin: -3px;
+}
+
+.suppCont-galleryImage {
+  display: block;
+  @include make-col(6px);
+  @include make-col-span(4);
+}
+
+.suppCont-quote {
+  font-size: 17px;
+}
+
+.suppCont-attribution {
+  font-size: 14px;
+}
+
+.suppCont-lightbox {
+  background: $grey;
+  padding: 1em 2em;
+}
+
+.suppCont-lightbox .suppCont-content {
+  margin: 0;
+  padding: 0 1em 0 0;
+  position: relative;
+  * {
+    opacity: 1;
+    visibility: visible;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    left: -50px;
+    top: -10px;
+    width: 20px;
+    border: $suppContArrowWidth solid transparent;
+    border-color: transparent $grey transparent transparent;
+  }
+}
+
+.suppCont-lightbox .suppCont-content > svg {
+  position: absolute;
+  top: -.6em;
+  left: -1.6em;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.icon--suppContent-lightboxClose {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 16px;
+  height: 16px;
+}
+
+// icons
+
+.icon--supp {
+  left: .5em;
+  cursor: pointer;
+}
+
+.icon--suppExpand {
+  font-size: 1rem;
+  right: .5em;
+}
+
+.icon--supp,
+.icon--suppExpand {
+  position: absolute;
+  top: .5em;
+  width: 1em;
+  height: 1em;
+  @include media-breakpoint-down(xs){
+    width: .75em;
+    top: .4em;
+  }
+}

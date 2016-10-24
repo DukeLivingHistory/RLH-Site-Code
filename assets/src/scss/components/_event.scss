@@ -1,0 +1,155 @@
+.timeline {
+  list-style: none;
+  padding: 0!important;
+  margin: 0;
+  overflow: hidden;
+}
+
+.event {
+  background-color: $timelinesBg;
+  padding: 2em 2em 3em 2.25em;
+  position: relative;
+  overflow: hidden;
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1em;
+    background: $white;
+    z-index: 1;
+  }
+  @include media-breakpoint-up(sm){
+    padding: 2em 2em 3em 3.5em;
+  }
+}
+
+.event-dot {
+  position: absolute;
+  background: $icon;
+  width: .75em;
+  height: .75em;
+  border-radius: 100%;
+  top: 2.5em;
+  left: .75em;
+  z-index: 2;
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: $icon;
+  }
+  &:before {
+    height: 3em;
+    bottom: 100%;
+  }
+  &:after {
+    height: 1000vh;
+  }
+  @include media-breakpoint-up(sm){
+    left: 1.75em;
+  }
+}
+
+.event:first-of-type .event-dot:before,
+.event:last-of-type .event-dot:after {
+  display: none;
+}
+
+.event-imageWrapper {
+  position: relative;
+  height: 0;
+  padding-bottom: 54.4%;
+  margin-bottom: 3em;
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 3em;
+    left: 0;
+    right: 0;
+    bottom: -3em;
+    background: $timelinesBg;
+    z-index: 1;
+  }
+}
+
+.event-imageWrapper img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.event-imageWrapper .respImg-credit {
+  position: absolute;
+  width: 100%;
+  bottom: -2em;
+  color: $body;
+  a {
+    color: $black;
+  }
+  z-index: 2;
+}
+
+.event-imageWrapper + .relatedItem {
+  margin-top: 1em;
+}
+
+.event p {
+  color: $body;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.event-date {
+  color: $interviews;
+  font-size: 17px;
+  @include media-breakpoint-up(sm){
+    font-size: 21px;
+  }
+}
+
+.event-head {
+  margin: 0;
+  padding: 0 0 .5em;
+  font-size: 17px;
+  background: $timelinesBg;
+  position: relative;
+  z-index: 1;
+  @include media-breakpoint-up(sm){
+    font-size: 21px;
+  }
+}
+
+.event-head + .event-content {
+  margin-top: -1em;
+}
+
+.event-social {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  @include media-breakpoint-up(md){
+    top: 18px;
+    right: 16px;
+  }
+}
+
+.event-social svg {
+  fill: $icon;
+}
+
+.event .relatedItem {
+  padding: 8px 11px 11px;
+  &:last-of-type {
+    margin-bottom: 14px;
+  }
+}

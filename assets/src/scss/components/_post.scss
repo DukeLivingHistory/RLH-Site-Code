@@ -1,0 +1,203 @@
+.post {
+  background-clip: content-box;
+  width: 100%;
+  @include make-col(18px);
+}
+
+.post--interview {
+  background-color: $interviewsBg;
+}
+
+.post--collection {
+  background-color: $collectionsBg;
+}
+
+.post--timeline {
+  background-color: $timelinesBg;
+}
+
+.postRoll--featured {
+  @include media-breakpoint-up(md){
+    .post {
+      background-color: none;
+    }
+    .post--interview {
+      @include extendo_clip( $interviewsBg );
+    }
+
+    .post--collection {
+      @include extendo_clip( $collectionsBg );
+    }
+
+    .post--timeline {
+      @include extendo_clip( $timelinesBg );
+    }
+
+    .post:before {
+      left: 9px;
+      right: 9px;
+      bottom: -1000vw;
+    }
+  }
+}
+
+.postRoll--home {
+  .post:before {
+    bottom: 0;
+  }
+}
+
+.post-type {
+  border-bottom: 10px solid $white;
+  padding: 20px 0 10px;
+}
+
+.post-type,
+.content-type {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.post-title {
+  font-size: 21px;
+  margin: 10px 0 5px;
+  line-height: 1.1;
+}
+
+.post-image {
+  margin: 0 0 18px;
+  cursor: pointer;
+}
+
+.post-header + .post-image {
+  margin-top: 10px;
+}
+
+.post-excerpt {
+  margin: 0 0 10px;
+  color: $body;
+}
+
+.post-link {
+  display: block;
+  margin-bottom: 40px;
+  text-decoration: none;
+  font-size: 14px;
+  &:after {
+    content: '\203A';
+    margin-left: .3em;
+  }
+}
+
+.post-type,
+.post-link {
+  text-transform: uppercase;
+}
+
+.icon--type {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0 .4em 0 0;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+
+.post-meta-label {
+  padding: 0 18px;
+}
+
+.post-meta {
+  margin: 4px 0 10px;
+}
+
+.post-meta svg {
+  fill: $icon;
+}
+
+.post-meta dd {
+  display: inline-block;
+  padding: 0;
+  margin: 3px 15px 0 0;
+  color: $icon;
+}
+
+.post-header,
+.post-image,
+.post-excerpt,
+.post-title,
+.post-link {
+  padding: 0 18px;
+}
+
+.post-image img {
+  width: 100%;
+  height: auto;
+}
+
+// ===
+// home featured
+// ===
+
+
+.homeFeat {
+  position: relative;
+  color: $white;
+  padding: 45px 0 0;
+  @include antialiased;
+  @include clearfix;
+  @include extendo_clip( $interviews );
+
+  .post-meta {
+    padding: 0 18px;
+  }
+
+  .post-meta dd {
+    color: $white;
+  }
+
+  svg {
+    fill: $white;
+  }
+
+  .post-link {
+    color: $linkLight;
+  }
+
+  .post-type {
+    border-color: rgba(255,255,255,.05);
+  }
+
+  .post-title {
+    font-size: 33px;
+    margin-top: 15px;
+    margin-bottom: 12px;
+  }
+
+}
+
+.homeFeat-inner {
+  position: relative;
+  overflow: hidden;
+  margin: 12px 0 80px;
+}
+
+.homeFeat-inner .post-excerpt {
+  color: $white;
+}
+
+@include media-breakpoint-up(md){
+
+  .homeFeat-inner {
+    padding-right: 50%;
+    min-height: 20rem;
+  }
+
+  .homeFeat .post-image {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+  }
+
+}

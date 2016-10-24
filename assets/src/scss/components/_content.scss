@@ -1,0 +1,304 @@
+
+.page {
+  @include clearfix();
+}
+
+.content-feed {
+  margin: 0;
+  padding: 0;
+}
+
+.content-intro {
+  padding: 22px 0;
+  line-height: 1.5;
+  color: $body;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    color: $black;
+  }
+}
+
+.content {
+  @include clearfix;
+  padding: 18px 22px 12px 18px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.content--interview {
+  background: $interviewsBg;
+}
+
+.content--timeline {
+  background: $timelinesBg;
+}
+
+.content--collection {
+  background: $collectionsBg;
+}
+
+.content-inner,
+.content-imgWrapper{
+  @include make-col(0);
+}
+
+.content-inner {
+  @include media-breakpoint-up(md){
+    @include make-col-span(8);
+    padding-right: 1em;
+  }
+}
+
+.content-imgWrapper {
+  display: none;
+  @include media-breakpoint-up(md){
+    display: block;
+    @include make-col-span(4);
+  }
+}
+
+.content-type {
+  display: block;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #000;
+}
+
+.content-head {
+  font-size: 20px;
+  margin: .7em 0 .25em;
+  color: #000;
+  @include media-breakpoint-up(md){
+    font-size: 22px;
+    margin: 1.2em 0 .25em;
+  }
+}
+
+.content-excerpt {
+  color: $body;
+  font-size: 15px;
+  margin: 0 0 .75em;
+  @include media-breakpoint-up(md){
+    padding: 0 2em 0 0;
+  }
+}
+
+.content-link {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0 0 .5em;
+  display: block;
+}
+
+.content-load {
+  display: inline-block;
+  margin: 42px 0 72px;
+  padding: .5em 2em;
+  border: 1px solid $link;
+  color: $link;
+  background: none;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.icon--link {
+  width: .75em;
+  height: .75em;
+  display: inline;
+  fill: $link;
+}
+
+$listViewIconSize: 32px;
+
+.listView {
+  height: $listViewIconSize;
+  margin: 0 0 15px;
+  text-align: right;
+  display: none;
+  @include media-breakpoint-up(lg){
+    display: block;
+  }
+}
+
+.listView input {
+  opacity: 0;
+  width: $listViewIconSize;
+  height: $listViewIconSize;
+}
+
+.listView-label,
+.listView input,
+.listView svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.listView-label {
+  color: $interviews;
+  margin: 0 5px 0 0;
+}
+
+.icon--listView {
+  width: $listViewIconSize;
+  height: $listViewIconSize;
+  fill: $body;
+  position: relative;
+  left: -1*$listViewIconSize;
+  margin-right: -1*$listViewIconSize;
+  pointer-events: none;
+}
+
+
+.listView input:focus + svg {
+  background: mix( $grey, $white );
+}
+
+
+.listView input:checked + svg {
+  background: $grey;
+}
+
+.content-feed--contracted {
+
+  .content-imgWrapper,
+  .content-type {
+    display: none;
+  }
+
+  @include media-breakpoint-up(lg){
+
+    .content-inner {
+      width: 100%;
+    }
+
+    .content-head,
+    .content-excerpt,
+    .content-link {
+      float: left;
+    }
+
+    .content-head {
+      width: 25%;
+      margin-top: 0;
+    }
+
+    .content-excerpt {
+      width: 50%;
+    }
+
+    .content-link {
+      width: 25%;
+    }
+
+  }
+
+}
+
+// generic
+
+.genericContent {
+  padding: 2em 0 2em;
+  @include media-breakpoint-up(lg){
+    padding: 1em 4em 4em;
+  }
+  @include media-breakpoint-up(lg){
+    padding: 1em 10em 4em;
+  }
+  color: $body;
+  line-height: 1.5;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    color: $black;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.genericContent--research {
+  @include media-breakpoint-up(lg){
+    @include make-col();
+    @include make-col-span(9);
+  }
+}
+
+.researchMenu {
+  max-height: 20px;
+  overflow: hidden;
+  transition: max-height .3s ease-in;
+  @include media-breakpoint-up(lg){
+    @include make-col();
+    @include make-col-span(3);
+    max-height: none;
+    margin-top: -50px; // offset margin from contentHeader
+    border-top: 10px solid $interviews;
+  }
+}
+
+.researchMenu--expand {
+  max-height: 800px;
+}
+
+.menu--research,
+.menu--research ul {
+  list-style: none;
+}
+
+.menu--research {
+  padding: 0;
+}
+
+.menu--research ul {
+  padding: 0 0 0 1em;
+}
+
+.menu--research a {
+  text-decoration: none;
+  font-weight: 300;
+  color: $interviews;
+  &:hover,
+  &:focus {
+    color: $link;
+    outline: none;
+  }
+}
+
+.menu--research > li > a {
+  font-weight: 400;
+}
+
+.menu--research .current_page_item a {
+  border-bottom: 2px solid $grey;
+  color: $interviews;
+}
+
+.researchMenu-toggle {
+  background: none;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  color: $link;
+  font-size: 14px;
+  @include media-breakpoint-up(lg){
+    display: none;
+  }
+  svg {
+    position: relative;
+    top: 3px;
+  }
+  &:focus {
+    outline: none;
+    text-decoration: underline;
+  }
+}
