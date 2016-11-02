@@ -230,6 +230,7 @@ $listViewIconSize: 32px;
   @include media-breakpoint-up(lg){
     @include make-col();
     @include make-col-span(9);
+    margin-top: -50px;
   }
 }
 
