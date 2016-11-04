@@ -40,12 +40,12 @@ var buildTranscript = function( wrapper, id, cb ){
                   }, TRANSITIONTIME*2 );
                   return;
                 }
-                var offset = $( '.contentHeaderOuter' ).height() + 16;
+                var offset = ( $(window).width() >= 568 ) ? $( '.contentHeaderOuter' ).height() + 16 : 0;
                 $('body,html').animate( {
                   scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
                 }, TRANSITIONTIME );
                 setTimeout( function(){
-                  offset = $( '.contentHeaderOuter' ).height() - jumpto.height() + 16;
+                  offset = offset - jumpto.height();
                   $('body,html').animate( {
                     scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
                   }, TRANSITIONTIME/2 );
