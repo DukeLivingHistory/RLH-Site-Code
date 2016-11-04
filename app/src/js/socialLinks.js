@@ -8,7 +8,7 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
   var linkList = $( '<ul class="social social--inline" data-url="'+url+'" data-excerpt="'+excerpt+'" data-title="'+title+'" />' );
   var facebook = $( '<li tabindex="0" data-soc="fb"><span>Share on Facebook</span>'+icon( 'facebook', 'social')+'</li>' );
   var twitter = $( '<li tabindex="0" data-soc="tw"><span>Share on Twitter</span>'+icon( 'twitter', 'social')+'</li>' );
-  var link = $( '<li tabindex="0" data-soc="link" data-clipboard-text="'+clipBoardText+'"><span>Share URL</span>'+icon( 'link', 'social')+'</li>' );
+  var link = $( '<li tabindex="0" readonly="readonly" data-soc="link" data-clipboard-text="'+clipBoardText+'"><span class="inner" style="position:static;"><span>Share URL</span>'+icon( 'link', 'social')+'</span></li>' );
 
   var response = function( error, isHighlight ){
     var message = '';
@@ -89,22 +89,43 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
     var wasClipboardSuccessful = false;
 
     clipboard.on( 'success', function(){
+      console.log( 'cb s' );
       wasClipboardSuccessful = true;
       $('body').append( response() );
+      $( '.socialCopy' ).css( {
+        position: 'absolute',
+        right: '1em',
+        bottom: 'auto',
+        top: function(){
+          var bottom = $(window).scrollTop() + $(window).height() - 16 - $(this).height() +'px';
+          return bottom;
+        }
+      } );
       setTimeout( function(){
         $( '.socialCopy' ).remove();
       }, 2000 );
     } );
 
     clipboardHL.on( 'success', function(){
+      console.log( 'cbhl s' );
       wasClipboardSuccessful = true;
       $('body').append( response( false, true ) );
+      $( '.socialCopy' ).css( {
+        position: 'absolute',
+        right: '1em',
+        bottom: 'auto',
+        top: function(){
+          var bottom = $(window).scrollTop() + $(window).height() - 16 - $(this).height() +'px';
+          return bottom;
+        }
+      } );
       setTimeout( function(){
         $( '.socialCopy' ).remove();
       }, 2000 );
     } );
 
-    $( 'body' ).on( 'click', '[data-soc="link"]', function(){
+    $( 'body' ).on( 'click', '[data-soc="link"]', function(e){
+      e.preventDefault();
       setTimeout( function(){
         if( !wasClipboardSuccessful ){
           handleClipboardError();
@@ -122,7 +143,15 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
           $( 'body' ).css( 'overflow', 'hidden' );
           $( '.featherlight-close').addClass( 'featherlight-close--textarea' );
           $( '.featherlight-inner' ).append( response(true) );
-
+          $( '.socialCopy' ).css( {
+            position: 'absolute',
+            right: '1em',
+            bottom: 'auto',
+            top: function(){
+              var bottom = $(window).scrollTop() + $(window).height() - 16 - $(this).height() +'px';
+              return bottom;
+            }
+          } );
           var input = $( '.featherlight-inner' ).find( 'textarea' );
 
           input.each( function(){
@@ -142,7 +171,7 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
       }, 2000 );
     }
 
-    //clipboard.on( 'error', handleClipboardError );
+    clipboard.on( 'error', handleClipboardError );
 
   }
 

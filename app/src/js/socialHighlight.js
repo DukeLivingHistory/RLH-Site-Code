@@ -15,7 +15,7 @@ var socialHighlight = function( target ){
         popup.show();
         $( 'body' ).unbind( 'touchend', handler );
       }
-      $( 'body' ).on( 'touchend', handler );
+      $( 'body' ).on( 'touchend', handler, top );
       // trigger touchend so popup will display
       $( target ).trigger( 'touchend' );
     } );
@@ -28,7 +28,8 @@ var socialHighlight = function( target ){
     }
   } );
 
-  popup.mousedown( function(e){
+  popup.on( 'mousedown', function(e){
+    e.preventDefault();
     e.stopPropagation();
   } );
 
