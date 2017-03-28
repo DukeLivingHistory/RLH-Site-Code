@@ -20,28 +20,31 @@ function save_txt_from_vtt( $transcript, $title ){
     $body .= trim( $caption )."\n\n";
   }
 
-  $old = new WP_Query( [
+  // locate previous txt transcript
+  $old = new WP_Query([
     'post_per_page' => 1,
     'post_type'     => 'attachment',
     'name'          => $title.' Transcript (.txt)',
-  ] );
+  ]);
 
-  if( count( $old->posts ) ){
+  // remove old txt transcript if it exists
+  if(count($old->posts)){
     $old = $old->posts[0];
-    wp_delete_attachment( $old->ID, true );
+    wp_delete_attachment($old->ID, true);
   }
 
-  $filename = str_replace( ' ', '_', strtolower( $_POST['post_title'] ) );
+  // add temp file to uploads directory
+  $filename = str_replace(' ', '_', strtolower( $_POST['post_title']));
   $file_temp = wp_upload_dir()['path'].'/'.$filename.'_transcript.txt';
   $file_put_contents = file_put_contents( $file_temp, stripslashes( $body ) );
 
+  //upload file to media library
   $attachment = [
     'post_mime_type' => 'text/txt',
     'post_title'     => $title.' Transcript (.txt)',
     'post_content'   => '',
     'post_status'    => 'inherit'
   ];
-
   $attach = wp_insert_attachment( $attachment, $file_temp );
 
 }

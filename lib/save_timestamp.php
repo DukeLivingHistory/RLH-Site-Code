@@ -1,8 +1,11 @@
 <?php
 
-/* This file registers timestamps from an interview as post meta attached
+/*
+ * This file registers timestamps from an interview as post meta attached
  * to a post, so that they can be used by supp cont.
- */
+ **/
+
+// Rewritten when the drag-and-drop interface was removed from the site.
 
 include_once( get_template_directory().'/models/Transcript.php' );
 

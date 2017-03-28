@@ -2,12 +2,8 @@
 
 /* This file handles transcript saving from the raw field, as well as the display of the transcript in the back end. */
 
-include_once( 'save_sliced_transcript.php' );
-add_action( 'save_post', function( $id ){
-  if( get_post_type( $id ) !== 'interview' ) return;
-  if( !isset( $_POST['acf'] ) || !isset( $_POST['acf']['update_from_raw'] ) || $_POST['acf']['update_from_raw'] == 0 || $_POST['acf']['update_from_fields'] ) return;
-
-  update_field( 'update_from_raw', 0, $id );
+add_action('save_post', function( $id ){
+  if(get_post_type($id) !== 'interview') return;
 
   $old = get_field( 'transcript_file', $id );
   if( $old ){
@@ -25,18 +21,16 @@ add_action( 'save_post', function( $id ){
 
     $attachment = [
       'post_mime_type' => 'text/vtt',
-      'post_title'     => get_the_title( $id ).' Transcript (.vtt)',
+      'post_title'     => get_the_title($id).' Transcript (.vtt)',
       'post_content'   => '',
       'post_status'    => 'inherit'
     ];
 
     $attach = wp_insert_attachment( $attachment, $file_temp );
     update_field( 'transcript_file', $attach, $id );
-    save_sliced_transcript( $id, true );
     save_txt_from_vtt( $transcript, $_POST['post_title'] );
 
   } else {
-    update_field( 'transcript_contents', [], $id );
     update_field( 'transcript_file', false, $id );
   }
 
