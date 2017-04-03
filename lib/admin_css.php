@@ -168,6 +168,16 @@ add_action('admin_head', function(){ ?>
       transition: background 0s;
       background: yellow;
     }
+
+    #jump-to-acf-error {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: #CC3834;
+      padding: 15px;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 
   <?php // remote timestamp picking logic ?>
@@ -939,7 +949,7 @@ add_action('admin_head', function(){ ?>
             for(var error of results.errors){
               var ln = error.line;
               var msg = error.message.replace('<','&lt;');
-              var errorLi = $('<li><strong data-err-line-'+alias+'="'+ln+'">'+ln+'</strong><em>'+msg+'</em></li>')
+              var errorLi = $('<li data-err-line-'+alias+'="'+ln+'"><strong>'+ln+'</strong><em>'+msg+'</em></li>')
               errorUl.append(errorLi);
             }
             errorList.append(errorUl);
@@ -1002,6 +1012,30 @@ add_action('admin_head', function(){ ?>
 
       initVTTField(transcript, 'transcript');
       initVTTField(suppCont, 'suppCont');
+
+      $('#publish').click(function(){
+        var goToError = function(err){
+          var scrollTop = err.offset().top;
+          $('body,html').scrollTop(scrollTop - 50);
+        }
+        var $jump = $('#jump-to-acf-error');
+        setTimeout(function(){
+          if($jump.length){
+            $jump.off('click');
+          } else {
+            $('body').append('<div id="jump-to-acf-error">Jump to Next Error</div>');
+          }
+          var curError = 0;
+          $('#jump-to-acf-error').click(function(){
+            var $errors = $('.acf-input .acf-error-message');
+            var errLimit = $errors.length;
+            curError = curError + 1;
+            if(curError >= errLimit) curError = 0;
+            var goTo = $($errors[curError]);
+            goToError(goTo);
+          });
+        },1000);
+      });
 
     });
   })(jQuery);
