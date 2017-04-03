@@ -8,12 +8,28 @@ class Transcript {
   }
 
   public function get_slices( $should_trim = false ){
+    /*
     // first capture: optional section header (unused)
+       (?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?
+
     // second capture: required timestamp (beginning)
+       (?:([^\d].+\s)?(?:([\d][\d:\.]+)
+
+       [ \-\>]+
+
     // third capture: required timestamp (end) (unused)
+       ([\d][\d:\.]+).*)\n)
+
     // fourth capture: optional speaker name (unused)
+       (?:<v[ ]*(.*)>[ ]*\R?)?
+
     // fifth capture: required text contents
+       ((?:(?!\s).*\s{0,1})*)
+
     // sixth capture : optional paragraph break (unused)
+       (\n*NOTE\sparagraph\n*)?/'
+
+    */
     $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
 
     preg_match_all( $pattern, $this->transcript, $nodes );

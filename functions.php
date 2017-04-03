@@ -16,6 +16,7 @@ $includes = [
   'lib/get_supp_cont_fields.php',
   'lib/icon.php',
   'lib/images.php',
+  'lib/manage_raw_supp.php',
   'lib/manage_raw_transcript.php',
   'lib/photo_credits.php',
   'lib/sanitize_timestamp.php',
@@ -25,6 +26,7 @@ $includes = [
   'lib/save_txt_from_vtt.php',
   'lib/save_vtt_from_fields.php',
   'lib/site_options.php',
+  'lib/supp_vtt.php',
   'lib/sync_supp.php',
   'lib/update_transcript_field.php',
   'lib/wrapper.php'
@@ -47,3 +49,8 @@ add_filter('upload_mimes', 'cc_mime_types');
 
 // prevent smart quote issue
 remove_filter('the_title', 'wptexturize');
+
+function my_acf_init() {
+	acf_update_setting('google_api_key', get_field('maps_client_id', 'options'));
+}
+add_action('acf/init', 'my_acf_init');

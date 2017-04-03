@@ -275,7 +275,27 @@ add_action( 'acf/init', function(){
   			'name' => '',
   			'type' => 'tab'
   		],
-      get_supp_cont_fields() // use function so fields can exist in multiple places
+      get_supp_cont_fields(), // use function so fields can exist in multiple places
+      [
+        'key' => 'tab_supporting_content_raw',
+        'label' => 'Supporting Content (Raw)',
+        'name' => '',
+        'type' => 'tab'
+      ],
+      [
+        'key' => 'save_from_supp_cont_raw',
+        'label' => 'Update from raw supporting content?',
+        'name' => 'save_from_supp_cont_raw',
+        'instructions' => 'If selected, the content below will be used for supporting content for this interview. Please note that this may remove existing images or other content from the supporting content.',
+        'type' => 'true_false'
+      ],
+      [
+        'key' => 'supporting_content_raw',
+        'label' => 'Supporting Content (Raw)',
+        'name' => 'supporting_content_raw',
+        'type' => 'textarea',
+        'rows' => 100
+      ]
     ],
   	'location' => [
   		[

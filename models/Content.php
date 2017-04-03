@@ -128,6 +128,7 @@ class Content {
 
   private function get_gallery_imd_ids( $id ){
     $imgs = get_field( 'gallery_contents', $id );
+    if(!$imgs) return [];
     foreach( $imgs as $img ){
       $returns[] = [
         'alt' => $img['alt'],

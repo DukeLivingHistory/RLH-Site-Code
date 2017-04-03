@@ -67,15 +67,6 @@ add_action('admin_head', function(){ ?>
       display: none;
     }
 
-    [data-name="is_transcript_processing"]{
-      display: none!important;
-    }
-
-    [data-key="processing_message"]{
-      background: yellow;
-      font-weight: bold;
-    }
-
     .term-description-wrap {
       display: none!important;
     }
@@ -124,18 +115,19 @@ add_action('admin_head', function(){ ?>
       position: relative;
     }
 
-    #acf-transcript_raw {
+    .acf-line-numbers + textarea {
       float: right;
       width: calc(100% - 3em);
       white-space: nowrap;
+      margin: 0 0 2em;
     }
 
-    #acf-transcript_raw-lines {
+    .acf-line-numbers {
       float: left;
       //margin-top: .25em;
     }
 
-    #acf-transcript_raw-lines .line-number {
+    .acf-line-numbers .line-number {
       width: 2.6em;
       text-align: right;
       font-size: 14px;
@@ -145,32 +137,34 @@ add_action('admin_head', function(){ ?>
       opacity: .5;
     }
 
-    #vtt-error-list {
+    .vtt-error-list {
       position: fixed;
       bottom: 15px;
       right: 15px;
       background: #CC3834;
       padding: 15px;
       color: white;
+      max-height: 400px;
+      overflow: scroll;
     }
-    #vtt-error-list strong {
+    .vtt-error-list strong {
       display: inline-block;
       width: 3em;
       text-align: right;
       padding-right: .5em;
       vertical-align: middle;
     }
-    #vtt-error-list em {
+    .vtt-error-list em {
       display: inline-block;
       width: 15em;
       vertical-align: middle;
     }
 
-    [data-line] {
+    .acf-line-numbers > div {
       transition: background 5s ease;
     }
 
-    [data-line].was-jumped-to {
+    .acf-line-numbers > div.was-jumped-to {
       transition: background 0s;
       background: yellow;
     }
@@ -926,83 +920,89 @@ add_action('admin_head', function(){ ?>
 
     $(document).ready(function(){
       var parser = new WebVTTParser();
-      var $field = $('#acf-transcript_raw');
+      var transcript = $('#acf-transcript_raw');
+      var suppCont   = $('#acf-supporting_content_raw');
 
-      $field.keyup(function(){
+      function initVTTField($field, alias){
 
-        handleErrors.bind(this)();
-        resizeTextArea(function(){
-          addLineNumbers();
-        });
+        function getLineCount($el){
+          return $el.height() / parseFloat($el.css('line-height'))|0;
+        }
 
-      });
-
-      function handleErrors(){
-        var contents = $(this).val();
-        var results = parser.parse(contents);
-        $('#vtt-error-list').remove();
-        if(results.errors.length){
-          var errorList = $('<div id="vtt-error-list"></div>');
-          var errorUl = $('<ul></ul>');
-          for(var error of results.errors){
-            var ln = error.line;
-            var msg = error.message.replace('<','&lt;');
-            var errorLi = $('<li><strong data-err-line="'+ln+'">'+ln+'</strong><em>'+msg+'</em></li>')
-            errorUl.append(errorLi);
+        function handleErrors(){
+          var contents = $(this).val();
+          var results = parser.parse(contents);
+          $('#vtt-error-list-'+alias).remove();
+          if(results.errors.length){
+            var errorList = $('<div id="vtt-error-list-'+alias+'" class="vtt-error-list"></div>');
+            var errorUl = $('<ul></ul>');
+            for(var error of results.errors){
+              var ln = error.line;
+              var msg = error.message.replace('<','&lt;');
+              var errorLi = $('<li><strong data-err-line-'+alias+'="'+ln+'">'+ln+'</strong><em>'+msg+'</em></li>')
+              errorUl.append(errorLi);
+            }
+            errorList.append(errorUl);
+            $('body').append(errorList);
+            resizeTextArea(function(){
+              addLineNumbers();
+            });
           }
-          errorList.append(errorUl);
-          $('body').append(errorList);
+        }
+
+        function resizeTextArea(cb){
+          setTimeout(function(){
+            $field.css({height: 'auto', paddingTop: '0'});
+            $field.height($field[0].scrollHeight);
+            if(cb) cb();
+          }, 0);
+        }
+
+        function addLineNumbers(){
+          var $lines = $('#acf-'+alias+'-lines');
+          var lineCount = getLineCount($field);
+          var buffer = 3; //47; // for some reason this is always low
+          var lineList = '';
+          for(var i = 1; i <= lineCount + buffer; i++){
+            lineList += '<div data-line-'+alias+'="' + i + '" class="line-number">' + i + '</div>';
+          }
+          if($lines.length){
+            $lines.html(lineList);
+          } else {
+            $lines = $('<div id="acf-'+alias+'-lines" class="acf-line-numbers"></div>');
+            $lines.append(lineList)
+            $field.before($lines);
+          }
+        }
+        addLineNumbers();
+
+        function jumpToError(err){
+          var newTop = $('[data-line-'+alias+'="'+err+'"]');
+          if(!newTop) return;
+          offset = newTop.offset().top - 50;
+          newTop.addClass('was-jumped-to');
+          setTimeout(function(){
+            newTop.removeClass('was-jumped-to');
+          },50);
+          $('body,html').scrollTop(offset);
+        }
+
+        $field.keyup(function(){
+          handleErrors.bind(this)();
           resizeTextArea(function(){
             addLineNumbers();
           });
-        }
+        });
+
+        $('body').on('click', '[data-err-line-'+alias+']', function(){
+          var ln = $(this).attr('data-err-line-'+alias);
+          jumpToError(ln);
+        });
       }
 
-      function getLineCount($el){
-        return $el.height() / parseFloat($el.css('line-height'))|0;
-      }
+      initVTTField(transcript, 'transcript');
+      initVTTField(suppCont, 'suppCont');
 
-      function resizeTextArea(cb){
-        setTimeout(function(){
-          $field.css({height: 'auto', paddingTop: '0'});
-          $field.height($field[0].scrollHeight);
-          if(cb) cb();
-        }, 0);
-      }
-
-      function addLineNumbers(){
-        var $lines = $('#acf-transcript_raw-lines');
-        var lineCount = getLineCount($field);
-        var buffer = 47; // for some reason this is always low
-        var lineList = '';
-        for(var i = 1; i <= lineCount + buffer; i++){
-          lineList += '<div data-line="' + i + '" class="line-number">' + i + '</div>';
-        }
-        if($lines.length){
-          $lines.html(lineList);
-        } else {
-          $lines = $('<div id="acf-transcript_raw-lines"></div>');
-          $lines.append(lineList)
-          $field.before($lines);
-        }
-      }
-      addLineNumbers();
-
-      function jumpToError(err){
-        var newTop = $('[data-line="'+err+'"]');
-        if(!newTop) return;
-        offset = newTop.offset().top - 50;
-        newTop.addClass('was-jumped-to');
-        setTimeout(function(){
-          newTop.removeClass('was-jumped-to');
-        },50);
-        $('body,html').scrollTop(offset);
-      }
-
-      $('body').on('click', '[data-err-line]', function(){
-        var ln = $(this).attr('data-err-line');
-        jumpToError(ln);
-      });
     });
   })(jQuery);
   </script>
