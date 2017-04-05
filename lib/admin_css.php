@@ -118,7 +118,6 @@ add_action('admin_head', function(){ ?>
     .acf-line-numbers + textarea {
       float: right;
       width: calc(100% - 3em);
-      white-space: nowrap;
       margin: 0 0 2em;
     }
 
@@ -933,6 +932,9 @@ add_action('admin_head', function(){ ?>
       var transcript = $('#acf-transcript_raw');
       var suppCont   = $('#acf-supporting_content_raw');
 
+      transcript.attr('wrap', 'off');
+      suppCont.attr('wrap', 'off');
+
       function initVTTField($field, alias){
 
         function getLineCount($el){
@@ -1020,6 +1022,8 @@ add_action('admin_head', function(){ ?>
         }
         var $jump = $('#jump-to-acf-error');
         setTimeout(function(){
+          var $errors = $('.acf-input .acf-error-message');
+          if(!$errors.length) return;
           if($jump.length){
             $jump.off('click');
           } else {
