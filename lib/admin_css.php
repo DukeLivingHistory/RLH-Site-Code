@@ -764,7 +764,7 @@ add_action('admin_head', function(){ ?>
             }
           } else if(state == "escape") {
             if(c == "&") {
-              err("Incorrect escape.")
+              //err("Incorrect escape.") disable this so that URLS can exist
               result += buffer
               buffer = c
             } else if(/[abglmnsprt]/.test(c)) {
@@ -788,11 +788,11 @@ add_action('admin_head', function(){ ?>
               }
               state = "data"
             } else if(c == "<" || c == undefined) {
-              err("Incorrect escape.")
+              //err("Incorrect escape.") disable this so that URLS can exist
               result += buffer
               return ["text", result]
             } else {
-              err("Incorrect escape.")
+              //err("Incorrect escape.") disable this so that URLS can exist
               result += buffer + c
               state = "data"
             }
@@ -1014,6 +1014,10 @@ add_action('admin_head', function(){ ?>
 
       initVTTField(transcript, 'transcript');
       initVTTField(suppCont, 'suppCont');
+
+      $('[data-key="tab_transcript_raw"], [data-key="tab_supporting_content_raw"]').click(function(){
+        $('.vtt-error-list').remove();
+      });
 
       $('#publish').click(function(){
         var goToError = function(err){
