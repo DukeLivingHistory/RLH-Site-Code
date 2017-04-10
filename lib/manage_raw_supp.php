@@ -44,12 +44,15 @@ function get_formatted_supp_cont_cues($vtt){
       case 'GALLERY': // gallery
         $cue['type'] = 'gallery';
         break;
-      case 'URL': // ext link, int link
+      case 'INTERNAL_URL': // ext link, int link
         $cue['type'] = 'internallink'; // default to internal
         $cue['url'] = $value;
         break;
-      case 'LINK_TEXT': // ext link
+      case 'URL': // ext link
         $cue['type'] = 'externallink'; // external if provided
+        $cue['url'] = $value;
+        break;
+      case 'LINK_TEXT':
         $cue['link_text'] = $value;
         break;
       case 'TIMESTAMP': // int link
