@@ -35,6 +35,15 @@ add_action( 'acf/init', function(){
         'return_format' => 'array',
         'mime_types' => ''
       ],
+      [
+        'key' => 'supp_cont_file',
+        'label' => 'Supporting Content (.vtt file)',
+        'name' => 'supp_cont_file',
+        'type' => 'file',
+        'instructions' => 'Transcripts should be uploaded in WebVTT format.',
+        'return_format' => 'array',
+        'mime_types' => ''
+      ],
   		[
   			'key' => 'transcript_utilities',
   			'label' => 'Transcript Utilities',

@@ -114,5 +114,27 @@ add_action('save_post', function( $id ){
     }
     update_field('sc_row', $insert, $id);
   }
-  //die();
+
+
+  if( strlen( $supporting_content ) > 0){
+    $title = preg_replace( '/[^a-zA-Z0-9\s]/', '', $_POST['post_title'] );
+    $title = str_replace( ' ', '_', strtolower( $title ) );
+    $file_temp = wp_upload_dir()['path'].'/'.$title.'_supporting_content.vtt';
+    $file_put_contents = file_put_contents( $file_temp, stripslashes( $supporting_content ) );
+
+    $attachment = [
+      'post_mime_type' => 'text/vtt',
+      'post_title'     => get_the_title($id).' Supporting Content (.vtt)',
+      'post_content'   => '',
+      'post_status'    => 'inherit'
+    ];
+
+    $attach = wp_insert_attachment( $attachment, $file_temp );
+    update_field( 'supp_cont_file', $attach, $id );
+    //save_txt_from_vtt( $supporting_content, $_POST['post_title'] );
+
+  } else {
+    update_field( 'supp_cont_file', false, $id );
+  }
+
 });
