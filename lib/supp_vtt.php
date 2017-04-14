@@ -40,45 +40,49 @@ function supp_cont_to_vtt($id, $supp_cont){
     switch($type){
       case 'text':
         $item_text .= "\n";
-        $item_text .= 'TEXT ' . $content['sc_text_content'];
+        $item_text .= 'TEXT ' . trim($content['sc_text_content']);
         break;
       case 'blockquote':
         $item_text .= "\n";
-        $item_text .= 'QUOTE ' . $content['sc_blockquote_quotetext'];
-        $item_text .= 'ATTRIBUTION ' . $content['sc_blockquote_attribution'];
+        $item_text .= 'QUOTE ' . trim($content['sc_blockquote_quotetext']);
+        $item_text .= 'ATTRIBUTION ' . trim($content['sc_blockquote_attribution']);
         break;
       case 'image':
         $item_text .= "\n";
-        $item_text .= 'IMAGE ' . wp_get_attachment_url($content['sc_image_img']);
+        $item_text .= 'IMAGE ' . trim(wp_get_attachment_url($content['sc_image_img']));
         break;
       //TODO: galleries?
       case 'externallink':
         $item_text .= "\n";
-        $item_text .= 'TITLE ' . $content['sc_externallink_title'];
+        $item_text .= 'TITLE ' . trim($content['sc_externallink_title']);
         $item_text .= "\n";
-        $item_text .= 'DESCRIPTION ' . $content['sc_externallink_description'];
+        $item_text .= 'DESCRIPTION ' . trim($content['sc_externallink_description']);
         $item_text .= "\n";
-        $item_text .= 'URL: ' . $content['sc_externallink_url'];
-        $item_text .= "\n";
-        $item_text .= 'LINK_TEXT ' . $content['sc_externallink_text'];
+        $item_text .= 'URL: ' . trim($content['sc_externallink_url']);
+        if($content['sc_externallink_text']){
+          $item_text .= "\n";
+          $item_text .= 'LINK_TEXT ' . trim($content['sc_externallink_text']);
+        }
         break;
       case 'internallink':
         $item_text .= "\n";
-        $item_text .= 'URL ' . get_permalink($content['sc_internallink_to']);
-        $item_text .= "\n";
-        $item_text .= 'TIMESTAMP ' . $content['sc_internalink_timestamp'];
+        $item_text .= 'URL ' . trim(get_permalink($content['sc_internallink_to']));
+        if($content['sc_internalink_timestamp']){
+          $item_text .= "\n";
+          $item_text .= 'TIMESTAMP ' . trim($content['sc_internalink_timestamp']);
+        }
         break;
       case 'file':
         $item_text .= "\n";
-        $item_text .= 'DESCRIPTION ' . $content['sc_file_description'];
+        $item_text .= 'DESCRIPTION ' . trim($content['sc_file_description']);
         $item_text .= "\n";
-        $item_text .= 'FILE ' . wp_get_attachment_url($content['sc_file_file']);
+        $item_text .= 'FILE ' . trim(wp_get_attachment_url($content['sc_file_file']));
         break;
       case 'map_location':
         $item_text .= "\n";
-        $item_text .= 'TITLE ' . $content['sc_map_title'];
+        $item_text .= 'TITLE ' . trim($content['sc_map_title']);
         $item_text .= "\n";
-        $item_text .= 'ADDRESS ' . $content['sc_map_location']['address'];
+        $item_text .= 'ADDRESS ' . trim($content['sc_map_location']['address']);
         break;
       default:
         break;

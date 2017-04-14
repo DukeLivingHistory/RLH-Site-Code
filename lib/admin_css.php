@@ -1045,6 +1045,10 @@ add_action('admin_head', function(){ ?>
         },1000);
       });
 
+      $('#acf-supporting_content_raw').on('keyup', function(){
+        $('#acf-save_from_supp_cont_raw').prop('checked', true);
+      });
+
     });
   })(jQuery);
   </script>

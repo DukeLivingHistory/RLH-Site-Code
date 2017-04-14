@@ -32,19 +32,6 @@ $route = new Route( '/interviews/(?P<id>\d+)/supp', 'GET', function( $data ){
     array_push( $supp, $vtt_download );
   }
 
-  if( $supp_cont ){
-    $supp_download = [
-      'timestamp' => '',
-      'type' => 'file',
-      'data' => [
-        'description' => $supp_cont['description'],
-        'file' => $supp_cont['url'],
-        'title' => $supp_cont['title']
-      ]
-    ];
-    array_push( $supp, $supp_download );
-  }
-
   if( count( $txt_file ) ){
     $txt_file = $txt_file[0];
     $txt_download = [
@@ -57,6 +44,19 @@ $route = new Route( '/interviews/(?P<id>\d+)/supp', 'GET', function( $data ){
       ]
     ];
     array_push( $supp, $txt_download );
+  }
+
+  if( $supp_cont ){
+    $supp_download = [
+      'timestamp' => '',
+      'type' => 'file',
+      'data' => [
+        'description' => $supp_cont['description'],
+        'file' => $supp_cont['url'],
+        'title' => $supp_cont['title']
+      ]
+    ];
+    array_push( $supp, $supp_download );
   }
 
   return $supp;
