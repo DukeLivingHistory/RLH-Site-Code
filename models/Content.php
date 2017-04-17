@@ -31,6 +31,7 @@ class Content {
       $item_formatted = $this->format_cont( $item['content'][0] );
       $supp_content_formatted[$i]['timestamp'] = $item['timestamp'];
       $supp_content_formatted[$i]['type'] = $item_formatted['type'];
+      $supp_content_formatted[$i]['open'] = $item['open'];
       $supp_content_formatted[$i++]['data'] = isset( $item_formatted['data'] ) ? $item_formatted['data'] : false ;
     }
     return $supp_content_formatted;

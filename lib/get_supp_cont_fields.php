@@ -26,6 +26,13 @@ function get_supp_cont_fields(){
 				'type' => 'select',
         'allow_null' => 1
 			],
+      [
+        'key' => 'sc_open',
+        'label' => 'Open by default',
+        'name' => 'open',
+        'type' => 'true_false',
+        'default' => 0
+      ],
 			[
 				'key' => 'sc_content',
 				'label' => 'Content',

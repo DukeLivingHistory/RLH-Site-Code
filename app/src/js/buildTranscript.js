@@ -12,8 +12,6 @@ var buildTranscript = function( wrapper, id, cb ){
       return;
     }
 
-    console.log(data);
-
     var paragraphInit = true;
     var paragraphOpen = false;
     var jumptoInit = false;

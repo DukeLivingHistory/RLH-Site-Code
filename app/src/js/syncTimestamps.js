@@ -31,6 +31,16 @@ var syncTimestamps = function( supp, node, transcript ){
     }
   }
 
+  var expandMultiple = function(target){
+    if($(window).width() <= 568) return;
+    target.addClass('expand');
+    target.find( '[data-action="close"] use' ).attr( 'xlink:href', '#contract');
+    var img = target.find('.respImg-defer');
+    respImg.load(img);
+  }
+
+  expandMultiple($('[data-opendefault="true"]'));
+
   var position = function(){
     $(supp).each( function(){
 

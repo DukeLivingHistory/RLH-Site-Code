@@ -22,7 +22,8 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
         timestamps[this.timestamp] = timestamps[this.timestamp] || [];
         timestamps[this.timestamp].push( {
           type: this.type,
-          data: this.data
+          data: this.data,
+          open: this.open
         } );
       } else {
         unmatched.push( {
@@ -36,7 +37,7 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
       var asideInner = $( '<ul class="suppCont-inner" data-timestamp="'+timestamp+'" />' );
       for( var i = 0, x = timestamps[timestamp].length; i<x; i++ ){
         var content = timestamps[timestamp][i];
-        var suppContSingle = $( '<li tabindex="0" data-action="expand" data-supp="'+index+'" class="suppCont-single suppCont-single--'+content.type+'"/>' );
+        var suppContSingle = $( '<li tabindex="0" data-opendefault="'+content.open+'" data-action="expand" data-supp="'+index+'" class="suppCont-single suppCont-single--'+content.type+'"/>' );
         var inner = '';
         var innerContent = buildSuppInner( content );
         var preview = innerContent.preview;
