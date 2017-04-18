@@ -5,19 +5,30 @@ function is_timestamp($line){
   return preg_match($pattern, $line);
 }
 
+function is_open($string){
+  $string = trim($string);
+  return strpos($string, 'NOTE open by default') !== false;
+}
+
 function get_formatted_supp_cont_cues($vtt){
   $lines = explode("\n", $vtt);
   $cues = [];
   $cue = [];
+  $is_open = false;
   foreach($lines as $line){
     $sep = explode(' ', $line, 2);
     $keyword = trim(isset($sep[0]) ? $sep[0] : $line);
     $value = strstr($line, ' ');
+    if(is_open($line)){
+      $is_open = true;
+    }
     if(is_timestamp($line)){
       $cues[] = $cue;
       $cue = [
-        'timestamp' => $keyword
+        'timestamp' => $keyword,
+        'open' => $is_open
       ];
+      $is_open = false;
       continue;
     }
     switch($keyword){
@@ -74,6 +85,10 @@ function get_formatted_supp_cont_cues($vtt){
     }
   }
 
+  // print '<pre>';
+  // print_r($cues); die();
+  // print '</pre>';
+
   return $cues;
 }
 
@@ -90,6 +105,7 @@ add_action('save_post', function( $id ){
     foreach($formatted as $slice){
       $insert[] = [
         'timestamp' => $slice['timestamp'],
+        'open' => $slice['open'],
         'sc_content'   => [
           [
             'acf_fc_layout'  => $slice['type'],

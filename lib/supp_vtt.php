@@ -22,6 +22,16 @@ function supp_cont_to_vtt($id, $supp_cont){
   foreach($supp_cont as $item){
     $item_text = '';
 
+    print '<pre>';
+    print_r($item);
+    print '</pre>';
+
+    $open = $item['sc_open'];
+
+    if($open){
+      $item_text = "NOTE open by default\n\n";
+    }
+
     $timestamp = $item['sc_timestamp'];
 
     if($timestamp){
@@ -40,7 +50,7 @@ function supp_cont_to_vtt($id, $supp_cont){
     switch($type){
       case 'text':
         $item_text .= "\n";
-        $item_text .= 'TEXT ' . trim($content['sc_text_content']);
+        $item_text .= 'CONTENT ' . trim($content['sc_text_content']);
         break;
       case 'blockquote':
         $item_text .= "\n";
