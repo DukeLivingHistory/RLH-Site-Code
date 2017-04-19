@@ -51,13 +51,16 @@ class Transcript {
   }
 
   public function get_slices_and_breaks(){
-    // first capture:  optional section header        ([^\d].+\s)
-    // second capture: required timestamp (beginning) ([\d][\d:\.]+)
-    // third capture:  required timestamp (end)       ([\d][\d:\.]+)
-    // fourth capture: optional speaker name          (.*) in (?:<v[ ]*(.*)>[ ]*)
-    // fifth capture:  required text contents         ((?:(?!\s).*\s{0,1})*)
-    // sixth capture:  optional paragraph break       (\s*NOTE\sparagraph\s*)
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
+    // first capture:    optional section header        ((?:\s*NOTE chapter )[^\d].+\s*)
+    // second capture:   optional section header        ([^\d].+\s)
+    // third capture:    required timestamp (beginning) ([\d][\d:\.]+)
+    // fourth capture:   required timestamp (end)       ([\d][\d:\.]+)
+    // fifth capture:    optional speaker name          (.*) in (?:<v[ ]*(.*)>[ ]*)
+    // sixth capture:    required text contents         ((?:(?!\s).*\s{0,1})*)
+    // seventh capture:  optional paragraph break       (\s*NOTE\sparagraph\s*)
+    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/';
+
+    // TODO: update indeces with new capture index
 
     // print '<pre>';
     // print_r( htmlspecialchars( $this->transcript ) );
@@ -74,32 +77,40 @@ class Transcript {
         $results[] = [
           'type' => 'section_break',
           'contents' => trim( $nodes[1][$i] ),
-          'start' => trim( $nodes[2][$i] ),
-          'end' => trim( $nodes[3][$i] )
+          'start' => trim( $nodes[3][$i] ),
+          'end' => trim( $nodes[4][$i] )
         ];
       }
-      if( isset( $nodes[4][$i] ) && strlen( $nodes[4][$i] ) > 0  ){
-        $contents = str_replace( '<v ', '', $nodes[4][$i] );
+      if( isset( $nodes[2][$i] ) && strlen( trim( $nodes[2][$i] ) ) > 0 ){
+        $results[] = [
+          'type' => 'section_break',
+          'contents' => trim( $nodes[2][$i] ),
+          'start' => trim( $nodes[3][$i] ),
+          'end' => trim( $nodes[4][$i] )
+        ];
+      }
+      if( isset( $nodes[5][$i] ) && strlen( $nodes[5][$i] ) > 0  ){
+        $contents = str_replace( '<v ', '', $nodes[5][$i] );
         $contents = str_replace( '>', '', $contents );
-        if( strlen( $nodes[1][$i] ) > 0 || $contents !== $curr_speaker ){ // don't repeat speakers UNLESS there's a section change
+        if( strlen( $nodes[1][$i] ) > 0 || strlen( $nodes[2][$i] ) > 0 || $contents !== $curr_speaker ){ // don't repeat speakers UNLESS there's a section change
           $results[] = [
             'type' => 'speaker_break',
             'contents' => trim( $contents ),
-            'start' => trim( $nodes[2][$i] ),
-            'end' => trim( $nodes[3][$i] )
+            'start' => trim( $nodes[3][$i] ),
+            'end' => trim( $nodes[4][$i] )
           ];
           $curr_speaker = $contents;
         }
       }
-      if( isset( $nodes[5][$i] ) && strlen( $nodes[5][$i] ) > 0 && substr( $nodes[5][$i], 0, 4 ) !== 'NOTE' ){
+      if( isset( $nodes[6][$i] ) && strlen( $nodes[6][$i] ) > 0 && substr( $nodes[6][$i], 0, 4 ) !== 'NOTE' ){
         $results[] = [
           'type' => 'transcript_node',
-          'contents' => trim( $nodes[5][$i] ),
-          'start' => trim( $nodes[2][$i] ),
-          'end' => trim( $nodes[3][$i] )
+          'contents' => trim( $nodes[6][$i] ),
+          'start' => trim( $nodes[3][$i] ),
+          'end' => trim( $nodes[4][$i] )
         ];
       }
-      if( isset( $nodes[6][$i] ) && strlen( $nodes[6][$i] ) > 0  ){
+      if( isset( $nodes[7][$i] ) && strlen( $nodes[7][$i] ) > 0  ){
         $results[] = [
           'type' => 'paragraph_break'
         ];
