@@ -51,14 +51,6 @@ add_action( 'acf/init', function(){
   			'type' => 'message'
   		],
       [
-        'key' => 'speaker_list',
-        'label' => 'Speaker List',
-        'name' => 'speaker_list',
-        'type' => 'textarea',
-        'rows' => 3,
-        'instructions' => 'Enter the names of the speakers that are featured in this video, the way you\'d like them to appear in labels. Separate names with semicolons. You may enter multiple names for the same speaker as multiple entries (e.g. a full name for the first use and just a last name for subsequent uses).'
-      ],
-      [
         'key' => 'update',
         'label' => 'Pull transcript from YouTube?',
         'name' => 'update',
@@ -150,16 +142,3 @@ add_action( 'acf/init', function(){
   	'description' => '',
   ]);
 }, 0 );
-
-// use contents of speakers list for speaker name
-function add_speakers( $field ){
-  if( !is_admin() || !isset( $_GET['post'] ) ) return $field;
-  $speakers = get_field( 'speaker_list', $_GET['post'] );
-  $speakers = explode( ';', $speakers );
-  foreach( $speakers as $speaker ){
-    $speaker = trim( $speaker );
-    $field['choices'][$speaker] = $speaker;
-  }
-  return $field;
-}
-add_filter( 'acf/load_field/key=speaker_name', 'add_speakers');
