@@ -22,10 +22,6 @@ function supp_cont_to_vtt($id, $supp_cont){
   foreach($supp_cont as $item){
     $item_text = '';
 
-    print '<pre>';
-    print_r($item);
-    print '</pre>';
-
     $open = $item['sc_open'];
 
     if($open){
