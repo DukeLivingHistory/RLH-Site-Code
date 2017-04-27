@@ -12,6 +12,7 @@ function next_associative($array, $key){
 }
 
 function last_associative($array){
+  if(!is_array($array)) return;
   return end(array_keys($array));
 }
 

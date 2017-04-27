@@ -10,6 +10,12 @@ function is_open($string){
   return strpos($string, 'NOTE open by default') !== false;
 }
 
+function get_image_id_from_url($image_url) {
+	global $wpdb;
+	$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
+  return $attachment[0];
+}
+
 function get_formatted_supp_cont_cues($vtt){
   $lines = explode("\n", $vtt);
   $cues = [];
@@ -18,7 +24,7 @@ function get_formatted_supp_cont_cues($vtt){
   foreach($lines as $line){
     $sep = explode(' ', $line, 2);
     $keyword = trim(isset($sep[0]) ? $sep[0] : $line);
-    $value = strstr($line, ' ');
+    $value = trim(strstr($line, ' '));
     if(is_open($line)){
       $is_open = true;
     }
@@ -45,6 +51,7 @@ function get_formatted_supp_cont_cues($vtt){
         break;
       case 'IMAGE'; // image
         $cue['type'] = 'image';
+        $cue['image'] = get_image_id_from_url($value);
         break;
       case 'TITLE': // gallery, map
         $cue['title'] = $value;
@@ -119,6 +126,7 @@ add_action('save_post', function( $id ){
             'link'           => url_to_postid($slice['url']),
             'link_timestamp' => $slice['link_timestamp'],
             'name'           => $slice['title'],
+            'sc_image_img'   => $slice['image'],
             'location'       => [ // TODO: fix this
               'address' => $slice['address'],
               'lat'     => '36.000180',
