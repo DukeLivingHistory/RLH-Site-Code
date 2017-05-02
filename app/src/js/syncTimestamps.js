@@ -6,8 +6,8 @@ var syncTimestamps = function( supp, node, transcript ){
 
   var expand = function( target ){
     if( $(window).width() > 568 ){ // from bootstrap
-      $( '[data-action="expand"]' ).removeClass( 'expand' )
-        .find( '[data-action="close"] use' ).attr( 'xlink:href', '#expand' );
+      // $( '[data-action="expand"]' ).removeClass( 'expand' )
+      //   .find( '[data-action="close"] use' ).attr( 'xlink:href', '#expand' );
       target.addClass( 'expand' );
       target.find( '[data-action="close"] use' ).attr( 'xlink:href', '#contract');
       var img = target.find( '.respImg-defer' );
