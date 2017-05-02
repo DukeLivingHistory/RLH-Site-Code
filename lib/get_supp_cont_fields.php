@@ -195,6 +195,13 @@ function get_supp_cont_fields(){
                 'label' => 'Timestamp Picker',
                 'name' => 'link_timestamp_picker',
                 'type' => 'select'
+              ],
+              [
+                'key' => 'sc_internalink_description',
+                'label' => 'Description',
+                'name' => 'link_description',
+                'type' => 'textarea',
+                'rows' => 3
               ]
 						]
 					],

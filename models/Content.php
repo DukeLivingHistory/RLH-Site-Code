@@ -92,6 +92,7 @@ class Content {
       case 'internallink':
         $link = $content['link'];
         $returns['data'] = [
+          'link_description' => $content['link_description'],
           'description' => $link->post_excerpt,
           'feat_img' => get_post_thumbnail_id( $link->ID ),
           'id' => $link->ID,
