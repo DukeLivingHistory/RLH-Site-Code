@@ -46,6 +46,7 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
       if( !link ) return;
       var selection = document.getSelection();
       var text = selection.toString();
+      text = text.replace('"', '&quot;');
       if( text.length ) window.HIGHLIGHTED = text;
 
       var anchor = $( selection.anchorNode.parentNode ); // where drag started
@@ -89,7 +90,6 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
     var wasClipboardSuccessful = false;
 
     clipboard.on( 'success', function(){
-      console.log( 'cb s' );
       wasClipboardSuccessful = true;
       $('body').append( response() );
       $( '.socialCopy' ).css( {
@@ -107,7 +107,6 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
     } );
 
     clipboardHL.on( 'success', function(){
-      console.log( 'cbhl s' );
       wasClipboardSuccessful = true;
       $('body').append( response( false, true ) );
       $( '.socialCopy' ).css( {
