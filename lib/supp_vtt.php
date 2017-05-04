@@ -65,7 +65,7 @@ function supp_cont_to_vtt($id, $supp_cont){
         $item_text .= "\n";
         $item_text .= 'DESCRIPTION ' . trim($content['sc_externallink_description']);
         $item_text .= "\n";
-        $item_text .= 'URL: ' . trim($content['sc_externallink_url']);
+        $item_text .= 'URL ' . trim($content['sc_externallink_url']);
         if($content['sc_externallink_text']){
           $item_text .= "\n";
           $item_text .= 'LINK_TEXT ' . trim($content['sc_externallink_text']);
