@@ -197,6 +197,13 @@ function get_supp_cont_fields(){
                 'type' => 'select'
               ],
               [
+                'key' => 'sc_internalink_label',
+                'label' => 'Label',
+                'name' => 'link_label',
+                'type' => 'text',
+                'instructions' => 'If not provided, the name of the linked content will be used.'
+              ],
+              [
                 'key' => 'sc_internalink_description',
                 'label' => 'Description',
                 'name' => 'link_description',

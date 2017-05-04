@@ -96,7 +96,7 @@ class Content {
           'description' => $link->post_excerpt,
           'feat_img' => get_post_thumbnail_id( $link->ID ),
           'id' => $link->ID,
-          'title' => $link->post_title,
+          'title' => $content['link_label'] ? $content['link_label'] : $link->post_title,
           'type' => get_post_type( $link->ID ),
           'link' => $content['link_timestamp'] ? get_permalink( $link->ID ).$content['link_timestamp'] : get_permalink( $link->ID )
         ];
