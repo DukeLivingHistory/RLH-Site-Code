@@ -73,18 +73,18 @@ function supp_cont_to_vtt($id, $supp_cont){
         break;
       case 'internallink':
         $item_text .= "\n";
-        $item_text .= 'URL ' . trim(get_permalink($content['sc_internallink_to']));
-        if($content['sc_internalink_timestamp']){
-          $item_text .= "\n";
-          $item_text .= 'TIMESTAMP ' . trim($content['sc_internalink_timestamp']);
-        }
         if($content['sc_internalink_label']){
           $item_text .= "\n";
-          $item_text .= 'LABEL' . trim($content['sc_internalink_label']);
+          $item_text .= 'LABEL ' . trim($content['sc_internalink_label']);
         }
         if($content['sc_internalink_description']){
           $item_text .= "\n";
           $item_text .= 'DESCRIPTION ' . trim($content['sc_internalink_description']);
+        }
+        $item_text .= 'URL ' . trim(get_permalink($content['sc_internallink_to']));
+        if($content['sc_internalink_timestamp']){
+          $item_text .= "\n";
+          $item_text .= 'TIMESTAMP ' . trim($content['sc_internalink_timestamp']);
         }
         break;
       case 'file':
