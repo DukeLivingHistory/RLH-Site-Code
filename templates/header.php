@@ -12,7 +12,7 @@
   <nav class="header-nav">
     <h1 class="header-navLogo">
       <a href="/">
-        <span>Home</span>
+        <span>Rutherfurd Living History</span>
         <?php $altLogo = get_field( 'primary_brand_logo_alt', 'options' ); ?>
         <img src="<?= $altLogo['url']; ?>" alt="<?= $altLogo['alt']; ?>"/>
       </a>
