@@ -1,5 +1,5 @@
 {
-  "published": "2017-05-03T16:40:30.863Z",
+  "published": "2017-05-08T19:44:53.799Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
@@ -8,7 +8,7 @@
   "size": 59169,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 11915,
+  "gzippedSize": 11914,
   "rules": 747,
   "selectors": 958,
   "declarations": 1977,
@@ -64,9 +64,9 @@
     "#000000",
     "#0C4D93",
     "#3870D0",
+    "#424038",
     "#424242",
     "#5F8950",
-    "#605848",
     "#666666",
     "#696C73",
     "#AAAAAA",
