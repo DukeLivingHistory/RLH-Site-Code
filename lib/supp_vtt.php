@@ -115,4 +115,26 @@ add_action('save_post', function($id){
   $supp_cont = $_POST['acf']['sc_row'];
   $vtt = supp_cont_to_vtt($id, $supp_cont);
   update_field('supporting_content_raw', $vtt, $id);
+
+  if( strlen( $vtt ) > 0 ){
+    $title = preg_replace( '/[^a-zA-Z0-9\s]/', '', $_POST['post_title'] );
+    $title = str_replace( ' ', '_', strtolower( $title ) );
+    $file_temp = wp_upload_dir()['path'].'/'.$title.'_supporting_content.vtt';
+    $file_put_contents = file_put_contents( $file_temp, stripslashes( $vtt ) );
+
+    $attachment = [
+      'post_mime_type' => 'text/vtt',
+      'post_title'     => get_the_title($id).' Supporting Content (.vtt)',
+      'post_content'   => '',
+      'post_status'    => 'inherit'
+    ];
+
+    $attach = wp_insert_attachment( $attachment, $file_temp );
+    update_field( 'supp_cont_file', $attach, $id );
+    //save_txt_from_vtt( $supporting_content, $_POST['post_title'] );
+
+  } else {
+    update_field( 'supp_cont_file', false, $id );
+  }
+
 });
