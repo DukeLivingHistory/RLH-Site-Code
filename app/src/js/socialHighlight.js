@@ -38,6 +38,7 @@ var socialHighlight = function( target ){
     var url = getUrlWithNoHash();
     var selection = document.getSelection();
     var text = selection.toString();
+    text = text.replace('"', '&quot;');
 
     if( !selection.anchorNode || !selection.focusNode ) return; // quick sanity check
 

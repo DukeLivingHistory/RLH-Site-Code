@@ -17,6 +17,7 @@ $route = new Route( '/interviews/(?P<id>\d+)/supp', 'GET', function( $data ){
     'post_type'     => 'attachment',
     'name'          => get_the_title( $data['id'] ).' Transcript (.txt)'
   ] );
+  $supp_cont = get_field( 'supp_cont_file', $data['id'] );
 
   if( $vtt_file ){
     $vtt_download = [
@@ -43,6 +44,19 @@ $route = new Route( '/interviews/(?P<id>\d+)/supp', 'GET', function( $data ){
       ]
     ];
     array_push( $supp, $txt_download );
+  }
+
+  if( $supp_cont ){
+    $supp_download = [
+      'timestamp' => '',
+      'type' => 'file',
+      'data' => [
+        'description' => $supp_cont['description'],
+        'file' => $supp_cont['url'],
+        'title' => $supp_cont['title']
+      ]
+    ];
+    array_push( $supp, $supp_download );
   }
 
   return $supp;

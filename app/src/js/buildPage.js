@@ -115,6 +115,14 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
       }
 
       animatePage( wrapper, page, dir, function(){
+        if( endpoint === 'timelines' && $('.respImg').length < 1 ){
+          buildSupp( page, endpoint, queriedObject, function(){
+            if( data.collections.length ){
+              buildOtherInCollection( page, data.id, data.collections[0] );
+            }
+          }, true );
+          return;
+        }
         respImg.load( '.respImg', function(){
 
           // run this as a callback so that height can be based on returned images

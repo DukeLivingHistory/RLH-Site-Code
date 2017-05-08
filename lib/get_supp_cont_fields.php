@@ -26,6 +26,13 @@ function get_supp_cont_fields(){
 				'type' => 'select',
         'allow_null' => 1
 			],
+      [
+        'key' => 'sc_open',
+        'label' => 'Open by default',
+        'name' => 'open',
+        'type' => 'true_false',
+        'default' => 0
+      ],
 			[
 				'key' => 'sc_content',
 				'label' => 'Content',
@@ -188,6 +195,20 @@ function get_supp_cont_fields(){
                 'label' => 'Timestamp Picker',
                 'name' => 'link_timestamp_picker',
                 'type' => 'select'
+              ],
+              [
+                'key' => 'sc_internalink_label',
+                'label' => 'Label',
+                'name' => 'link_label',
+                'type' => 'text',
+                'instructions' => 'If not provided, the name of the linked content will be used.'
+              ],
+              [
+                'key' => 'sc_internalink_description',
+                'label' => 'Description',
+                'name' => 'link_description',
+                'type' => 'textarea',
+                'rows' => 3
               ]
 						]
 					],

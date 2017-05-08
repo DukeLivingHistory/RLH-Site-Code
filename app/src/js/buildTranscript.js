@@ -26,8 +26,8 @@ var buildTranscript = function( wrapper, id, cb ){
           break;
         case 'section_break':
           html += paragraphOpen ? '</div>' : '';
-          html += '<div data-highlight="transcript" class="transcript-section able-unspoken" data-timestamp="'+this.timestamp+'">'+this.text+'</div>';
-          jumpto.append( '<option value="'+this.timestamp+'">'+this.text+'</option>' );
+          html += '<div data-highlight="transcript" class="transcript-section able-unspoken" data-timestamp="'+this.start+'">'+this.contents+'</div>';
+          jumpto.append( '<option value="'+this.start+'">'+this.contents+'</option>' );
           if( !jumptoInit ){
             jumptoInit = true;
             jumpto.parent().show();
@@ -55,10 +55,10 @@ var buildTranscript = function( wrapper, id, cb ){
           break;
         case 'speaker_break':
           html += paragraphOpen ? '</div>' : '';
-          html += '<div data-highlight="next" class="transcript-speaker able-unspoken">'+this.text+'</div>';
+          html += '<div data-highlight="next" class="transcript-speaker able-unspoken">'+this.contents+'</div>';
           break;
         case 'transcript_node':
-          html += '<span tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="'+this.start+'" data-end="'+this.end+'">'+this.text+ '</span> ';
+          html += '<span tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="'+this.start+'" data-end="'+this.end+'">'+this.contents+ '</span> ';
           break;
       }
     } );

@@ -31,6 +31,7 @@ class Content {
       $item_formatted = $this->format_cont( $item['content'][0] );
       $supp_content_formatted[$i]['timestamp'] = $item['timestamp'];
       $supp_content_formatted[$i]['type'] = $item_formatted['type'];
+      $supp_content_formatted[$i]['open'] = $item['open'];
       $supp_content_formatted[$i++]['data'] = isset( $item_formatted['data'] ) ? $item_formatted['data'] : false ;
     }
     return $supp_content_formatted;
@@ -91,10 +92,11 @@ class Content {
       case 'internallink':
         $link = $content['link'];
         $returns['data'] = [
+          'link_description' => $content['link_description'],
           'description' => $link->post_excerpt,
           'feat_img' => get_post_thumbnail_id( $link->ID ),
           'id' => $link->ID,
-          'title' => $link->post_title,
+          'title' => $content['link_label'] ? $content['link_label'] : $link->post_title,
           'type' => get_post_type( $link->ID ),
           'link' => $content['link_timestamp'] ? get_permalink( $link->ID ).$content['link_timestamp'] : get_permalink( $link->ID )
         ];
@@ -128,6 +130,7 @@ class Content {
 
   private function get_gallery_imd_ids( $id ){
     $imgs = get_field( 'gallery_contents', $id );
+    if(!$imgs) return [];
     foreach( $imgs as $img ){
       $returns[] = [
         'alt' => $img['alt'],
