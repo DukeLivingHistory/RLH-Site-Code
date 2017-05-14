@@ -1,4 +1,4 @@
-# This is the public repo for the RLH project.
+# This is the public repo for the InSite interactive transcript project.
 
 This repository contains a WordPress theme that contains the template files for the project, library code to make the back-end functionality work, and API endpoint setup.
 
