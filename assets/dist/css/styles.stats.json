@@ -1,28 +1,28 @@
 {
-  "published": "2017-05-08T19:44:53.799Z",
+  "published": "2017-05-25T14:17:45.264Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 59169,
+  "size": 59296,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 11914,
-  "rules": 747,
-  "selectors": 958,
-  "declarations": 1977,
-  "simplicity": 0.7797494780793319,
-  "averageOfIdentifier": 1.8622129436325678,
+  "gzippedSize": 11962,
+  "rules": 751,
+  "selectors": 964,
+  "declarations": 1984,
+  "simplicity": 0.779045643153527,
+  "averageOfIdentifier": 1.8568464730290457,
   "mostIdentifier": 5,
   "mostIdentifierSelector": ".able-player .able-playlist li.able-current:after",
-  "averageOfCohesion": 2.646586345381526,
+  "averageOfCohesion": 2.6418109187749668,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
     ".featherlight-previous"
   ],
-  "totalUniqueFontSizes": 28,
+  "totalUniqueFontSizes": 31,
   "uniqueFontSizes": [
     "0",
     ".9em",
@@ -37,6 +37,9 @@
     "1rem",
     "2rem",
     "3rem",
+    "12pt",
+    "14pt",
+    "16pt",
     "12px",
     "14px",
     "15px",
@@ -63,9 +66,9 @@
   "uniqueColors": [
     "#000000",
     "#0C4D93",
+    "#212019",
     "#3870D0",
     "#424038",
-    "#424242",
     "#5F8950",
     "#666666",
     "#696C73",
@@ -118,7 +121,7 @@
     },
     {
       "property": "font-size",
-      "count": 96
+      "count": 99
     },
     {
       "property": "background",
