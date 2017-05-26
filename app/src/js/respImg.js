@@ -1,6 +1,7 @@
 window.featherlight = require( './thirdparty/featherlight.min' );
 window.featherlightGallery = require( './thirdparty/featherlight.gallery.min.js' );
 
+var cachebust = require('./cachebust');
 var internalLink = require( './internalLink' );
 
 var respImg = {
@@ -56,7 +57,7 @@ var respImg = {
     images.each( function( i ){
       var src = $(this).attr( 'data-src' );
       var size = $(this).attr( 'data-size' );
-      $.get( '/wp-json/v1/images/'+src+'/'+size, function( data ){
+      $.get( '/wp-json/v1/images/'+src+'/'+size+cachebust(), function( data ){
 
         // data returns an object with four properties:
         // requested = resized img

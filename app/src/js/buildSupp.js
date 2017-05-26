@@ -1,3 +1,4 @@
+var cachebust = require('./cachebust');
 var buildSuppInner = require( './buildSuppInner' );
 var getUrlWithNoHash = require( './getUrlWithNoHash' );
 var icon = require( './icon' );
@@ -10,7 +11,7 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
   var aside = $( '<aside class="suppCont" />' );
 
 
-  $.get( '/wp-json/v1/'+endpoint+'/'+queriedObject+'/supp', function(data){
+  $.get( '/wp-json/v1/'+endpoint+'/'+queriedObject+'/supp'+cachebust(), function(data){
 
     // ensure that repeated timestamps nest all content inside themselves
     var timestamps = [];
