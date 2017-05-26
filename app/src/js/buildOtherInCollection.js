@@ -1,9 +1,10 @@
+var cachebust = require('./cachebust');
 var eqHeight = require( './eqHeight' );
 var icon = require( './icon' );
 var internalLink = require( './internalLink' );
 
 var buildOtherInCollection = function( page, id, collection ){
-  $.get( '/wp-json/v1/collections/'+collection.id+'/?count=3&not='+id, function(data){
+  $.get( '/wp-json/v1/collections/'+collection.id+'/?count=3&not='+id+cachebust(true), function(data){
     if ( !data.content.length ) return;
     var others = $( '<div class="others" />' );
     others.append( '<h3 class="others-head">Other interviews and timelines in the <strong>' + data.name + '</strong> collection</h3>' );

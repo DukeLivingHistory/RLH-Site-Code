@@ -1,3 +1,4 @@
+var cachebust = require('./cachebust');
 var buildContentNode = require( './buildContentNode' );
 var icon             = require( './icon' );
 var respBg           = require( './respBg' );
@@ -57,7 +58,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
   load.click( function(){
     load.data( 'offset', load.data( 'offset' ) + 1 );
     var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
-    $.get( '/wp-json/v1/'+dest+'?count='+COUNT+'&offset=' + ( load.data( 'offset' ) * COUNT ), function(data){
+    $.get( '/wp-json/v1/'+dest+'?count='+COUNT+'&offset=' + ( load.data( 'offset' ) * COUNT )+cachebust(true), function(data){
       for( var i = 0, x = data.items.length; i < x; i++ ){
         feed.append( buildContentNode( data.items[i] ) );
       }
@@ -77,7 +78,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
 
         var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
         // console.log( '/wp-json/v1/'+dest+'?order=abc&count=-1' );
-        $.get( '/wp-json/v1/'+dest+'?order=abc', function(data){
+        $.get( '/wp-json/v1/'+dest+'?order=abc'+cachebust(true), function(data){
           feed.empty();
           feed.addClass( 'content-feed--contracted' );
           for( var i = 0, x = data.items.length; i < x; i++ ){
@@ -93,7 +94,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
         // previous count
         var _count = COUNT + ( COUNT * load.data( 'offset' ) );
         // we don't need an offset since we have the total count
-        $.get( '/wp-json/v1/'+dest+'?count='+_count+'&offset=0', function(data){
+        $.get( '/wp-json/v1/'+dest+'?count='+_count+'&offset=0'+cachebust(true), function(data){
           feed.empty();
           feed.removeClass( 'content-feed--contracted' );
           for( var i = 0, x = data.items.length; i < x; i++ ){

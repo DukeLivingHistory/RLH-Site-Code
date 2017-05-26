@@ -1,3 +1,4 @@
+var cachebust = require('./cachebust');
 var buildTranscript = function( wrapper, id, cb ){
 
   var outer = $( '<section class="able-transcript-area transcript" id="transcript-'+id+'">' );
@@ -5,7 +6,7 @@ var buildTranscript = function( wrapper, id, cb ){
   var callback = cb || false;
   var html = '';
 
-  $.get( '/wp-json/v1/interviews/'+id+'/transcript?return=transcript_contents', function( data ){
+  $.get( '/wp-json/v1/interviews/'+id+'/transcript?return=transcript_contents'+cachebust(true), function( data ){
 
     if( !data ){
       if( callback ) callback( data );

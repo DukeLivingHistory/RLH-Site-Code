@@ -1,3 +1,5 @@
+var cachebust = require('./cachebust');
+
 var respBg = function( elem ){
   var id = elem.attr( 'data-id' );
   var set = elem.attr( 'data-set' );
@@ -10,7 +12,7 @@ var respBg = function( elem ){
   };
 
 
-  $.get( '/wp-json/v1/images/'+id+'/'+set+'_'+getSize(), function( data ){
+  $.get( '/wp-json/v1/images/'+id+'/'+set+'_'+getSize()+cachebust(), function( data ){
     elem.css( 'background-image', 'url('+data.requested+')' );
   } );
 

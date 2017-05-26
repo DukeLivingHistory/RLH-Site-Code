@@ -1,3 +1,4 @@
+var cachebust = require('./cachebust');
 var animatePage           = require('./animatePage');
 var buildArchive          = require('./buildArchive');
 var buildCollectionHeader = require('./buildCollectionHeader');
@@ -34,7 +35,7 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
       var term = $( 'body' ).attr( 'data-search' );
       document.title = 'Search for '+term;
 
-      $.get( '/wp-json/v1/'+endpoint+'/'+term+'?count='+COUNT+'&offset=0', function(data){
+      $.get( '/wp-json/v1/'+endpoint+'/'+term+'?count='+COUNT+'&offset=0'+cachebust(true), function(data){
         buildArchive( page, data, endpoint );
         animatePage( wrapper, page, dir, function(){
           respImg.load( '.respImg' );
@@ -47,7 +48,7 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
       if( Cookies.get('ARCHIVEVIEW') === 'condense' && endpoint === 'interviews' ){
 
-        $.get( '/wp-json/v1/'+endpoint+'?order=abc', function(data){
+        $.get( '/wp-json/v1/'+endpoint+'?order=abc'+cachebust(true), function(data){
           buildArchive( page, data, endpoint, ( endpoint === 'interviews' ) );
           animatePage( wrapper, page, dir, function(){
             respImg.load( '.respImg' );
@@ -56,7 +57,7 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
       } else {
 
-        $.get( '/wp-json/v1/'+endpoint+'?count='+COUNT+'&offset=0', function(data){
+        $.get( '/wp-json/v1/'+endpoint+'?count='+COUNT+'&offset=0'+cachebust(true), function(data){
           buildArchive( page, data, endpoint, ( endpoint === 'interviews' ) );
           animatePage( wrapper, page, dir, function(){
             respImg.load( '.respImg' );
@@ -67,7 +68,7 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
     }
   } else {
 
-    $.get( '/wp-json/v1/'+endpoint+'/'+queriedObject, function(data){
+    $.get( '/wp-json/v1/'+endpoint+'/'+queriedObject+cachebust(), function(data){
 
       document.title = data.name;
       DESCRIPTION = data.description;

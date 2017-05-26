@@ -1,3 +1,4 @@
+var cachebust = require('./cachebust');
 var buildContentNode = require( './buildContentNode' );
 var icon = require( './icon' );
 var respImg = require( './respImg' );
@@ -21,7 +22,7 @@ var buildCollectionFeed = function( page, data ){
   search.find('input').on( 'keyup', function(e) {
     // after a delay in typing, search
     window.TIMEOUT = setTimeout( function(){
-      $.get( '/wp-json/v1/collections/'+data.id+'?s='+$(this).val(), function( results ){
+      $.get( '/wp-json/v1/collections/'+data.id+'?s='+$(this).val()+cachebust(true), function( results ){
         var newContent = results.content;
         feed.empty();
         for( var i = 0, x = newContent.length; i<x; i++ ){

@@ -1,7 +1,11 @@
 var internalLink = require('./internalLink');
 
 var buildCollectionsList = function( collections ){
-  var html = '<p class="contentHeader-collectionsList">Part of the <strong> ';
+  // don't display the word "the" if first collection starts with "the"
+
+  var the = collections[0].link_text.startsWith('The') ? '' : 'the ';
+
+  var html = '<p class="contentHeader-collectionsList">Part of ' + the + '<strong> ';
   html +=      internalLink( collections[0], collections[0].link_text );
   if( collections.length > 2 ){
     for( var i = 1, x = collections.length - 1; i < x; i++ ){
