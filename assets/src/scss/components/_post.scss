@@ -78,11 +78,17 @@
   color: $body;
 }
 
+.post-hyperlink {
+  color: inherit;
+  text-decoration: none;
+}
+
 .post-link {
   display: block;
   margin-bottom: 40px;
   text-decoration: none;
   font-size: 14px;
+  color: $link;
   &:after {
     content: '\203A';
     margin-left: .3em;

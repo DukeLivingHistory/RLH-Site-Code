@@ -49,38 +49,40 @@ class ContentNode{
 
   public function html( $classes = '' ){ ?>
     <article class="post post--<?= $this->type; ?> <?= $classes; ?>">
-      <header class="post-header">
-        <div class="post-type"><?= icon( $this->type, 'type' ); ?><?= ucfirst( $this->type ); ?></div>
+      <a class="post-hyperlink" href="<?= $this->link; ?>">
+        <header class="post-header">
+          <div class="post-type"><?= icon( $this->type, 'type' ); ?><?= ucfirst( $this->type ); ?></div>
+          <?php if( $this->type === 'collection' ){ ?>
+            <dl class="post-meta">
+              <dt class="sr-only">Number of interviews:</dt>
+              <dd>
+                <?= icon( 'interview', 'type' ); ?>
+                <?= $this->interview_count; ?>
+              </dd>
+              <dt class="sr-only">Number of timelines:</dt>
+              <dd>
+                <?= icon( 'timeline', 'type' ); ?>
+                <?= $this->timeline_count; ?>
+              </dd>
+            </dl>
+          <?php } ?>
+        </header>
         <?php if( $this->type === 'collection' ){ ?>
-          <dl class="post-meta">
-            <dt class="sr-only">Number of interviews:</dt>
-            <dd>
-              <?= icon( 'interview', 'type' ); ?>
-              <?= $this->interview_count; ?>
-            </dd>
-            <dt class="sr-only">Number of timelines:</dt>
-            <dd>
-              <?= icon( 'timeline', 'type' ); ?>
-              <?= $this->timeline_count; ?>
-            </dd>
-          </dl>
+          <h2 class="post-title"><?= $this->title; ?></h2>
         <?php } ?>
-      </header>
-      <?php if( $this->type === 'collection' ){ ?>
-        <h2 class="post-title"><?= $this->title; ?></h2>
-      <?php } ?>
-      <div class="post-image js-img" data-img="<?= $this->img; ?>">
-        <a href="<?= $this->link; ?>">
-          <?= wp_get_attachment_image( $this->img, 'feat_md' ); ?>
-        </a>
-      </div>
-      <?php if( $this->type !== 'collection' ){ ?>
-        <h2 class="post-title"><?= $this->title; ?></h2>
-      <?php } ?>
-      <?php if( $this->excerpt ){ ?>
-        <div class="post-excerpt"><?= $this->excerpt; ?></div>
-      <?php } ?>
-      <a class="post-link" href="<?= $this->link; ?>">View The <?= ucfirst( $this->type ); ?></a>
+        <div class="post-image js-img" data-img="<?= $this->img; ?>">
+          <span href="<?= $this->link; ?>">
+            <?= wp_get_attachment_image( $this->img, 'feat_md' ); ?>
+          </span>
+        </div>
+        <?php if( $this->type !== 'collection' ){ ?>
+          <h2 class="post-title"><?= $this->title; ?></h2>
+        <?php } ?>
+        <?php if( $this->excerpt ){ ?>
+          <div class="post-excerpt"><?= $this->excerpt; ?></div>
+        <?php } ?>
+        <span class="post-link" href="<?= $this->link; ?>">View The <?= ucfirst( $this->type ); ?></span>
+      </a>
     </article>
   <?php }
 
@@ -99,9 +101,10 @@ class ContentNodeCollection extends ContentNode {
           'taxonomy' => 'collection',
           'field' => 'id',
           'terms' => $id
-        ],
-        'posts_per_page' => -1
-      ]
+        ]
+      ],
+      'posts_per_page' => -1,
+      'field' => 'ids',
     ] );
     foreach( $posts_in_term as $post_in_term ){
       $type = get_post_type( $post_in_term->ID );
