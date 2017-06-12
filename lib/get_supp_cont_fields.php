@@ -255,6 +255,14 @@ function get_supp_cont_fields(){
                 'name' => 'location',
                 'type' => 'google_map',
                 'required' => 1
+              ],
+              [
+                'key' => 'sc_zoom_level',
+                'label' => 'Zoom Level',
+                'name' => 'zoom',
+                'instructions' => 'Enter a zoom level between 1 and 18',
+                'type' =>'text',
+                'default' => '13'
               ]
             ]
           ]
