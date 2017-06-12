@@ -101,9 +101,10 @@ class ContentNodeCollection extends ContentNode {
           'taxonomy' => 'collection',
           'field' => 'id',
           'terms' => $id
-        ],
-        'posts_per_page' => -1
-      ]
+        ]
+      ],
+      'posts_per_page' => -1,
+      'field' => 'ids',
     ] );
     foreach( $posts_in_term as $post_in_term ){
       $type = get_post_type( $post_in_term->ID );
