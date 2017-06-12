@@ -67,7 +67,8 @@ var buildSuppInner = function( content ){
       cont += internalLink( content.data, 'View ' + content.type + icon( 'right', 'link' ) );
       break;
     case 'map_location':
-      var map_url = 'https://maps.googleapis.com/maps/api/staticmap?center='+content.data.coords.lat+','+content.data.coords.lng+'&size=600x300&zoom=17&markers=color:red%7C'+content.data.coords.lat+','+content.data.coords.lng+'&key='+MAPS_APP_ID; // TODO: make API key a site option
+      var zoom = content.data.zoom || 17;
+      var map_url = 'https://maps.googleapis.com/maps/api/staticmap?center='+content.data.coords.lat+','+content.data.coords.lng+'&size=600x300&zoom='+zoom+'&markers=color:red%7C'+content.data.coords.lat+','+content.data.coords.lng+'&key='+MAPS_APP_ID; // TODO: make API key a site option
       preview = content.data.title;
       cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
       cont += '<img src="' + map_url + '" alt="Map of '+content.data.title+'" />';

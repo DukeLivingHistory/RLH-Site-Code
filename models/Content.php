@@ -107,7 +107,8 @@ class Content {
           'coords' => [
             'lat' => $content['location']['lat'],
             'lng' => $content['location']['lng']
-          ]
+          ],
+          'zoom'  => $content['zoom']
         ];
         break;
       case 'image':
