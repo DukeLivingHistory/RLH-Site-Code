@@ -16,6 +16,8 @@
 .transcript {
   line-height: 1.5;
   top: auto!important; // override what ableplayer does when exiting fullscreen
+  padding: 2em 3em;
+  margin: 0 -3em;
 }
 
 .transcript-node {
