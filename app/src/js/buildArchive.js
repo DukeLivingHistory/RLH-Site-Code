@@ -30,14 +30,14 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
 
   page.append( header );
   if( canBeCondensed ){
-    var btnExplode   = $( '<input type="radio" name="list-view" value="explode">' );
     var btnCondense = $( '<input type="radio" name="list-view" value="condense">' );
+    var btnExplode   = $( '<input type="radio" name="list-view" value="explode">' );
 
-    if( Cookies.get('ARCHIVEVIEW') === 'condense' ){
+    if( Cookies.get('ARCHIVEVIEW') === 'explode' ){
+      btnExplode.attr( 'checked', 'checked' );
+    } else {
       btnCondense.attr( 'checked', 'checked' );
       feed.addClass( 'content-feed--contracted' );
-    } else {
-      btnExplode.attr( 'checked', 'checked' );
     }
 
     var listView = $( '<div class="listView"/>' );
