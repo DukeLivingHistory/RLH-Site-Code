@@ -2,7 +2,7 @@ var cachebust = require('./cachebust');
 var buildContentNode = require( './buildContentNode' );
 var icon             = require( './icon' );
 var respBg           = require( './respBg' );
-var respImg          = require( './respImg' );
+// var respImg          = require( './respImg' );
 var Cookies          = require('js-cookie');
 
 var buildArchive = function( page, data, endpoint, canBeCondensed ){
@@ -65,7 +65,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
       if( data.items.length < COUNT ){
         load.hide();
       }
-      respImg.load( '.respImg' );
+      //respImg.load( '.respImg' );
     } );
   } );
 
@@ -85,7 +85,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
             feed.append( buildContentNode( data.items[i] ) );
           }
           load.hide();
-          respImg.load( '.respImg' );
+          //respImg.load( '.respImg' );
         } );
 
       } else {
@@ -105,7 +105,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
           } else {
             load.show();
           }
-          respImg.load( '.respImg' );
+          //respImg.load( '.respImg' );
         } );
 
       }
