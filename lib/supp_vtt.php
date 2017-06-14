@@ -43,6 +43,9 @@ function supp_cont_to_vtt($id, $supp_cont){
     }
 
     $content = $item['sc_content'][0];
+
+    if(!isset($content['acf_fc_layout'])) continue;
+
     $type = $content['acf_fc_layout'];
     switch($type){
       case 'text':

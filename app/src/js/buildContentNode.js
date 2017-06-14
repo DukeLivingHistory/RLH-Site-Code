@@ -12,8 +12,15 @@ var buildContentNode = function( data ){
   }
   inner.append(  '<div class="content-link">View The '+data.type+' '+icon( 'right', 'link' )+'</div>' );
   content.append( inner );
-  if( data.img ){
-    content.append( '<div class="content-imgWrapper">' + respImg.markup( data.img, 'feat_md', 'respImg', null, null, data ) + '</div>' );
+  if( data.img_set.original ){
+    var img = '';
+    img += '<img src="'+data.img_set.sizes.md+'" class="respImg-none" ';
+    if( data.img_set.alt )     img += 'alt="'+data.img_set.alt+'" ';
+    if( data.img_set.caption ) img += 'data-caption="'+data.img_set.caption+'" ';
+    if( data.img_set.group )   img += 'data-group="'+data.img_set.group+'" ';
+    img += ' />';
+
+    content.append('<div class="content-imgWrapper">'+img+'</div>');
   }
 
   return internalLink( data, content[0].outerHTML );

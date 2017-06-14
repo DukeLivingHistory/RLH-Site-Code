@@ -14,6 +14,21 @@ class ContentNode{
     $this->link        = $is_taxonomy ? get_term_link( $id )              : get_permalink( $id );
     $this->title       = $is_taxonomy ? $the_term->name                   : $the_post->post_title;
     $this->type        = $is_taxonomy ? $the_term->taxonomy               : get_post_type( $id );
+    $this->img_set     = [
+      'caption'  => get_post($this->img)->post_excerpt,
+      'original' => wp_get_attachment_image_src($this->img, 'full' )[0],
+      'credit'   => [
+        'author' => get_post_meta($this->img, 'photographer_name', true ),
+        'src'    => get_post_meta($this->img, 'photographer_url', true )
+      ],
+      'alt'      => get_post_meta($this->img, '_wp_attachment_image_alt', true),
+      'sizes' => [
+        'xs' => wp_get_attachment_image_src($this->img, 'feat_xs')[0],
+        'sm' => wp_get_attachment_image_src($this->img, 'feat_sm')[0],
+        'md' => wp_get_attachment_image_src($this->img, 'feat_md')[0],
+        'lg' => wp_get_attachment_image_src($this->img, 'feat_lg')[0]
+      ]
+    ];
   }
 
   private function get_term_date( $term ){

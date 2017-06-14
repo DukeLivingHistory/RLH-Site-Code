@@ -2,7 +2,7 @@ var cachebust = require('./cachebust');
 var buildContentNode = require( './buildContentNode' );
 var icon             = require( './icon' );
 var respBg           = require( './respBg' );
-var respImg          = require( './respImg' );
+// var respImg          = require( './respImg' );
 var Cookies          = require('js-cookie');
 
 var buildArchive = function( page, data, endpoint, canBeCondensed ){
@@ -65,7 +65,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
       if( data.items.length < COUNT ){
         load.hide();
       }
-      respImg.load( '.respImg' );
+      //respImg.load( '.respImg' );
     } );
   } );
 
@@ -78,14 +78,16 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
 
         var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
         // console.log( '/wp-json/v1/'+dest+'?order=abc&count=-1' );
-        $.get( '/wp-json/v1/'+dest+'?order=abc'+cachebust(true), function(data){
+        $.get( '/wp-json/v1/'+dest+'?order=abc&count='+COUNT+cachebust(true), function(data){
           feed.empty();
           feed.addClass( 'content-feed--contracted' );
           for( var i = 0, x = data.items.length; i < x; i++ ){
             feed.append( buildContentNode( data.items[i] ) );
           }
-          load.hide();
-          respImg.load( '.respImg' );
+          if( data.items.length < COUNT ){
+            load.hide();
+          }
+          //respImg.load( '.respImg' );
         } );
 
       } else {
@@ -105,7 +107,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
           } else {
             load.show();
           }
-          respImg.load( '.respImg' );
+          //respImg.load( '.respImg' );
         } );
 
       }
