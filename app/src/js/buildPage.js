@@ -48,7 +48,9 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
       if( Cookies.get('ARCHIVEVIEW') === 'condense' && endpoint === 'interviews' ){
 
-        $.get( '/wp-json/v1/'+endpoint+'?order=abc'+cachebust(true), function(data){
+        console.log('/wp-json/v1/'+endpoint+'?order=abc&count='+COUNT+cachebust(true));
+
+        $.get( '/wp-json/v1/'+endpoint+'?order=abc&count='+COUNT+cachebust(true), function(data){
           buildArchive( page, data, endpoint, ( endpoint === 'interviews' ) );
           animatePage( wrapper, page, dir, function(){
             respImg.load( '.respImg' );
