@@ -2,7 +2,6 @@ var cachebust = require('./cachebust');
 var buildContentNode = require( './buildContentNode' );
 var icon             = require( './icon' );
 var respBg           = require( './respBg' );
-// var respImg          = require( './respImg' );
 var Cookies          = require('js-cookie');
 
 var buildArchive = function( page, data, endpoint, canBeCondensed ){
@@ -65,20 +64,17 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
       if( data.items.length < COUNT ){
         load.hide();
       }
-      //respImg.load( '.respImg' );
     } );
   } );
 
   if( listView ){
     listView.click( function(){
-
+      load.data('offset', 0);
       var selected = $( 'input[name="list-view"]:checked' ).val();
       Cookies.set( 'ARCHIVEVIEW', selected );
       if( selected === 'condense' ){
-
         var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
-        // console.log( '/wp-json/v1/'+dest+'?order=abc&count=-1' );
-        $.get( '/wp-json/v1/'+dest+'?order=abc&count='+COUNT+cachebust(true), function(data){
+        $.get( '/wp-json/v1/'+dest+'?order=abc&offset=0&count='+COUNT+cachebust(true), function(data){
           feed.empty();
           feed.addClass( 'content-feed--contracted' );
           for( var i = 0, x = data.items.length; i < x; i++ ){
@@ -86,17 +82,16 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
           }
           if( data.items.length < COUNT ){
             load.hide();
+          } else {
+            load.show();
           }
-          //respImg.load( '.respImg' );
         } );
 
       } else {
 
         var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
         // previous count
-        var _count = COUNT + ( COUNT * load.data( 'offset' ) );
-        // we don't need an offset since we have the total count
-        $.get( '/wp-json/v1/'+dest+'?count='+_count+'&offset=0'+cachebust(true), function(data){
+        $.get( '/wp-json/v1/'+dest+'?offset=0&count='+COUNT+cachebust(true), function(data){
           feed.empty();
           feed.removeClass( 'content-feed--contracted' );
           for( var i = 0, x = data.items.length; i < x; i++ ){
@@ -107,7 +102,6 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
           } else {
             load.show();
           }
-          //respImg.load( '.respImg' );
         } );
 
       }
