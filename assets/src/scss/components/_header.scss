@@ -116,6 +116,10 @@
   @include media-breakpoint-up(lg){
     margin-top: 0;
   }
+  button {
+    background: none;
+    border: none;
+  }
   svg {
     position: relative;
     top: -2px;
@@ -133,16 +137,17 @@
   &:focus {
     width: 8rem;
   }
-  + svg {
-    fill:: $white;
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-  }
   @include media-breakpoint-up(lg){
     display: inline;
     margin-left: 2em;
   }
+}
+
+.header [type="submit"] svg {
+  fill: $white;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: middle;
 }
 
 .header .menu--utility {
