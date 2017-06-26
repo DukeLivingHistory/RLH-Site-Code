@@ -11,6 +11,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
   }
   var feed = $( '<ul class="content-feed"/>' );
   var load = $( '<button class="content-load">Load More</button>' );
+  var isAbc = false;
 
   header.append( '<h2>'+decodeURI( data.name )+'</h2>' );
   if( data.image ){
@@ -35,6 +36,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
     if( Cookies.get('ARCHIVEVIEW') === 'explode' ){
       btnExplode.attr( 'checked', 'checked' );
     } else {
+      isAbc = true;
       btnCondense.attr( 'checked', 'checked' );
       feed.addClass( 'content-feed--contracted' );
     }
@@ -56,8 +58,13 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
   load.data( 'offset', 0 );
   load.click( function(){
     load.data( 'offset', load.data( 'offset' ) + 1 );
-    var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
-    $.get( '/wp-json/v1/'+dest+'?count='+COUNT+'&offset=' + ( load.data( 'offset' ) * COUNT )+cachebust(true), function(data){
+    var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search') : endpoint;
+    var params = '';
+    if(isAbc) params = params = '&order=abc';
+
+    var url  = '/wp-json/v1/'+dest+'?count='+COUNT+'&offset=' + ( load.data( 'offset' ) * COUNT )+cachebust(true) + params;
+    console.log(url);
+    $.get(url, function(data){
       for( var i = 0, x = data.items.length; i < x; i++ ){
         feed.append( buildContentNode( data.items[i] ) );
       }
@@ -73,6 +80,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
       var selected = $( 'input[name="list-view"]:checked' ).val();
       Cookies.set( 'ARCHIVEVIEW', selected );
       if( selected === 'condense' ){
+        isAbc = true;
         var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
         $.get( '/wp-json/v1/'+dest+'?order=abc&offset=0&count='+COUNT+cachebust(true), function(data){
           feed.empty();
@@ -88,7 +96,7 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
         } );
 
       } else {
-
+        isAbc = false;
         var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search')  : endpoint;
         // previous count
         $.get( '/wp-json/v1/'+dest+'?offset=0&count='+COUNT+cachebust(true), function(data){
