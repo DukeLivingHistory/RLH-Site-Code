@@ -27,7 +27,7 @@ var buildCollectionFeed = function( page, data ){
         feed.empty();
         for( var i = 0, x = newContent.length; i<x; i++ ){
           feed.append( buildContentNode( newContent[i] ) );
-          respImg.load( '.respImg' );
+          //respImg.load( '.respImg' );
         }
       } );
     }.bind(this), 200 )
