@@ -52,6 +52,12 @@ if( function_exists('acf_add_local_field_group') ){
         'name' => 'maps_client_id',
         'type' => 'password'
       ],
+      [
+        'key' => 'interview_instructions',
+        'label' => 'Interview Instructions',
+        'name' => 'interview_instructions',
+        'type' => 'textarea'
+      ]
     ],
   	'location' => [
   		[

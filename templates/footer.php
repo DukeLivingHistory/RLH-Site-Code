@@ -17,7 +17,8 @@
 <script>
   window.FB_APP_ID = '<?= get_field( 'fb_client_id', 'options' ); ?>';
   window.MAPS_APP_ID = '<?= get_field( 'maps_client_id', 'options' ); ?>';
-  window.COUNT = <?= get_option( 'posts_per_page' ); ?>
+  window.COUNT = <?= get_option( 'posts_per_page' ); ?>;
+  window.INSTRUCTIONS = '<?= str_replace("\n", "", get_field( 'interview_instructions', 'options' )); ?>';
 </script>
 <?php } ?>
 <?php wp_footer(); ?>

@@ -67,6 +67,7 @@ var buildTranscript = function( wrapper, id, cb ){
     transcript.append( html );
     outer.append( transcript );
     outer.append( '<div class="able-window-toolbar" />' );
+    wrapper.append( '<div class="transcript-instructions">'+window.INSTRUCTIONS+'</div>' );
     wrapper.append( outer );
     if( callback ) callback( data );
   } );
