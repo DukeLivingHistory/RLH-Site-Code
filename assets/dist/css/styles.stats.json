@@ -1,22 +1,22 @@
 {
-  "published": "2017-06-26T14:51:07.272Z",
+  "published": "2017-07-03T23:29:23.945Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 59421,
+  "size": 59496,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12020,
-  "rules": 753,
-  "selectors": 976,
-  "declarations": 1982,
-  "simplicity": 0.7715163934426229,
-  "averageOfIdentifier": 1.853483606557377,
+  "gzippedSize": 12040,
+  "rules": 754,
+  "selectors": 977,
+  "declarations": 1985,
+  "simplicity": 0.7717502558853634,
+  "averageOfIdentifier": 1.8526100307062436,
   "mostIdentifier": 5,
   "mostIdentifierSelector": "[data-endpoint=interviews] .menu-item [href*=interviews]",
-  "averageOfCohesion": 2.6321381142098272,
+  "averageOfCohesion": 2.63262599469496,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".transcript-jumpToActive"
@@ -100,7 +100,7 @@
     },
     {
       "property": "padding",
-      "count": 124
+      "count": 125
     },
     {
       "property": "margin",
