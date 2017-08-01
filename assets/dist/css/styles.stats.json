@@ -1,22 +1,22 @@
 {
-  "published": "2017-07-05T15:40:33.481Z",
+  "published": "2017-08-01T14:30:58.003Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 59508,
+  "size": 59601,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12042,
-  "rules": 755,
-  "selectors": 978,
-  "declarations": 1985,
-  "simplicity": 0.7719836400817995,
-  "averageOfIdentifier": 1.8517382413087935,
+  "gzippedSize": 12072,
+  "rules": 756,
+  "selectors": 983,
+  "declarations": 1987,
+  "simplicity": 0.7690742624618515,
+  "averageOfIdentifier": 1.8514750762970498,
   "mostIdentifier": 5,
   "mostIdentifierSelector": "[data-endpoint=interviews] .menu-item [href*=interviews]",
-  "averageOfCohesion": 2.629139072847682,
+  "averageOfCohesion": 2.628306878306878,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -109,11 +109,11 @@
     },
     {
       "property": "display",
-      "count": 110
+      "count": 111
     },
     {
       "property": "color",
-      "count": 103
+      "count": 104
     },
     {
       "property": "width",
@@ -125,7 +125,7 @@
     },
     {
       "property": "background",
-      "count": 80
+      "count": 81
     },
     {
       "property": "top",

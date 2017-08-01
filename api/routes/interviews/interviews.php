@@ -17,10 +17,29 @@ $route = new Route( '/interviews/', 'GET', function( $data ){
     'fields' => 'ids'
   ];
 
-  if( isset( $args['order'] ) && $args['order'] === 'abc' ){
-    $query_args['orderby'] = 'meta_value';
-    $query_args['meta_key'] = 'abc_term';
-    $query_args['order'] = 'ASC';
+  if( isset( $args['order'] ) ){
+    $key = explode('_', $args['order'])[0];
+    $order = explode('_', $args['order'])[1];
+
+
+    switch($key){
+      case 'abc':
+        $query_args['meta_key'] = 'abc_term';
+        $query_args['orderby'] = 'meta_value';
+        break;
+      case 'publish':
+        $query_args['orderby'] = 'date';
+        break;
+      case 'date':
+        $query_args['meta_key'] = 'interview_date';
+        $query_args['meta_type'] = 'DATETYPE';
+        $query_args['orderby'] = 'meta_value';
+        break;
+      default:
+        break;
+    }
+
+    $query_args['order'] = isset($order) ? $order : 'ASC';
   }
 
   $interviews = get_posts( $query_args );
