@@ -49,14 +49,13 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
     })
 
     var viewSelect = $('<select name="list-order"/>');
-    var contentName = (endpoint === 'interviews') ? 'Interview' : 'Timeline';
 
-    viewSelect.append('<option value="publish_desc">Upload Date, descending</option>');
-    viewSelect.append('<option value="publish_asc">Upload Date, ascending</option>');
-    viewSelect.append('<option value="date_desc">' + contentName + ' Date, descending</option>');
-    viewSelect.append('<option value="date_asc">' + contentName + ' Date, ascending</option>');
-    viewSelect.append('<option value="abc_desc">Alphabetical, descending</option>');
-    viewSelect.append('<option value="abc_asc">Alphabetical, ascending</option>');
+    viewSelect.append('<option value="abc_asc">A-Z</option>');
+    viewSelect.append('<option value="abc_desc">Z-A</option>');
+    viewSelect.append('<option value="date_desc">Date Interviewed</option>');
+    viewSelect.append('<option value="publish_desc">Date Published</option>');
+    viewSelect.append('<option value="date_asc">Date Interviewed (reverse)</option>');
+    viewSelect.append('<option value="publish_asc">Date Published (reverse)</option>');
 
     var archiveOrder = Cookies.get( 'ARCHIVEORDER' );
 
@@ -86,9 +85,11 @@ var buildArchive = function( page, data, endpoint, canBeCondensed ){
     var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search') : endpoint;
     var params = '';
 
-    order = $('[name="list-order"]').val()
+    var order = $('[name="list-order"]').val()
 
     params = '&order=' + order;
+
+    console.log(order)
 
     var url  = '/wp-json/v1/'+dest+'?count='+COUNT+'&offset=' + ( load.data( 'offset' ) * COUNT )+cachebust(true) + params;
 
