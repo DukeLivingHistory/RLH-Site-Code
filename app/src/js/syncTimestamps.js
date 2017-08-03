@@ -42,7 +42,8 @@ var syncTimestamps = function( supp, node, transcript ){
   expandMultiple($('[data-opendefault="true"]'));
 
   var position = function(){
-    $(supp).each( function(){
+    var lastBottom = 0;
+    $(supp).each( function(i){
 
       // assign match data attribute if not already set
       $(this).data( 'match', $(this).data('match') || (function(){
@@ -52,32 +53,24 @@ var syncTimestamps = function( supp, node, transcript ){
       var match = $(this).data( 'match' );
       if( !match.length ) return;
       var matchPos = $(match).offset().top;
-      var transcriptPos = $(transcript).offset().top
-      var _this = this;
 
-      // compare top of match to bottom of any previous suppcont
-      // this refers to element being looped over
-      // _this refers to element being positioned
-      $(supp).each( function(i){
-        var bottom = Math.floor( $(this).offset().top - transcriptPos );
-        var _top = Math.floor( matchPos - transcriptPos );
-        if( i === 0 ){
-          $(_this).css( {
-            position: 'absolute',
-            top: _top,
-            left: 0,
-            right: 0
-          } );
-          return false;
-        }
-        $(_this).css( {
-          position: 'absolute',
-          top: _top > bottom + $(this).height() ? _top : bottom,
-          left: 0,
-          right: 0
-        } );
-        return _top > bottom; // if false, stop iterating bc we've found a match
+
+      if(i > 0){
+        var newTop = matchPos - lastBottom;
+        newTop = newTop > 0 ? newTop : 0;
+      } else {
+        var transcriptTop = $(transcript).offset().top;
+        var newTop = matchPos - transcriptTop;
+      }
+
+      $(this).css( {
+        marginTop: newTop,
+        transform: 'translateY(-15px)',
+        left: 0,
+        right: 0
       } );
+
+      lastBottom = $(this).offset().top + $(this).height();
 
       $(this).on( 'mouseenter', function(){
         $(match).addClass( node.slice(1)+'--suppHover' );
@@ -105,7 +98,6 @@ var syncTimestamps = function( supp, node, transcript ){
           shouldAdvance = false;
         } );
       }.bind(this) )
-
     } );
   };
 
