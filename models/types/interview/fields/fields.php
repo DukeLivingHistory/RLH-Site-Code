@@ -86,7 +86,7 @@ add_action( 'acf/init', function(){
         'label' => 'Interview Date',
         'name' => 'interview_date',
         'type' => 'date_picker',
-        'display_format' => 'm/d/Y',
+        'display_format' => 'F d, Y',
         'required' => 1,
         'instructions' => 'Enter the date of the interview.'
       ],
