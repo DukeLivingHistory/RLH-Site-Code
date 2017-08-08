@@ -1,22 +1,22 @@
 {
-  "published": "2017-08-03T16:21:03.334Z",
+  "published": "2017-08-08T16:29:24.445Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 59601,
+  "size": 59647,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12072,
+  "gzippedSize": 12080,
   "rules": 756,
   "selectors": 983,
-  "declarations": 1987,
+  "declarations": 1988,
   "simplicity": 0.7690742624618515,
   "averageOfIdentifier": 1.8514750762970498,
   "mostIdentifier": 5,
   "mostIdentifierSelector": "[data-endpoint=interviews] .menu-item [href*=interviews]",
-  "averageOfCohesion": 2.628306878306878,
+  "averageOfCohesion": 2.6296296296296298,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -136,5 +136,5 @@
       "count": 64
     }
   ],
-  "mediaQueries": 76
+  "mediaQueries": 77
 }
