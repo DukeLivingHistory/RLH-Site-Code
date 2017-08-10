@@ -73,6 +73,7 @@
   font-size: 20px;
   margin: .7em 0 .25em;
   color: #000;
+  padding-right: .75em;
   @include media-breakpoint-up(md){
     font-size: 22px;
     margin: 1.2em 0 .25em;
@@ -132,16 +133,24 @@ $listViewIconSize: 32px;
   height: $listViewIconSize;
 }
 
+.listView select {
+  border: none;
+  background: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+}
+
 .listView-label,
 .listView input,
-.listView svg {
+.listView svg,
+.listView select {
   display: inline-block;
   vertical-align: middle;
 }
 
 .listView-label {
   color: $interviews;
-  margin: 0 5px 0 0;
+  margin: 0 5px 0 1em;
 }
 
 .icon--listView {
@@ -153,7 +162,6 @@ $listViewIconSize: 32px;
   margin-right: -1*$listViewIconSize;
   pointer-events: none;
 }
-
 
 .listView input:focus + svg {
   background: mix( $grey, $white );

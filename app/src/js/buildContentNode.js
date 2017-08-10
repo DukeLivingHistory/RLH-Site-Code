@@ -12,7 +12,7 @@ var buildContentNode = function( data ){
   }
   inner.append(  '<div class="content-link">View The '+data.type+' '+icon( 'right', 'link' )+'</div>' );
   content.append( inner );
-  console.log(data);
+  
   if(data.img_set){
     var img = '';
     img += '<img src="'+data.img_set.sizes.md+'" class="respImg-none" ';

@@ -46,11 +46,14 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
       document.title = endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
 
-      if( Cookies.get('ARCHIVEVIEW') === 'condense' && endpoint === 'interviews' ){
+      if(endpoint === 'interviews' ){
 
-        console.log('/wp-json/v1/'+endpoint+'?order=abc&count='+COUNT+cachebust(true));
+        var order = Cookies.get('ARCHIVEORDER');
+        var url = '/wp-json/v1/'+endpoint+'?order=' + order + '&count='+COUNT+cachebust(true);
 
-        $.get( '/wp-json/v1/'+endpoint+'?order=abc&count='+COUNT+cachebust(true), function(data){
+        console.log(url);
+
+        $.get(url, function(data){
           buildArchive( page, data, endpoint, ( endpoint === 'interviews' ) );
           animatePage( wrapper, page, dir, function(){
             respImg.load( '.respImg' );

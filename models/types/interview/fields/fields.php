@@ -82,6 +82,15 @@ add_action( 'acf/init', function(){
         'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.'
       ],
       [
+        'key' => 'interview_date',
+        'label' => 'Interview Date',
+        'name' => 'interview_date',
+        'type' => 'date_picker',
+        'display_format' => 'F d, Y',
+        'required' => 1,
+        'instructions' => 'Enter the date of the interview.'
+      ],
+      [
         'key' => 'tab_transcript_raw',
         'label' => 'Transcript (.vtt)',
         'name' => '',
