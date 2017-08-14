@@ -2,15 +2,39 @@ window.Cookies = require( 'js-cookie' );
 
 var icon = require( './icon' );
 
-var syncAblePlayer = function(){
+var syncAblePlayer = function(transcript){
   $( 'body' ).removeClass( 'hasAblePlayer' );
   $( 'video' ).each(function (index, element) {
     $( 'body' ).addClass( 'hasAblePlayer' );
     if ($(element).data('able-player') !== undefined) {
       window.AP = new AblePlayer( $(this), $(element) );
 
-      // disable closed captioning
+      // transform transcript into useable format
+      const formatted = transcript.filter(node => node.type === 'section_break').map(node => {
+        return {
+          text: node.contents,
+          start: node.start
+        }
+      })
 
+      // hacky way to wait until youtube iframe is initialized before running add dot code
+      const tryYouTube = setInterval(() => {
+        const youTubePlayer = AP.youTubePlayer
+        if(youTubePlayer && youTubePlayer.getDuration && !!youTubePlayer.getDuration()){
+          const duration = youTubePlayer.getDuration()
+          ableplayerAddDots(AP, formatted, {
+            duration,
+            format: 'array',
+            color: window.CHAPTEROPTS.COLOR || '#fff',
+            width: window.CHAPTEROPTS.WIDTH || 1,
+            display: window.CHAPTEROPTS.DISPLAY || 'line',
+          }).then((player) => {
+            clearInterval(tryYouTube)
+          }).catch(err => console.log(err))
+        }
+      }, 200)
+
+      // disable closed captioning
       var tryClick = setInterval( function(){
         if( typeof AP.initializing === 'undefined' ) return;
         var captions = $( '.able-wrapper .icon-captions' );
@@ -81,7 +105,7 @@ var syncAblePlayer = function(){
       var match_id = hash.match(/\#(\d*)/);
       if( match_id && match_id[1].length ){
         if( $( '[data-start="'+match_id[1]+'"]' ).length ){
-          return $( '[data-start="'+match_id[1]+'"]' );  
+          return $( '[data-start="'+match_id[1]+'"]' );
         }
       }
     }

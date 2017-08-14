@@ -57,6 +57,29 @@ if( function_exists('acf_add_local_field_group') ){
         'label' => 'Interview Instructions',
         'name' => 'interview_instructions',
         'type' => 'textarea'
+      ],
+      [
+        'key' => 'chapter_color',
+        'label' => 'Chapter Marker Color',
+        'name' => 'chapter_color',
+        'type' => 'color_picker'
+      ],
+      [
+        'key' => 'chapter_width',
+        'label' => 'Chapter Marker Width',
+        'name' => 'chapter_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'chapter_display',
+        'label' => 'Chapter Marker Display',
+        'name' => 'chapter_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ]
       ]
     ],
   	'location' => [

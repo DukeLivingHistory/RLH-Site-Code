@@ -15,10 +15,20 @@
 </footer>
 <?php if( get_field( 'fb_client_id', 'options' ) ){ ?>
 <script>
-  window.FB_APP_ID = '<?= get_field( 'fb_client_id', 'options' ); ?>';
-  window.MAPS_APP_ID = '<?= get_field( 'maps_client_id', 'options' ); ?>';
-  window.COUNT = <?= get_option( 'posts_per_page' ); ?>;
+  window.FB_APP_ID    = '<?= get_field( 'fb_client_id', 'options' ); ?>';
+  window.MAPS_APP_ID  = '<?= get_field( 'maps_client_id', 'options' ); ?>';
+  window.COUNT        =  <?= get_option( 'posts_per_page' ); ?>;
   window.INSTRUCTIONS = '<?= str_replace("\n", "", get_field( 'interview_instructions', 'options' )); ?>';
+  window.CHAPTEROPTS  = {
+    <?php
+      $color   = get_field('chapter_color',   'options');
+      $width   = get_field('chapter_width',   'options');
+      $display = get_field('chapter_display',   'options');
+    ?>
+    COLOR:    <?= $color   ? "'$color'"   : 'false'; ?>,
+    WIDTH:    <?= $width   ? "'$width'"   : 'false'; ?>,
+    DISPLAY:  <?= $display ? "'$display'" : 'false'; ?>
+  };
 </script>
 <?php } ?>
 <?php wp_footer(); ?>
