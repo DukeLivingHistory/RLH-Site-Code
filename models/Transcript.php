@@ -58,7 +58,7 @@ class Transcript {
     // fifth capture:    optional speaker name          (.*) in (?:<v[ ]*(.*)>[ ]*)
     // sixth capture:    required text contents         ((?:(?!\s).*\s{0,1})*)
     // seventh capture:  optional paragraph break       (\s*NOTE\sparagraph\s*)
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/';
+    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/i';
 
     // TODO: update indeces with new capture index
 
@@ -78,7 +78,8 @@ class Transcript {
           'type' => 'section_break',
           'contents' => trim( $nodes[1][$i] ),
           'start' => trim( $nodes[3][$i] ),
-          'end' => trim( $nodes[4][$i] )
+          'end' => trim( $nodes[4][$i] ),
+          'note_chapter' => true
         ];
       }
       if( isset( $nodes[2][$i] ) && strlen( trim( $nodes[2][$i] ) ) > 0 ){
@@ -86,7 +87,8 @@ class Transcript {
           'type' => 'section_break',
           'contents' => trim( $nodes[2][$i] ),
           'start' => trim( $nodes[3][$i] ),
-          'end' => trim( $nodes[4][$i] )
+          'end' => trim( $nodes[4][$i] ),
+          'note_chapter' => false
         ];
       }
       if( isset( $nodes[5][$i] ) && strlen( $nodes[5][$i] ) > 0  ){

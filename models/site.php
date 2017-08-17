@@ -59,6 +59,13 @@ if( function_exists('acf_add_local_field_group') ){
         'type' => 'textarea'
       ],
       [
+        'key'   => 'chapter_message',
+        'label' => 'Chapter Indicator Options',
+        'name'  => 'chapter_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect indicator dots added to video seekbars for section breaks added using the "NOTE Chapter" syntax.'
+      ],
+      [
         'key' => 'chapter_color',
         'label' => 'Chapter Marker Color',
         'name' => 'chapter_color',
@@ -75,6 +82,36 @@ if( function_exists('acf_add_local_field_group') ){
         'key' => 'chapter_display',
         'label' => 'Chapter Marker Display',
         'name' => 'chapter_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ]
+      ],
+      [
+        'key'   => 'heading_message',
+        'label' => 'Header Indicator Options',
+        'name'  => 'heading_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect indicator dots added to video seekbars for section breaks added using the header syntax.'
+      ],
+      [
+        'key' => 'heading_color',
+        'label' => 'Heading Marker Color',
+        'name' => 'heading_color',
+        'type' => 'color_picker'
+      ],
+      [
+        'key' => 'heading_width',
+        'label' => 'Heading Marker Width',
+        'name' => 'heading_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'heading_display',
+        'label' => 'Heading Marker Display',
+        'name' => 'heading_display',
         'type' => 'select',
         'choices' => [
           'line' => 'Line',

@@ -19,15 +19,25 @@
   window.MAPS_APP_ID  = '<?= get_field( 'maps_client_id', 'options' ); ?>';
   window.COUNT        =  <?= get_option( 'posts_per_page' ); ?>;
   window.INSTRUCTIONS = '<?= str_replace("\n", "", get_field( 'interview_instructions', 'options' )); ?>';
+  window.HEADINGOPTS  = {
+    <?php
+      $h_color   = get_field('heading_color',   'options');
+      $h_width   = get_field('heading_width',   'options');
+      $h_display = get_field('heading_display',   'options');
+    ?>
+    COLOR:    <?= $h_color   ? "'$h_color'"   : 'false'; ?>,
+    WIDTH:    <?= $h_width   ? "'$h_width'"   : 'false'; ?>,
+    DISPLAY:  <?= $h_display ? "'$h_display'" : 'false'; ?>
+  };
   window.CHAPTEROPTS  = {
     <?php
-      $color   = get_field('chapter_color',   'options');
-      $width   = get_field('chapter_width',   'options');
-      $display = get_field('chapter_display',   'options');
+      $c_color   = get_field('chapter_color',   'options');
+      $c_width   = get_field('chapter_width',   'options');
+      $c_display = get_field('chapter_display',   'options');
     ?>
-    COLOR:    <?= $color   ? "'$color'"   : 'false'; ?>,
-    WIDTH:    <?= $width   ? "'$width'"   : 'false'; ?>,
-    DISPLAY:  <?= $display ? "'$display'" : 'false'; ?>
+    COLOR:    <?= $c_color   ? "'$c_color'"   : 'false'; ?>,
+    WIDTH:    <?= $c_width   ? "'$c_width'"   : 'false'; ?>,
+    DISPLAY:  <?= $c_display ? "'$c_display'" : 'false'; ?>
   };
 </script>
 <?php } ?>

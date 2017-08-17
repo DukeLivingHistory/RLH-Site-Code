@@ -10,7 +10,16 @@ var syncAblePlayer = function(transcript){
       window.AP = new AblePlayer( $(this), $(element) );
 
       // transform transcript into useable format
-      const formatted = transcript.filter(node => node.type === 'section_break').map(node => {
+      const sections = transcript.filter(node => node.type === 'section_break')
+
+      const headings = sections.filter(node => !node.note_chapter).map(node => {
+        return {
+          text: node.contents,
+          start: node.start
+        }
+      })
+
+      const chapters = sections.filter(node => node.note_chapter).map(node => {
         return {
           text: node.contents,
           start: node.start
@@ -22,15 +31,24 @@ var syncAblePlayer = function(transcript){
         const youTubePlayer = AP.youTubePlayer
         if(youTubePlayer && youTubePlayer.getDuration && !!youTubePlayer.getDuration()){
           const duration = youTubePlayer.getDuration()
-          ableplayerAddDots(AP, formatted, {
+
+          ableplayerAddDots(AP, headings, {
             duration,
-            format: 'array',
-            color: window.CHAPTEROPTS.COLOR || '#fff',
-            width: window.CHAPTEROPTS.WIDTH || 1,
-            display: window.CHAPTEROPTS.DISPLAY || 'line',
+            format:  'array',
+            color:   window.HEADINGOPTS.COLOR || '#fff',
+            width:   window.HEADINGOPTS.WIDTH || 1,
+            display: window.HEADINGOPTS.DISPLAY || 'line',
           }).then((player) => {
             clearInterval(tryYouTube)
+            ableplayerAddDots(player, chapters, {
+              duration,
+              format: 'array',
+              color:   window.CHAPTEROPTS.COLOR || '#fff',
+              width:   window.CHAPTEROPTS.WIDTH || 1,
+              display: window.CHAPTEROPTS.DISPLAY || 'line',
+            }).catch(err => console.log(err))
           }).catch(err => console.log(err))
+
         }
       }, 200)
 

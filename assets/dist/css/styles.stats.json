@@ -1,14 +1,14 @@
 {
-  "published": "2017-08-14T19:31:24.844Z",
+  "published": "2017-08-16T18:13:38.729Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 59647,
+  "size": 59658,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12080,
+  "gzippedSize": 12083,
   "rules": 756,
   "selectors": 983,
   "declarations": 1988,
@@ -92,7 +92,7 @@
   "universalSelectors": 5,
   "unqualifiedAttributeSelectors": 13,
   "javascriptSpecificSelectors": 0,
-  "importantKeywords": 31,
+  "importantKeywords": 32,
   "floatProperties": 32,
   "propertiesCount": [
     {
