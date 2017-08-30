@@ -36,6 +36,15 @@ add_action( 'acf/init', function(){
         'mime_types' => ''
       ],
       [
+        'key'    => 'description_file',
+        'label'  => 'Description File',
+        'name'   => 'description',
+        'type'   => 'file',
+        'instructions' => 'Descriptions should be uploaded in WebVTT format.',
+        'return_format' => 'array',
+        'mime_types' => ''
+      ],
+      [
         'key' => 'supp_cont_file',
         'label' => 'Supporting Content (.vtt file)',
         'name' => 'supp_cont_file',
@@ -97,12 +106,25 @@ add_action( 'acf/init', function(){
         'type' => 'tab'
       ],
       [
-        'key' => 'transcript_raw',
+        'key'   => 'transcript_raw',
         'label' => 'Transcript (.vtt)',
-        'name' => 'transcript_raw',
-        'type' => 'textarea',
+        'name'  => 'transcript_raw',
+        'type'  => 'textarea',
         'instructions' => 'Changes here will be reflected in the transcript file.',
-        'rows' => 100
+        'rows'  => 100
+      ],
+      [
+        'key'   => 'tab_description_raw',
+        'label' => 'Description (.vtt)',
+        'name'  => '',
+        'type'  => 'tab'
+      ],
+      [
+        'key'   => 'description_raw',
+        'label' => 'Description (.vtt)',
+        'name'  => 'description_raw',
+        'type'  => 'textarea',
+        'rows'  => 100
       ],
   		[
   			'key' => 'tab_supporting_content',

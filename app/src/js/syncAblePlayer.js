@@ -9,6 +9,8 @@ var syncAblePlayer = function(transcript){
     if ($(element).data('able-player') !== undefined) {
       window.AP = new AblePlayer( $(this), $(element) );
 
+      console.log(AP);
+
       // transform transcript into useable format
       const sections = transcript.filter(node => node.type === 'section_break')
 
