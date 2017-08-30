@@ -23,10 +23,12 @@
     <?php
       $h_color   = get_field('heading_color',   'options');
       $h_width   = get_field('heading_width',   'options');
-      $h_display = get_field('heading_display',   'options');
+      $h_height  = get_field('heading_height',  'options');
+      $h_display = get_field('heading_display', 'options');
     ?>
     COLOR:    <?= $h_color   ? "'$h_color'"   : 'false'; ?>,
     WIDTH:    <?= $h_width   ? "'$h_width'"   : 'false'; ?>,
+    HEIGHT:   <?= $h_height  ? "'$h_height'"  : 'false'; ?>,
     DISPLAY:  <?= $h_display ? "'$h_display'" : 'false'; ?>
   };
   window.CHAPTEROPTS  = {
@@ -37,6 +39,7 @@
     ?>
     COLOR:    <?= $c_color   ? "'$c_color'"   : 'false'; ?>,
     WIDTH:    <?= $c_width   ? "'$c_width'"   : 'false'; ?>,
+    HEIGHT:   <?= $c_height  ? "'$c_height'"  : 'false'; ?>,
     DISPLAY:  <?= $c_display ? "'$c_display'" : 'false'; ?>
   };
 </script>

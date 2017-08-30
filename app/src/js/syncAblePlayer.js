@@ -35,16 +35,18 @@ var syncAblePlayer = function(transcript){
           ableplayerAddDots(AP, headings, {
             duration,
             format:  'array',
-            color:   window.HEADINGOPTS.COLOR || '#fff',
-            width:   window.HEADINGOPTS.WIDTH || 1,
+            color:   window.HEADINGOPTS.COLOR   || '#fff',
+            width:   window.HEADINGOPTS.WIDTH   || 1,
+            height:  window.HEADINGOPTS.HEIGHT  || false,
             display: window.HEADINGOPTS.DISPLAY || 'line',
           }).then((player) => {
             clearInterval(tryYouTube)
             ableplayerAddDots(player, chapters, {
               duration,
               format: 'array',
-              color:   window.CHAPTEROPTS.COLOR || '#fff',
-              width:   window.CHAPTEROPTS.WIDTH || 1,
+              color:   window.CHAPTEROPTS.COLOR   || '#fff',
+              width:   window.CHAPTEROPTS.WIDTH   || 1,
+              height:  window.HEADINGOPTS.HEIGHT  || false,
               display: window.CHAPTEROPTS.DISPLAY || 'line',
             }).catch(err => console.log(err))
           }).catch(err => console.log(err))

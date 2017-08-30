@@ -1248,7 +1248,8 @@ button svg {
 }
 
 .able-seekbar-head {
-  top: -8px;
+  top: -10px;
+  z-index: 100000;
 }
 
 .able-transcript-block {

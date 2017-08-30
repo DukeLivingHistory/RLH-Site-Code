@@ -79,6 +79,13 @@ if( function_exists('acf_add_local_field_group') ){
         'instructions' => 'Width should be specified as a number of pixels.'
       ],
       [
+        'key' => 'chapter_height',
+        'label' => 'Chapter Marker Height',
+        'name' => 'chapter_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+      ],
+      [
         'key' => 'chapter_display',
         'label' => 'Chapter Marker Display',
         'name' => 'chapter_display',
@@ -107,6 +114,13 @@ if( function_exists('acf_add_local_field_group') ){
         'name' => 'heading_width',
         'type' => 'text',
         'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'heading_height',
+        'label' => 'Heading Marker Height',
+        'name' => 'heading_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
       ],
       [
         'key' => 'heading_display',
