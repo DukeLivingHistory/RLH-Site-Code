@@ -34,7 +34,8 @@ function save_txt_from_vtt($transcript, $title, $alias){
   }
 
   // add temp file to uploads directory
-  $filename = str_replace(' ', '_', strtolower( $_POST['post_title']));
+  $filename = preg_replace('/[^a-zA-Z0-9\s]/', '', $_POST['post_title']);
+  $filename = str_replace(' ', '_', strtolower($filename));
   $file_temp = wp_upload_dir()['path'].'/'.$filename.'_'.$alias.'.txt';
   $file_put_contents = file_put_contents($file_temp, stripslashes($body));
 

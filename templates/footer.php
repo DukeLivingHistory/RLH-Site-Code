@@ -35,12 +35,25 @@
     <?php
       $c_color   = get_field('chapter_color',   'options');
       $c_width   = get_field('chapter_width',   'options');
-      $c_display = get_field('chapter_display',   'options');
+      $c_height  = get_field('chapter_height',  'options');
+      $c_display = get_field('chapter_display', 'options');
     ?>
     COLOR:    <?= $c_color   ? "'$c_color'"   : 'false'; ?>,
     WIDTH:    <?= $c_width   ? "'$c_width'"   : 'false'; ?>,
     HEIGHT:   <?= $c_height  ? "'$c_height'"  : 'false'; ?>,
     DISPLAY:  <?= $c_display ? "'$c_display'" : 'false'; ?>
+  };
+  window.SEARCHOPTS  = {
+    <?php
+      $s_color   = get_field('search_color',   'options');
+      $s_width   = get_field('search_width',   'options');
+      $s_height  = get_field('search_height',  'options');
+      $s_display = get_field('search_display', 'options');
+    ?>
+    COLOR:    <?= $s_color   ? "'$s_color'"   : 'false'; ?>,
+    WIDTH:    <?= $s_width   ? "'$s_width'"   : 'false'; ?>,
+    HEIGHT:   <?= $s_height  ? "'$s_height'"  : 'false'; ?>,
+    DISPLAY:  <?= $s_display ? "'$s_display'" : 'false'; ?>
   };
 </script>
 <?php } ?>

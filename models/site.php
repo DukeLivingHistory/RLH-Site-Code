@@ -131,6 +131,43 @@ if( function_exists('acf_add_local_field_group') ){
           'line' => 'Line',
           'dot' => 'Dot'
         ]
+      ],
+      [
+        'key'   => 'search_message',
+        'label' => 'Search Indicator Options',
+        'name'  => 'search_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect search result markers for Able Player.'
+      ],
+      [
+        'key' => 'search_color',
+        'label' => 'Search Marker Color',
+        'name' => 'search_color',
+        'type' => 'color_picker'
+      ],
+      [
+        'key' => 'search_width',
+        'label' => 'Search Marker Width',
+        'name' => 'search_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'search_height',
+        'label' => 'Search Marker Height',
+        'name' => 'search_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+      ],
+      [
+        'key' => 'search_display',
+        'label' => 'Search Marker Display',
+        'name' => 'search_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ]
       ]
     ],
   	'location' => [

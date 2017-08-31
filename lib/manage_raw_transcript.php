@@ -8,6 +8,7 @@
 add_action('save_post', function( $id ){
 
   function handle_save($alias){
+
     $old = get_field("{$alias}_file", $id );
     if( $old ){
       $old = $old['ID'];
@@ -15,10 +16,11 @@ add_action('save_post', function( $id ){
     }
 
     $contents = $_POST['acf']["{$alias}_raw"];
+;
 
     if(strlen( $contents ) > 0){
       $title             = preg_replace('/[^a-zA-Z0-9\s]/', '', $_POST['post_title']);
-      $title             = str_replace(' ', '_', strtolower($title ));
+      $title             = stripslashes(str_replace(' ', '_', strtolower($title )));
       $file_temp         = wp_upload_dir()['path'].'/'.$title.'_'.$alias.'.vtt';
       $file_put_contents = file_put_contents($file_temp, stripslashes($contents));
 
@@ -30,6 +32,7 @@ add_action('save_post', function( $id ){
       ];
 
       $attach = wp_insert_attachment( $attachment, $file_temp );
+
       update_field( $alias.'_file', $attach, $id );
       save_txt_from_vtt($contents, $_POST['post_title'], $alias);
 

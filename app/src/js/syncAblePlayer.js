@@ -1,15 +1,13 @@
 window.Cookies = require( 'js-cookie' );
+var cachebust  = require('./cachebust');
+var icon       = require( './icon' );
 
-var icon = require( './icon' );
-
-var syncAblePlayer = function(transcript){
+var syncAblePlayer = function(transcript, id){
   $( 'body' ).removeClass( 'hasAblePlayer' );
   $( 'video' ).each(function (index, element) {
     $( 'body' ).addClass( 'hasAblePlayer' );
     if ($(element).data('able-player') !== undefined) {
       window.AP = new AblePlayer( $(this), $(element) );
-
-      console.log(AP);
 
       // transform transcript into useable format
       const sections = transcript.filter(node => node.type === 'section_break')
@@ -28,6 +26,16 @@ var syncAblePlayer = function(transcript){
         }
       })
 
+      const body = transcript.filter(node => node.type === 'transcript_node').map(node => {
+        return {
+          text: node.contents,
+          start: node.start
+        }
+      })
+
+      body.push(...headings)
+      body.push(...chapters)
+
       // hacky way to wait until youtube iframe is initialized before running add dot code
       const tryYouTube = setInterval(() => {
         const youTubePlayer = AP.youTubePlayer
@@ -41,15 +49,40 @@ var syncAblePlayer = function(transcript){
             width:   window.HEADINGOPTS.WIDTH   || 1,
             height:  window.HEADINGOPTS.HEIGHT  || false,
             display: window.HEADINGOPTS.DISPLAY || 'line',
-          }).then((player) => {
+          }).then(player => {
             clearInterval(tryYouTube)
             ableplayerAddDots(player, chapters, {
               duration,
               format: 'array',
               color:   window.CHAPTEROPTS.COLOR   || '#fff',
               width:   window.CHAPTEROPTS.WIDTH   || 1,
-              height:  window.HEADINGOPTS.HEIGHT  || false,
+              height:  window.CHAPTEROPTS.HEIGHT  || false,
               display: window.CHAPTEROPTS.DISPLAY || 'line',
+            }).then(player => {
+              ableplayerSearch(player, '#video-search', body, {
+                duration,
+                color:   window.SEARCHOPTS.COLOR   || '#fff',
+                width:   window.SEARCHOPTS.WIDTH   || 1,
+                height:  window.SEARCHOPTS.HEIGHT  || false,
+                display: window.SEARCHOPTS.DISPLAY || 'line',
+              }).then(player => {
+                $.ajax({
+                  url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
+                  success: data => {
+                    const { description } = data
+                    console.log(description)
+                    ableplayerSearch(player, '#video-search', description, {
+                      duration,
+                      color:   window.SEARCHOPTS.COLOR   || '#fff',
+                      width:   window.SEARCHOPTS.WIDTH   || 1,
+                      height:  window.SEARCHOPTS.HEIGHT  || false,
+                      display: window.SEARCHOPTS.DISPLAY || 'line',
+                    }).then(player => {
+                      console.log('Plugins instantiated successfully.')
+                    }).catch(err => console.log(err))
+                  }
+                })
+              }).catch(err => console.log(err))
             }).catch(err => console.log(err))
           }).catch(err => console.log(err))
 
