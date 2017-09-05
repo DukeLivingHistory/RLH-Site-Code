@@ -70,7 +70,7 @@ var syncAblePlayer = function(transcript, id){
                   url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
                   success: data => {
                     const { description } = data
-                    console.log(description)
+                    if(!description.length) return;
                     ableplayerSearch(player, '#video-search', description, {
                       duration,
                       color:   window.SEARCHOPTS.COLOR   || '#fff',
