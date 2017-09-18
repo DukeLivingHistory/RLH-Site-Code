@@ -1,6 +1,6 @@
 <?php
 
-function save_txt_from_vtt( $transcript, $title ){
+function save_txt_from_vtt($transcript, $title, $alias){
 
   $body = '';
 
@@ -15,16 +15,16 @@ function save_txt_from_vtt( $transcript, $title ){
     $speaker = str_replace( '>', '', $speaker );
     $caption = $nodes[5][$i];
 
-    if( strlen( $section ) ) $body .= trim($section)."\r\n\r\n";
-    if( strlen( $speaker ) ) $body .= trim($speaker)."\r\n";
-    $body .= trim( $caption )."\n\n";
+    if(strlen($section)) $body .= trim($section)."\r\n\r\n";
+    if(strlen($speaker)) $body .= trim($speaker)."\r\n";
+    $body .= trim($caption)."\n\n";
   }
 
   // locate previous txt transcript
   $old = new WP_Query([
     'post_per_page' => 1,
     'post_type'     => 'attachment',
-    'name'          => $title.' Transcript (.txt)',
+    'name'          => $title.' '.$alias.' (.txt)',
   ]);
 
   // remove old txt transcript if it exists
@@ -34,17 +34,18 @@ function save_txt_from_vtt( $transcript, $title ){
   }
 
   // add temp file to uploads directory
-  $filename = str_replace(' ', '_', strtolower( $_POST['post_title']));
-  $file_temp = wp_upload_dir()['path'].'/'.$filename.'_transcript.txt';
-  $file_put_contents = file_put_contents( $file_temp, stripslashes( $body ) );
+  $filename = preg_replace('/[^a-zA-Z0-9\s]/', '', $_POST['post_title']);
+  $filename = str_replace(' ', '_', strtolower($filename));
+  $file_temp = wp_upload_dir()['path'].'/'.$filename.'_'.$alias.'.txt';
+  $file_put_contents = file_put_contents($file_temp, stripslashes($body));
 
   //upload file to media library
   $attachment = [
     'post_mime_type' => 'text/txt',
-    'post_title'     => $title.' Transcript (.txt)',
+    'post_title'     => $title.' '.$alias.' (.txt)',
     'post_content'   => '',
     'post_status'    => 'inherit'
   ];
-  $attach = wp_insert_attachment( $attachment, $file_temp );
+  $attach = wp_insert_attachment($attachment, $file_temp);
 
 }

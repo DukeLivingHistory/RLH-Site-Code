@@ -280,3 +280,24 @@
 
 
 }
+
+.contentHeader-searchwrap {
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $white;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: $white;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: $white;
+  }
+}
+
+.contentHeader-search {
+  width: 100%;
+  border: none;
+  background: mix($interviews, $white, 90);
+  color: $white;
+  font-size: 18px;
+  padding: .25em .5em;
+}

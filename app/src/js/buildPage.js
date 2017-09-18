@@ -107,8 +107,7 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
             }
 
           }, transcript );
-
-          syncAblePlayer();
+          syncAblePlayer(transcript, data.id);
           stickyHeader( page, '.contentHeaderOuter', '.contentHeader-inner' );
 
         } );

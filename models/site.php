@@ -57,6 +57,117 @@ if( function_exists('acf_add_local_field_group') ){
         'label' => 'Interview Instructions',
         'name' => 'interview_instructions',
         'type' => 'textarea'
+      ],
+      [
+        'key'   => 'chapter_message',
+        'label' => 'Chapter Indicator Options',
+        'name'  => 'chapter_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect indicator dots added to video seekbars for section breaks added using the "NOTE Chapter" syntax.'
+      ],
+      [
+        'key' => 'chapter_color',
+        'label' => 'Chapter Marker Color',
+        'name' => 'chapter_color',
+        'type' => 'color_picker'
+      ],
+      [
+        'key' => 'chapter_width',
+        'label' => 'Chapter Marker Width',
+        'name' => 'chapter_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'chapter_height',
+        'label' => 'Chapter Marker Height',
+        'name' => 'chapter_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+      ],
+      [
+        'key' => 'chapter_display',
+        'label' => 'Chapter Marker Display',
+        'name' => 'chapter_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ]
+      ],
+      [
+        'key'   => 'heading_message',
+        'label' => 'Header Indicator Options',
+        'name'  => 'heading_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect indicator dots added to video seekbars for section breaks added using the header syntax.'
+      ],
+      [
+        'key' => 'heading_color',
+        'label' => 'Heading Marker Color',
+        'name' => 'heading_color',
+        'type' => 'color_picker'
+      ],
+      [
+        'key' => 'heading_width',
+        'label' => 'Heading Marker Width',
+        'name' => 'heading_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'heading_height',
+        'label' => 'Heading Marker Height',
+        'name' => 'heading_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+      ],
+      [
+        'key' => 'heading_display',
+        'label' => 'Heading Marker Display',
+        'name' => 'heading_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ]
+      ],
+      [
+        'key'   => 'search_message',
+        'label' => 'Search Indicator Options',
+        'name'  => 'search_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect search result markers for Able Player.'
+      ],
+      [
+        'key' => 'search_color',
+        'label' => 'Search Marker Color',
+        'name' => 'search_color',
+        'type' => 'color_picker'
+      ],
+      [
+        'key' => 'search_width',
+        'label' => 'Search Marker Width',
+        'name' => 'search_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.'
+      ],
+      [
+        'key' => 'search_height',
+        'label' => 'Search Marker Height',
+        'name' => 'search_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+      ],
+      [
+        'key' => 'search_display',
+        'label' => 'Search Marker Display',
+        'name' => 'search_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ]
       ]
     ],
   	'location' => [

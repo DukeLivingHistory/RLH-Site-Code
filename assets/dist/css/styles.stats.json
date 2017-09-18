@@ -1,28 +1,28 @@
 {
-  "published": "2017-08-10T15:56:55.650Z",
+  "published": "2017-09-12T20:41:52.349Z",
   "paths": [
     "/Users/Ethan/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 59647,
+  "size": 60015,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12080,
-  "rules": 756,
-  "selectors": 983,
-  "declarations": 1988,
-  "simplicity": 0.7690742624618515,
-  "averageOfIdentifier": 1.8514750762970498,
+  "gzippedSize": 12145,
+  "rules": 761,
+  "selectors": 989,
+  "declarations": 1997,
+  "simplicity": 0.7694641051567239,
+  "averageOfIdentifier": 1.8543983822042467,
   "mostIdentifier": 5,
   "mostIdentifierSelector": "[data-endpoint=interviews] .menu-item [href*=interviews]",
-  "averageOfCohesion": 2.6296296296296298,
+  "averageOfCohesion": 2.624178712220762,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
     ".featherlight-previous"
   ],
-  "totalUniqueFontSizes": 31,
+  "totalUniqueFontSizes": 32,
   "uniqueFontSizes": [
     "0",
     ".9em",
@@ -45,6 +45,7 @@
     "15px",
     "16px",
     "17px",
+    "18px",
     "20px",
     "21px",
     "22px",
@@ -92,7 +93,7 @@
   "universalSelectors": 5,
   "unqualifiedAttributeSelectors": 13,
   "javascriptSpecificSelectors": 0,
-  "importantKeywords": 31,
+  "importantKeywords": 33,
   "floatProperties": 32,
   "propertiesCount": [
     {
@@ -101,7 +102,7 @@
     },
     {
       "property": "padding",
-      "count": 125
+      "count": 126
     },
     {
       "property": "margin",
@@ -113,19 +114,19 @@
     },
     {
       "property": "color",
-      "count": 104
+      "count": 108
     },
     {
       "property": "width",
-      "count": 100
+      "count": 102
     },
     {
       "property": "font-size",
-      "count": 99
+      "count": 100
     },
     {
       "property": "background",
-      "count": 81
+      "count": 82
     },
     {
       "property": "top",
@@ -136,5 +137,5 @@
       "count": 64
     }
   ],
-  "mediaQueries": 77
+  "mediaQueries": 78
 }

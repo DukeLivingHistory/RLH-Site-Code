@@ -1248,7 +1248,8 @@ button svg {
 }
 
 .able-seekbar-head {
-  top: -8px;
+  top: -10px;
+  z-index: 100000;
 }
 
 .able-transcript-block {
@@ -1295,4 +1296,12 @@ div.able-captions-wrapper {
 
 .able-seekbar-wrapper {
   transition: width .1s ease;
+}
+
+.able-seekbar-head {
+  z-index: 1000;
+}
+
+.able-descriptions {
+  width: 100%!important;
 }
