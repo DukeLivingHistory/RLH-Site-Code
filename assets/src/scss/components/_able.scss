@@ -1298,6 +1298,10 @@ div.able-captions-wrapper {
   transition: width .1s ease;
 }
 
+.able-seekbar-head {
+  z-index: 1000;
+}
+
 .able-descriptions {
   width: 100%!important;
 }

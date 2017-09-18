@@ -26,15 +26,12 @@ var syncAblePlayer = function(transcript, id){
         }
       })
 
-      const body = transcript.filter(node => node.type === 'transcript_node').map(node => {
+      const body = transcript.filter(node => node.type !== 'paragraph_break').map(node => {
         return {
           text: node.contents,
           start: node.start
         }
       })
-
-      body.push(...headings)
-      body.push(...chapters)
 
       // hacky way to wait until youtube iframe is initialized before running add dot code
       const tryYouTube = setInterval(() => {
