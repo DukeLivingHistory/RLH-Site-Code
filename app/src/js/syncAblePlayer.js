@@ -70,10 +70,10 @@ var syncAblePlayer = function(transcript, id){
                     if(!description.length) return;
                     ableplayerSearch(player, '#video-search', description, {
                       duration,
-                      color:   window.SEARCHOPTS.COLOR   || '#fff',
-                      width:   window.SEARCHOPTS.WIDTH   || 1,
-                      height:  window.SEARCHOPTS.HEIGHT  || false,
-                      display: window.SEARCHOPTS.DISPLAY || 'line',
+                      color:   window.AUDIOOPTS.COLOR   || '#fff',
+                      width:   window.AUDIOOPTS.WIDTH   || 1,
+                      height:  window.AUDIOOPTS.HEIGHT  || false,
+                      display: window.AUDIOOPTS.DISPLAY || 'line',
                     }).then(player => {
                       console.log('Plugins instantiated successfully.')
                     }).catch(err => console.log(err))

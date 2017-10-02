@@ -69,21 +69,24 @@ if( function_exists('acf_add_local_field_group') ){
         'key' => 'chapter_color',
         'label' => 'Chapter Marker Color',
         'name' => 'chapter_color',
-        'type' => 'color_picker'
+        'type' => 'color_picker',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'chapter_width',
         'label' => 'Chapter Marker Width',
         'name' => 'chapter_width',
         'type' => 'text',
-        'instructions' => 'Width should be specified as a number of pixels.'
+        'instructions' => 'Width should be specified as a number of pixels.',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'chapter_height',
         'label' => 'Chapter Marker Height',
         'name' => 'chapter_height',
         'type' => 'text',
-        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'chapter_display',
@@ -93,7 +96,8 @@ if( function_exists('acf_add_local_field_group') ){
         'choices' => [
           'line' => 'Line',
           'dot' => 'Dot'
-        ]
+        ],
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key'   => 'heading_message',
@@ -106,21 +110,24 @@ if( function_exists('acf_add_local_field_group') ){
         'key' => 'heading_color',
         'label' => 'Heading Marker Color',
         'name' => 'heading_color',
-        'type' => 'color_picker'
+        'type' => 'color_picker',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'heading_width',
         'label' => 'Heading Marker Width',
         'name' => 'heading_width',
         'type' => 'text',
-        'instructions' => 'Width should be specified as a number of pixels.'
+        'instructions' => 'Width should be specified as a number of pixels.',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'heading_height',
         'label' => 'Heading Marker Height',
         'name' => 'heading_height',
         'type' => 'text',
-        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+        'instructions' => 'Height should be specified as a number of pixels."',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'heading_display',
@@ -130,7 +137,8 @@ if( function_exists('acf_add_local_field_group') ){
         'choices' => [
           'line' => 'Line',
           'dot' => 'Dot'
-        ]
+        ],
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key'   => 'search_message',
@@ -143,21 +151,24 @@ if( function_exists('acf_add_local_field_group') ){
         'key' => 'search_color',
         'label' => 'Search Marker Color',
         'name' => 'search_color',
-        'type' => 'color_picker'
+        'type' => 'color_picker',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'search_width',
         'label' => 'Search Marker Width',
         'name' => 'search_width',
         'type' => 'text',
-        'instructions' => 'Width should be specified as a number of pixels.'
+        'instructions' => 'Width should be specified as a number of pixels.',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'search_height',
         'label' => 'Search Marker Height',
         'name' => 'search_height',
         'type' => 'text',
-        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."'
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."',
+        'wrapper' => [ 'width' => '25%' ]
       ],
       [
         'key' => 'search_display',
@@ -167,7 +178,49 @@ if( function_exists('acf_add_local_field_group') ){
         'choices' => [
           'line' => 'Line',
           'dot' => 'Dot'
-        ]
+        ],
+        'wrapper' => [ 'width' => '25%' ]
+      ],
+      [
+        'key'   => 'audio_message',
+        'label' => 'Audio Description Indicator Options',
+        'name'  => 'audio_message',
+        'type'  => 'message',
+        'text'  => 'The following options affect audio description search result markers for Able Player.'
+      ],
+      [
+        'key' => 'audio_color',
+        'label' => 'Audio Description Marker Color',
+        'name' => 'audio_color',
+        'type' => 'color_picker',
+        'wrapper' => [ 'width' => '25%' ]
+      ],
+      [
+        'key' => 'audio_width',
+        'label' => 'Audio Description Marker Width',
+        'name' => 'audio_width',
+        'type' => 'text',
+        'instructions' => 'Width should be specified as a number of pixels.',
+        'wrapper' => [ 'width' => '25%' ]
+      ],
+      [
+        'key' => 'audio_height',
+        'label' => 'Audio Description Marker Height',
+        'name' => 'audio_height',
+        'type' => 'text',
+        'instructions' => 'Height should be specified as a number of pixels. This value will only be used if display is set to "Line."',
+        'wrapper' => [ 'width' => '25%' ]
+      ],
+      [
+        'key' => 'audio_display',
+        'label' => 'Audio Description Marker Display',
+        'name' => 'audio_display',
+        'type' => 'select',
+        'choices' => [
+          'line' => 'Line',
+          'dot' => 'Dot'
+        ],
+        'wrapper' => [ 'width' => '25%' ]
       ]
     ],
   	'location' => [
