@@ -5,6 +5,7 @@ class Transcript {
   function __construct( $interview_id ){
     $this->interview_id = $interview_id;
     $this->transcript = get_field( 'transcript', $interview_id ) ? file_get_contents( get_field( 'transcript', $interview_id )['url'] ) : false;
+    $this->description = get_field( 'description', $interview_id ) ? file_get_contents( get_field( 'description', $interview_id )['url'] ) : false;
   }
 
   public function get_slices( $should_trim = false ){
@@ -50,7 +51,7 @@ class Transcript {
     return $timestamps;
   }
 
-  public function get_slices_and_breaks(){
+  public function get_slices_and_breaks($include_description){
     // first capture:    optional section header        ((?:\s*NOTE chapter )[^\d].+\s*)
     // second capture:   optional section header        ([^\d].+\s)
     // third capture:    required timestamp (beginning) ([\d][\d:\.]+)
@@ -117,6 +118,27 @@ class Transcript {
           'type' => 'paragraph_break'
         ];
       }
+    }
+
+    if($include_description){
+      preg_match_all($pattern, $this->description, $description_nodes);
+      for( $i = 0; $i < count($description_nodes[0]); $i++ ){
+        if( isset( $description_nodes[6][$i] ) && strlen( $description_nodes[6][$i] ) > 0){
+          $results[] = [
+            'type'      => 'description',
+            'contents'  => trim($description_nodes[6][$i]),
+            'start'     => trim($description_nodes[3][$i]),
+            'end'       => trim($description_nodes[4][$i]),
+          ];
+        }
+      }
+
+      function compare($a, $b){
+        if($a['start'] === $b['start']) return 0;
+        return ($a['start'] < $b['start']) ? -1 : 1;
+      }
+
+      usort($results, 'compare');
     }
 
     return count( $results ) ? $results : false;
