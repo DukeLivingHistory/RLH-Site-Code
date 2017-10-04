@@ -1,5 +1,6 @@
 var cachebust             = require('./cachebust');
 var buildTranscriptMarkup = require('./buildTranscriptMarkup');
+var Cookies               = require('js-cookie');
 
 var buildTranscript = function( wrapper, id, cb ){
 
@@ -10,7 +11,14 @@ var buildTranscript = function( wrapper, id, cb ){
   let jumptoInit = false;
   let jumpto = $( '#select-'+id );
 
-  let getUseDescription = () => !$('.able-button-handler-descriptions').hasClass('buttonOff')
+  let getUseDescription = (init) => {
+    if(init){
+      const cookies = JSON.parse(Cookies.get('Able-Player'))
+      return cookies && cookies.preferences.prefDesc
+    } else {
+        return !$('.able-button-handler-descriptions').hasClass('buttonOff')
+    }
+  }
   let getNodes = () => null
   const onEachNode = (node) => {
     if(node.type === 'section_break'){
@@ -54,7 +62,7 @@ var buildTranscript = function( wrapper, id, cb ){
 
     const html = buildTranscriptMarkup(data, {
       onEach: onEachNode,
-      useDescription: false
+      useDescription: getUseDescription(true)
     })
 
     jumpto.append( '<option value="default">Back to top</option>' );

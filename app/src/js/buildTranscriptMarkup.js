@@ -5,7 +5,6 @@ const buildTranscriptMarkup = (data, {
   useDescription
 }) => {
   if(!data) return
-  console.log('useDescription', useDescription)
 
   let paragraphInit = true;
   let paragraphOpen = false;
@@ -40,7 +39,6 @@ const buildTranscriptMarkup = (data, {
         break;
       case 'transcript_node':
         markup = `<span tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="${node.start}" data-end="${node.end}">${replaced || node.contents}</span>&nbsp;`;
-        console.log(markup)
         break;
     }
 
