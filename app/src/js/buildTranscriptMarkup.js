@@ -12,7 +12,7 @@ const buildTranscriptMarkup = (data, {
     let markup = '';
     let replaced = false
 
-    if(highlight){
+    if(highlight && node.contents){
       replaced = node.contents.replace(new RegExp(`(${highlight})`, 'ig'), '<span class="transcript-highlight">$1</span>');
     }
 
