@@ -14,8 +14,11 @@ var buildTranscript = function( wrapper, id, cb ){
 
   let getUseDescription = (init) => {
     if(init){
-      const cookies = JSON.parse(Cookies.get('Able-Player'))
-      return cookies && cookies.preferences.prefDesc
+      const cookies = Cookies.get('Able-Player')
+      if(!cookies) return false
+
+      const json = JSON.parse(cookies)
+      return json.preferences && json.preferences.prefDesc
     } else {
       return !$('.able-button-handler-descriptions').hasClass('buttonOff')
     }
