@@ -26,12 +26,26 @@ var syncAblePlayer = function(transcript, id){
         }
       })
 
-      const body = transcript.filter(node => node.type !== 'paragraph_break').map(node => {
+      const body = transcript.filter(node => {
+        return (
+          node.type !== 'paragraph_break' &&
+          node.type !== 'description'
+        )
+      }).map(node => {
         return {
           text: node.contents,
           start: node.start
         }
       })
+
+      const description = transcript
+        .filter(node => node.type === 'description')
+        .map(node => {
+          return {
+            text: node.contents,
+            start: node.start
+          }
+        })
 
       // hacky way to wait until youtube iframe is initialized before running add dot code
       const tryYouTube = setInterval(() => {
@@ -46,7 +60,8 @@ var syncAblePlayer = function(transcript, id){
             width:   window.HEADINGOPTS.WIDTH   || 1,
             height:  window.HEADINGOPTS.HEIGHT  || false,
             display: window.HEADINGOPTS.DISPLAY || 'line',
-          }).then(player => {
+          })
+          .then(player => {
             clearInterval(tryYouTube)
             ableplayerAddDots(player, chapters, {
               duration,
@@ -55,33 +70,33 @@ var syncAblePlayer = function(transcript, id){
               width:   window.CHAPTEROPTS.WIDTH   || 1,
               height:  window.CHAPTEROPTS.HEIGHT  || false,
               display: window.CHAPTEROPTS.DISPLAY || 'line',
-            }).then(player => {
+            })
+            .then(player => {
               ableplayerSearch(player, '#video-search', body, {
                 duration,
                 color:   window.SEARCHOPTS.COLOR   || '#fff',
                 width:   window.SEARCHOPTS.WIDTH   || 1,
                 height:  window.SEARCHOPTS.HEIGHT  || false,
                 display: window.SEARCHOPTS.DISPLAY || 'line',
-              }).then(player => {
-                $.ajax({
-                  url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
-                  success: data => {
-                    const { description } = data
-                    if(!description.length) return;
-                    ableplayerSearch(player, '#video-search', description, {
-                      duration,
-                      color:   window.AUDIOOPTS.COLOR   || '#fff',
-                      width:   window.AUDIOOPTS.WIDTH   || 1,
-                      height:  window.AUDIOOPTS.HEIGHT  || false,
-                      display: window.AUDIOOPTS.DISPLAY || 'line',
-                    }).then(player => {
-                      console.log('Plugins instantiated successfully.')
-                    }).catch(err => console.log(err))
-                  }
+              })
+              .then(player => {
+                ableplayerSearch(player, '#video-search', description, {
+                  duration,
+                  color:   window.AUDIOOPTS.COLOR   || '#fff',
+                  width:   window.AUDIOOPTS.WIDTH   || 1,
+                  height:  window.AUDIOOPTS.HEIGHT  || false,
+                  display: window.AUDIOOPTS.DISPLAY || 'line',
                 })
-              }).catch(err => console.log(err))
-            }).catch(err => console.log(err))
-          }).catch(err => console.log(err))
+                .then(player => {
+                  console.log('Plugins instantiated successfully.')
+                })
+                .catch(err => console.log(err))
+              })
+              .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
+          })
+          .catch(err => console.log(err))
 
         }
       }, 200)
