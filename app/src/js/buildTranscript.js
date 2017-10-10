@@ -1,5 +1,6 @@
 var cachebust             = require('./cachebust');
 var buildTranscriptMarkup = require('./buildTranscriptMarkup');
+var highlightTranscript   = require('./highlightTranscript');
 var Cookies               = require('js-cookie');
 
 var buildTranscript = function( wrapper, id, cb ){
@@ -16,10 +17,12 @@ var buildTranscript = function( wrapper, id, cb ){
       const cookies = JSON.parse(Cookies.get('Able-Player'))
       return cookies && cookies.preferences.prefDesc
     } else {
-        return !$('.able-button-handler-descriptions').hasClass('buttonOff')
+      return !$('.able-button-handler-descriptions').hasClass('buttonOff')
     }
   }
+
   let getNodes = () => null
+
   const onEachNode = (node) => {
     if(node.type === 'section_break'){
       jumpto.append(`<option value="${node.start}">${node.contents}</option>`);
@@ -86,12 +89,8 @@ var buildTranscript = function( wrapper, id, cb ){
   // Rebuild on search
   $('body').on('keyup', '#video-search', function(){
     window.SEARCHDEBUFF = setTimeout(() => {
-      const html = buildTranscriptMarkup(getNodes(), {
-        highlight: $(this).val(),
-        onEach: onEachNode,
-        useDescription: getUseDescription()
-      })
-      transcript.html(html)
+      const keyword = $(this).val()
+      highlightTranscript(transcript, '[data-node]', keyword)
     }, 500)
   })
 }
