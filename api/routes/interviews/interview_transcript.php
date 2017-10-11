@@ -4,8 +4,6 @@ $route = new Route('/interviews/(?P<id>\d+)/transcript', 'GET', function($data){
   $sliced = $transcript->get_slices_and_breaks(true);
   if(!$sliced) return [];
 
-  return $sliced;
-  
   foreach($sliced as &$slice){
     if($slice['start']) $slice['start'] = sanitize_timestamp($slice['start']);
     if($slice['end'])   $slice['end']   = sanitize_timestamp($slice['end']);

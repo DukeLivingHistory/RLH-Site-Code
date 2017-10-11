@@ -1,6 +1,8 @@
 var highlightTranscript = (transcript, selector, highlight) => {
   const nodes = transcript.find(selector)
 
+  console.log('heyo')
+
   $(nodes).each(function(){
     const text = $(this).attr('data-node')
     const html = $(this).html()

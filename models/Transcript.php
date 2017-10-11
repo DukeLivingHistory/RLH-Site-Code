@@ -123,25 +123,31 @@ class Transcript {
     if($include_description){
       preg_match_all($pattern, $this->description, $description_nodes);
       for( $i = 0; $i < count($description_nodes[0]); $i++ ){
+        $insert = [];
+        
         if( isset( $description_nodes[6][$i] ) && strlen( $description_nodes[6][$i] ) > 0){
-          $results[] = [
+          $start = trim($description_nodes[3][$i]);
+
+          $insert[] = [
             'type'      => 'description',
             'contents'  => trim($description_nodes[6][$i]),
-            'start'     => trim($description_nodes[3][$i]),
+            'start'     => $start,
             'end'       => trim($description_nodes[4][$i]),
           ];
+
+          foreach($results as $index => $result){
+            if(sanitize_timestamp($result['start']) > sanitize_timestamp($start)){
+              $offset = $index;
+              break;
+            }
+          }
+
+          array_splice($results, $offset, 0, $insert);
         }
       }
-
-      function compare($a, $b){
-        if($a['start'] === $b['start']) return 0;
-        return ($a['start'] < $b['start']) ? -1 : 1;
-      }
-
-      usort($results, 'compare');
     }
 
-    return count( $results ) ? $results : false;
+    return count($results) ? $results : false;
   }
 
   public function get_caption( $timestamp ){
