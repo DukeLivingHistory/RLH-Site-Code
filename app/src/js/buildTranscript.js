@@ -33,25 +33,25 @@ var buildTranscript = function( wrapper, id, cb ){
         jumptoInit = true;
         jumpto.parent().show();
         jumpto.on( 'change', function(){
-            var val = $(this).val();
-            var offset = 0;
-            if( val === 'default' ){
-              $('body,html').animate( {
-                scrollTop: 0
-              }, TRANSITIONTIME*2 );
-              return;
-            }
-            var offset = ( $(window).width() >= 568 ) ? $( '.contentHeaderOuter' ).height() + 16 : 0;
+          var val = $(this).val();
+          var offset = 0;
+          if( val === 'default' ){
+            $('body,html').animate( {
+              scrollTop: 0
+            }, TRANSITIONTIME*2 );
+            return;
+          }
+          var offset = ( $(window).width() >= 568 ) ? $( '.contentHeaderOuter' ).height() + 16 : 0;
+          $('body,html').animate( {
+            scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
+          }, TRANSITIONTIME );
+          setTimeout( function(){
+            offset = offset - jumpto.height();
             $('body,html').animate( {
               scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
-            }, TRANSITIONTIME );
-            setTimeout( function(){
-              offset = offset - jumpto.height();
-              $('body,html').animate( {
-                scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
-              }, TRANSITIONTIME/2 );
-            }, TRANSITIONTIME )
-        } );
+            }, TRANSITIONTIME/2 );
+          }, TRANSITIONTIME )
+        });
       }
     }
   }
@@ -90,10 +90,11 @@ var buildTranscript = function( wrapper, id, cb ){
   })
 
   // Rebuild on search
+  let initDebuff = false
   $('body').on('keyup', '#video-search', function(){
     window.SEARCHDEBUFF = setTimeout(() => {
       const keyword = $(this).val()
-      highlightTranscript(transcript, '[data-node]', keyword)
+      highlightTranscript(transcript, '[data-node]', (keyword.length > 2) ? keyword : false)
     }, 500)
   })
 }

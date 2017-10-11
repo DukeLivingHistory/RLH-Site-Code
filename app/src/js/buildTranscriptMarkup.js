@@ -15,25 +15,25 @@ const buildTranscriptMarkup = (data, {
       case 'description':
         if(useDescription){
           markup += paragraphOpen ? '</div>' : '';
-          markup += `<div data-node class="transcript-description">${node.contents}</div>`;
+          markup += `<div data-node="${node.contents}" class="transcript-description">${node.contents}</div>`;
         }
         break;
       case 'paragraph_break':
-        markup += paragraphInit ? '<div data-node class="able-transcript-block">' : '</div>';
-        markup += paragraphOpen ? '<div data-node class="able-transcript-block">' : '';
+        markup += paragraphInit ? '<div class="able-transcript-block">' : '</div>';
+        markup += paragraphOpen ? '<div class="able-transcript-block">' : '';
         paragraphInit = false;
         paragraphOpen = !paragraphOpen;
         break;
       case 'section_break':
         markup += paragraphOpen ? '</div>' : '';
-        markup += `<div data-node data-highlight="transcript" class="transcript-section able-unspoken" data-timestamp="${node.start}">${node.contents}</div>`;
+        markup += `<div data-node="${node.contents}" data-highlight="transcript" class="transcript-section able-unspoken" data-timestamp="${node.start}">${node.contents}</div>`;
         break;
       case 'speaker_break':
         markup += paragraphOpen ? '</div>' : '';
-        markup += `<div data-node data-highlight="next" class="transcript-speaker able-unspoken">${node.contents}</div>`;
+        markup += `<div data-node="${node.contents}" data-highlight="next" class="transcript-speaker able-unspoken">${node.contents}</div>`;
         break;
       case 'transcript_node':
-        markup = `<span data-node tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="${node.start}" data-end="${node.end}">${node.contents}</span>&nbsp;`;
+        markup = `<span data-node="${node.contents}" tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="${node.start}" data-end="${node.end}">${node.contents}</span>&nbsp;`;
         break;
     }
 

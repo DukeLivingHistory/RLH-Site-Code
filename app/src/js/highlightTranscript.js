@@ -1,9 +1,14 @@
 var highlightTranscript = (transcript, selector, highlight) => {
-  if(!text) return
   const nodes = transcript.find(selector)
 
   $(nodes).each(function(){
-    const text = $(this).text()
+    const text = $(this).attr('data-node')
+    const html = $(this).html()
+
+    if(!highlight){
+      $(this).text(text)
+      return
+    }
 
     const replaced = text.replace(
       new RegExp(`(${highlight})`, 'ig'),
@@ -11,7 +16,14 @@ var highlightTranscript = (transcript, selector, highlight) => {
     )
 
     // prevent unnecessary DOM mutations
-    if(replaced === text) return
+    if(replaced === text){
+      $(this).text(text)
+      return
+    }
+
+    if(replaced === html){
+      return
+    }
 
     $(this).html(replaced)
   })
