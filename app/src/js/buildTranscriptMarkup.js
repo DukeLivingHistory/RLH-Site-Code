@@ -14,12 +14,12 @@ const buildTranscriptMarkup = (data, {
     const quotes = (string) => string.replace('"', '\'')
 
     switch(node.type){
-      // case 'description':
-      //   if(useDescription){
-      //     markup += paragraphOpen ? '</div>' : '';
-      //     markup += `<div data-node="${node.contents}" class="transcript-description">${node.contents}</div>`;
-      //   }
-      //   break;
+      case 'description':
+        if(useDescription){
+          markup += paragraphOpen ? '</div>' : '';
+          markup += `<div data-node="${node.contents}" class="transcript-description">${node.contents}</div>`;
+        }
+        break;
       case 'paragraph_break':
         markup += paragraphInit ? '<div class="able-transcript-block">' : '</div>';
         markup += paragraphOpen ? '<div class="able-transcript-block">' : '';
