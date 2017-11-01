@@ -1,0 +1,17 @@
+{
+  "name": "fireshell",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Adam Brewer"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DukeLivingHistory/RLH-Site-Code",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

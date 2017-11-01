@@ -17,14 +17,11 @@
     "browser-sync": "^2.10.0",
     "browserify": "^12.0.1",
     "chai": "^3.4.1",
-    "clipboard": "^1.5.12",
     "del": "^1.1.1",
-    "facebook-share-link": "^1.0.0",
-    "fb": "^1.1.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.2.0",
     "gulp-bump": "^0.3.1",
-    "gulp-git": "^1.2.4",
+    "gulp-git": "^2.4.2",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.2.1",
     "gulp-minify-css": "^1.1.0",
@@ -39,18 +36,15 @@
     "gulp-stylestats": "^1.0.1",
     "gulp-svgstore": "^5.0.5",
     "gulp-tag-version": "^1.2.1",
-    "gulp-uglify": "^1.5.4",
+    "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
-    "js-cookie": "^2.1.2",
-    "require-dir": "^0.3.0",
+    "jquery": "^3.0.0",
+    "require-dir": "^0.3.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.1",
-    "youtube-iframe": "^1.0.2"
+    "watchify": "^3.2.1"
   },
-  "dependencies": {
-    "js-cookie": "^2.1.3"
-  },
+  "dependencies": {},
   "scripts": {
     "preinstall": "bower install",
     "postinstall": "gulp && gulp test"
