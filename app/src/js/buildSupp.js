@@ -14,14 +14,15 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
   $.get( '/wp-json/v1/'+endpoint+'/'+queriedObject+'/supp'+cachebust(), function(data){
 
     // ensure that repeated timestamps nest all content inside themselves
-    var timestamps = [];
+    var timestamps = {};
     var unmatched = [];
     var index = 0;
 
     $(data).each( function(){
-      if( this.timestamp || this.timestamp === 0 && mainContentExists ){
-        timestamps[this.timestamp] = timestamps[this.timestamp] || [];
-        timestamps[this.timestamp].push( {
+      var timestamp = this.timestamp.toString()
+      if( timestamp || timestamp === 0 && mainContentExists ){
+        timestamps[timestamp] = timestamps[timestamp] || [];
+        timestamps[timestamp].push( {
           type: this.type,
           data: this.data,
           open: this.open
@@ -111,7 +112,10 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
       syncTimestamps( '.suppCont-inner', '.event', '.timeline' );
     }
 
-    if( callback ) callback();
+    if( callback ) callback({
+      timestamps,
+      unmatched
+    });
 
   } );
 }

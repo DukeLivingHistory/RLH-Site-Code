@@ -2,7 +2,7 @@ window.Cookies = require( 'js-cookie' );
 var cachebust  = require('./cachebust');
 var icon       = require( './icon' );
 
-var syncAblePlayer = function(transcript, id){
+var syncAblePlayer = function(transcript, id, supp){
   $( 'body' ).removeClass( 'hasAblePlayer' );
   $( 'video' ).each(function (index, element) {
     $( 'body' ).addClass( 'hasAblePlayer' );
@@ -32,6 +32,24 @@ var syncAblePlayer = function(transcript, id){
           start: node.start
         }
       })
+
+      const suppContent = Object.entries(supp.timestamps).map(node => {
+        const values = ['content', 'blockquote', 'attribution', 'title', 'description', 'link_text']
+        const pieces = node[1]
+        return {
+          text: pieces.reduce((all, piece) => {
+            return all + values.reduce((acc, value) => {
+              if(piece.data[value]){
+                acc += piece.data[value]
+              }
+              return acc
+            }, '')
+          }, ''),
+          start: node[0]
+        }
+      })
+
+      console.log(suppContent)
 
       // hacky way to wait until youtube iframe is initialized before running add dot code
       const tryYouTube = setInterval(() => {
@@ -63,22 +81,30 @@ var syncAblePlayer = function(transcript, id){
                 height:  window.SEARCHOPTS.HEIGHT  || false,
                 display: window.SEARCHOPTS.DISPLAY || 'line',
               }).then(player => {
-                $.ajax({
-                  url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
-                  success: data => {
-                    const { description } = data
-                    if(!description.length) return;
-                    ableplayerSearch(player, '#video-search', description, {
-                      duration,
-                      color:   window.SEARCHOPTS.COLOR   || '#fff',
-                      width:   window.SEARCHOPTS.WIDTH   || 1,
-                      height:  window.SEARCHOPTS.HEIGHT  || false,
-                      display: window.SEARCHOPTS.DISPLAY || 'line',
-                    }).then(player => {
-                      console.log('Plugins instantiated successfully.')
-                    }).catch(err => console.log(err))
-                  }
-                })
+                ableplayerSearch(player, '#video-search', suppContent, {
+                  duration,
+                  color:   window.SUPP_CONT_OPTS.COLOR   || '#fff',
+                  width:   window.SUPP_CONT_OPTS.WIDTH   || 1,
+                  height:  window.SUPP_CONT_OPTS.HEIGHT  || false,
+                  display: window.SUPP_CONT_OPTS.DISPLAY || 'line',
+                }).then(player => {
+                  $.ajax({
+                    url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
+                    success: data => {
+                      const { description } = data
+                      if(!description.length) return;
+                      ableplayerSearch(player, '#video-search', description, {
+                        duration,
+                        color:   window.SEARCHOPTS.COLOR   || '#fff',
+                        width:   window.SEARCHOPTS.WIDTH   || 1,
+                        height:  window.SEARCHOPTS.HEIGHT  || false,
+                        display: window.SEARCHOPTS.DISPLAY || 'line',
+                      }).then(player => {
+                        console.log('Plugins instantiated successfully.')
+                      }).catch(err => console.log(err))
+                    }
+                  })
+                }).catch(err => console.log(err))
               }).catch(err => console.log(err))
             }).catch(err => console.log(err))
           }).catch(err => console.log(err))
