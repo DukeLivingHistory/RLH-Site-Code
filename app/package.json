@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.1.21",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.1.18",
     "babelify": "^7.2.0",
     "browser-sync": "^2.10.0",
@@ -50,7 +51,5 @@
     "js-cookie": "^2.2.0"
   },
   "scripts": {
-    "preinstall": "bower install",
-    "postinstall": "gulp && gulp test"
   }
 }

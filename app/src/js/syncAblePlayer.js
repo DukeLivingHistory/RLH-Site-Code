@@ -26,7 +26,12 @@ var syncAblePlayer = function(transcript, id, supp){
         }
       })
 
-      const body = transcript.filter(node => node.type !== 'paragraph_break').map(node => {
+      const body = transcript.filter(node => {
+        return (
+          node.type !== 'paragraph_break' &&
+          node.type !== 'description'
+        )
+      }).map(node => {
         return {
           text: node.contents,
           start: node.start
@@ -45,10 +50,11 @@ var syncAblePlayer = function(transcript, id, supp){
               return acc
             }, '')
           }, ''),
-          start: node[0]
+          start: parseInt(node[0])
         }
       })
 
+      console.log(body)
       console.log(suppContent)
 
       // hacky way to wait until youtube iframe is initialized before running add dot code
@@ -64,7 +70,8 @@ var syncAblePlayer = function(transcript, id, supp){
             width:   window.HEADINGOPTS.WIDTH   || 1,
             height:  window.HEADINGOPTS.HEIGHT  || false,
             display: window.HEADINGOPTS.DISPLAY || 'line',
-          }).then(player => {
+          })
+          .then(player => {
             clearInterval(tryYouTube)
             ableplayerAddDots(player, chapters, {
               duration,
@@ -73,7 +80,8 @@ var syncAblePlayer = function(transcript, id, supp){
               width:   window.CHAPTEROPTS.WIDTH   || 1,
               height:  window.CHAPTEROPTS.HEIGHT  || false,
               display: window.CHAPTEROPTS.DISPLAY || 'line',
-            }).then(player => {
+            })
+            .then(player => {
               ableplayerSearch(player, '#video-search', body, {
                 duration,
                 color:   window.SEARCHOPTS.COLOR   || '#fff',
