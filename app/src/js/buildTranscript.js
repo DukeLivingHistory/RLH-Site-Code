@@ -1,6 +1,7 @@
 var cachebust             = require('./cachebust');
 var buildTranscriptMarkup = require('./buildTranscriptMarkup');
 var highlightTranscript   = require('./highlightTranscript');
+var highlightSuppCont     = require('./highlightSuppCont');
 var Cookies               = require('js-cookie');
 
 var buildTranscript = function( wrapper, id, cb ){
@@ -93,8 +94,11 @@ var buildTranscript = function( wrapper, id, cb ){
   let initDebuff = false
   $('body').on('keyup', '#video-search', function(){
     window.SEARCHDEBUFF = setTimeout(() => {
-      const keyword = $(this).val()
-      highlightTranscript(transcript, '[data-node]', (keyword.length > 2) ? keyword : false)
+      const value = $(this).val()
+      const keyword = (value.length > 2) ? value : false
+      console.log(keyword)
+      highlightSuppCont('[data-suppcont]', keyword)
+      highlightTranscript(transcript, '[data-node]', keyword)
     }, 500)
   })
 }

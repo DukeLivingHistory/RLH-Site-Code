@@ -48,7 +48,7 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
         suppContSingle.append( '<button class="suppCont-expand suppCont-expand--type" data-action="close-type">'+icon( content.type, 'suppExpand' )+'</button>' );
         if( content.class ) suppContSingle.addClass( 'suppCont-single--'+content.class );
         var inner =  '<div class="suppCont-singleInner">';
-        inner +=        '<div class="suppCont-preview" aria-hidden>' + preview + '</div>';
+        inner +=        '<div data-suppcont="'+preview+'" class="suppCont-preview" aria-hidden>' + preview + '</div>';
         inner +=        '<div class="suppCont-content">'+cont;
         inner +=        '<div class="suppCont-share">Share this';
         inner +=          socialLinks( getUrlWithNoHash() + '#sc-'+index++, innerContent.preview, window.DESCRIPTION );

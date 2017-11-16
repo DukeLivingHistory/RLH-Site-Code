@@ -264,11 +264,18 @@ if( function_exists('acf_add_local_field_group') ){
         'wrapper' => [ 'width' => '25%' ]
       ],
       [
+        'key' => 'search_highlight_color',
+        'label' => 'Search Highlight Color',
+        'name' => 'search_highlight_color',
+        'type' => 'color_picker',
+        'wrapper' => [ 'width' => '50%' ]
+      ],
+      [
         'key' => 'highlight_color',
         'label' => 'Highlight Color',
         'name' => 'highlight_color',
         'type' => 'color_picker',
-        'wrapper' => [ 'width' => '25%' ]
+        'wrapper' => [ 'width' => '50%' ]
       ],
     ],
   	'location' => [

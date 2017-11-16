@@ -39,7 +39,16 @@ var syncAblePlayer = function(transcript, id, supp){
       })
 
       const suppContent = Object.entries(supp.timestamps).map(node => {
-        const values = ['content', 'blockquote', 'attribution', 'title', 'description', 'link_text']
+        const values = [
+          'content',
+          'blockquote',
+          'attribution',
+          'title',
+          'description',
+          'link_text',
+          'link_description'
+        ]
+
         const pieces = node[1]
         return {
           text: pieces.reduce((all, piece) => {
@@ -53,9 +62,6 @@ var syncAblePlayer = function(transcript, id, supp){
           start: parseInt(node[0])
         }
       })
-
-      console.log(body)
-      console.log(suppContent)
 
       // hacky way to wait until youtube iframe is initialized before running add dot code
       const tryYouTube = setInterval(() => {

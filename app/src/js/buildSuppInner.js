@@ -10,14 +10,14 @@ var buildSuppInner = function( content ){
   switch( content.type ){
     case 'blockquote':
       preview = content.data.quote;
-      cont =  '<blockquote class="suppCont-quote">'+content.data.quote+'&rdquo;';
-      cont +=  '<footer class="suppCont-attribution">&mdash; '+content.data.attribution+'</footer>';
+      cont =  '<blockquote data-suppcont="'+content.data.quote+'" class="suppCont-quote">'+content.data.quote+'&rdquo;';
+      cont +=  '<footer data-suppcont="'+content.data.attribution+'" class="suppCont-attribution">&mdash; '+content.data.attribution+'</footer>';
       cont += '</blockquote>';
       break;
     case 'externallink':
       preview = content.data.title;
-      cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
-      if( content.data.description ) cont += '<p>'+content.data.description+'</p>';
+      cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
+      if( content.data.description ) cont += '<p data-suppcont="'+content.data.description+'">'+content.data.description+'</p>';
       cont += '<a target="_blank" href="' + content.data.link_url + '">';
       cont +=  ( content.data.link_text || 'Visit Link' ) + icon( 'right', 'link' );
       cont += '</a>';
@@ -25,16 +25,16 @@ var buildSuppInner = function( content ){
       break;
     case 'file':
       preview = content.data.title;
-      cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
-      if( content.data.description ) cont += '<p>'+content.data.description+'</p>';
+      cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
+      if( content.data.description ) cont += '<p data-suppcont="'+content.data.description+'">'+content.data.description+'</p>';
       cont += '<a target="_blank" href="' + content.data.file + '">';
       cont +=  'Download ' + icon( 'right', 'link' );
       cont += '</a>';
       break;
     case 'gallery':
       preview = content.data.title;
-      cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
-      if( content.data.description ) cont += '<p>'+content.data.description+'</p>';
+      cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
+      if( content.data.description ) cont += '<p data-suppcont="'+content.data.description+'">'+content.data.description+'</p>';
       cont += '<div class="suppCont-gallery">';
       for( var i = 0, x = content.data.imgs.length; i < x; i++ ){
         var img = content.data.imgs[i];
@@ -50,27 +50,27 @@ var buildSuppInner = function( content ){
       break;
     case 'image':
       preview = content.data.title;
-      cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
+      cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
       cont += respImg.markup( content.data.img_id, 'feat_sm', 'respImg-defer', {
         alt: content.data.alt,
         caption: content.data.caption
       } );
-      if( content.data.caption ) cont += '<p>'+content.data.caption+'</p>';
+      if( content.data.caption ) cont += '<p data-suppcont="'+content.data.caption+'">'+content.data.caption+'</p>';
       break;
     case 'internallink':
       preview = content.data.title;
       content.type = content.data.type;
       content.class = content.data.type;
-      cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
+      cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
       cont += respImg.markup( content.data.feat_img, 'feat', 'respImg-defer gallery-single' );
-      cont += '<p>'+(content.data.link_description || content.data.description)+'</p>';
+      cont += '<p data-suppcont="'+(content.data.link_description || content.data.description)+'">'+(content.data.link_description || content.data.description)+'</p>';
       cont += internalLink( content.data, 'View ' + content.type + icon( 'right', 'link' ) );
       break;
     case 'map_location':
       var zoom = content.data.zoom || 17;
       var map_url = 'https://maps.googleapis.com/maps/api/staticmap?center='+content.data.coords.lat+','+content.data.coords.lng+'&size=600x300&zoom='+zoom+'&markers=color:red%7C'+content.data.coords.lat+','+content.data.coords.lng+'&key='+MAPS_APP_ID; // TODO: make API key a site option
       preview = content.data.title;
-      cont += '<span class="suppCont-contentTitle">'+content.data.title+'</span>';
+      cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
       cont += '<img src="' + map_url + '" alt="Map of '+content.data.title+'" />';
       break;
     case 'text':

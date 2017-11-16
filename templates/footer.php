@@ -80,12 +80,19 @@
     DISPLAY:  <?= $sc_display ? "'$sc_display'" : 'false'; ?>
   };
 </script>
-<?php if($highlight = get_field('highlight_color', 'options')){ ?>
+<?php } ?>
+<?php if($s_highlight = get_field('search_highlight_color', 'options')){ ?>
   <style>
   .transcript-highlight {
-    background: <?= $highlight; ?>;
+    background: <?= $s_highlight; ?>;
   }
   </style>
 <?php } ?>
+<?php if($highlight = get_field('highlight_color', 'options')){ ?>
+  <style>
+  .transcript ::selection {
+    background: <?= $highlight; ?>
+  }
+  </style>
 <?php } ?>
 <?php wp_footer(); ?>
