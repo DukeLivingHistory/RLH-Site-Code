@@ -1,14 +1,14 @@
 {
-  "published": "2017-11-15T18:21:47.088Z",
+  "published": "2017-11-21T15:50:19.768Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 60262,
+  "size": 60310,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12192,
+  "gzippedSize": 12199,
   "rules": 764,
   "selectors": 996,
   "declarations": 2002,
@@ -62,7 +62,7 @@
     "Roboto,sans-serif",
     "able"
   ],
-  "totalUniqueColors": 19,
+  "totalUniqueColors": 20,
   "uniqueColors": [
     "#000000",
     "#0C4D93",
@@ -81,6 +81,7 @@
     "#FFFF66",
     "#FFFFFF",
     "RED",
+    "RGBA(255,255,255,.5)",
     "RGBA(255,255,255,.7)",
     "RGBA(255,255,255,.8)"
   ],

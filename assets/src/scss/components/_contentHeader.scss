@@ -283,13 +283,13 @@
 
 .contentHeader-searchwrap {
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: $white;
+    color: rgba($white, .5);
   }
   ::-moz-placeholder { /* Firefox 19+ */
-    color: $white;
+    color: rgba($white, .5);
   }
   :-ms-input-placeholder { /* IE 10+ */
-    color: $white;
+    color: rgba($white, .5);
   }
 }
 
