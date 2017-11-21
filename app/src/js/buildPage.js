@@ -51,8 +51,6 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
         var order = Cookies.get('ARCHIVEORDER');
         var url = '/wp-json/v1/'+endpoint+'?order=' + order + '&count='+COUNT+cachebust(true);
 
-        console.log(url);
-
         $.get(url, function(data){
           buildArchive( page, data, endpoint, ( endpoint === 'interviews' ) );
           animatePage( wrapper, page, dir, function(){
@@ -100,14 +98,14 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
           socialHighlight( '.transcript' );
 
-          buildSupp( page, endpoint, queriedObject, function(){
+          buildSupp( page, endpoint, queriedObject, function(supp){
 
             if( data.collections.length ){
               buildOtherInCollection( page, data.id, data.collections[0] );
             }
 
+            syncAblePlayer(transcript, data.id, supp);
           }, transcript );
-          syncAblePlayer(transcript, data.id);
           stickyHeader( page, '.contentHeaderOuter', '.contentHeader-inner' );
 
         } );

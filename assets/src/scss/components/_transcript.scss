@@ -97,7 +97,7 @@ span.transcript-node--suppHover  {
 }
 
 .transcript ::selection {
-  background: $yellow!important;
+  background: $yellow;
 }
 
 .able-highlight {
@@ -118,7 +118,8 @@ span.transcript-node:hover {
 //span.transcript-node:hover,
 .suppCont-single:hover,
 .suppCont-single:focus,
-.suppCont-inner--suppHover .suppCont-single, {
+.suppCont-inner--suppHover .suppCont-single,
+.transcript-highlight {
   background: mix( $yellow, $white );
   outline: none;
   &:before {
@@ -129,5 +130,17 @@ span.transcript-node:hover {
     &:before {
       border-color: transparent $suppGrey transparent transparent;
     }
+  }
+}
+
+.transcript-description {
+  font-style: italic;
+  opacity: .5;
+  margin: 1em 0;
+  &:before {
+    content: '['
+  };
+  &:after {
+    content: ']';
   }
 }

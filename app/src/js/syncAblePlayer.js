@@ -2,7 +2,7 @@ window.Cookies = require( 'js-cookie' );
 var cachebust  = require('./cachebust');
 var icon       = require( './icon' );
 
-var syncAblePlayer = function(transcript, id){
+var syncAblePlayer = function(transcript, id, supp){
   $( 'body' ).removeClass( 'hasAblePlayer' );
   $( 'video' ).each(function (index, element) {
     $( 'body' ).addClass( 'hasAblePlayer' );
@@ -26,10 +26,40 @@ var syncAblePlayer = function(transcript, id){
         }
       })
 
-      const body = transcript.filter(node => node.type !== 'paragraph_break').map(node => {
+      const body = transcript.filter(node => {
+        return (
+          node.type !== 'paragraph_break' &&
+          node.type !== 'description'
+        )
+      }).map(node => {
         return {
           text: node.contents,
           start: node.start
+        }
+      })
+
+      const suppContent = Object.entries(supp.timestamps).map(node => {
+        const values = [
+          'content',
+          'blockquote',
+          'attribution',
+          'title',
+          'description',
+          'link_text',
+          'link_description'
+        ]
+
+        const pieces = node[1]
+        return {
+          text: pieces.reduce((all, piece) => {
+            return all + values.reduce((acc, value) => {
+              if(piece.data[value]){
+                acc += piece.data[value]
+              }
+              return acc
+            }, '')
+          }, ''),
+          start: parseInt(node[0])
         }
       })
 
@@ -46,7 +76,8 @@ var syncAblePlayer = function(transcript, id){
             width:   window.HEADINGOPTS.WIDTH   || 1,
             height:  window.HEADINGOPTS.HEIGHT  || false,
             display: window.HEADINGOPTS.DISPLAY || 'line',
-          }).then(player => {
+          })
+          .then(player => {
             clearInterval(tryYouTube)
             ableplayerAddDots(player, chapters, {
               duration,
@@ -55,7 +86,8 @@ var syncAblePlayer = function(transcript, id){
               width:   window.CHAPTEROPTS.WIDTH   || 1,
               height:  window.CHAPTEROPTS.HEIGHT  || false,
               display: window.CHAPTEROPTS.DISPLAY || 'line',
-            }).then(player => {
+            })
+            .then(player => {
               ableplayerSearch(player, '#video-search', body, {
                 duration,
                 color:   window.SEARCHOPTS.COLOR   || '#fff',
@@ -63,22 +95,30 @@ var syncAblePlayer = function(transcript, id){
                 height:  window.SEARCHOPTS.HEIGHT  || false,
                 display: window.SEARCHOPTS.DISPLAY || 'line',
               }).then(player => {
-                $.ajax({
-                  url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
-                  success: data => {
-                    const { description } = data
-                    if(!description.length) return;
-                    ableplayerSearch(player, '#video-search', description, {
-                      duration,
-                      color:   window.SEARCHOPTS.COLOR   || '#fff',
-                      width:   window.SEARCHOPTS.WIDTH   || 1,
-                      height:  window.SEARCHOPTS.HEIGHT  || false,
-                      display: window.SEARCHOPTS.DISPLAY || 'line',
-                    }).then(player => {
-                      console.log('Plugins instantiated successfully.')
-                    }).catch(err => console.log(err))
-                  }
-                })
+                ableplayerSearch(player, '#video-search', suppContent, {
+                  duration,
+                  color:   window.SUPP_CONT_OPTS.COLOR   || '#fff',
+                  width:   window.SUPP_CONT_OPTS.WIDTH   || 1,
+                  height:  window.SUPP_CONT_OPTS.HEIGHT  || false,
+                  display: window.SUPP_CONT_OPTS.DISPLAY || 'line',
+                }).then(player => {
+                  $.ajax({
+                    url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
+                    success: data => {
+                      const { description } = data
+                      if(!description.length) return;
+                      ableplayerSearch(player, '#video-search', description, {
+                        duration,
+                        color:   window.SEARCHOPTS.COLOR   || '#fff',
+                        width:   window.SEARCHOPTS.WIDTH   || 1,
+                        height:  window.SEARCHOPTS.HEIGHT  || false,
+                        display: window.SEARCHOPTS.DISPLAY || 'line',
+                      }).then(player => {
+                        console.log('Plugins instantiated successfully.')
+                      }).catch(err => console.log(err))
+                    }
+                  })
+                }).catch(err => console.log(err))
               }).catch(err => console.log(err))
             }).catch(err => console.log(err))
           }).catch(err => console.log(err))
