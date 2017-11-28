@@ -11,7 +11,7 @@ const buildTranscriptMarkup = (data, {
     let markup = '';
     let replaced = false
 
-    const quotes = (string) => string.replace('"', '\'')
+    const quotes = (string) => string.replace(/"/g, '\'')
 
     switch(node.type){
       case 'description':
