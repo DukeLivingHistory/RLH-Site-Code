@@ -1,3 +1,5 @@
+var respImg = require( './respImg' )
+
 var highlightSuppCont = (nodes, highlight) => {
   $(nodes).each(function(){
     const text = $(this).attr('data-suppcont')
@@ -7,8 +9,6 @@ var highlightSuppCont = (nodes, highlight) => {
       $(this).text(text)
       return
     }
-
-    console.log(text)
 
     const replaced = text.replace(
       new RegExp(`(${highlight})`, 'ig'),
@@ -26,6 +26,14 @@ var highlightSuppCont = (nodes, highlight) => {
     }
 
     $(this).html(replaced)
+
+    const target = $(this).closest('.suppCont-single')
+    target.addClass('expand--search')
+    target.find('[data-action="close"] use')
+    .attr( 'xlink:href', '#contract')
+
+    const img = target.find('.respImg-defer')
+    respImg.load(img)
   })
 
 }
