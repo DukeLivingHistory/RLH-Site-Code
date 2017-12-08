@@ -4,6 +4,7 @@ var highlightSuppCont = (nodes, highlight) => {
   $(nodes).each(function(){
     const text = $(this).attr('data-suppcont')
     const html = $(this).html()
+    const target = $(this).closest('.suppCont-single')
 
     if(!highlight){
       $(this).text(text)
@@ -18,6 +19,9 @@ var highlightSuppCont = (nodes, highlight) => {
     // prevent unnecessary DOM mutations
     if(replaced === text){
       $(this).text(text)
+      if(target.attr('data-expand-search') === 'true'){
+        target.attr('data-expand-search', 'false')
+      }
       return
     }
 
@@ -27,8 +31,8 @@ var highlightSuppCont = (nodes, highlight) => {
 
     $(this).html(replaced)
 
-    const target = $(this).closest('.suppCont-single')
-    target.addClass('expand--search')
+    target.addClass('expand')
+    target.attr('data-expand-search', 'true')
     target.find('[data-action="close"] use')
     .attr( 'xlink:href', '#contract')
 

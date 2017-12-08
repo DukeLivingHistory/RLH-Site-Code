@@ -96,9 +96,11 @@ var buildTranscript = function( wrapper, id, cb ){
     window.SEARCHDEBUFF = setTimeout(() => {
       const value = $(this).val()
       const keyword = (value.length > 2) ? value : false
-      console.log(keyword)
-      highlightSuppCont('[data-suppcont]', keyword)
       highlightTranscript(transcript, '[data-node]', keyword)
+      highlightSuppCont('[data-suppcont]', keyword)
+      $('[data-expand-search="false"]')
+      .removeClass('expand')
+      .find( '[data-action="close"] use' ).attr( 'xlink:href', '#expand' );
     }, 500)
   })
 }
