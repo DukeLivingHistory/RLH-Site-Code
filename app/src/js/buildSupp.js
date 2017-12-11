@@ -38,12 +38,12 @@ var buildSupp = function( page, endpoint, queriedObject, callback, mainContentEx
     for( var timestamp in timestamps ){
       var asideInner = $( '<ul class="suppCont-inner" data-timestamp="'+timestamp+'" />' );
       for( var i = 0, x = timestamps[timestamp].length; i<x; i++ ){
-        var content = timestamps[timestamp][i];
-        var suppContSingle = $( '<li tabindex="0" data-opendefault="'+content.open+'" data-action="expand" data-supp="'+index+'" class="suppCont-single suppCont-single--'+content.type+'"/>' );
-        var inner = '';
-        var innerContent = buildSuppInner( content );
-        var preview = innerContent.preview;
-        var cont = innerContent.cont;
+        var content = timestamps[timestamp][i]
+        var suppContSingle = $( '<li tabindex="0" data-opendefault="'+content.open+'" data-action="expand" data-supp="'+index+'" class="suppCont-single suppCont-single--'+content.type+'"/>' )
+        var inner = ''
+        var innerContent = buildSuppInner(content)
+        var preview = innerContent.preview
+        var cont = innerContent.cont
 
         suppContSingle.append( '<button class="suppCont-expand suppCont-expand--type" data-action="close-type">'+icon( content.type, 'suppExpand' )+'</button>' );
         if( content.class ) suppContSingle.addClass( 'suppCont-single--'+content.class );

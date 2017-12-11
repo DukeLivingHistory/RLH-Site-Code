@@ -97,10 +97,7 @@ var buildTranscript = function( wrapper, id, cb ){
       const value = $(this).val()
       const keyword = (value.length > 2) ? value : false
       highlightTranscript(transcript, '[data-node]', keyword)
-      highlightSuppCont('[data-suppcont]', keyword)
-      $('[data-expand-search="false"]')
-      .removeClass('expand')
-      .find( '[data-action="close"] use' ).attr( 'xlink:href', '#expand' );
+      highlightSuppCont('.suppCont-single', '[data-suppcont]', keyword)
     }, 500)
   })
 }

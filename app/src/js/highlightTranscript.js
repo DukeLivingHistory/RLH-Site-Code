@@ -6,7 +6,7 @@ var highlightTranscript = (transcript, selector, highlight) => {
     const html = $(this).html()
 
     if(!highlight){
-      $(this).text(text)
+      $(this).html(text)
       return
     }
 
@@ -17,7 +17,7 @@ var highlightTranscript = (transcript, selector, highlight) => {
 
     // prevent unnecessary DOM mutations
     if(replaced === text){
-      $(this).text(text)
+      $(this).html(text)
       return
     }
 
