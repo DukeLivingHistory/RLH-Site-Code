@@ -31,7 +31,7 @@ class Transcript {
        (\n*NOTE\sparagraph\n*)?/'
 
     */
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
+    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*?)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
 
     preg_match_all( $pattern, $this->transcript, $nodes );
 
@@ -59,7 +59,7 @@ class Transcript {
     // fifth capture:    optional speaker name          (.*) in (?:<v[ ]*(.*)>[ ]*)
     // sixth capture:    required text contents         ((?:(?!\s).*\s{0,1})*)
     // seventh capture:  optional paragraph break       (\s*NOTE\sparagraph\s*)
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/i';
+    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*?)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/i';
 
     // TODO: update indeces with new capture index
 
@@ -124,7 +124,7 @@ class Transcript {
       preg_match_all($pattern, $this->description, $description_nodes);
       for( $i = 0; $i < count($description_nodes[0]); $i++ ){
         $insert = [];
-        
+
         if( isset( $description_nodes[6][$i] ) && strlen( $description_nodes[6][$i] ) > 0){
           $start = trim($description_nodes[3][$i]);
 

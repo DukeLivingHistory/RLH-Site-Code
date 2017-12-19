@@ -31,7 +31,7 @@ var buildInterviewsHeader = function( wrapper, data ){
     inner.append( related );
   }
 
-  inner.append( '<span class="contentHeader-selectWrapper" style="display:none;"><select class="contentHeader-select" id="select-'+data.id+'""><option value="null">Contents</option></select></span>' );
+  inner.append( '<span class="contentHeader-selectWrapper" id="selectwrap-'+data.id+'" style="display:none;"><select class="contentHeader-select" id="select-'+data.id+'"><option value="null">Contents</option></select></span>' );
 
   var video = $('<video data-able-player data-youtube-id="'+data.video_id+'">');
 

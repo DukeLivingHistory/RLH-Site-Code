@@ -10,9 +10,6 @@ var buildTranscript = function( wrapper, id, cb ){
   var transcript = $( '<div id="transcript-inner" class="able-transcript" />' );
   var callback = cb || false;
 
-  let jumptoInit = false;
-  let jumpto = $( '#select-'+id );
-
   let getUseDescription = (init) => {
     if(init){
       const cookies = Cookies.get('Able-Player')
@@ -27,13 +24,17 @@ var buildTranscript = function( wrapper, id, cb ){
 
   let getNodes = () => null
 
+  // Window scoped variables for quick fix
+  window.JUMPTOINIT = false
   const onEachNode = (node) => {
+    window.JUMPTO = $('#select-'+id)
     if(node.type === 'section_break'){
-      jumpto.append(`<option value="${node.start}">${node.contents}</option>`);
-      if( !jumptoInit ){
-        jumptoInit = true;
-        jumpto.parent().show();
-        jumpto.on( 'change', function(){
+      JUMPTO.append(`<option value="${node.start}">${node.contents}</option>`)
+      if(!JUMPTOINIT){
+        console.log(JUMPTO)
+        window.JUMPTOINIT = true
+        JUMPTO.parent().show()
+        JUMPTO.on( 'change', function(){
           var val = $(this).val();
           var offset = 0;
           if( val === 'default' ){
@@ -72,7 +73,7 @@ var buildTranscript = function( wrapper, id, cb ){
       useDescription: getUseDescription(true)
     })
 
-    jumpto.append( '<option value="default">Back to top</option>' );
+    JUMPTO.append( '<option value="default">Back to top</option>' );
     transcript.append( html );
     outer.append( transcript );
     outer.append( '<div class="able-window-toolbar" />' );
@@ -96,9 +97,8 @@ var buildTranscript = function( wrapper, id, cb ){
     window.SEARCHDEBUFF = setTimeout(() => {
       const value = $(this).val()
       const keyword = (value.length > 2) ? value : false
-      console.log(keyword)
-      highlightSuppCont('[data-suppcont]', keyword)
       highlightTranscript(transcript, '[data-node]', keyword)
+      highlightSuppCont('.suppCont-single', '[data-suppcont]', keyword)
     }, 500)
   })
 }

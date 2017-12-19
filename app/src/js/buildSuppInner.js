@@ -76,8 +76,8 @@ var buildSuppInner = function( content ){
     case 'text':
       var tempHtml = document.createElement('div');
       tempHtml.innerHTML = content.data.content;
-      preview = tempHtml.textContent || tempHtml.innerText;
-      cont = content.data.content;
+      preview = tempHtml.textContent || tempHtml.innerText
+      cont = '<div data-suppcont="'+content.data.content+'">'+content.data.content+'</div>'
       break;
   }
 
