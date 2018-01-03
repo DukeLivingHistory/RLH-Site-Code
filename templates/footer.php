@@ -87,7 +87,6 @@
     DISPLAY:  <?= $sc_display ? "'$sc_display'" : 'false'; ?>
   };
 </script>
-<?php } ?>
 <?php if($s_highlight = get_field('search_highlight_color', 'options')){ ?>
   <style>
   .transcript-highlight {
@@ -95,11 +94,11 @@
   }
   </style>
 <?php } ?>
-<?php if($highlight = get_field('highlight_color', 'options')){ ?>
+<?php if($highlight = get_field('highlight_color', 'options')): ?>
   <style>
   .transcript ::selection {
     background: <?= $highlight; ?>
   }
   </style>
-<?php } ?>
+<?php endif; ?>
 <?php wp_footer(); ?>
