@@ -32,7 +32,7 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
     if( endpoint === 'search' ){
 
-      var term = $( 'body' ).attr( 'data-search' );
+      var term = $('body').attr( 'data-search' );
       document.title = 'Search for '+term;
 
       $.get( '/wp-json/v1/'+endpoint+'/'+term+'?count='+COUNT+'&offset=0'+cachebust(true), function(data){
