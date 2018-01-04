@@ -44,7 +44,7 @@
   font-size: 14px;
   font-style: italic;
   padding: .5em 1em;
-  min-width: 180px;
+  //min-width: 180px;
   @include antialiased;
   &:after {
     content: '';
@@ -58,7 +58,7 @@
   }
   @include media-breakpoint-up(md){
     transform: translate(-50%,-150%);
-    min-width: 167px;
+    //min-width: 167px;
     &:after {
       bottom: auto;
       top: 100%;

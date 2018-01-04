@@ -31,7 +31,6 @@ var buildTranscript = function( wrapper, id, cb ){
     if(node.type === 'section_break'){
       JUMPTO.append(`<option value="${node.start}">${node.contents}</option>`)
       if(!JUMPTOINIT){
-        console.log(JUMPTO)
         window.JUMPTOINIT = true
         JUMPTO.parent().show()
         JUMPTO.on( 'change', function(){

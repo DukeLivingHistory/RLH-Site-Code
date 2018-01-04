@@ -1,25 +1,26 @@
 {
-  "published": "2018-01-04T16:44:12.728Z",
+  "published": "2018-01-04T16:51:04.950Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 60310,
+  "size": 60319,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12199,
+  "gzippedSize": 12205,
   "rules": 764,
   "selectors": 996,
-  "declarations": 2002,
+  "declarations": 2001,
   "simplicity": 0.7670682730923695,
   "averageOfIdentifier": 1.854417670682731,
   "mostIdentifier": 5,
   "mostIdentifierSelector": ".able-player .able-playlist li.able-current:after",
-  "averageOfCohesion": 2.6204188481675392,
+  "averageOfCohesion": 2.619109947643979,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
-    ".transcript-jumpToActive"
+    ".featherlight-next",
+    ".featherlight-previous"
   ],
   "totalUniqueFontSizes": 32,
   "uniqueFontSizes": [

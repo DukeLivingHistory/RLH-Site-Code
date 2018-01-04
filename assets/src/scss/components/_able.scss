@@ -190,7 +190,7 @@
 }
 .able-seekbar {
   position: relative;
-  height: 0.5em;
+  height: 1em;
   border: 1px solid;
   background-color: #000000;
   margin: 0 3px;
@@ -203,7 +203,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 0.5em;
+  height: 1em;
   background-color: #464646;
   z-index: 5100;
 }
@@ -212,7 +212,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 0.5em;
+  height: 1em;
   background-color: #DADADA;
   z-index: 5200;
 }
@@ -220,10 +220,10 @@
   display: inline-block;
   position: relative;
   left: 0;
-  top: -0.45em;
+  top: 0;
   background-color: #FDFDFD;
-  width: 0.8em;
-  height: 0.8em;
+  width: 1em;
+  height: 1em;
   border: 1px solid;
   border-radius: 0.8em;
   z-index: 5500;
@@ -1239,7 +1239,7 @@ button svg {
 
 .able-seekbar-loaded,
 .able-seekbar-played {
-  height: 4px;
+  height: calc(1em - 4px);
 }
 
 .able-left-controls,
@@ -1248,7 +1248,7 @@ button svg {
 }
 
 .able-seekbar-head {
-  top: -10px;
+  top: -3px;
   z-index: 100000;
 }
 
@@ -1296,10 +1296,6 @@ div.able-captions-wrapper {
 
 .able-seekbar-wrapper {
   transition: width .1s ease;
-}
-
-.able-seekbar-head {
-  z-index: 1000;
 }
 
 .able-descriptions {

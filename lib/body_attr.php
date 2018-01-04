@@ -36,7 +36,7 @@ function body_attr(){
     $attr .= 'data-id="archive"';
   }
   if( is_search() ){
-    $attr .= ' data-search="'.( !isset( $_GET['s'] ) ?: $_GET['s'] ).'"';
+    $attr .= ' data-search="'.( !isset( $_GET['s'] ) ?: urlencode($_GET['s']) ).'"';
   }
 
   return $attr;
