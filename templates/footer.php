@@ -13,10 +13,17 @@
     <?= str_replace( '{{year}}', Date('Y'), get_field( 'address', 'options' ) ); ?>
   </div>
 </footer>
-<?php if( get_field( 'fb_client_id', 'options' ) ){ ?>
+<?php if( get_field( 'fb_client_id', 'options' ) ): ?>
 <script>
   window.FB_APP_ID    = '<?= get_field( 'fb_client_id', 'options' ); ?>';
+</script>
+<?php endif; ?>
+<?php if( get_field( 'maps_client_id', 'options' ) ): ?>
+<script>
   window.MAPS_APP_ID  = '<?= get_field( 'maps_client_id', 'options' ); ?>';
+</script>
+<?php endif; ?>
+<script>
   window.COUNT        =  <?= get_option( 'posts_per_page' ); ?>;
   window.INSTRUCTIONS = '<?= str_replace("\n", "", get_field( 'interview_instructions', 'options' )); ?>';
   window.HEADINGOPTS  = {
@@ -80,7 +87,6 @@
     DISPLAY:  <?= $sc_display ? "'$sc_display'" : 'false'; ?>
   };
 </script>
-<?php } ?>
 <?php if($s_highlight = get_field('search_highlight_color', 'options')){ ?>
   <style>
   .transcript-highlight {
@@ -88,11 +94,11 @@
   }
   </style>
 <?php } ?>
-<?php if($highlight = get_field('highlight_color', 'options')){ ?>
+<?php if($highlight = get_field('highlight_color', 'options')): ?>
   <style>
   .transcript ::selection {
     background: <?= $highlight; ?>
   }
   </style>
-<?php } ?>
+<?php endif; ?>
 <?php wp_footer(); ?>

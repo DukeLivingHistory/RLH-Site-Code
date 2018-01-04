@@ -3,6 +3,8 @@ var Clipboard = require('clipboard');
 var icon = require('./icon');
 
 var socialLinks = function( url, title, excerpt, extraClipBoardText ){
+  const isFbProvided = !!window.FB_APP_ID
+
   var url = url || window.location.href;
   var clipBoardText = extraClipBoardText ? extraClipBoardText.trim() + '\n' + url + '\n' : title + ' ' + url;
   var linkList = $( '<ul class="social social--inline" data-url="'+url+'" data-excerpt="'+excerpt+'" data-title="'+title+'" />' );
@@ -24,9 +26,11 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
     return '<div class="'+className+'">'+message+'</div>';
   }
 
-  linkList.append( facebook );
-  linkList.append( twitter );
-  linkList.append( link );
+  if(isFbProvided){
+    linkList.append( facebook )
+  }
+  linkList.append( twitter )
+  linkList.append( link )
 
   if( !window.SOCIALINIT ){
     window.SOCIALINIT = true;
@@ -35,7 +39,11 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
       var _title = $(elem).parent().attr( 'data-title' );
       return window.HIGHLIGHTED || _title || _excerpt || window.DESCRIPTION;
     }
-    var share = fb( window.FB_APP_ID );
+
+    if(isFbProvided) {
+      var share = fb( window.FB_APP_ID )
+    }
+
     var quote = getQuote();
     var clipboard = new Clipboard( '[data-soc="link"]' );
     var clipboardHL = new Clipboard( '.socialPopup [data-soc="link"]' );
@@ -69,16 +77,18 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
       clipboard = new Clipboard( '[data-soc="link"]' );
     } );
 
-    $( 'body' ).on( 'click', '[data-soc="fb"]', function(){
-      var url = $(this).parent().attr( 'data-url' );
-      var quote = getQuote(this);
-      var link = share( {
-        href: url,
-        display: 'popup',
-        quote: quote
-      } );
-      window.open( link, 'fbShareWindow', 'height=450, width=550, top=' + ( $(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-    } );
+    if(isFbProvided) {
+      $('body').on( 'click', '[data-soc="fb"]', function(){
+        var url = $(this).parent().attr( 'data-url' );
+        var quote = getQuote(this);
+        var link = share( {
+          href: url,
+          display: 'popup',
+          quote: quote
+        } );
+        window.open( link, 'fbShareWindow', 'height=450, width=550, top=' + ( $(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+      });
+    }
 
     $( 'body' ).on( 'click', '[data-soc="tw"]', function(){
       var url = encodeURIComponent( $(this).parent().attr( 'data-url' ) );
