@@ -20,9 +20,12 @@ var buildCollectionFeed = function( page, data ){
   page.append( feed );
 
   search.find('input').on( 'keyup', function(e) {
+    const term = $(this).val()
+    const endpoint = `/wp-json/v1/collections/${data.id}?s=${encodeURIComponent(term)}${cachebust(true)}`
+    console.log(endpoint)
     // after a delay in typing, search
     window.TIMEOUT = setTimeout( function(){
-      $.get( '/wp-json/v1/collections/'+data.id+'?s='+$(this).val()+cachebust(true), function( results ){
+      $.get(endpoint, function( results ){
         var newContent = results.content;
         feed.empty();
         for( var i = 0, x = newContent.length; i<x; i++ ){
