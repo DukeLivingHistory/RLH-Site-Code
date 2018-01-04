@@ -5,6 +5,7 @@ class Transcript {
   function __construct( $interview_id ){
     $this->interview_id = $interview_id;
     $this->transcript = get_field( 'transcript', $interview_id ) ? file_get_contents( get_field( 'transcript', $interview_id )['url'] ) : false;
+    $this->description = get_field( 'description', $interview_id ) ? file_get_contents( get_field( 'description', $interview_id )['url'] ) : false;
   }
 
   public function get_slices( $should_trim = false ){
@@ -30,7 +31,7 @@ class Transcript {
        (\n*NOTE\sparagraph\n*)?/'
 
     */
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
+    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*?)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
 
     preg_match_all( $pattern, $this->transcript, $nodes );
 
@@ -50,7 +51,7 @@ class Transcript {
     return $timestamps;
   }
 
-  public function get_slices_and_breaks(){
+  public function get_slices_and_breaks($include_description){
     // first capture:    optional section header        ((?:\s*NOTE chapter )[^\d].+\s*)
     // second capture:   optional section header        ([^\d].+\s)
     // third capture:    required timestamp (beginning) ([\d][\d:\.]+)
@@ -58,7 +59,7 @@ class Transcript {
     // fifth capture:    optional speaker name          (.*) in (?:<v[ ]*(.*)>[ ]*)
     // sixth capture:    required text contents         ((?:(?!\s).*\s{0,1})*)
     // seventh capture:  optional paragraph break       (\s*NOTE\sparagraph\s*)
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/i';
+    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*?)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/i';
 
     // TODO: update indeces with new capture index
 
@@ -119,7 +120,34 @@ class Transcript {
       }
     }
 
-    return count( $results ) ? $results : false;
+    if($include_description){
+      preg_match_all($pattern, $this->description, $description_nodes);
+      for( $i = 0; $i < count($description_nodes[0]); $i++ ){
+        $insert = [];
+
+        if( isset( $description_nodes[6][$i] ) && strlen( $description_nodes[6][$i] ) > 0){
+          $start = trim($description_nodes[3][$i]);
+
+          $insert[] = [
+            'type'      => 'description',
+            'contents'  => trim($description_nodes[6][$i]),
+            'start'     => $start,
+            'end'       => trim($description_nodes[4][$i]),
+          ];
+
+          foreach($results as $index => $result){
+            if(sanitize_timestamp($result['start']) > sanitize_timestamp($start)){
+              $offset = $index;
+              break;
+            }
+          }
+
+          array_splice($results, $offset, 0, $insert);
+        }
+      }
+    }
+
+    return count($results) ? $results : false;
   }
 
   public function get_caption( $timestamp ){

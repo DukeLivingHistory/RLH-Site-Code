@@ -1,69 +1,79 @@
-var cachebust = require('./cachebust');
+var cachebust             = require('./cachebust');
+var buildTranscriptMarkup = require('./buildTranscriptMarkup');
+var highlightTranscript   = require('./highlightTranscript');
+var highlightSuppCont     = require('./highlightSuppCont');
+var Cookies               = require('js-cookie');
+
 var buildTranscript = function( wrapper, id, cb ){
 
   var outer = $( '<section class="able-transcript-area transcript" id="transcript-'+id+'">' );
-  var transcript = $( '<div class="able-transcript" />' );
+  var transcript = $( '<div id="transcript-inner" class="able-transcript" />' );
   var callback = cb || false;
-  var html = '';
+
+  let getUseDescription = (init) => {
+    if(init){
+      const cookies = Cookies.get('Able-Player')
+      if(!cookies) return false
+
+      const json = JSON.parse(cookies)
+      return json.preferences && json.preferences.prefDesc
+    } else {
+      return !$('.able-button-handler-descriptions').hasClass('buttonOff')
+    }
+  }
+
+  let getNodes = () => null
+
+  // Window scoped variables for quick fix
+  window.JUMPTOINIT = false
+  const onEachNode = (node) => {
+    window.JUMPTO = $('#select-'+id)
+    if(node.type === 'section_break'){
+      JUMPTO.append(`<option value="${node.start}">${node.contents}</option>`)
+      if(!JUMPTOINIT){
+        console.log(JUMPTO)
+        window.JUMPTOINIT = true
+        JUMPTO.parent().show()
+        JUMPTO.on( 'change', function(){
+          var val = $(this).val();
+          var offset = 0;
+          if( val === 'default' ){
+            $('body,html').animate( {
+              scrollTop: 0
+            }, TRANSITIONTIME*2 );
+            return;
+          }
+          var offset = ( $(window).width() >= 568 ) ? $( '.contentHeaderOuter' ).height() + 16 : 0;
+          $('body,html').animate( {
+            scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
+          }, TRANSITIONTIME );
+          setTimeout( function(){
+            offset = offset - jumpto.height();
+            $('body,html').animate( {
+              scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
+            }, TRANSITIONTIME/2 );
+          }, TRANSITIONTIME )
+        });
+      }
+    }
+  }
 
   $.get( '/wp-json/v1/interviews/'+id+'/transcript?return=transcript_contents'+cachebust(true), function( data ){
+
+    getNodes = () => data
 
     if( !data ){
       if( callback ) callback( data );
       return;
     }
 
-    var paragraphInit = true;
-    var paragraphOpen = false;
-    var jumptoInit = false;
-    var jumpto = $( '#select-'+id );
-    $( data ).each(function(){
-      switch( this.type ){
-        case 'paragraph_break':
-          html += paragraphInit ? '<div class="able-transcript-block">' : '</div>';
-          html += paragraphOpen ? '<div class="able-transcript-block">' : '';
-          paragraphInit = false;
-          paragraphOpen = !paragraphOpen;
-          break;
-        case 'section_break':
-          html += paragraphOpen ? '</div>' : '';
-          html += '<div data-highlight="transcript" class="transcript-section able-unspoken" data-timestamp="'+this.start+'">'+this.contents+'</div>';
-          jumpto.append( '<option value="'+this.start+'">'+this.contents+'</option>' );
-          if( !jumptoInit ){
-            jumptoInit = true;
-            jumpto.parent().show();
-            jumpto.on( 'change', function(){
-                var val = $(this).val();
-                var offset = 0;
-                if( val === 'default' ){
-                  $('body,html').animate( {
-                    scrollTop: 0
-                  }, TRANSITIONTIME*2 );
-                  return;
-                }
-                var offset = ( $(window).width() >= 568 ) ? $( '.contentHeaderOuter' ).height() + 16 : 0;
-                $('body,html').animate( {
-                  scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
-                }, TRANSITIONTIME );
-                setTimeout( function(){
-                  offset = offset - jumpto.height();
-                  $('body,html').animate( {
-                    scrollTop: $('.transcript-section[data-timestamp="'+val+'"]').offset().top - offset
-                  }, TRANSITIONTIME/2 );
-                }, TRANSITIONTIME )
-            } );
-          }
-          break;
-        case 'speaker_break':
-          html += paragraphOpen ? '</div>' : '';
-          html += '<div data-highlight="next" class="transcript-speaker able-unspoken">'+this.contents+'</div>';
-          break;
-        case 'transcript_node':
-          html += '<span tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="'+this.start+'" data-end="'+this.end+'">'+this.contents+ '</span> ';
-          break;
-      }
-    } );
-    jumpto.append( '<option value="default">Back to top</option>' );
+
+    const html = buildTranscriptMarkup(data, {
+      onEach: onEachNode,
+      useDescription: getUseDescription(true)
+    })
+
+    JUMPTO.append( '<option value="default">Back to top</option>' );
     transcript.append( html );
     outer.append( transcript );
     outer.append( '<div class="able-window-toolbar" />' );
@@ -71,6 +81,26 @@ var buildTranscript = function( wrapper, id, cb ){
     wrapper.append( outer );
     if( callback ) callback( data );
   } );
+
+  // Rebuild on descriptions
+  $('body').on('click', '.able-button-handler-descriptions', () =>{
+    const html = buildTranscriptMarkup(getNodes(), {
+      onEach: onEachNode,
+      useDescription: getUseDescription()
+    })
+    transcript.html(html)
+  })
+
+  // Rebuild on search
+  let initDebuff = false
+  $('body').on('keyup', '#video-search', function(){
+    window.SEARCHDEBUFF = setTimeout(() => {
+      const value = $(this).val()
+      const keyword = (value.length > 2) ? value : false
+      highlightTranscript(transcript, '[data-node]', keyword)
+      highlightSuppCont('.suppCont-single', '[data-suppcont]', keyword)
+    }, 500)
+  })
 }
 
 module.exports = buildTranscript;
