@@ -35,7 +35,8 @@ const buildTranscriptMarkup = (data, {
         markup += `<div data-node="${quotes(node.contents)}" data-highlight="next" class="transcript-speaker able-unspoken">${node.contents}</div>`;
         break;
       case 'transcript_node':
-        markup = `<span data-node="${quotes(node.contents)}" tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="${node.start}" data-end="${node.end}">${node.contents}</span>&nbsp;`;
+        const contents = node.contents.replace('href', 'target="_blank" href')
+        markup = `<span data-node="${quotes(node.contents)}" tabindex="0" class="able-transcript-seekpoint able-transcript-caption transcript-node" data-highlight="transcript" data-start="${node.start}" data-end="${node.end}">${contents}</span>&nbsp;`;
         break;
     }
 
