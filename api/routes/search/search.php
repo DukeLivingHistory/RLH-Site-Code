@@ -25,15 +25,15 @@ $search = new Route( '/search/(?P<term>.*)', 'GET', function( $data ){
           'compare' => 'LIKE'
         ],
         [
-          'key' => 'supp_cont_raw',
+          'key' => 'supporting_content_raw',
           'value' => $term,
           'compare' => 'LIKE'
         ]
       ],
       // Prevent duplicate terms from previous search
-      'exclude' => array_reduce($terms_search, function($excluded_terms , $term) {
-        $excluded_terms[] = $term->term_id;
-        return $excluded_terms;
+      'exclude' => array_reduce($posts_search, function($excluded_terms , $post) {
+        $excluded_posts[] = $post->post_id;
+        return $excluded_posts;
       }, [])
     ]),
     $terms_search = get_terms([

@@ -2,10 +2,15 @@
 
 class Transcript {
 
+  private function sanitize_file_paths($data, $key = 'url') {
+    if(!$data) return false;
+    return file_get_contents(str_replace(site_url(), ABSPATH, $data[$key]));
+  }
+
   function __construct( $interview_id ){
     $this->interview_id = $interview_id;
-    $this->transcript = get_field( 'transcript', $interview_id ) ? file_get_contents( get_field( 'transcript', $interview_id )['url'] ) : false;
-    $this->description = get_field( 'description', $interview_id ) ? file_get_contents( get_field( 'description', $interview_id )['url'] ) : false;
+    $this->transcript = $this->sanitize_file_paths(get_field('transcript', $interview_id));
+    $this->description = $this->sanitize_file_paths(get_field('description', $interview_id));
   }
 
   public function get_slices( $should_trim = false ){
