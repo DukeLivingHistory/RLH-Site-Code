@@ -4,8 +4,8 @@ class Transcript {
 
   function __construct( $interview_id ){
     $this->interview_id = $interview_id;
-    $this->transcript = get_field( 'transcript', $interview_id ) ? get_field('transcript_raw', $interview_id ) : false;
-    $this->description = get_field( 'description', $interview_id ) ? get_field('description_raw', $interview_id ) : false;
+    $this->transcript = get_field( 'transcript', $interview_id ) ? file_get_contents( get_field( 'transcript', $interview_id )['url'] ) : false;
+    $this->description = get_field( 'description', $interview_id ) ? file_get_contents( get_field( 'description', $interview_id )['url'] ) : false;
   }
 
   public function get_slices( $should_trim = false ){

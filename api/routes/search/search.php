@@ -4,10 +4,37 @@ $search = new Route( '/search/(?P<term>.*)', 'GET', function( $data ){
   $args = $data->get_query_params();
   $term = str_replace('+', ' ', urldecode($data['term']));
   $results = array_merge(
-    get_posts([
+    $posts_search = get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
       's' => $term
+    ]),
+    get_posts([
+      'post_type' => [ 'timeline', 'interview' ],
+      'posts_per_page' => -1,
+      'meta_query' => [
+        'relation' => 'OR',
+        [
+          'key' => 'transcript_raw',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ],
+        [
+          'key' => 'description_raw',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ],
+        [
+          'key' => 'supp_cont_raw',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ]
+      ],
+      // Prevent duplicate terms from previous search
+      'exclude' => array_reduce($terms_search, function($excluded_terms , $term) {
+        $excluded_terms[] = $term->term_id;
+        return $excluded_terms;
+      }, [])
     ]),
     $terms_search = get_terms([
       'number' => 0,
