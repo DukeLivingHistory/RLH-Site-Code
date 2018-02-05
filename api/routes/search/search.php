@@ -18,8 +18,8 @@ $search = new Route( '/search/(?P<term>.*)', 'GET', function( $data ){
       'meta_query' => [
         [
           'key' => 'collection_description',
-          'value' => $data['term'],
-          'compare' => $term
+          'value' => $term,
+          'compare' => 'LIKE'
         ]
       ],
       // Prevent duplicate terms from previous search
