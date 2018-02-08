@@ -1,5 +1,4 @@
 <?php
-
 /* This file lets us get the ACF fields needed to be registered by
  * both interviews and timelines from one place.
  */
@@ -24,14 +23,16 @@ function get_supp_cont_fields(){
 				'label' => 'Timestamp',
 				'name' => 'timestamp',
 				'type' => 'select',
-        'allow_null' => 1
+        'allow_null' => 1,
+        'wrapper' => [ 'width' => '80' ]
 			],
       [
         'key' => 'sc_open',
         'label' => 'Open by default',
         'name' => 'open',
         'type' => 'true_false',
-        'default' => 0
+        'default' => 0,
+        'wrapper' => [ 'width' => '20' ]
       ],
 			[
 				'key' => 'sc_content',

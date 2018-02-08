@@ -1,25 +1,29 @@
 <?php
 
-function next_associative($array, $key){
+// Given an array of values with possible duplicates, returns the next by value
+function next_by_val($array, $val){
   $is_match = false;
-  foreach($array as $test => $val){
-    if($is_match){
-      return $test;
+  foreach($array as $key => $_val){
+    if($is_match && $_val !== $val){
+      return $_val;
     }
-    if($test == $key) $is_match = true;
+    if($_val == $val) $is_match = true;
   }
-  return $key;
-}
-
-function last_associative($array){
-  if(!is_array($array)) return;
-  return end(array_keys($array));
+  return $val;
 }
 
 function supp_cont_to_vtt($id, $supp_cont){
   if(!$supp_cont) return;
+
+  $transcript = new Transcript($id);
+  $timestamps = $transcript->get_slices_and_breaks(true);
+
+  $timestamps = array_reduce($timestamps, function($timestamps, $timestamp) {
+    if(strlen($timestamp['start'])) $timestamps[] = $timestamp['start'];
+    return $timestamps;
+  }, []);
+
   $vtt = "WEBVTT\n\n";
-  $timestamps = get_post_meta( $id, 'timestamps', $event_dates )[0];
   foreach($supp_cont as $item){
     $item_text = '';
 
@@ -34,12 +38,12 @@ function supp_cont_to_vtt($id, $supp_cont){
     if($timestamp){
       $item_text .= $timestamp;
       $item_text .= ' --> ';
-      $item_text .= next_associative($timestamps, $timestamp);
+      $item_text .= next_by_val($timestamps, $timestamp);
     } else {
       $item_text .= 'NOTE Non-transcript supporting content.'."\n\n";
-      $item_text .= last_associative($timestamps);
+      $item_text .= end($timestamps);
       $item_text .= ' --> ';
-      $item_text .= last_associative($timestamps);
+      $item_text .= end($timestamps);
     }
 
     $content = $item['sc_content'][0];
@@ -116,14 +120,14 @@ add_action('save_post', function($id){
   if(get_post_type($id) !== 'interview') return;
   if($_POST['acf']['save_from_supp_cont_raw']) return;
   $supp_cont = $_POST['acf']['sc_row'];
+
   $vtt = supp_cont_to_vtt($id, $supp_cont);
   update_field('supporting_content_raw', $vtt, $id);
 
-  if( strlen( $vtt ) > 0 ){
+  if(strlen($vtt) > 0){
     $title = preg_replace( '/[^a-zA-Z0-9\s]/', '', $_POST['post_title'] );
     $title = str_replace( ' ', '_', strtolower( $title ) );
     $file_temp = wp_upload_dir()['path'].'/'.$title.'_supporting_content.vtt';
-    $file_put_contents = file_put_contents( $file_temp, stripslashes( $vtt ) );
 
     $attachment = [
       'post_mime_type' => 'text/vtt',
@@ -133,11 +137,16 @@ add_action('save_post', function($id){
     ];
 
     $attach = wp_insert_attachment( $attachment, $file_temp );
-    update_field( 'supp_cont_file', $attach, $id );
-    //save_txt_from_vtt( $supporting_content, $_POST['post_title'] );
-
+    update_field('supp_cont_file', $attach, $id);
   } else {
-    update_field( 'supp_cont_file', false, $id );
+    update_field('supp_cont_file', false, $id);
   }
 
-});
+  // This is a hack
+  $sc_rows = $_POST['acf']['sc_row'];
+  foreach($sc_rows as $index => $content) {
+    $meta_key = 'sc_row_'.$index.'_timestamp';
+    update_post_meta($id, $meta_key, $content['sc_timestamp']);
+  }
+  
+}, 100); // Must run after manage_raw_transcript.php

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file allows us to get parts from our /app/ directory with the correct URL path.
  */

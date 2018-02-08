@@ -1,5 +1,5 @@
 <?php
-
+// @deprecated
 function alert_unavailable_timestamp(){
 
   if( !is_admin() || !isset( $_GET['post'] ) );

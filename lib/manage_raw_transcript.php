@@ -1,8 +1,6 @@
 <?php
 
-/* This file handles transcript saving from the raw field, as well as the display of the transcript in the back end.
-
-  August 30th 2017: This file also handles description text.
+/* This file handles transcript and description saving from the raw field, as well as the display of the transcript in the back end.
 */
 
 function handle_save($alias){
@@ -38,19 +36,16 @@ function handle_save($alias){
   }
 }
 
-add_action('save_post', function( $id ){
-
+add_action('save_post', function($id){
   if(get_post_type($id) !== 'interview') return;
-
   handle_save('transcript');
   handle_save('description');
-
-}, 30 );
+}, 30);
 
 add_filter( 'acf/load_field/key=transcript_raw', function( $field ){
-  if( !is_admin() || !isset( $_GET['post'] ) ) return $field;
-  if( get_post_type( $_GET['post'] ) !== 'interview' ) return $field;
-  $transcript = new Transcript( $_GET['post'] );
+  if(!$id = $_GET['post']) return $field;
+
+  $transcript = new Transcript($_GET['post']);
   $field['value'] = $transcript->transcript;
   return $field;
 } );

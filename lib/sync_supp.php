@@ -1,18 +1,30 @@
 <?php
 
-/* This file makes the results of save_timestamp available for use with supporting content. */
+/* This file makes the timestamps present in a piece of content available to supporting content */
 
-function add_choices( $field ){
-  if( !is_admin() || !isset( $_GET['post'] ) || !isset(get_post_meta( $_GET['post'], 'timestamps' )[0]) ) return $field;
-  $timestamps = get_post_meta( $_GET['post'], 'timestamps' )[0]; // set in save_timestamp
-  if( !$timestamps ) return;
-  foreach( $timestamps as $timestamp => $label ){
-    if( get_post_type( $_GET['post'] ) === 'interview' ){
-      $field['choices'][$timestamp] = $timestamp.' '.$label;
-    } elseif( get_post_type( $_GET['post'] ) === 'timeline' ){
-      $field['choices'][$label] = $label;
+include_once(get_stylesheet_directory() . '/models/Transcript.php');
+
+function add_choices($field){
+  if(!$id = $_GET['post']) return;
+
+  if(get_post_type($id) === 'interview') {
+    $transcript = new Transcript($id);
+    $contents = $transcript->get_slices_and_breaks(false);
+    foreach($contents as $timestamp) {
+      if($timestamp['type'] === 'transcript_node') {
+        $start = $timestamp['start'];
+        $label = $timestamp['contents'];
+        $field['choices'][$start] = $start.' '.$label;
+      }
+    }
+  }
+  elseif(get_post_type($id) === 'timeline') {
+    $contents = get_field('events');
+    foreach($contents as $timestamp) {
+      $date = $timestamp['date'];
+      $field['choices'][$date] = $date;
     }
   }
   return $field;
 }
-add_filter( 'acf/load_field/key=sc_timestamp', 'add_choices');
+add_filter('acf/load_field/key=sc_timestamp', 'add_choices');

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file registers P2P relations used by the site.
  */

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file adds CSS to the admin area of the site designed to make the interface
  * more user-friendly.

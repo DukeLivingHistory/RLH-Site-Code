@@ -7,53 +7,9 @@ class Transcript {
     return file_get_contents(str_replace(site_url(), ABSPATH, $data[$key]));
   }
 
-  function __construct( $interview_id ){
-    $this->interview_id = $interview_id;
-    $this->transcript = $this->sanitize_file_paths(get_field('transcript', $interview_id));
-    $this->description = $this->sanitize_file_paths(get_field('description', $interview_id));
-  }
-
-  public function get_slices( $should_trim = false ){
-    /*
-    // first capture: optional section header (unused)
-       (?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?
-
-    // second capture: required timestamp (beginning)
-       (?:([^\d].+\s)?(?:([\d][\d:\.]+)
-
-       [ \-\>]+
-
-    // third capture: required timestamp (end) (unused)
-       ([\d][\d:\.]+).*)\n)
-
-    // fourth capture: optional speaker name (unused)
-       (?:<v[ ]*(.*)>[ ]*\R?)?
-
-    // fifth capture: required text contents
-       ((?:(?!\s).*\s{0,1})*)
-
-    // sixth capture : optional paragraph break (unused)
-       (\n*NOTE\sparagraph\n*)?/'
-
-    */
-    $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*?)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE\sparagraph\n*)?/';
-
-    preg_match_all( $pattern, $this->transcript, $nodes );
-
-    for( $i = 0; $i < count($nodes[0]); $i++ ){
-      $timestamp = $nodes[2][$i];
-      $caption = $nodes[5][$i];
-      if( $should_trim ){ // limit captions to five words
-        $caption = explode( ' ', $caption );
-        if( count( $caption ) > 5 ){
-          $caption = implode( ' ', array_slice( $caption, 0, 5 ) ).'&hellip;';
-        } else {
-          $caption = implode( ' ', $caption );
-        }
-      }
-      $timestamps[$timestamp] = $caption;
-    }
-    return $timestamps;
+  function __construct($id){
+    $this->transcript = $this->sanitize_file_paths(get_field('transcript', $id));
+    $this->description = $this->sanitize_file_paths(get_field('description', id));
   }
 
   public function get_slices_and_breaks($include_description){
@@ -65,12 +21,6 @@ class Transcript {
     // sixth capture:    required text contents         ((?:(?!\s).*\s{0,1})*)
     // seventh capture:  optional paragraph break       (\s*NOTE\sparagraph\s*)
     $pattern = '/(?:WEBVTT.*\s)?(?:Kind.*\s)?(?:Language.*\s)?\s?(?:(?:(?:\s*NOTE chapter )([^\d].+)\s*)?([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)\n)?[ ]*(?:<v[ ]*(.*?)>[ ]*\R?)?((?:(?!\s).*\s{0,1})*)(\n*NOTE paragraph\n*)?/i';
-
-    // TODO: update indeces with new capture index
-
-    // print '<pre>';
-    // print_r( htmlspecialchars( $this->transcript ) );
-    // print '</pre>'; die();
 
     preg_match_all( $pattern, $this->transcript, $nodes );
 
@@ -130,20 +80,26 @@ class Transcript {
       for( $i = 0; $i < count($description_nodes[0]); $i++ ){
         $insert = [];
 
-        if( isset( $description_nodes[6][$i] ) && strlen( $description_nodes[6][$i] ) > 0){
+        if( // If description chunk has text
+          isset($description_nodes[6][$i]) &&
+          strlen($description_nodes[6][$i]) > 0
+        ){
           $start = trim($description_nodes[3][$i]);
+          $end = trim($description_nodes[4][$i]);
 
           $insert[] = [
             'type'      => 'description',
             'contents'  => trim($description_nodes[6][$i]),
             'start'     => $start,
-            'end'       => trim($description_nodes[4][$i]),
+            'end'       => $end, // End
           ];
 
-          foreach($results as $index => $result){
+          // Place result in the correct place in the transcript
+          foreach($results as $index => $result){ // Index = array key
+            // Identifies the last transcript node before timestamp
             if(sanitize_timestamp($result['start']) > sanitize_timestamp($start)){
               $offset = $index;
-              break;
+              break; // Exit
             }
           }
 
@@ -154,19 +110,4 @@ class Transcript {
 
     return count($results) ? $results : false;
   }
-
-  public function get_caption( $timestamp ){
-    return isset( $this->get_slices()[$timestamp] ) ? trim( $this->get_slices()[$timestamp] ) : false;
-  }
-
-  public function has_supp_at( $timestamp ){
-    $supp_content = get_field( 'sc_row', $this->interview_id );
-    foreach( $supp_content as $item ){
-      if( $item['timestamp'] === $timestamp ){
-        return true;
-      }
-    }
-    return false;
-  }
-
 }

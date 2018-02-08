@@ -1,5 +1,4 @@
 <?php
-
 function is_timestamp($line){
   $pattern = "/([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)/";
   return preg_match($pattern, $line);
@@ -92,10 +91,6 @@ function get_formatted_supp_cont_cues($vtt){
     }
   }
 
-  // print '<pre>';
-  // print_r($cues); die();
-  // print '</pre>';
-
   return $cues;
 }
 
@@ -107,7 +102,7 @@ add_action('save_post', function( $id ){
   $supporting_content = $_POST['acf']['supporting_content_raw'];
   $formatted = get_formatted_supp_cont_cues($supporting_content);
   $insert = [];
-  //print '<pre>'; print_r($formatted); print '</pre>'; die();
+
   if($formatted){
     foreach($formatted as $slice){
       $insert[] = [
@@ -141,7 +136,6 @@ add_action('save_post', function( $id ){
     update_field('sc_row', $insert, $id);
   }
 
-
   if( strlen( $supporting_content ) > 0){
     $title = preg_replace( '/[^a-zA-Z0-9\s]/', '', $_POST['post_title'] );
     $title = str_replace( ' ', '_', strtolower( $title ) );
@@ -156,11 +150,8 @@ add_action('save_post', function( $id ){
     ];
 
     $attach = wp_insert_attachment( $attachment, $file_temp );
-    update_field( 'supp_cont_file', $attach, $id );
-    //save_txt_from_vtt( $supporting_content, $_POST['post_title'] );
-
+    update_field('supp_cont_file', $attach, $id);
   } else {
-    update_field( 'supp_cont_file', false, $id );
+    update_field('supp_cont_file', false, $id);
   }
-
 });

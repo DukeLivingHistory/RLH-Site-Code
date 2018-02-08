@@ -31,27 +31,30 @@ add_action( 'acf/init', function(){
         'label' => 'Transcript',
         'name' => 'transcript',
         'type' => 'file',
-        'instructions' => 'Transcripts should be uploaded in WebVTT format. If pulling from YouTube, the caption track will be converted to WebVTT for you.',
+        'instructions' => 'Transcripts should be uploaded in WebVTT format.',
         'return_format' => 'array',
-        'mime_types' => ''
+        'mime_types' => '',
+        'wrapper' => [ 'width' => '33' ]
       ],
       [
         'key'    => 'description_file',
-        'label'  => 'Description File',
+        'label'  => 'Description',
         'name'   => 'description',
         'type'   => 'file',
         'instructions' => 'Descriptions should be uploaded in WebVTT format.',
         'return_format' => 'array',
-        'mime_types' => ''
+        'mime_types' => '',
+        'wrapper' => [ 'width' => '33' ]
       ],
       [
         'key' => 'supp_cont_file',
-        'label' => 'Supporting Content (.vtt file)',
+        'label' => 'Supporting Content',
         'name' => 'supp_cont_file',
         'type' => 'file',
         'instructions' => 'Transcripts should be uploaded in WebVTT format.',
         'return_format' => 'array',
-        'mime_types' => ''
+        'mime_types' => '',
+        'wrapper' => [ 'width' => '33' ]
       ],
   		[
   			'key' => 'transcript_utilities',
@@ -59,22 +62,23 @@ add_action( 'acf/init', function(){
   			'name' => 'transcript_utilities',
   			'type' => 'message'
   		],
-      [
-        'key' => 'update',
-        'label' => 'Pull transcript from YouTube?',
-        'name' => 'update',
-        'type' => 'true_false',
-        'wrapper' => [ 'width' => '50' ],
-        'instructions' => 'If selected, upon saving this interview you\'ll be asked to authenticate with the YouTube account hosting the video. After authenticating, the YouTube caption track will be saved to this post and you\'ll be redirected back to this page. Please note that this will erase existing content breaks in a track.'
-      ],
-      [
-        'key' => 'sync',
-        'label' => 'Sync',
-        'name' => 'sync',
-        'type' => 'true_false',
-        'wrapper' => [ 'width' => '50' ],
-  			'instructions' => 'If selected, upon saving the timestamps or event dates for this interview or timeline will be available to use with supporting content. This may erase existing timestamps or event dates that no longer exist in the transcript or timeline. Only select this when initially saving or if the transcript or timeline has changed.'
-      ],
+      // @deprecated
+      // [
+      //   'key' => 'update',
+      //   'label' => 'Pull transcript from YouTube?',
+      //   'name' => 'update',
+      //   'type' => 'true_false',
+      //   'wrapper' => [ 'width' => '50' ],
+      //   'instructions' => 'If selected, upon saving this interview you\'ll be asked to authenticate with the YouTube account hosting the video. After authenticating, the YouTube caption track will be saved to this post and you\'ll be redirected back to this page. Please note that this will erase existing content breaks in a track.'
+      // ],
+      // [
+      //   'key' => 'sync',
+      //   'label' => 'Sync',
+      //   'name' => 'sync',
+      //   'type' => 'true_false',
+      //   'wrapper' => [ 'width' => '50' ],
+  		// 	'instructions' => 'If selected, upon saving the timestamps or event dates for this interview or timeline will be available to use with supporting content. This may erase existing timestamps or event dates that no longer exist in the transcript or timeline. Only select this when initially saving or if the transcript or timeline has changed.'
+      // ],
       [
         'key' => 'hide',
         'label' => 'Hide from feeds?',
@@ -128,14 +132,14 @@ add_action( 'acf/init', function(){
       ],
   		[
   			'key' => 'tab_supporting_content',
-  			'label' => 'Supporting Content',
+  			'label' => 'Supp. Content',
   			'name' => '',
   			'type' => 'tab'
   		],
       get_supp_cont_fields(), // use function so fields can exist in multiple places
       [
         'key' => 'tab_supporting_content_raw',
-        'label' => 'Supporting Content (.vtt)',
+        'label' => 'Supp. Content (.vtt)',
         'name' => '',
         'type' => 'tab'
       ],
