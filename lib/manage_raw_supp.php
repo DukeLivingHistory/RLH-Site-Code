@@ -24,9 +24,11 @@ function get_formatted_supp_cont_cues($vtt){
     $sep = explode(' ', $line, 2);
     $keyword = trim(isset($sep[0]) ? $sep[0] : $line);
     $value = trim(strstr($line, ' '));
+
     if(is_open($line)){
       $is_open = true;
     }
+
     if(is_timestamp($line)){
       $cues[] = $cue;
       $cue = [
@@ -36,6 +38,7 @@ function get_formatted_supp_cont_cues($vtt){
       $is_open = false;
       continue;
     }
+
     switch($keyword){
       case 'CONTENT': // text
         $cue['type'] = 'text';
@@ -106,7 +109,7 @@ add_action('save_post', function( $id ){
   if($formatted){
     foreach($formatted as $slice){
       $insert[] = [
-        'timestamp' => $slice['timestamp'],
+        'sc_timestamp' => $slice['timestamp'],
         'open' => $slice['open'],
         'sc_content'   => [
           [
@@ -133,7 +136,14 @@ add_action('save_post', function( $id ){
         ]
       ];
     }
+
     update_field('sc_row', $insert, $id);
+
+    $sc_rows = $insert;
+    if($sc_rows) foreach($sc_rows as $index => $content) {
+      $meta_key = 'sc_row_'.$index.'_timestamp';
+      update_post_meta($id, $meta_key, $content['sc_timestamp']);
+    }
   }
 
   if( strlen( $supporting_content ) > 0){

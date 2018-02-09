@@ -142,11 +142,11 @@ add_action('save_post', function($id){
     update_field('supp_cont_file', false, $id);
   }
 
-  // This is a hack
+  // This is a hack. TODO: Figure out why this is necesary.
   $sc_rows = $_POST['acf']['sc_row'];
-  foreach($sc_rows as $index => $content) {
+  if($sc_rows) foreach($sc_rows as $index => $content) {
     $meta_key = 'sc_row_'.$index.'_timestamp';
     update_post_meta($id, $meta_key, $content['sc_timestamp']);
   }
-  
+
 }, 100); // Must run after manage_raw_transcript.php
