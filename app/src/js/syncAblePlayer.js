@@ -3,11 +3,13 @@ var cachebust  = require('./cachebust');
 var icon       = require( './icon' );
 
 var syncAblePlayer = function(transcript, id, supp){
+  console.log('syncing able')
   $( 'body' ).removeClass( 'hasAblePlayer' );
-  $( 'video' ).each(function (index, element) {
+  $('video').each(function (index, element) {
+    console.log('video found')
     $( 'body' ).addClass( 'hasAblePlayer' );
     if ($(element).data('able-player') !== undefined) {
-      window.AP = new AblePlayer( $(this), $(element) );
+      window.AP = new AblePlayer($(this), $(element))
 
       // transform transcript into useable format
       const sections = transcript.filter(node => node.type === 'section_break')

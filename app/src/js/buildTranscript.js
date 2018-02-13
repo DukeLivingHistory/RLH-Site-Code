@@ -57,7 +57,9 @@ var buildTranscript = function( wrapper, id, cb ){
     }
   }
 
-  $.get( '/wp-json/v1/interviews/'+id+'/transcript?return=transcript_contents'+cachebust(true), function( data ){
+  const url = '/wp-json/v1/interviews/'+id+'/transcript?return=transcript_contents'+cachebust(true)
+
+  $.get(url, function( data ){
 
     getNodes = () => data
 

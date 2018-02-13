@@ -93,13 +93,12 @@ var buildPage = function( wrapper, endpoint, queriedObject, dir ){
 
       } else if( endpoint === 'interviews' ){
 
-        buildInterviewsHeader( page, data );
+        buildInterviewsHeader( page, data )
         buildTranscript( page, data.id, function(transcript){
 
           socialHighlight( '.transcript' );
 
           buildSupp( page, endpoint, queriedObject, function(supp){
-
             if( data.collections.length ){
               buildOtherInCollection( page, data.id, data.collections[0] );
             }

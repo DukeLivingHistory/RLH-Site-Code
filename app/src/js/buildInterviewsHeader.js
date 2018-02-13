@@ -33,7 +33,7 @@ var buildInterviewsHeader = function( wrapper, data ){
 
   inner.append( '<span class="contentHeader-selectWrapper" id="selectwrap-'+data.id+'" style="display:none;"><select class="contentHeader-select" id="select-'+data.id+'"><option value="null">Contents</option></select></span>' );
 
-  var video = $('<video data-able-player data-youtube-id="'+data.video_id+'">');
+  var video = $('<video data-able-player data-youtube-id="'+data.video_id+'" data-youtube-playsinline>');
 
   if( data.transcript_url ){
     video.attr('data-transcript-src', 'transcript-'+data.id);

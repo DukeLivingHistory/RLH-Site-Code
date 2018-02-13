@@ -26,10 +26,12 @@ class Content {
   public function get_supp_cont(){
     $supp_content = get_field( 'sc_row', $this->id );
     if( !$supp_content ) return [];
+
+
     $i = 0;
     foreach( $supp_content as $item ){
       $item_formatted = $this->format_cont( $item['content'][0] );
-      $supp_content_formatted[$i]['timestamp'] = $item['timestamp'];
+      $supp_content_formatted[$i]['timestamp'] = get_post_meta($this->id, 'sc_row_'.$i.'_timestamp', true);
       $supp_content_formatted[$i]['type'] = $item_formatted['type'];
       $supp_content_formatted[$i]['open'] = $item['open'];
       $supp_content_formatted[$i++]['data'] = isset( $item_formatted['data'] ) ? $item_formatted['data'] : false ;
