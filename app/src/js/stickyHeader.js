@@ -1,11 +1,12 @@
 var stickyHeader = function( page, elem, target ){
 
-  var bottom =  $(target).offset().top;
-  var height = $(elem).height();
-  var unsticky = true; // toggled on/off and checked before manipulating DOM
-  var hasVideo = $( 'video' ).length;
+  const bottom =  $(target).offset().top + $(target).height()
+  const height = $(elem).height();
+  let unsticky = true; // toggled on/off and checked before manipulating DOM
+  const hasVideo = $( 'video' ).length;
+  let oldTop = 0 // cache value so we can tell if we scrolled up/down
 
-  var handleOn = function(){
+  const handleOn = function(){
     $(elem).addClass( elem.slice(1) + '--sticky' );
     page.css( 'padding-top', height );
     unsticky = false;
@@ -14,8 +15,8 @@ var stickyHeader = function( page, elem, target ){
     }, 500 ); //offset by css transition time
   }
 
-  var handleOff = function(){
-    $(elem).removeClass( elem.slice(1) + '--sticky' );
+  const handleOff = function(){
+    $(elem).removeClass(elem.slice(1) + '--sticky');
     page.css( 'padding-top', '' );
     unsticky = true;
     setTimeout( function(){
@@ -23,17 +24,28 @@ var stickyHeader = function( page, elem, target ){
     }, 500 ); //offset by css transition time
   }
 
-  var handler = function(){
-    if( $(window).width() <= 568 || !hasVideo ){
-      handleOff();
-      return;
+  const handler = function(){
+    // if( $(window).width() <= 568 || !hasVideo ){
+    if(!hasVideo){
+      handleOff()
+      return
     }
-    var top = $(window).scrollTop();
+    var top = $(window).scrollTop()
     if( top > bottom && unsticky ){
-      handleOn();
+      handleOn()
     } else if( top < bottom && !unsticky ) {
-      handleOff();
+      handleOff()
     }
+
+    if(top < oldTop) {
+      console.log('up')
+      $(elem).addClass( elem.slice(1) + '--justScrolledUp' );
+    } else {
+      console.log('down')
+      $(elem).removeClass( elem.slice(1) + '--justScrolledUp' );
+    }
+
+    oldTop = top
   }
 
   $(window).on( 'scroll resize orientationchange', handler );
@@ -42,7 +54,7 @@ var stickyHeader = function( page, elem, target ){
     $( 'body, html' ).animate( {
       scrollTop: 0
     }, TRANSITIONTIME );
-  } );
+  });
 
   $(elem).find( '[data-action="toggle"] select').change( function(){
     var size = $(this).val().toLowerCase();
