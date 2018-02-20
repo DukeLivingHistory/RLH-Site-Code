@@ -37,9 +37,13 @@ function handle_save($alias){
 }
 
 add_action('save_post', function($id){
-  if(get_post_type($id) !== 'interview') return;
-  handle_save('transcript');
-  handle_save('description');
+  if(get_post_type($id) === 'interview') {
+    handle_save('transcript');
+    handle_save('description');
+  }
+  if(get_post_type($id) === 'rich-text') {
+    handle_save('transcript');
+  }
 }, 30);
 
 add_filter( 'acf/load_field/key=transcript_raw', function( $field ){

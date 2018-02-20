@@ -18,6 +18,7 @@ $includes = [
   'lib/manage_raw_supp.php',
   'lib/manage_raw_transcript.php',
   'lib/photo_credits.php',
+  'lib/rich-text-format.php',
   'lib/sanitize_timestamp.php',
   'lib/save_txt_from_vtt.php',
   'lib/site_options.php',

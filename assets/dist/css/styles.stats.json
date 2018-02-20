@@ -1,22 +1,22 @@
 {
-  "published": "2018-02-20T16:55:25.703Z",
+  "published": "2018-02-20T21:17:20.011Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 65894,
+  "size": 66121,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12701,
-  "rules": 792,
-  "selectors": 1046,
-  "declarations": 2063,
-  "simplicity": 0.7571701720841301,
-  "averageOfIdentifier": 1.9282982791586998,
+  "gzippedSize": 12747,
+  "rules": 796,
+  "selectors": 1050,
+  "declarations": 2067,
+  "simplicity": 0.758095238095238,
+  "averageOfIdentifier": 1.9257142857142857,
   "mostIdentifier": 6,
-  "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper--large .able-wrapper .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.6047979797979797,
+  "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper--medium .contentHeader-searchwrap .able-right-controls:not(:nth-child(3))",
+  "averageOfCohesion": 2.5967336683417086,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -127,7 +127,7 @@
     },
     {
       "property": "background",
-      "count": 82
+      "count": 84
     },
     {
       "property": "top",

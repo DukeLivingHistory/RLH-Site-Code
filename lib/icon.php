@@ -1,6 +1,8 @@
 <?php
 /* This file specifies SVG defs used throughout the site. Also contains icon()
  * for displaying a <use> for the SVG.
+ *
+ * TODO: Add Rich Text icon.
  */
 
 function icon_defs(){ ?>

@@ -1,3 +1,3 @@
 <?php
 
-$collection = new Taxonomy( 'Collection', null, ['interview','timeline'] );
+$collection = new Taxonomy( 'Collection', null, ['interview','timeline', 'rich-text'] );

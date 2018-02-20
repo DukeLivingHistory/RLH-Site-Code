@@ -42,6 +42,10 @@
   background: $collectionsBg;
 }
 
+.content--rich-text {
+  background: $richTextBg;
+}
+
 .content-inner,
 .content-imgWrapper{
   @include make-col(0);
