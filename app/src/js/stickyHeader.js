@@ -38,10 +38,8 @@ var stickyHeader = function( page, elem, target ){
     }
 
     if(top < oldTop) {
-      console.log('up')
       $(elem).addClass( elem.slice(1) + '--justScrolledUp' );
     } else {
-      console.log('down')
       $(elem).removeClass( elem.slice(1) + '--justScrolledUp' );
     }
 
@@ -66,6 +64,17 @@ var stickyHeader = function( page, elem, target ){
       if( typeof AP !== 'undefined' ) AP.refreshControls();
     }, 500 ); //offset by css transition time
   } );
+
+  // Hack to allow pausing for small video
+  $(elem).on('click', '.able-fake-pause', function() {
+    if(typeof AP == 'undefined') return
+    if(AP.playing) {
+      AP.pauseMedia()
+    }
+    else {
+      AP.playMedia()
+    }
+  })
 
 };
 

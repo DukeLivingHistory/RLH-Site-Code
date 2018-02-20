@@ -1,22 +1,22 @@
 {
-  "published": "2018-02-15T20:46:38.757Z",
+  "published": "2018-02-20T16:55:25.703Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 62129,
+  "size": 65894,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12347,
-  "rules": 774,
-  "selectors": 1013,
-  "declarations": 2033,
-  "simplicity": 0.7640671273445212,
-  "averageOfIdentifier": 1.872655478775913,
-  "mostIdentifier": 5,
-  "mostIdentifierSelector": ".able-player .able-playlist li.able-current:after",
-  "averageOfCohesion": 2.6266149870801034,
+  "gzippedSize": 12701,
+  "rules": 792,
+  "selectors": 1046,
+  "declarations": 2063,
+  "simplicity": 0.7571701720841301,
+  "averageOfIdentifier": 1.9282982791586998,
+  "mostIdentifier": 6,
+  "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper--large .able-wrapper .able-right-controls:not(:nth-child(3))",
+  "averageOfCohesion": 2.6047979797979797,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -94,12 +94,12 @@
   "universalSelectors": 5,
   "unqualifiedAttributeSelectors": 13,
   "javascriptSpecificSelectors": 0,
-  "importantKeywords": 34,
+  "importantKeywords": 36,
   "floatProperties": 32,
   "propertiesCount": [
     {
       "property": "position",
-      "count": 133
+      "count": 134
     },
     {
       "property": "padding",
@@ -107,18 +107,18 @@
     },
     {
       "property": "margin",
-      "count": 123
-    },
-    {
-      "property": "display",
-      "count": 113
-    },
-    {
-      "property": "color",
-      "count": 108
+      "count": 124
     },
     {
       "property": "width",
+      "count": 117
+    },
+    {
+      "property": "display",
+      "count": 117
+    },
+    {
+      "property": "color",
       "count": 108
     },
     {
@@ -131,12 +131,12 @@
     },
     {
       "property": "top",
-      "count": 72
+      "count": 73
     },
     {
       "property": "left",
       "count": 64
     }
   ],
-  "mediaQueries": 79
+  "mediaQueries": 83
 }

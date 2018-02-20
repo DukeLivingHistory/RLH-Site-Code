@@ -240,13 +240,18 @@
     width: 50vw;
     @each $breakpoint, $container-max-width in $container-max-widths {
       @include media-breakpoint-up($breakpoint) {
-        margin-left: calc( (100vw - #{$container-max-width} ) / 2 );
+        margin-left: calc((100vw - #{$container-max-width}) / 2);
       }
     }
   }
 
-  .contentHeader-imgWrapper--default {
-    //margin-left: 20vw;
+  .contentHeader-imgWrapper--medium {
+    width: 40vw;
+    @each $breakpoint, $container-max-width in $container-max-widths {
+      @include media-breakpoint-up($breakpoint) {
+        margin-left: calc(((100vw - #{$container-max-width}) / 2) + 10vw);
+      }
+    }
   }
 
   .contentHeader-imgWrapper--hidden .able-wrapper {
@@ -302,7 +307,12 @@
   padding: .25em .5em;
 }
 
-@media(max-width: 567px) {
+.able-fake-pause {
+  display: none;
+}
+
+@media(max-width: 568px) {
+
   .contentHeader {
     select,
     input {
@@ -315,6 +325,16 @@
   .contentHeaderOuter--sticky {
     transform: translateY(-75px);
     transition: transform .25s ease;
+
+    .able-fake-pause {
+      display: block;
+      position: absolute;
+      top: 74px;
+      height: 33vw * 9 / 16;
+      width: 33vw;
+      right: 0;
+      z-index: 10000;
+    }
 
     &.contentHeaderOuter--justScrolledUp {
       transform: translateY(0);
@@ -349,14 +369,17 @@
       &-searchwrap,
       .able-wrapper {
         position: relative;
-        right: -50vw;
+        right: -67vw;
         top: 75px;
-        width: 50vw;
-        margin-top: -1px;
+        width: 33vw;
         .able-controller,
         .able-status-bar {
           display: none;
         }
+      }
+
+      &-search {
+        margin-top: -2px;
       }
     }
 
@@ -365,10 +388,57 @@
       .able-wrapper {
         right: 0;
         width: 100vw;
-        .able-controller,
-        .able-status-bar {
+        .able-controller {
           display: block;
         }
+        .able-left-controls,
+        .able-right-controls:not(:nth-child(3)) {
+          display: none;
+        }
+        .able-right-controls {
+          width: 100%;
+        }
+        .able-seekbar-wrapper {
+          width: 100%!important;
+        }
+        .able-seekbar {
+          margin: 0 10px;
+        }
+
+        .able-fake-pause {
+          width: 100vw;
+          height: 100vw * 9 / 16;
+        }
+      }
+    }
+
+    .contentHeader-imgWrapper--medium {
+      .contentHeader-searchwrap,
+      .able-wrapper {
+        right: -50vw;
+        width: 50vw;
+        .able-controller {
+          display: block;
+        }
+        .able-left-controls,
+        .able-right-controls:not(:nth-child(3)) {
+          display: none;
+        }
+        .able-right-controls {
+          width: 100%;
+        }
+        .able-seekbar-wrapper {
+          width: 100%!important;
+        }
+        .able-seekbar {
+          margin: 0 10px;
+        }
+
+      }
+
+      .able-fake-pause {
+        width: 50vw;
+        height: 50vw * 9 / 16;
       }
     }
   }
