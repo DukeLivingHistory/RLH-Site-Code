@@ -53,6 +53,23 @@ add_action( 'acf/init', function(){
         'instructions' => 'If selected, this content will not be displayed on the home page or any archive pages. This content may still be referenced via Related Content relationships or through menus, such as the Research menu.'
       ],
       [
+        'key' => 'abc_term',
+        'label' => 'Sort Term',
+        'name' => 'abc_term',
+        'type' => 'text',
+        'required' => 1,
+        'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.'
+      ],
+      [
+        'key' => 'interview_date',
+        'label' => 'Date',
+        'name' => 'interview_date',
+        'type' => 'date_picker',
+        'display_format' => 'F d, Y',
+        'required' => 1,
+        'instructions' => 'Enter the date of the content.'
+      ],
+      [
         'key' => 'tab_transcript_raw',
         'label' => 'Text (.vtt)',
         'name' => '',

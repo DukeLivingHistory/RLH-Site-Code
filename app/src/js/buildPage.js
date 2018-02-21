@@ -18,8 +18,6 @@ var respImg               = require('./respImg')
 var Cookies               = require('js-cookie')
 
 var buildPage = function(wrapper, endpoint, queriedObject, dir){
-  console.log(endpoint, queriedObject)
-
   $('[data-action="jumpToActive"], .socialPopup').remove() // shouldn't have to do this but we do
 
   clearInterval(JUMPTOACTIVE) // from syncAblePlayer – stop polling went creating new page
@@ -41,26 +39,26 @@ var buildPage = function(wrapper, endpoint, queriedObject, dir){
       })
     }
     else {
-      if(endpoint === 'rich-text') {
-        document.title = 'Rich Text'
-      }
-      else {
-        document.title = endpoint.charAt(0).toUpperCase() + endpoint.slice(1)
-      }
       if(endpoint === 'interviews'){
-        var order = Cookies.get('ARCHIVEORDER')
-        var url = '/wp-json/v1/'+endpoint+'?order=' + order + '&count='+COUNT+cachebust(true)
+        const order = Cookies.get('ARCHIVEORDER') || 'abc'
+        const url = `/wp-json/v1/interviews?order=${order}&count=${COUNT}&include=all`+cachebust(true)
+
         $.get(url, function(data){
-          buildArchive(page, data, endpoint, (endpoint === 'interviews'))
+          buildArchive(page, data, endpoint, true, [
+            'Media',
+            'No Media',
+            'All'
+          ])
+
           animatePage(wrapper, page, dir, function(){
             respImg.load('.respImg')
           })
         })
+
       } else {
         const url = '/wp-json/v1/'+endpoint+'?count='+COUNT+'&offset=0'+cachebust(true)
-        console.log(url)
         $.get(url, function(data){
-          buildArchive(page, data, endpoint, (endpoint === 'interviews'))
+          buildArchive(page, data, endpoint, false, false)
           animatePage(wrapper, page, dir, function(){
             respImg.load('.respImg')
           })

@@ -6,6 +6,12 @@ class Type {
     $this->plural = $plural ? $plural : $name.'s';
     $this->lower = str_replace(' ', '-', strtolower($this->name));
     $this->supports = $supports;
+    $this->slug = str_replace(' ', '-', strtolower($this->plural));
+
+    if($name === 'No Media VTT') { // HACK
+      $this->slug = 'rich-text';
+    }
+
     add_action('init', function(){
       $labels = [
         'name'                  => _x($this->plural, 'Post Type General Name', 'text_domain'),
@@ -41,9 +47,9 @@ class Type {
     		'menu_position'         => 5,
     		'show_in_admin_bar'     => true,
     		'show_in_nav_menus'     => true,
-    		'has_archive'           => str_replace(' ', '-', strtolower($this->plural)),
+    		'has_archive'           => $this->slug,
     		'publicly_queryable'    => true,
-        'rewrite'               => [ 'slug' => str_replace(' ', '-', strtolower($this->plural)) ]
+        'rewrite'               => [ 'slug' => $this->slug ]
       ];
 
       register_post_type($this->lower, $args);
