@@ -17,19 +17,6 @@ $route = new Route('/interviews/', 'GET', function($data){
     'fields' => 'ids'
   ];
 
-  if(isset($args['include'])) {
-    switch($args['include']) {
-      case 'media':
-        $query_args['post_type'] = ['interview'];
-        break;
-      case 'no-media':
-        $query_args['post_type'] = ['rich-text']; // TODO: Rename
-        break;
-      default:
-        $query_args['post_type'] = ['interview', 'rich-text']; // TODO: Rename
-    }
-  }
-
   if(isset($args['order'])){
     $key = explode('_', $args['order'])[0];
     $order = explode('_', $args['order'])[1];

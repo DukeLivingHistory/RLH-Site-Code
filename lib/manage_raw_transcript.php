@@ -41,7 +41,7 @@ add_action('save_post', function($id){
     handle_save('transcript');
     handle_save('description');
   }
-  if(get_post_type($id) === 'rich-text') {
+  if(get_post_type($id) === 'interactive') {
     handle_save('transcript');
   }
 }, 30);

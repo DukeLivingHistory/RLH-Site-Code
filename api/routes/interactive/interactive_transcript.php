@@ -1,5 +1,5 @@
 <?php
-$route = new Route('/rich-text/(?P<id>\d+)/transcript', 'GET', function($data){
+$route = new Route('/interactives/(?P<id>\d+)/transcript', 'GET', function($data){
   $transcript = new Transcript($data['id']);
   $sliced = $transcript->get_slices_and_breaks(true);
   if(!$sliced) return [];

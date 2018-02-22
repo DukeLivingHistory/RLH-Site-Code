@@ -2,11 +2,11 @@
 
 add_action( 'acf/init', function(){
   acf_add_local_field_group( [
-  	'key' => 'rich-text_options',
+  	'key' => 'interactive_options',
   	'title' => 'Rich Text Options',
   	'fields' => [
   		[
-  			'key' => 'tab_rich-text',
+  			'key' => 'tab_interactive',
   			'label' => 'Rich Text Options',
   			'name' => '',
   			'type' => 'tab'
@@ -27,7 +27,7 @@ add_action( 'acf/init', function(){
         'instructions' => 'Transcripts should be uploaded in WebVTT format.',
         'return_format' => 'array',
         'mime_types' => '',
-        'wrapper' => [ 'width' => '33' ]
+        'wrapper' => [ 'width' => '50' ]
       ],
       [
         'key' => 'supp_cont_file',
@@ -37,37 +37,7 @@ add_action( 'acf/init', function(){
         'instructions' => 'Transcripts should be uploaded in WebVTT format.',
         'return_format' => 'array',
         'mime_types' => '',
-        'wrapper' => [ 'width' => '33' ]
-      ],
-  		[
-  			'key' => 'transcript_utilities',
-  			'label' => 'Transcript Utilities',
-  			'name' => 'transcript_utilities',
-  			'type' => 'message'
-  		],
-      [
-        'key' => 'hide',
-        'label' => 'Hide from feeds?',
-        'name' => 'hide',
-        'type' => 'true_false',
-        'instructions' => 'If selected, this content will not be displayed on the home page or any archive pages. This content may still be referenced via Related Content relationships or through menus, such as the Research menu.'
-      ],
-      [
-        'key' => 'abc_term',
-        'label' => 'Sort Term',
-        'name' => 'abc_term',
-        'type' => 'text',
-        'required' => 1,
-        'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.'
-      ],
-      [
-        'key' => 'interview_date',
-        'label' => 'Date',
-        'name' => 'interview_date',
-        'type' => 'date_picker',
-        'display_format' => 'F d, Y',
-        'required' => 1,
-        'instructions' => 'Enter the date of the content.'
+        'wrapper' => [ 'width' => '50' ]
       ],
       [
         'key' => 'tab_transcript_raw',
@@ -80,7 +50,7 @@ add_action( 'acf/init', function(){
         'label' => 'Text(.vtt)',
         'name'  => 'transcript_raw',
         'type'  => 'textarea',
-        'instructions' => '<p>You may paste text here and press the button below to automatically insert timestamps. If there is an abbreviation that should not trigger a new timestamp, add it to the "Whitelisted Abbreviations" section<a href="/wp-admin/admin.php?page=acf-options">here</a>.</p><a href="#" id="js-format-rich-text" class="button-primary">Format</a>',
+        'instructions' => '<p>You may paste text here and press the button below to automatically insert timestamps. If there is an abbreviation that should not trigger a new timestamp, add it to the "Whitelisted Abbreviations" section<a href="/wp-admin/admin.php?page=acf-options">here</a>.</p><a href="#" id="js-format-interactive" class="button-primary">Format</a>',
         'rows'  => 100
       ],
   		[
@@ -116,7 +86,7 @@ add_action( 'acf/init', function(){
   			[
   				'param' => 'post_type',
   				'operator' => '==',
-  				'value' => 'rich-text',
+  				'value' => 'interactive',
   			],
   		],
   	],

@@ -1,35 +1,31 @@
-var cachebust = require('./cachebust')
-var animatePage           = require('./animatePage')
-var buildArchive          = require('./buildArchive')
-var buildCollectionHeader = require('./buildCollectionHeader')
-var buildCollectionFeed   = require('./buildCollectionFeed')
-var buildTimeline         = require('./buildTimeline')
-var buildTimelineHeader   = require('./buildTimelineHeader')
-var buildInterviewsHeader = require('./buildInterviewsHeader')
-var buildOtherInCollection = require('./buildOtherInCollection')
-var buildTranscript       = require('./buildTranscript')
-var buildSupp             = require('./buildSupp')
-var eqHeight              = require('./eqHeight')
-var socialHighlight       = require('./socialHighlight')
-var stickyHeader          = require('./stickyHeader')
-var syncAblePlayer        = require('./syncAblePlayer')
-var respBg                = require('./respBg')
-var respImg               = require('./respImg')
-var Cookies               = require('js-cookie')
+const cachebust = require('./cachebust')
+const animatePage            = require('./animatePage')
+const buildArchive           = require('./buildArchive')
+const buildCollectionHeader  = require('./buildCollectionHeader')
+const buildCollectionFeed    = require('./buildCollectionFeed')
+const buildTimeline          = require('./buildTimeline')
+const buildTimelineHeader    = require('./buildTimelineHeader')
+const buildInterviewsHeader  = require('./buildInterviewsHeader')
+const buildOtherInCollection = require('./buildOtherInCollection')
+const buildTranscript        = require('./buildTranscript')
+const buildSupp              = require('./buildSupp')
+const eqHeight               = require('./eqHeight')
+const socialHighlight        = require('./socialHighlight')
+const stickyHeader           = require('./stickyHeader')
+const syncAblePlayer         = require('./syncAblePlayer')
+const respBg                 = require('./respBg')
+const respImg                = require('./respImg')
+const Cookies                = require('js-cookie')
 
-var buildPage = function(wrapper, endpoint, queriedObject, dir){
-  $('[data-action="jumpToActive"], .socialPopup').remove() // shouldn't have to do this but we do
-
+const buildPage = function(wrapper, endpoint, queriedObject, dir){
+  $('[data-action="jumpToActive"], .socialPopup').remove()
   clearInterval(JUMPTOACTIVE) // from syncAblePlayer – stop polling went creating new page
-
-  var page = $('<article class="page"/>')
-
+  const page = $('<article class="page"/>')
   $('body').attr('data-endpoint', endpoint)
   $('body').attr('data-id', queriedObject)
-
   if(queriedObject === 'archive'){
     if(endpoint === 'search'){
-      var term = $('body').attr('data-search')
+      const term = $('body').attr('data-search')
       document.title = 'Search for '+term
       $.get('/wp-json/v1/'+endpoint+'/'+term+'?count='+COUNT+'&offset=0'+cachebust(true), function(data){
         buildArchive(page, data, endpoint)
@@ -72,9 +68,9 @@ var buildPage = function(wrapper, endpoint, queriedObject, dir){
       DESCRIPTION = data.description
       if(endpoint === 'timelines'){
         buildTimelineHeader(page, data)
-        buildTimeline(page, data.events, data.intro, function(){
+        buildTimeline(page, data.events, data.intro, () => {
           if(window.location.hash){
-            var hash = window.location.hash
+            const hash = window.location.hash
             setTimeout(function(){
               $('body, html').scrollTop($(hash).offset().top)
             }, TRANSITIONTIME)
@@ -82,38 +78,46 @@ var buildPage = function(wrapper, endpoint, queriedObject, dir){
         })
       }
       else if(endpoint === 'interviews'){
-        buildInterviewsHeader(page, data)
-        buildTranscript(page, data.id, function(transcript){
+        if(data.no_media) {
+          buildTimelineHeader(page, data, 'Interview')
+          buildTranscript(page, data.id, (transcript) => {
+            socialHighlight('.transcript')
+            buildSupp(page, endpoint, queriedObject, () => {
+              if(data.collections.length) {
+                buildOtherInCollection(page, data.id, data.collections[0])
+              }
+            })
+          })
+        }
+        else {
+          buildInterviewsHeader(page, data)
+          buildTranscript(page, data.id, (transcript) => {
+            socialHighlight('.transcript')
+            buildSupp(page, endpoint, queriedObject, (supp) => {
+              if(data.collections.length){
+                buildOtherInCollection(page, data.id, data.collections[0])
+              }
+              syncAblePlayer(transcript, data.id, supp)
+            }, !!transcript)
+            stickyHeader(page, '.contentHeaderOuter', '.contentHeader-inner')
+          })
+        }
+      }
+      else if(endpoint === 'interactives') {
+        buildTimelineHeader(page, data, false)
+        buildTranscript(page, data.id, (transcript) => {
           socialHighlight('.transcript')
-          buildSupp(page, endpoint, queriedObject, function(supp){
-            if(data.collections.length){
-              buildOtherInCollection(page, data.id, data.collections[0])
-            }
-            syncAblePlayer(transcript, data.id, supp)
-          }, transcript)
-          stickyHeader(page, '.contentHeaderOuter', '.contentHeader-inner')
+          buildSupp(page, endpoint, queriedObject, null, !!transcript)
         })
       }
-      else if(endpoint === 'rich-text') {
-        console.log('rich text!')
-        buildTimelineHeader(page, data)
-        buildTranscript(page, data.id, function(transcript) {
-          socialHighlight('.transcript')
-          buildSupp(page, endpoint, queriedObject, function() {
-            if(data.collections.length) {
-              buildOtherInCollection(page, data.id, data.collections[0])
-            }
-          }, transcript)
-        })
-      }
-      else if(endpoint === 'collections'){
+      else if(endpoint === 'collections') {
         buildCollectionHeader(page, data)
         buildCollectionFeed(page, data)
       }
 
-      animatePage(wrapper, page, dir, function(){
+      animatePage(wrapper, page, dir, () => {
         if(endpoint === 'timelines' && $('.respImg').length < 1){
-          buildSupp(page, endpoint, queriedObject, function(){
+          buildSupp(page, endpoint, queriedObject, () => {
             if(data.collections.length){
               buildOtherInCollection(page, data.id, data.collections[0])
             }
@@ -121,10 +125,10 @@ var buildPage = function(wrapper, endpoint, queriedObject, dir){
           return
         }
 
-        respImg.load('.respImg', function(){
+        respImg.load('.respImg', () => {
           // run this as a callback so that height can be based on returned images
           if(endpoint === 'timelines'){
-            buildSupp(page, endpoint, queriedObject, function(){
+            buildSupp(page, endpoint, queriedObject, () => {
               if(data.collections.length){
                 buildOtherInCollection(page, data.id, data.collections[0])
               }

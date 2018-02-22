@@ -1,5 +1,17 @@
 <?php
 
+function get_cond_logic() {
+  return [
+    [
+      [
+        'field' => 'no_media',
+        'operator' => '!=',
+        'value' => '1'
+      ]
+    ]
+  ];
+}
+
 add_action( 'acf/init', function(){
   acf_add_local_field_group( [
   	'key' => 'interview_options',
@@ -20,12 +32,29 @@ add_action( 'acf/init', function(){
         'media_upload' => 0
       ],
       [
+        'key' => 'no_media',
+        'label' => 'No Media',
+        'name' => 'no_media',
+        'type' => 'true_false',
+        'instructions' => 'Select this box for interviews that do not have a video.',
+        'default' => 0,
+        'wrapper' => [ 'width' => '50' ]
+      ],
+      [
         'key' => 'youtube_id',
         'label' => 'YouTube Video ID',
         'name' => 'youtube_id',
         'type' => 'text',
-        'maxlength' => '11'
+        'maxlength' => '11',
+        'conditional_logic' => get_cond_logic(),
+        'wrapper' => [ 'width' => '50' ]
       ],
+  		[
+  			'key' => 'transcript_files',
+  			'label' => 'Transcript Files',
+  			'name' => 'transcript_files',
+  			'type' => 'message'
+  		],
       [
         'key' => 'transcript_file',
         'label' => 'Transcript',
@@ -44,7 +73,8 @@ add_action( 'acf/init', function(){
         'instructions' => 'Descriptions should be uploaded in WebVTT format.',
         'return_format' => 'array',
         'mime_types' => '',
-        'wrapper' => [ 'width' => '33' ]
+        'wrapper' => [ 'width' => '33' ],
+        'conditional_logic' => get_cond_logic()
       ],
       [
         'key' => 'supp_cont_file',
@@ -62,29 +92,13 @@ add_action( 'acf/init', function(){
   			'name' => 'transcript_utilities',
   			'type' => 'message'
   		],
-      // @deprecated
-      // [
-      //   'key' => 'update',
-      //   'label' => 'Pull transcript from YouTube?',
-      //   'name' => 'update',
-      //   'type' => 'true_false',
-      //   'wrapper' => [ 'width' => '50' ],
-      //   'instructions' => 'If selected, upon saving this interview you\'ll be asked to authenticate with the YouTube account hosting the video. After authenticating, the YouTube caption track will be saved to this post and you\'ll be redirected back to this page. Please note that this will erase existing content breaks in a track.'
-      // ],
-      // [
-      //   'key' => 'sync',
-      //   'label' => 'Sync',
-      //   'name' => 'sync',
-      //   'type' => 'true_false',
-      //   'wrapper' => [ 'width' => '50' ],
-  		// 	'instructions' => 'If selected, upon saving the timestamps or event dates for this interview or timeline will be available to use with supporting content. This may erase existing timestamps or event dates that no longer exist in the transcript or timeline. Only select this when initially saving or if the transcript or timeline has changed.'
-      // ],
       [
         'key' => 'hide',
         'label' => 'Hide from feeds?',
         'name' => 'hide',
         'type' => 'true_false',
-        'instructions' => 'If selected, this content will not be displayed on the home page or any archive pages. This content may still be referenced via Related Content relationships or through menus, such as the Research menu.'
+        'instructions' => 'If selected, this content will not be displayed on the home page or any archive pages. This content may still be referenced via Related Content relationships or through menus, such as the Research menu.',
+        'wrapper' => [ 'width' => '33' ]
       ],
       [
         'key' => 'abc_term',
@@ -92,7 +106,8 @@ add_action( 'acf/init', function(){
         'name' => 'abc_term',
         'type' => 'text',
         'required' => 1,
-        'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.'
+        'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.',
+        'wrapper' => [ 'width' => '33' ]
       ],
       [
         'key' => 'interview_date',
@@ -101,7 +116,8 @@ add_action( 'acf/init', function(){
         'type' => 'date_picker',
         'display_format' => 'F d, Y',
         'required' => 1,
-        'instructions' => 'Enter the date of the interview.'
+        'instructions' => 'Enter the date of the interview.',
+        'wrapper' => [ 'width' => '33' ]
       ],
       [
         'key' => 'tab_transcript_raw',
@@ -111,24 +127,26 @@ add_action( 'acf/init', function(){
       ],
       [
         'key'   => 'transcript_raw',
-        'label' => 'Transcript (.vtt)',
+        'label' => 'Text(.vtt)',
         'name'  => 'transcript_raw',
         'type'  => 'textarea',
-        'instructions' => 'Changes here will be reflected in the transcript file.',
+        'instructions' => '<p>You may paste text here and press the button below to automatically insert timestamps. If there is an abbreviation that should not trigger a new timestamp, add it to the "Whitelisted Abbreviations" section <a href="/wp-admin/admin.php?page=acf-options"> here</a>.</p><a href="#" id="js-format-interactive" class="button-primary">Format</a>',
         'rows'  => 100
       ],
       [
         'key'   => 'tab_description_raw',
         'label' => 'Description (.vtt)',
         'name'  => '',
-        'type'  => 'tab'
+        'type'  => 'tab',
+        'conditional_logic' => get_cond_logic()
       ],
       [
         'key'   => 'description_raw',
         'label' => 'Description (.vtt)',
         'name'  => 'description_raw',
         'type'  => 'textarea',
-        'rows'  => 100
+        'rows'  => 100,
+        'conditional_logic' => get_cond_logic()
       ],
   		[
   			'key' => 'tab_supporting_content',

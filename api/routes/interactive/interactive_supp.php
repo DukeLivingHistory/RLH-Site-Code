@@ -1,7 +1,7 @@
 <?php
-include_once(get_template_directory().'/models/RichText.php');
-$route = new Route('/rich-text/(?P<id>\d+)/supp', 'GET', function($data){
-  $rich_text = new RichText($data['id']);
+include_once(get_template_directory().'/models/Interactive.php');
+$route = new Route('/interactives/(?P<id>\d+)/supp', 'GET', function($data){
+  $rich_text = new Interactive($data['id']);
 
   $supp = $rich_text->get_supp_cont();
 

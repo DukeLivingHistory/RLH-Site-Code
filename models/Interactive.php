@@ -2,7 +2,7 @@
 
 include_once('Content.php');
 
-class RichText extends Content {
+class Interactive extends Content {
   function __construct($id){
     parent::__construct($id);
     $this->introduction    = get_field('introduction', $id);

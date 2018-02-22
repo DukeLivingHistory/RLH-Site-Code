@@ -8,15 +8,17 @@ class Type {
     $this->supports = $supports;
     $this->slug = str_replace(' ', '-', strtolower($this->plural));
 
-    if($name === 'No Media VTT') { // HACK
-      $this->slug = 'rich-text';
+    if($this->plural === 'Interactives') {
+      $this->menu_name = 'Interactive Pages';
+    } else {
+      $this->menu_name = $this->plural;
     }
 
     add_action('init', function(){
       $labels = [
-        'name'                  => _x($this->plural, 'Post Type General Name', 'text_domain'),
+        'name'                  => _x($this->menu_name, 'Post Type General Name', 'text_domain'),
     		'singular_name'         => _x($this->name, 'Post Type Singular Name', 'text_domain'),
-    		'menu_name'             => __($this->plural, 'text_domain'),
+    		'menu_name'             => __($this->menu_name, 'text_domain'),
     		'name_admin_bar'        => __($this->name, 'text_domain'),
     		'archives'              => __($this->name.'Archives', 'text_domain'),
     		'parent_item_colon'     => __('Parent '.$this->name.':', 'text_domain'),
@@ -36,7 +38,6 @@ class Type {
       ];
 
       $args = [
-        'label'                 => __($this->name, 'text_domain'),
     		'description'           => __($this->name.' Description', 'text_domain'),
     		'labels'                => $labels,
     		'supports'              => $this->supports,

@@ -1,7 +1,7 @@
 <?php
-include_once(get_template_directory().'/models/RichText.php');
-$route = new Route('/rich-text/(?P<id>\d+)', 'GET', function($data){
-  $rich_text = new RichText($data['id']);
+include_once(get_template_directory().'/models/Interactive.php');
+$route = new Route('/interactives/(?P<id>\d+)', 'GET', function($data){
+  $rich_text = new Interactive($data['id']);
 
   if($rich_text->collections){
     $i = 0;

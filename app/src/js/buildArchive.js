@@ -12,9 +12,11 @@ var buildArchive = function(
   mediaTypes
 ){
   var header = $('<header class="contentHeader contentHeader--archive"/>')
+
   if(data.image) {
     var hero = $('<figure class="heroImg js-respBg" data-set="hero" data-id="'+data.image+'">')
   }
+
   var feed = $('<ul class="content-feed"/>')
   var load = $('<button class="content-load">Load More</button>')
   var isAbc = false
