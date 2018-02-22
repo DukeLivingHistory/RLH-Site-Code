@@ -217,7 +217,7 @@
   .contentHeader-imgWrapper {
     position: absolute;
     top: 0;
-    width: 30vw;
+    width: 40vw;
     padding: 0;
     // variables from bootstrap _variables.scss in bower_components
     // offsets left position by distance from edge of container
@@ -226,8 +226,8 @@
     // the right edge of element while also changing the left padding
     @each $breakpoint, $container-max-width in $container-max-widths {
       @include media-breakpoint-up($breakpoint) {
-        left: calc( 50% - ( 100vw - #{$container-max-width} ) / 2 );
-        margin-left: calc( (140vw - #{$container-max-width} ) / 2 );
+        left: calc(50% - ( 100vw - #{$container-max-width} ) / 2);
+        margin-left: calc(((100vw - #{$container-max-width}) / 2) + 10vw);
       }
     }
     // offset the transition so that element doesn't jump left due a left
@@ -245,13 +245,13 @@
     }
   }
 
-  .contentHeader-imgWrapper--medium {
-    width: 40vw;
-    @each $breakpoint, $container-max-width in $container-max-widths {
-      @include media-breakpoint-up($breakpoint) {
-        margin-left: calc(((100vw - #{$container-max-width}) / 2) + 10vw);
+  .contentHeader-imgWrapper--small {
+      width: 25vw;
+      @each $breakpoint, $container-max-width in $container-max-widths {
+        @include media-breakpoint-up($breakpoint) {
+          margin-left: calc(((100vw - #{$container-max-width}) / 2) + 25vw);
+        }
       }
-    }
   }
 
   .contentHeader-imgWrapper--hidden .able-wrapper {
@@ -312,7 +312,6 @@
 }
 
 @media(max-width: 568px) {
-
   .contentHeader {
     select,
     input {
@@ -330,8 +329,6 @@
       display: block;
       position: absolute;
       top: 74px;
-      height: 33vw * 9 / 16;
-      width: 33vw;
       right: 0;
       z-index: 10000;
     }
@@ -366,55 +363,16 @@
         width: 50vw;
       }
 
-      &-searchwrap,
-      .able-wrapper {
-        position: relative;
-        right: -67vw;
-        top: 75px;
-        width: 33vw;
-        .able-controller,
-        .able-status-bar {
-          display: none;
-        }
-      }
-
       &-search {
         margin-top: -2px;
       }
     }
 
-    .contentHeader-imgWrapper--large {
+    .contentHeader-imgWrapper {
       .contentHeader-searchwrap,
       .able-wrapper {
-        right: 0;
-        width: 100vw;
-        .able-controller {
-          display: block;
-        }
-        .able-left-controls,
-        .able-right-controls:not(:nth-child(3)) {
-          display: none;
-        }
-        .able-right-controls {
-          width: 100%;
-        }
-        .able-seekbar-wrapper {
-          width: 100%!important;
-        }
-        .able-seekbar {
-          margin: 0 10px;
-        }
-
-        .able-fake-pause {
-          width: 100vw;
-          height: 100vw * 9 / 16;
-        }
-      }
-    }
-
-    .contentHeader-imgWrapper--medium {
-      .contentHeader-searchwrap,
-      .able-wrapper {
+        position: relative;
+        top: 75px;
         right: -50vw;
         width: 50vw;
         .able-controller {
@@ -433,12 +391,45 @@
         .able-seekbar {
           margin: 0 10px;
         }
-
+        .able-fake-pause {
+          height: 50vw * 9 / 16;
+          width: 50vw;
+        }
+        .able-status-bar {
+          display: none;
+        }
       }
-
       .able-fake-pause {
         width: 50vw;
         height: 50vw * 9 / 16;
+      }
+    }
+
+    .contentHeader-imgWrapper--large {
+      .contentHeader-searchwrap,
+      .able-wrapper {
+        right: 0;
+        width: 100vw;
+      }
+      .able-fake-pause {
+        width: 100vw;
+        height: 100vw * 9 / 16;
+      }
+    }
+
+    .contentHeader-imgWrapper--small {
+      .contentHeader-searchwrap,
+      .able-wrapper {
+        right: 0;
+        width: 33vw;
+        .able-controller,
+        .able-status-bar {
+          display: none;
+        }
+      }
+      .able-fake-pause {
+        height: 33vw * 9 / 16;
+        width: 33vw;
       }
     }
   }

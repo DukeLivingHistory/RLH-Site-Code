@@ -47,7 +47,7 @@ var buildInterviewsHeader = function(wrapper, data){
   header.append(inner);
 
   if(data.video_id){
-    imgWrapper.append('<span class="contentHeader-toggleVid" data-action="toggle" data-target=".contentHeader-imgWrapper"><label for="toggleVid">Video Display:</label><select id="toggleVid"><option>Small</option><option>Medium</option><option>Large</option><option>Hidden</option></select></span >')
+    imgWrapper.append('<span class="contentHeader-toggleVid" data-action="toggle" data-target=".contentHeader-imgWrapper"><label for="toggleVid">Video Display:</label><select id="toggleVid"><option>Small</option><option selected>Medium</option><option>Large</option><option>Hidden</option></select></span >')
     imgWrapper.append(video)
     imgWrapper.append('<a class="able-fake-pause"></a><div class="contentHeader-searchwrap"><input class="contentHeader-search" id="video-search" placeholder="Search transcript, annotations & descriptions..."></div>')
   }
