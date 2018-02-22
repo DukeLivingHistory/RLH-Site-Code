@@ -1,25 +1,26 @@
 {
-  "published": "2018-02-22T16:03:33.694Z",
+  "published": "2018-02-22T19:33:56.194Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 65015,
+  "size": 65250,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12646,
-  "rules": 789,
-  "selectors": 1038,
-  "declarations": 2059,
-  "simplicity": 0.7601156069364162,
-  "averageOfIdentifier": 1.9094412331406552,
+  "gzippedSize": 12690,
+  "rules": 793,
+  "selectors": 1042,
+  "declarations": 2063,
+  "simplicity": 0.7610364683301344,
+  "averageOfIdentifier": 1.9069097888675623,
   "mostIdentifier": 6,
-  "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .contentHeader-searchwrap .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.609632446134347,
+  "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .able-wrapper .able-right-controls:not(:nth-child(3))",
+  "averageOfCohesion": 2.601513240857503,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
-    ".transcript-jumpToActive"
+    ".featherlight-next",
+    ".featherlight-previous"
   ],
   "totalUniqueFontSizes": 32,
   "uniqueFontSizes": [
@@ -126,7 +127,7 @@
     },
     {
       "property": "background",
-      "count": 82
+      "count": 84
     },
     {
       "property": "top",

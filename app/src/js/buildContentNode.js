@@ -5,14 +5,14 @@ var respImg = require( './respImg' );
 var buildContentNode = function( data ){
   var content = $( '<article class="content content--'+data.type+'" data-id="'+data.id+'"/>' );
   var inner = $( '<div class="content-inner" />' );
-  inner.append(  '<span class="content-type">'+icon(data.type, 'type')+' '+data.type+'</span>' );
+  inner.append(  '<span class="content-type">'+icon(data.type, 'type')+' '+data.type.replace('-', ' ')+'</span>' );
   inner.append(  '<h3 class="content-head">'+data.title+'</h3>' );
   if( data.excerpt ){
     inner.append(  '<div class="content-excerpt">'+data.excerpt+'</div>' );
   }
   inner.append(  '<div class="content-link">View The '+data.type+' '+icon( 'right', 'link' )+'</div>' );
   content.append( inner );
-  
+
   if(data.img_set){
     var img = '';
     img += '<img src="'+data.img_set.sizes.md+'" class="respImg-none" ';

@@ -2,20 +2,21 @@
 
 class Content {
 
-  function __construct( $id ){
+  function __construct($id){
     $this->id = (int)$id;
-    $this->name = get_the_title( $id );
-    $this->link = get_the_permalink( $id );
-    $this->image = get_post_thumbnail_id( $id );
+    $this->name = get_the_title($id);
+    $this->link = get_the_permalink($id);
+    $this->image = get_post_thumbnail_id($id);
     $this->description = get_post($id)->post_excerpt;
     $this->collections = $this->get_collections();
     $this->related = $this->get_related();
+    $this->type = get_post_type($id);
   }
 
   private function get_collections(){
-    $collections = get_the_terms( $this->id, 'collection' );
-    if( $collections ){
-      foreach( $collections as $collection ){
+    $collections = get_the_terms($this->id, 'collection');
+    if($collections){
+      foreach($collections as $collection){
         $collection_ids[] = $collection->term_id;
       }
       return $collection_ids;
@@ -24,44 +25,44 @@ class Content {
   }
 
   public function get_supp_cont(){
-    $supp_content = get_field( 'sc_row', $this->id );
-    if( !$supp_content ) return [];
+    $supp_content = get_field('sc_row', $this->id);
+    if(!$supp_content) return [];
 
 
     $i = 0;
-    foreach( $supp_content as $item ){
-      $item_formatted = $this->format_cont( $item['content'][0] );
+    foreach($supp_content as $item){
+      $item_formatted = $this->format_cont($item['content'][0]);
       $supp_content_formatted[$i]['timestamp'] = get_post_meta($this->id, 'sc_row_'.$i.'_timestamp', true);
       $supp_content_formatted[$i]['type'] = $item_formatted['type'];
       $supp_content_formatted[$i]['open'] = $item['open'];
-      $supp_content_formatted[$i++]['data'] = isset( $item_formatted['data'] ) ? $item_formatted['data'] : false ;
+      $supp_content_formatted[$i++]['data'] = isset($item_formatted['data']) ? $item_formatted['data'] : false ;
     }
     return $supp_content_formatted;
   }
 
   private function get_related(){
-    $related_content = get_posts( [
+    $related_content = get_posts([
       'connected_type' => [ 'content_bi', 'content_uni' ],
       'connected_items' => $this->id,
       'suppress_filters' => false,
       'post_type' => 'any'
-    ] );
+    ]);
 
-    foreach( $related_content as $content ){
+    foreach($related_content as $content){
       $related[] = [
         'name' => $content->post_title,
         'id' => $content->ID,
-        'type' => get_post_type( $content->ID ),
-        'link' => get_permalink( $content->ID )
+        'type' => get_post_type($content->ID),
+        'link' => get_permalink($content->ID)
       ];
     }
-    return isset( $related ) ? $related : false;
+    return isset($related) ? $related : false;
   }
 
-  private function format_cont( $content ){
+  private function format_cont($content){
     $type = $content['acf_fc_layout'];
     $returns['type'] = $type;
-    switch( $type ){
+    switch($type){
       case 'blockquote':
         $returns['data'] = [
           'attribution' => $content['attribution'],
@@ -87,7 +88,7 @@ class Content {
       case 'gallery':
         $returns['data'] = [
           'description' => $content['description'],
-          'imgs' => $this->get_gallery_imd_ids( $content['gallery'] ),
+          'imgs' => $this->get_gallery_imd_ids($content['gallery']),
           'title' => $content['title']
         ];
         break;
@@ -96,11 +97,11 @@ class Content {
         $returns['data'] = [
           'link_description' => $content['link_description'],
           'description' => $link->post_excerpt,
-          'feat_img' => get_post_thumbnail_id( $link->ID ),
+          'feat_img' => get_post_thumbnail_id($link->ID),
           'id' => $link->ID,
           'title' => $content['link_label'] ? $content['link_label'] : $link->post_title,
-          'type' => get_post_type( $link->ID ),
-          'link' => $content['link_timestamp'] ? get_permalink( $link->ID ).$content['link_timestamp'] : get_permalink( $link->ID )
+          'type' => get_post_type($link->ID),
+          'link' => $content['link_timestamp'] ? get_permalink($link->ID).$content['link_timestamp'] : get_permalink($link->ID)
         ];
         break;
       case 'map_location':
@@ -131,10 +132,10 @@ class Content {
     return $returns;
   }
 
-  private function get_gallery_imd_ids( $id ){
-    $imgs = get_field( 'gallery_contents', $id );
+  private function get_gallery_imd_ids($id){
+    $imgs = get_field('gallery_contents', $id);
     if(!$imgs) return [];
-    foreach( $imgs as $img ){
+    foreach($imgs as $img){
       $returns[] = [
         'alt' => $img['alt'],
         'caption' => $img['caption'],

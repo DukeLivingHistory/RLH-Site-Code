@@ -7,7 +7,7 @@ include_once(get_stylesheet_directory() . '/models/Transcript.php');
 function add_choices($field){
   if(!$id = $_GET['post']) return;
 
-  if(get_post_type($id) === 'interview') {
+  if(get_post_type($id) === 'interview' || get_post_type($id) === 'interactive') {
     $transcript = new Transcript($id);
     $contents = $transcript->get_slices_and_breaks(false);
     foreach($contents as $timestamp) {

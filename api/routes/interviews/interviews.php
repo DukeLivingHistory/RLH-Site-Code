@@ -1,12 +1,12 @@
 <?php
-include_once( get_template_directory().'/models/ContentNode.php' );
-$route = new Route( '/interviews/', 'GET', function( $data ){
+include_once(get_template_directory().'/models/ContentNode.php');
+$route = new Route('/interviews/', 'GET', function($data){
   $args = $data->get_query_params();
 
   $query_args = [
     'post_type' => 'interview',
-    'posts_per_page' => isset( $args['count'] ) ? $args['count'] : -1,
-    'offset' => isset( $args['offset'] ) ? $args['offset'] : 0,
+    'posts_per_page' => isset($args['count']) ? $args['count'] : -1,
+    'offset' => isset($args['offset']) ? $args['offset'] : 0,
     'meta_query' => [
       [
         'key' => 'hide',
@@ -17,10 +17,9 @@ $route = new Route( '/interviews/', 'GET', function( $data ){
     'fields' => 'ids'
   ];
 
-  if( isset( $args['order'] ) ){
+  if(isset($args['order'])){
     $key = explode('_', $args['order'])[0];
     $order = explode('_', $args['order'])[1];
-
 
     switch($key){
       case 'abc':
@@ -42,16 +41,16 @@ $route = new Route( '/interviews/', 'GET', function( $data ){
     $query_args['order'] = isset($order) ? $order : 'ASC';
   }
 
-  $interviews = get_posts( $query_args );
+  $interviews = get_posts($query_args);
 
-  foreach( $interviews as $interview ){
-    $returns[] = new ContentNode( $interview );
+  foreach($interviews as $interview){
+    $returns[] = new ContentNode($interview);
   }
 
   return [
     'items' => $returns,
-    'image' => get_field( 'interviews_content_image', 'options' ),
+    'image' => get_field('interviews_content_image', 'options'),
     'name' => 'Interviews'
   ];
 
-} );
+});
