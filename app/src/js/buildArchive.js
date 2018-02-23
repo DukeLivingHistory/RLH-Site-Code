@@ -17,6 +17,7 @@ var buildArchive = function(
     var hero = $('<figure class="heroImg js-respBg" data-set="hero" data-id="'+data.image+'">')
   }
 
+  // TODO: Insert search results/hits.
   var feed = $('<ul class="content-feed"/>')
   var load = $('<button class="content-load">Load More</button>')
   var isAbc = false
@@ -140,6 +141,7 @@ var buildArchive = function(
     $.get(url, function(data){
       feed.empty()
       data.items.forEach((item) => {
+        // TODO: Add search-specific content to items in place of excerpt.
         feed.append(buildContentNode(item))
       })
 

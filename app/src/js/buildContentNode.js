@@ -1,30 +1,36 @@
-var icon = require( './icon' );
-var internalLink = require( './internalLink' );
-var respImg = require( './respImg' );
+var icon = require('./icon');
+var internalLink = require('./internalLink');
+var respImg = require('./respImg');
 
-var buildContentNode = function( data ){
-  var content = $( '<article class="content content--'+data.type+'" data-id="'+data.id+'"/>' );
-  var inner = $( '<div class="content-inner" />' );
-  inner.append(  '<span class="content-type">'+icon(data.type, 'type')+' '+data.type.replace('-', ' ')+'</span>' );
-  inner.append(  '<h3 class="content-head">'+data.title+'</h3>' );
-  if( data.excerpt ){
-    inner.append(  '<div class="content-excerpt">'+data.excerpt+'</div>' );
+var buildContentNode = function({
+  type,
+  id,
+  title,
+  excerpt,
+  img_set,
+}){
+  var content = $('<article class="content content--'+type+'" data-id="'+id+'"/>');
+  var inner = $('<div class="content-inner" />');
+  inner.append( '<span class="content-type">'+icon(type, 'type')+' '+type.replace('-', ' ')+'</span>');
+  inner.append( '<h3 class="content-head">'+title+'</h3>');
+  if(excerpt){
+    inner.append( '<div class="content-excerpt">'+excerpt+'</div>');
   }
-  inner.append(  '<div class="content-link">View The '+data.type+' '+icon( 'right', 'link' )+'</div>' );
-  content.append( inner );
+  inner.append( '<div class="content-link">View The '+type+' '+icon('right', 'link')+'</div>');
+  content.append(inner);
 
-  if(data.img_set){
+  if(img_set){
     var img = '';
-    img += '<img src="'+data.img_set.sizes.md+'" class="respImg-none" ';
-    if( data.img_set.alt )     img += 'alt="'+data.img_set.alt+'" ';
-    if( data.img_set.caption ) img += 'data-caption="'+data.img_set.caption+'" ';
-    if( data.img_set.group )   img += 'data-group="'+data.img_set.group+'" ';
+    img += '<img src="'+img_set.sizes.md+'" class="respImg-none" ';
+    if(img_set.alt)     img += 'alt="'+img_set.alt+'" ';
+    if(img_set.caption) img += 'data-caption="'+img_set.caption+'" ';
+    if(img_set.group)   img += 'data-group="'+img_set.group+'" ';
     img += ' />';
 
     content.append('<div class="content-imgWrapper">'+img+'</div>');
   }
 
-  return internalLink( data, content[0].outerHTML );
+  return internalLink(data, content[0].outerHTML);
 };
 
 module.exports = buildContentNode
