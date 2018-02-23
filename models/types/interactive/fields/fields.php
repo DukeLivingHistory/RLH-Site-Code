@@ -3,11 +3,11 @@
 add_action( 'acf/init', function(){
   acf_add_local_field_group( [
   	'key' => 'interactive_options',
-  	'title' => 'Rich Text Options',
+  	'title' => 'Interactive Page Options',
   	'fields' => [
   		[
   			'key' => 'tab_interactive',
-  			'label' => 'Rich Text Options',
+  			'label' => 'Interactive Page Options',
   			'name' => '',
   			'type' => 'tab'
   		],

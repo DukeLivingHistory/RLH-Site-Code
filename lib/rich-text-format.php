@@ -11,26 +11,43 @@ add_action('admin_head', function() {
   <script>
     (function($){
       function getArrayFromSentences(text, disallowedDelimiters) {
+        // Hash NOTEs
+        text = text.replace(/\n\nNOTE\s(.*?)\n\n/g, function(){
+          return '[[N:'+arguments[1]+']]'
+        })
 
+        // Hash new lines
         text = text.replace(/\n{2,}/g, '[[P]]')
 
+        // Hash protected words
         disallowedDelimiters.forEach(function(delimiter, i) {
           text = text.split(delimiter).join('[['+i+']]')
         })
+
+        // Explode into sentences
         var exploded = text.match(/.*?(?<![A-Z])[\.!\?]+\n*/g)
 
+        // Replace hashed values
         var cleaned = exploded.map(function(value) {
           var paragraph = false
+          var note = false
           if(value.match(/\[\[P\]\]/)) {
             value = value.replace(/\[\[P\]\]/g, '')
             paragraph = true
           }
+          if(value.match(/\[\[N:(.*?)\]\]/)) {
+            value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
+              note = arguments[1]
+              return ''
+            })
+          }
           return {
-            item: value.replace(/\[\[(\d+)\]\]/, function() {
+            item: value.replace(/\[\[(\d+)\]\]/g, function() {
               var i = arguments[1]
               return disallowedDelimiters[i]
             }).trim(),
-            paragraph: paragraph
+            paragraph: paragraph,
+            note: note
           }
         })
 
@@ -42,10 +59,22 @@ add_action('admin_head', function() {
       }
 
       function formatArrayAsTimeStamps(arr) {
-        var i = 0
+        var i = 1
         return arr.reduce(function(string, sentence) {
-          return `${string}${sentence.paragraph ? 'NOTE paragraph\n\n' : ''}${makeTimestamps(i++)} --> ${makeTimestamps(i++)}\n${sentence.item}\n\n`
+          return `${string}${sentence.paragraph ? 'NOTE paragraph\n\n' : ''}${sentence.note ? 'NOTE '+sentence.note+'\n\n' : ''}${makeTimestamps(i++)} --> ${makeTimestamps(i)}\n${sentence.item}\n\n`
         }, 'WEBVTT\n\n')
+      }
+
+      function sanitizeTranscript(text) {
+        var cleaned = text.replace(/WEBVTT\n\n/g, '')
+          .replace(/NOTE paragraph/g, '')
+          .replace(/(NOTE .*\n)/g, function() {
+            return arguments[1]+'\n'
+          })
+          .replace(/\s?(?:\d\d)?:\d\d:\d\d\.\d\d\d\s?/g, '')
+          .replace(/-->/g, '')
+
+        return cleaned
       }
 
       $(document).ready(function(){
@@ -54,7 +83,8 @@ add_action('admin_head', function() {
         $('#js-format-interactive').click(function(){
           var $transcript = $('#acf-transcript_raw')
           var val = $transcript.val()
-          var split = getArrayFromSentences(val, disallowedDelimiters)
+          var cleaned = sanitizeTranscript(val)
+          var split = getArrayFromSentences(cleaned, disallowedDelimiters)
           var formatted = formatArrayAsTimeStamps(split)
           $transcript.val(formatted)
         })
