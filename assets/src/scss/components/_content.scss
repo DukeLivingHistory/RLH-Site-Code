@@ -30,6 +30,22 @@
   cursor: pointer;
 }
 
+.content-subheading {
+  font-size: 1.2em;
+}
+
+.content-hits {
+  list-style: none;
+  padding: 0;
+  li {
+    margin: 0 0 5px;
+  }
+}
+
+.content-search-result {
+  background: $linkLight;
+}
+
 .content--interview {
   background: $interviewsBg;
 }

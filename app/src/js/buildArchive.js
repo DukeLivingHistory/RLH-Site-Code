@@ -1,173 +1,186 @@
-var cachebust = require('./cachebust')
-var buildContentNode = require('./buildContentNode')
-var icon             = require('./icon')
-var respBg           = require('./respBg')
-var Cookies          = require('js-cookie')
+const cachebust        = require('./cachebust')
+const buildContentNode = require('./buildContentNode')
+const icon             = require('./icon')
+const respBg           = require('./respBg')
+const sublink          = require('./sublink')
+const Cookies          = require('js-cookie')
+const qs               = require('query-string')
 
-var buildArchive = function(
+const buildArchive = function(
   page,
-  data,
+  {
+    items,
+    image,
+    name,
+    total_hits,
+    results,
+    error,
+    message
+  },
   endpoint,
-  canBeCondensed,
+  hasNav,
   mediaTypes
 ){
-  var header = $('<header class="contentHeader contentHeader--archive"/>')
+  const isCondensed = hasNav && (Cookies.get('ARCHIVEVIEW') === 'condense')
+  const archiveOrder = Cookies.get('ARCHIVEORDER')
 
-  if(data.image) {
-    var hero = $('<figure class="heroImg js-respBg" data-set="hero" data-id="'+data.image+'">')
-  }
+  let nav, load, subheading
 
-  // TODO: Insert search results/hits.
-  var feed = $('<ul class="content-feed"/>')
-  var load = $('<button class="content-load">Load More</button>')
-  var isAbc = false
+  // Header
+  const header = `
+    <header class="contentHeader contentHeader--archive">
+      <h2>${error || decodeURI(name)}</h2>
+      ${!image ? '' : `<figure class="heroImage js-respBg" data-set="hero" data-id="${image}"/>`}
+    </header>
+  `
 
-  header.append('<h2>'+decodeURI(data.name)+'</h2>')
-  if(data.image){
-    header.append(hero)
-    respBg(hero)
-  }
-
-  if(data.items){
-    data.items.forEach((item) => {
-      feed.append(buildContentNode(item))
-    })
-  } else {
-    feed.append('Sorry, no results were found.')
-  }
-
-  page.append(header)
-
-  if(canBeCondensed){
-    var btnCondense = $('<input type="radio" name="list-view" value="condense">')
-    var btnExplode   = $('<input type="radio" name="list-view" value="explode">')
-
-    if(Cookies.get('ARCHIVEVIEW') === 'condense'){
-      btnCondense.attr('checked', 'checked')
-      feed.addClass('content-feed--contracted')
-    } else {
-      btnExplode.attr('checked', 'checked')
-    }
-
-    btnCondense.click(function(){
-      feed.addClass('content-feed--contracted')
-    })
-
-    btnExplode.click(function(){
-      feed.removeClass('content-feed--contracted')
-    })
-
-    var viewSelect = $('<select name="list-order"/>')
-
-    viewSelect.append('<option value="abc_asc">A-Z</option>')
-    viewSelect.append('<option value="abc_desc">Z-A</option>')
-    viewSelect.append('<option value="date_desc">Date Interviewed</option>')
-    viewSelect.append('<option value="publish_desc">Date Published</option>')
-    viewSelect.append('<option value="date_asc">Date Interviewed (reverse)</option>')
-    viewSelect.append('<option value="publish_asc">Date Published (reverse)</option>')
-
-    var archiveOrder = Cookies.get('ARCHIVEORDER')
-
-    viewSelect.find('[value="'+archiveOrder+'"]').attr('selected', 'selected')
-
-    var listView = $('<div class="listView"/>')
-    listView
-      .append('<span class="listView-label">change view:</span')
-      .append(btnExplode)
-      .append(icon('explode', 'listView'))
-      .append(btnCondense)
-      .append(icon('condense', 'listView'))
-      .append('<span class="listView-label">sort by:</span>')
-      .append(viewSelect)
-
-    if(mediaTypes){
-      var mediaSelect = $('<select name="media-type"/>')
-      mediaTypes.forEach((type) => {
-        mediaSelect.append(`<option value="${type.toLowerCase().replace(' ', '-')}">${type}</option>`)
-      })
-      listView
-        .append('<span class="listView-label">content types:</span>')
-        .append(mediaSelect)
-    }
-
-    page.append(listView)
-  }
-
-  page.append(feed)
-
-  if(data.items && data.items.length >= COUNT){
-    page.append(load)
-  }
-
-  load.data('offset', 0)
-  load.click(function(){
-    load.data('offset', load.data('offset') + 1)
-    var dest = endpoint === 'search' ? endpoint+'/'+$('body').attr('data-search') : endpoint
-    var params = ''
-
-    var order = $('[name="list-order"]').val()
-
-    params = '&order=' + order
-
-    console.log(order)
-
-    var url  = '/wp-json/v1/'+dest+'?count='+COUNT+'&offset=' + (load.data('offset') * COUNT)+cachebust(true) + params
-
-    $.get(url, function(data){
-      data.items.forEach((item) => {
-        feed.append(buildContentNode(item))
-      })
-
-      if(data.items.length < COUNT){
-        load.hide()
+  // Feed
+  const feed = `
+    <ul class="content-feed ${isCondensed ? 'content-feed--contracted': ''}">
+      ${
+        items ?
+          items.map((item) => buildContentNode(item)).join(' ') :
+          (message || 'Sorry, no results were found.')
       }
-    })
-  })
+    </ul>
+  `
 
-  const handleListChange = function() {
-    load.data('offset', 0)
-    let media = ''
-    const view  = $('input[name="list-view"]:checked').val()
-    const order = $('select[name="list-order"]').val()
+  // Nav
+  if(hasNav) {
+    let mediaSelect
+    const sortOptions = [
+      { value: 'abc_asc', label: 'A-Z' },
+      { value: 'abc_desc', label: 'Z-A' },
+      { value: 'date_desc', label: 'Date Interviewed' },
+      { value: 'publish_desc', label: 'Date Published' },
+      { value: 'date_asc', label: 'Date Interviewed (reverse)' },
+      { value: 'publish_asc', label: 'Date Published (reverse)' }
+    ]
+
     if(mediaTypes) {
-      media = $('select[name="media-type"]').val()
+      const mediaSelect = `
+        <select name="media-select">
+          ${mediaTypes.map((type) => (
+            `<option value="${type.toLowerCase().replace(' ', '-')}">${type}</option>`
+          )).join(' ')}
+        </section>
+      `
     }
 
-    const dest = (endpoint === 'search') ? endpoint+'/'+$('body').attr('data-search') : endpoint
-    const url  = `/wp-json/v1/${dest}?order=${order}&offset=0&count=${COUNT}&include=${media}`+cachebust(true)
+    nav = `
+      <div class="listView">
+        <span class="listView-label">change view:</span>
+        <input type="radio" name="list-view" value="explode" ${!isCondensed ? 'checked' : ''}>
+        ${icon('explode', 'listView')}
+        <input type="radio" name="list-view" value="condense" ${isCondensed ? 'checked' : ''}>
+        ${icon('condense', 'listView')}
+        <span class="listview-label">change view:</span>
+        <select name="list-order">
+          ${sortOptions.map(({value, label}) => (
+            `<option value="${value}" ${archiveOrder === value ? 'selected' : ''}>${label}</option>`
+          )).join(' ')}
+        </select>
+        ${!mediaSelect ? '' : `<span class="listView-label">media type:</span>${mediaSelect}`}
+      </div>
+    `
+  }
+
+  // Loader
+  if(items && items.length >= COUNT){
+    load = `<button data-offset="0" class="content-load">Load More</button>`
+  }
+
+  // Subheading
+  if(total_hits && results) {
+    subheading = `<p class="content-subheading">Showing ${total_hits} hits across ${results} files</p>`
+  }
+
+  // Construct Page
+  const $append = $(`${header}${subheading || ''}${nav || ''}${feed}${load || ''}`)
+
+  page.append($append)
+
+  // Functionality
+  const $feed = page.find('.content-feed')
+  const $load = page.find('.content-load')
+  const handleUpdate = function(loadedMore = false) {
+    const $order = $append.find('select[name="list-order"]')
+    const $media = $append.find('select[name="media-type"]')
+    const offset = parseInt($load.attr('data-offset')) + COUNT
+    const params = {
+      order: $order.val(),
+      offset: loadedMore ? offset : 0, // FIXME: Get correct value
+      count: COUNT,
+      include: $media ? $media.val() : null
+    }
+
+    const dest = (endpoint === 'search') ?
+      endpoint+'/'+$('body').attr('data-search') :
+      endpoint
+
+    const url = `/wp-json/v1/${dest}?${qs.stringify(params)}${cachebust(true)}`
 
     console.log(url)
 
-    $.get(url, function(data){
-      feed.empty()
-      data.items.forEach((item) => {
-        // TODO: Add search-specific content to items in place of excerpt.
-        feed.append(buildContentNode(item))
-      })
+    $.get(url, ({items}) => {
+      if(!items) {
+        $load.hide()
+        return
+      }
 
-      if(data.items.length < COUNT){
-        load.hide()
-      } else {
-        load.show()
+      if(!loadedMore) $feed.empty()
+      $feed.append(`
+        ${items.map((item) => buildContentNode(item)).join(' ')}
+      `)
+
+      if(loadedMore) {
+        if(items.length < COUNT){
+          $load.hide()
+        }
+        else {
+          $load.attr('data-offset', offset)
+        }
+      }
+      else {
+        $load.attr('data-offset', 0)
       }
     })
   }
 
-  if(listView){
-    listView.find('input[name="list-view"]').click(handleListChange)
-    listView.find('select[name="list-order"]').change(handleListChange)
+  const changeView = function() {
+    const value = $(this).val()
+    const className = 'content-feed--contracted'
+    const $feed = $('.content-feed')
+
+    if(value === 'condense') {
+      $feed.addClass(className)
+    }
+    else {
+      $feed.removeClass(className)
+    }
+    Cookies.set('ARCHIVEVIEW', value)
   }
 
-  if(mediaTypes) {
-    listView.find('select[name="media-type"]').change(handleListChange)
+  const changeOrder = function() {
+    const value = $(this).val()
+    Cookies.set('ARCHIVEORDER', value)
   }
 
-  $('body').on('click', '.content', function(e){
-    var link             = $(this).find('.js-internalLink')
-    var target           = link.attr('href')
-    var _endpoint        = link.attr('data-type')
-    var _queriedObject   = link.attr('data-id')
+  // Event Listeners
+  $append.on('click', 'input[name="list-view"]', changeView)
+  $append.on('change', 'select[name="list-order"]', function(){
+    handleUpdate()
+    changeOrder.bind(this)()
   })
+  $append.on('change', 'input[name="media-type"]', () =>{ handleUpdate() })
+  page.on('click', '.content-load', () => { handleUpdate(true) })
+
+  if(image){
+    respBg($append.find('.respImg'))
+  }
+
+  // [data-sublink] is created in buildContentNode
+  sublink($append.find('[data-sublink]'))
 }
 
 module.exports = buildArchive

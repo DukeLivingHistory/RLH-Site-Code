@@ -57,25 +57,27 @@ var socialLinks = function( url, title, excerpt, extraClipBoardText ){
       text = text.replace('"', '&quot;');
       if( text.length ) window.HIGHLIGHTED = text;
 
-      var anchor = $( selection.anchorNode.parentNode ); // where drag started
-      var focus = $( selection.focusNode.parentNode ); // where drag ended
-      var first = anchor.index() < focus.index() ? anchor : focus; // which comes first in DOM
-      var _url;
+      if(selection.anchorNode){
+        var anchor = $( selection.anchorNode.parentNode ); // where drag started
+        var focus = $( selection.focusNode.parentNode ); // where drag ended
+        var first = anchor.index() < focus.index() ? anchor : focus; // which comes first in DOM
+        var _url;
 
-      if( anchor.attr( 'data-highlight') ){ //check for special cases
-        if( first.attr( 'data-highlight') === 'next' ){
-          var next = first.next();
-          var timestamp =  next.attr( 'data-start' ) || next.attr( 'data-timestamp' );
-          _url = url + '#'+timestamp;
-        } else if( anchor.attr( 'data-highlight') === 'transcript' ){
-          var timestamp =  first.attr( 'data-start' ) || first.attr( 'data-timestamp' );
-          _url = url + '#'+timestamp;
+        if( anchor.attr( 'data-highlight') ){ //check for special cases
+          if( first.attr( 'data-highlight') === 'next' ){
+            var next = first.next();
+            var timestamp =  next.attr( 'data-start' ) || next.attr( 'data-timestamp' );
+            _url = url + '#'+timestamp;
+          } else if( anchor.attr( 'data-highlight') === 'transcript' ){
+            var timestamp =  first.attr( 'data-start' ) || first.attr( 'data-timestamp' );
+            _url = url + '#'+timestamp;
+          }
         }
-      }
 
-      link.attr( 'data-clipboard-text', ( text ? text + '\n' + _url + '\n' : _url )  );
-      clipboard = new Clipboard( '[data-soc="link"]' );
-    } );
+        link.attr( 'data-clipboard-text', ( text ? text + '\n' + _url + '\n' : _url )  );
+        clipboard = new Clipboard( '[data-soc="link"]' );
+      }
+    });
 
     if(isFbProvided) {
       $('body').on( 'click', '[data-soc="fb"]', function(){

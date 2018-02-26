@@ -1,16 +1,44 @@
 <?php
 /**
  * Given a WebVTT file, return an array of strings that contain a term.
- * @param  string $all  Multiline text
- * @param  string $term Search term
- * @return array        Array of lines
+ * @param  string $all              Multiline text
+ * @param  string $term             Search term
+ * @param  string $timestamp_method Means
+ * @return array                    Array of lines
  */
-function get_matching_lines($all, $term) {
+function get_matching_lines($all, $term, $timestamp_method) {
   $exploded = explode("\n", $all);
   $results = [];
-  foreach($exploded as $line) {
+  $timestamp = '';
+  $i = 0;
+  foreach($exploded as $index => $line) {
+    // Allow custom timestamp methods based on field name
+    switch($timestamp_method) {
+      case "transcript_raw":
+      case "description_raw":
+        $start = [];
+        if(preg_match("/((?:\d\d)?\d\d:\d\d.\d\d\d) --/", $line, $start)) {
+          $timestamp = sanitize_timestamp($start[1]);
+        }
+        break;
+      case "supporting_content_raw":
+        if(preg_match("/((?:\d\d)?\d\d:\d\d.\d\d\d) --/", $line, $start)) {
+          $timestamp = "sc-$i";
+          $i = $i + 1;
+        }
+        break;
+      case "content": // Timelines
+        $timestamp = $index;
+        break;
+      default:
+        break;
+    }
+
     if(stripos($line, $term) !== false) {
-      $results[] = trim($line);
+      $results[] = [
+        'text' => trim(highlight_term($line, $term)),
+        'timestamp' => $timestamp
+      ];
     }
   }
   return $results;
@@ -35,7 +63,7 @@ function get_lines_from_sentences($string) {
  * @return string         HTML for string.
  */
 function highlight_term($string, $term) {
-  return preg_replace("/${term}/i", "<span class='search-result'>$1</span>", $string);
+  return preg_replace("/${term}/i", "<span class='content-search-result'>\\0</span>", $string);
 }
 
 /**

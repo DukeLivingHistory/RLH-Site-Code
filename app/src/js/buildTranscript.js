@@ -5,7 +5,6 @@ var highlightSuppCont     = require('./highlightSuppCont');
 var Cookies               = require('js-cookie');
 
 var buildTranscript = function( wrapper, id, cb ){
-
   var outer = $( '<section class="able-transcript-area transcript" id="transcript-'+id+'">' );
   var transcript = $( '<div id="transcript-inner" class="able-transcript" />' );
   var callback = cb || false;

@@ -50,12 +50,13 @@ var buildSupp = function(page, endpoint, queriedObject, callback, mainContentExi
         inner +=        '<div data-suppcont="'+preview+'" class="suppCont-preview" aria-hidden>' + preview + '</div>'
         inner +=        '<div class="suppCont-content">'+cont
         inner +=        '<div class="suppCont-share">Share this'
-        inner +=          socialLinks(getUrlWithNoHash() + '#sc-'+index++, innerContent.preview, window.DESCRIPTION)
+        inner +=          socialLinks(getUrlWithNoHash() + '#sc-'+index, innerContent.preview, window.DESCRIPTION)
         inner +=        '</div>'
         inner +=      '</div></div">'
         suppContSingle.append(inner)
         suppContSingle.append('<button data-action="close" class="suppCont-expand">'+ icon('expand', 'suppExpand') + '</button>')
         asideInner.append(suppContSingle)
+        index = index + 1;
       }
       aside.append(asideInner)
     } // end for...in

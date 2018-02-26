@@ -1,13 +1,25 @@
-window.Cookies = require( 'js-cookie' );
-var cachebust  = require('./cachebust');
-var icon       = require( './icon' );
+window.Cookies = require('js-cookie')
+var cachebust  = require('./cachebust')
+var icon       = require('./icon')
 
-var syncAblePlayer = function(transcript, id, supp){
-  console.log('syncing able')
-  $( 'body' ).removeClass( 'hasAblePlayer' );
+// do we have a timestamp that matches a hash? if so return it
+const getNodeFromTimestamp = function(){
+  if(window.location.hash){
+    const hash = window.location.hash
+    const match_id = hash.match(/\#(\d*)/)
+    if(match_id && match_id[1].length){
+      if($('[data-start="'+match_id[1]+'"]').length){
+        return $('[data-start="'+match_id[1]+'"]')
+      }
+    }
+  }
+  return false
+}
+
+const syncAblePlayer = function(transcript, id, supp){
+  $('body').removeClass('hasAblePlayer')
   $('video').each(function (index, element) {
-    console.log('video found')
-    $( 'body' ).addClass( 'hasAblePlayer' );
+    $('body').addClass('hasAblePlayer')
     if ($(element).data('able-player') !== undefined) {
       window.AP = new AblePlayer($(this), $(element))
 
@@ -32,7 +44,7 @@ var syncAblePlayer = function(transcript, id, supp){
         return (
           node.type !== 'paragraph_break' &&
           node.type !== 'description'
-        )
+       )
       }).map(node => {
         return {
           text: node.contents,
@@ -95,11 +107,13 @@ var syncAblePlayer = function(transcript, id, supp){
                   height:  window.SUPP_CONT_OPTS.HEIGHT  || false,
                   display: window.SUPP_CONT_OPTS.DISPLAY || 'line',
                 }).then(player => {
+                  // Hack to trigger search
+                  $('#video-search').val(window.SEARCHTERM).trigger('keyup')
                   $.ajax({
                     url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
                     success: data => {
                       const { description } = data
-                      if(!description.length) return;
+                      if(!description.length) return
                       ableplayerSearch(player, '#video-search', description, {
                         duration,
                         color:   window.SEARCHOPTS.COLOR   || '#fff',
@@ -107,7 +121,6 @@ var syncAblePlayer = function(transcript, id, supp){
                         height:  window.SEARCHOPTS.HEIGHT  || false,
                         display: window.SEARCHOPTS.DISPLAY || 'line',
                       }).then(player => {
-                        console.log('Plugins instantiated successfully.')
                       }).catch(err => console.log(err))
                     }
                   })
@@ -120,21 +133,21 @@ var syncAblePlayer = function(transcript, id, supp){
       }, 200)
 
       // disable closed captioning
-      var tryClick = setInterval( function(){
-        if( typeof AP.initializing === 'undefined' ) return;
-        var captions = $( '.able-wrapper .icon-captions' );
-        var isClicked = false;
-        captions.on( 'click', function(){
-          clearInterval( tryClick );
-          isClicked = true;
-        } );
-        if( !isClicked ) captions.trigger('click');
-      }, 200 );
+      var tryClick = setInterval(function(){
+        if(typeof AP.initializing === 'undefined') return
+        var captions = $('.able-wrapper .icon-captions')
+        var isClicked = false
+        captions.on('click', function(){
+          clearInterval(tryClick)
+          isClicked = true
+        })
+        if(!isClicked) captions.trigger('click')
+      }, 200)
 
-      var inViewport = 0;  // 0 for in viewport, 1 for below, -1 for above
-      JUMPTOACTIVE = setInterval( function(){
-        var current = $( '.able-highlight' );
-        if( !current.length ) return;
+      var inViewport = 0 // 0 for in viewport, 1 for below, -1 for above
+      JUMPTOACTIVE = setInterval(function(){
+        var current = $('.able-highlight')
+        if(!current.length) return
 
         var currentPos = {
           top: current.offset().top,
@@ -142,77 +155,67 @@ var syncAblePlayer = function(transcript, id, supp){
         }
 
         var windowPos = {
-          top: $( window ).scrollTop(),
-          bottom: $( window ).scrollTop() + $( window ).height()
+          top: $(window).scrollTop(),
+          bottom: $(window).scrollTop() + $(window).height()
         }
 
-        if( currentPos.top > windowPos.bottom ){
-          var _inViewport = 1;
-        } else if( currentPos.bottom < windowPos.top ){
-          var _inViewport = -1;
+        if(currentPos.top > windowPos.bottom){
+          var _inViewport = 1
+        } else if(currentPos.bottom < windowPos.top){
+          var _inViewport = -1
         } else {
-          var _inViewport = 0;
-          $( '.transcript-jumpToActive' ).remove();
+          var _inViewport = 0
+          $('.transcript-jumpToActive').remove()
         }
 
-        if( _inViewport !== inViewport && _inViewport !== 0 ){
-          $( '.transcript-jumpToActive' ).remove();
-          var jumpToActive = $( '<button data-action="jumpToActive" class="transcript-jumpToActive">'+icon( ( _inViewport === 1 ? 'down' : 'up' ), 'jump' ) +'Jump to active section</button>' );
-          if( _inViewport === -1 ){
-            jumpToActive.css( {
-              top: $(window).width() <= 568 ? 0 : $( '.contentHeaderOuter' ).outerHeight(),
+        if(_inViewport !== inViewport && _inViewport !== 0){
+          $('.transcript-jumpToActive').remove()
+          var jumpToActive = $('<button data-action="jumpToActive" class="transcript-jumpToActive">'+icon((_inViewport === 1 ? 'down' : 'up'), 'jump') +'Jump to active section</button>')
+          if(_inViewport === -1){
+            jumpToActive.css({
+              top: $(window).width() <= 568 ? 0 : $('.contentHeaderOuter').outerHeight(),
               bottom: 'auto'
-            } );
+            })
           }
-          $( 'body' ).append( jumpToActive );
+          $('body').append(jumpToActive)
         }
-        inViewport = _inViewport;
+        inViewport = _inViewport
 
-      }, 1000 );
+      }, 1000)
     }
 
-    $( 'body' ).on( 'click', '[data-action="jumpToActive"]', function(){
-      $(this).hide();
-      $( 'body,html' ).animate( {
+    $('body').on('click', '[data-action="jumpToActive"]', function(){
+      $(this).hide()
+      $('body,html').animate({
         scrollTop: (function(){
-          var offset = $( '.contentHeaderOuter' ).outerHeight() + 32;
-          return $( '.able-highlight' ).offset().top - offset;
-        } )()
-      }, TRANSITIONTIME );
-    } );
+          const offset = $('.contentHeaderOuter').outerHeight() + 32
+          return $('.able-highlight').offset().top - offset
+        })()
+      }, TRANSITIONTIME)
+    })
 
-  } );
+  })
 
-  // do we have a timestamp that matches a hash? if so return it
-  var getNodeFromTimestamp = function(){
-    if( window.location.hash ){
-      var hash = window.location.hash;
-      var match_id = hash.match(/\#(\d*)/);
-      if( match_id && match_id[1].length ){
-        if( $( '[data-start="'+match_id[1]+'"]' ).length ){
-          return $( '[data-start="'+match_id[1]+'"]' );
-        }
-      }
-    }
-    return false;
+  if(getNodeFromTimestamp()){
+    var timestamp = getNodeFromTimestamp()
+    var offset = $('.contentHeaderOuter').outerHeight() + 32
+    setTimeout(() => {
+      $('body, html').scrollTop(timestamp.offset().top - offset)
+      timestamp.addClass('able-highlight')
+
+      // Hack to trigger play
+      const tryClick = setInterval(function(){
+        if(typeof AP.initializing === 'undefined') return
+        timestamp.trigger('click')
+        timestamp.on('click', function(){
+          clearInterval(tryClick)
+        })
+      }, 200)
+    }, 300)
   }
 
-  if( getNodeFromTimestamp() ){
-    var timestamp = getNodeFromTimestamp();
-    var offset = $( '.contentHeaderOuter' ).outerHeight() + 32;
-    $( 'body, html' ).scrollTop( timestamp.offset().top - offset );
-    timestamp.addClass( 'able-highlight' );
-    var tryClick = setInterval( function(){
-      if( typeof AP.initializing === 'undefined' ) return;
-      timestamp.trigger('click');
-      timestamp.on( 'click', function(){
-        clearInterval( tryClick );
-      } );
-    }, 200 );
-  }
-
-  $( '.able-wrapper' ).addClass( 'able-wrapper--loaded' );
+  $('.able-wrapper').addClass('able-wrapper--loaded')
 
 }
 
-module.exports = syncAblePlayer;
+module.exports = syncAblePlayer

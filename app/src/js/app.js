@@ -10,6 +10,7 @@ $(document).ready(function(){
   window.SOCIALINIT = false // only add social event handlers once, see socialLinks.js
   window.DESCRIPTION = '' // used in sharing links
   window.JUMPTOACTIVE = false // set ableplayer polling as a window-scoped object so it can be overwritten
+  window.SEARCHTERM = '' // On searching, cache value for use later
 
   // Safari calls popstate on page load
   // and has its own forward/backward ui

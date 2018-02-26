@@ -25,7 +25,8 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
   $('body').attr('data-id', queriedObject)
   if(queriedObject === 'archive'){
     if(endpoint === 'search'){
-      const term = $('body').attr('data-search')
+      const term = $('body').attr('data-search').replace('+', ' ')
+      window.SEARCHTERM = term
       document.title = 'Search for '+term
       $.get('/wp-json/v1/'+endpoint+'/'+term+'?count='+COUNT+'&offset=0'+cachebust(true), function(data){
         buildArchive(page, data, endpoint)

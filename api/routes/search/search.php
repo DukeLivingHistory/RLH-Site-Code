@@ -8,7 +8,8 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
   if(strlen($term) < 4) {
     return [
       "term" => $term,
-      "error" => "Try a longer search."
+      "error" => "Search term too short.",
+      "message" => "Try a longer search."
     ];
   }
 
@@ -80,8 +81,10 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
       },
       'transcript_raw',
       'description_raw',
-      'supporting_content_raw',
-    ],
+      'supporting_content_raw' => function($id) {
+
+      }
+     ],
     'timeline' => [
       'introduction' => function($id) {
         return get_lines_from_sentences(get_field('introduction', $id));
@@ -119,7 +122,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
       } else {
         $value = clean_vtt($field($item->id));
       }
-      $lines = get_matching_lines($value, $term);
+      $lines = get_matching_lines($value, $term, $field);
       $hits = array_merge($hits, $lines);
     }
 
