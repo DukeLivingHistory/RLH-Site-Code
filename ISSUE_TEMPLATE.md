@@ -9,7 +9,7 @@
 - [ ] Item 3
 
 
-**Other details:** _Other details that might be useful for bug fixes, such as browser or OS._
+**Other details:** _Other details that might be useful for bug fixes, such as browser or OS. For difficult-to-explain issues, please add screenshots._
 
 ***
 
