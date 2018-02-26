@@ -66,6 +66,11 @@ add_action('admin_head', function() {
       }
 
       function sanitizeTranscript(text) {
+        if(text.match(/\s?(?:\d\d)?:\d\d:\d\d\.\d\d\d\s?/)) {
+          var r = confirm('Do you really want to replace existing time codes?')
+          if(!r) return
+        }
+
         var cleaned = text.replace(/WEBVTT\n\n/g, '')
           .replace(/NOTE paragraph/g, '')
           .replace(/(NOTE .*\n)/g, function() {

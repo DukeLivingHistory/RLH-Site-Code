@@ -38,8 +38,13 @@ add_action( 'acf/init', function(){
         'type' => 'true_false',
         'instructions' => 'Select this box for interviews that do not have a video.',
         'default' => 0,
-        'wrapper' => [ 'width' => '50' ]
       ],
+  		[
+  			'key' => 'transcript_utilities',
+  			'label' => 'Transcript Utilities',
+  			'name' => 'transcript_utilities',
+  			'type' => 'message'
+  		],
       [
         'key' => 'youtube_id',
         'label' => 'YouTube Video ID',
@@ -47,7 +52,26 @@ add_action( 'acf/init', function(){
         'type' => 'text',
         'maxlength' => '11',
         'conditional_logic' => get_cond_logic(),
-        'wrapper' => [ 'width' => '50' ]
+        'wrapper' => [ 'width' => '33' ]
+      ],
+      [
+        'key' => 'abc_term',
+        'label' => 'Sort Term',
+        'name' => 'abc_term',
+        'type' => 'text',
+        'required' => 1,
+        'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.',
+        'wrapper' => [ 'width' => '33' ]
+      ],
+      [
+        'key' => 'interview_date',
+        'label' => 'Interview Date',
+        'name' => 'interview_date',
+        'type' => 'date_picker',
+        'display_format' => 'F d, Y',
+        'required' => 1,
+        'instructions' => 'Enter the date of the interview.',
+        'wrapper' => [ 'width' => '33' ]
       ],
   		[
   			'key' => 'transcript_files',
@@ -86,37 +110,12 @@ add_action( 'acf/init', function(){
         'mime_types' => '',
         'wrapper' => [ 'width' => '33' ]
       ],
-  		[
-  			'key' => 'transcript_utilities',
-  			'label' => 'Transcript Utilities',
-  			'name' => 'transcript_utilities',
-  			'type' => 'message'
-  		],
       [
         'key' => 'hide',
         'label' => 'Hide from feeds?',
         'name' => 'hide',
         'type' => 'true_false',
         'instructions' => 'If selected, this content will not be displayed on the home page or any archive pages. This content may still be referenced via Related Content relationships or through menus, such as the Research menu.',
-        'wrapper' => [ 'width' => '33' ]
-      ],
-      [
-        'key' => 'abc_term',
-        'label' => 'Sort Term',
-        'name' => 'abc_term',
-        'type' => 'text',
-        'required' => 1,
-        'instructions' => 'Enter the term (i.e. last name) you want used when this content is sorted alphabetically.',
-        'wrapper' => [ 'width' => '33' ]
-      ],
-      [
-        'key' => 'interview_date',
-        'label' => 'Interview Date',
-        'name' => 'interview_date',
-        'type' => 'date_picker',
-        'display_format' => 'F d, Y',
-        'required' => 1,
-        'instructions' => 'Enter the date of the interview.',
         'wrapper' => [ 'width' => '33' ]
       ],
       [
@@ -130,7 +129,15 @@ add_action( 'acf/init', function(){
         'label' => 'Text(.vtt)',
         'name'  => 'transcript_raw',
         'type'  => 'textarea',
-        'instructions' => '<p>You may paste text here and press the button below to automatically insert timestamps. If there is an abbreviation that should not trigger a new timestamp, add it to the "Whitelisted Abbreviations" section <a href="/wp-admin/admin.php?page=acf-options"> here</a>.</p><a href="#" id="js-format-interactive" class="button-primary">Format</a>',
+        'instructions' => "
+          <p>Use the \"Format No-Media Text\" button with text that's not connected to audio or video.</p>
+          <p>This will format the text as WebVTT with dummy timecodes to enable supporting content and direct links to each sentence.</p>
+          <p>If there is an abbreviation that should not trigger a new timestamp (e.g. 'Dr.'), add it to the \"Whitelisted Abbreviations\" section <a href=\"/wp-admin/admin.php?page=acf-options\"> here</a>.</p>
+          <div style=\"text-align: right;\">
+            <a href=\"#\" id=\"js-format-interactive\" class=\"button-primary\">
+              Format No-Media Text
+            </a>
+          </div>",
         'rows'  => 100
       ],
       [

@@ -41,7 +41,6 @@ add_action('admin_head', function(){ ?>
       margin-bottom: 0!important;
     }
     /* hide posts & comments menu items */
-    #menu-posts,
     #menu-comments {
       display: none;
     }
