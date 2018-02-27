@@ -40,6 +40,22 @@
   li {
     margin: 0 0 5px;
   }
+  &.hidden {
+    display: none;
+  }
+}
+
+.content-cutoff {
+  background: $interviews;
+  color: $white;
+  border-radius: none;
+  padding: 2px 5px;
+  border: none;
+  font-family: 'Roboto';
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: .5em 0 1em;
 }
 
 .content-search-result {

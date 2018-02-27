@@ -1,28 +1,27 @@
 {
-  "published": "2018-02-26T18:30:18.604Z",
+  "published": "2018-02-27T14:45:27.398Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 65402,
+  "size": 65603,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12729,
-  "rules": 797,
-  "selectors": 1047,
-  "declarations": 2067,
-  "simplicity": 0.7612225405921681,
-  "averageOfIdentifier": 1.9025787965616046,
+  "gzippedSize": 12792,
+  "rules": 798,
+  "selectors": 1050,
+  "declarations": 2076,
+  "simplicity": 0.76,
+  "averageOfIdentifier": 1.900952380952381,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .able-wrapper .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.5934755332496864,
+  "averageOfCohesion": 2.601503759398496,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
-    ".featherlight-next",
-    ".featherlight-previous"
+    ".transcript-jumpToActive"
   ],
-  "totalUniqueFontSizes": 32,
+  "totalUniqueFontSizes": 33,
   "uniqueFontSizes": [
     "0",
     ".9em",
@@ -41,6 +40,7 @@
     "14pt",
     "16pt",
     "12px",
+    "13px",
     "14px",
     "15px",
     "16px",
@@ -57,9 +57,10 @@
     "50px",
     "80px"
   ],
-  "totalUniqueFontFamilies": 3,
+  "totalUniqueFontFamilies": 4,
   "uniqueFontFamilies": [
     "Arial,sans-serif",
+    "Roboto",
     "Roboto,sans-serif",
     "able"
   ],
@@ -103,11 +104,11 @@
     },
     {
       "property": "padding",
-      "count": 127
+      "count": 128
     },
     {
       "property": "margin",
-      "count": 125
+      "count": 126
     },
     {
       "property": "width",
@@ -119,15 +120,15 @@
     },
     {
       "property": "color",
-      "count": 108
+      "count": 109
     },
     {
       "property": "font-size",
-      "count": 102
+      "count": 103
     },
     {
       "property": "background",
-      "count": 85
+      "count": 86
     },
     {
       "property": "top",

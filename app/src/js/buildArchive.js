@@ -1,5 +1,6 @@
 const cachebust        = require('./cachebust')
 const buildContentNode = require('./buildContentNode')
+const cutoff           = require('./cutoff')
 const icon             = require('./icon')
 const respBg           = require('./respBg')
 const sublink          = require('./sublink')
@@ -179,8 +180,9 @@ const buildArchive = function(
     respBg($append.find('.respImg'))
   }
 
-  // [data-sublink] is created in buildContentNode
+  // These are created in buildContentNode
   sublink($append.find('[data-sublink]'))
+  cutoff($append.find('[data-cutoff]'))
 }
 
 module.exports = buildArchive

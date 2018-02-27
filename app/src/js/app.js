@@ -35,6 +35,11 @@ $(document).ready(function(){
   buildPage(wrapper, endpoint, queriedObject, false)
 
   $('body').on('click', '.js-internalLink', function(e){
+    if($(e.target).attr('data-nolink')) {
+      e.preventDefault()
+      return false
+    }
+
     HASPAGE = true
     if(IGNOREDIR) return
     e.preventDefault()
@@ -55,8 +60,11 @@ $(document).ready(function(){
       { endpoint: _endpoint,
         queriedObject: _queriedObject,
         sequence: sequence // store the current sequence at this point in navigation history
-      }, null, target)
-
+      },
+      null,
+      target
+    )
+    return false
   })
 
   $(window).on('popstate', function(){

@@ -11,17 +11,28 @@ const buildContentNode = function({
   img_set,
   link
 }){
-  let imgHtml = '', hitCount
+  let imgHtml = '', hitCount, hitHtml
   if(hits && hits.length > 0) {
+    const cutoff = 5
     hitCount = hits.length
-    hits = `
+    hitHtml = `
       <ul class="content-hits">
-        ${hits.map((hit) => `<li
+        ${hits.slice(0, cutoff).map((hit) => `<li
           class="content-data-sublink"
           data-sublink=${hit.timestamp}
           >${hit.text}</li>
         `).join('')}
       </ul>
+      ${hitCount > cutoff ? `
+        <ul class="content-hits hidden">
+          ${hits.map((hit) => `<li
+            class="content-data-sublink"
+            data-sublink=${hit.timestamp}
+            >${hit.text}</li>
+          `).join('')}
+        </ul>
+        <button class="content-cutoff" data-cutoff=".hidden" data-alttext="View Less" data-nolink="true">View More</button>
+      ` : ''}
     `
   }
 
@@ -47,7 +58,7 @@ const buildContentNode = function({
           ${title}
           ${!hits ? '' : `&nbsp;<small>(${hitCount} total hits)</small>`}
         </h3>
-        <div class="content-excerpt">${hits || excerpt}</div>
+        <div class="content-excerpt">${hitHtml || excerpt}</div>
         <div class="content-link">View The ${type} ${icon('right', 'link')}</div>
       </div>
       ${imgHtml}
