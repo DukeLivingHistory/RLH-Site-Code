@@ -84,7 +84,7 @@ add_action( 'acf/init', function(){
         'label' => 'Transcript',
         'name' => 'transcript',
         'type' => 'file',
-        'instructions' => 'Transcripts should be uploaded in WebVTT format.',
+        'instructions' => 'Paste into Transcript (.vtt) tab above or upload in WebVTT format.',
         'return_format' => 'array',
         'mime_types' => '',
         'wrapper' => [ 'width' => '33' ]
@@ -94,7 +94,7 @@ add_action( 'acf/init', function(){
         'label'  => 'Description',
         'name'   => 'description',
         'type'   => 'file',
-        'instructions' => 'Descriptions should be uploaded in WebVTT format.',
+        'instructions' => 'Paste into Description (.vtt) tab above or upload in WebVTT format.',
         'return_format' => 'array',
         'mime_types' => '',
         'wrapper' => [ 'width' => '33' ],
@@ -105,7 +105,8 @@ add_action( 'acf/init', function(){
         'label' => 'Supporting Content',
         'name' => 'supp_cont_file',
         'type' => 'file',
-        'instructions' => 'Transcripts should be uploaded in WebVTT format.',
+        'instructions' => 'Paste into Supp. Content (.vtt) tab above or upload in WebVTT format.
+',
         'return_format' => 'array',
         'mime_types' => '',
         'wrapper' => [ 'width' => '33' ]
