@@ -11,11 +11,13 @@ const cutoff = (elem) => {
     if($this.data('on')) {
       $target.show()
       $target.children(':first').focus()
+      $this.siblings().hover(() => { $(':focus').blur() })
       $this.html($this.data('alttext'))
     }
     else {
       $target.hide()
       $this.html($this.data('orig'))
+      $this.siblings().unbind('hover')
     }
   })
 }
