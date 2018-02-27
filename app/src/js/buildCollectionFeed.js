@@ -1,44 +1,66 @@
-var cachebust = require('./cachebust');
-var buildContentNode = require( './buildContentNode' );
-var icon = require( './icon' );
-var respImg = require( './respImg' );
+const cachebust = require('./cachebust')
+const cutoff = require('./cutoff')
+const buildContentNode = require('./buildContentNode')
+const icon = require('./icon')
+const respImg = require('./respImg')
+const sublink = require('./sublink')
+const qs = require('query-string')
 
-var buildCollectionFeed = function( page, data ){
-  var intro = $( '<div class="collection-intro" />' );
-  var description = $( '<div class="collection-description">'+data.description+'</div>' );
-  var search = $( '<div class="collection-introBottom"><label class="collection-searchLabel" for="filter">Search within this collection</label><span class="collection-search">'+icon( 'search', 'type' )+'<input name="filter" type="text" placeholder="Search" /></span></div>')
-  var feed = $( '<ul class="collection" />' );
-  var content = data.content;
-
-  for( var i = 0, x = content.length; i<x; i++ ){
-    feed.append( buildContentNode( content[i] ) );
+const buildCollectionFeed = (
+  page,
+  {
+    id,
+    content,
+    description
   }
+) => {
+  const append = $(`
+    <div class="collection-intro">
+      <div class="collection-description">${description}</div>
+      <div class="collection-introBottom">
+        <label class="collection-searchLabel" for="filter">Search within this collection</label>
+        <span class="collection-search">
+          ${icon('search', 'type')}
+          <input name="filter" type="text" placeholder="Search">
+        </span>
+      </div>
+    </div>
+    <p class="content-subheading"></p>
+    <ul class="collection">
+      ${content.map((item) => buildContentNode(item)).join(' ')}
+    </ul>
+  `)
 
-  intro.append( description );
-  intro.append( search );
-  page.append( intro );
-  page.append( feed );
+  page.append(append)
 
-  search.find('input').on( 'keyup', function(e) {
-    const term = $(this).val()
-    const endpoint = `/wp-json/v1/collections/${data.id}?s=${encodeURIComponent(term)}${cachebust(true)}`
-    console.log(endpoint)
-    // after a delay in typing, search
-    window.TIMEOUT = setTimeout( function(){
-      $.get(endpoint, function( results ){
-        var newContent = results.content;
-        feed.empty();
-        for( var i = 0, x = newContent.length; i<x; i++ ){
-          feed.append( buildContentNode( newContent[i] ) );
-          //respImg.load( '.respImg' );
+  const params = { collection: id }
+  const $feed = page.find('.collection')
+  const $subhead = page.find('.content-subheading')
+  page.find('input').keyup(function(e) {
+    window.TIMEOUT = setTimeout(() => {
+      const term = $(this).val()
+      const endpoint = `/wp-json/v1/search/${term}?${qs.stringify(params)}${cachebust(true)}`
+      
+      $.get(endpoint, ({
+        total_hits,
+        items,
+        results
+      }) => {
+        if(!items) {
+          $subhead.text('No results found')
+          $feed.empty()
+          return
         }
-      } );
-    }.bind(this), 200 )
-  } ).on( 'submit', function(e){
-    e.preventDefault();
-  } );
 
+        $subhead.text(`Showing ${total_hits} hits across ${results} files`)
+        $feed.html(items.map(buildContentNode).join(' '))
 
+        // These are created in buildContentNode
+        sublink(page.find('[data-sublink]'))
+        cutoff(page.find('[data-cutoff]'))
+      })
+    }, 200)
+  }).submit((e) => { e.preventDefault })
 }
 
-module.exports = buildCollectionFeed;
+module.exports = buildCollectionFeed

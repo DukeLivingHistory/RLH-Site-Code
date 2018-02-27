@@ -13,16 +13,31 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     ];
   }
 
+  function get_collection_arg($args) {
+    if(isset($args['collection'])) {
+      return [
+        [
+          'taxonomy' => 'collection',
+          'field' => 'term_id',
+          'terms' => $args['collection']
+        ]
+      ];
+    }
+    else return null;
+  }
+
   $results = array_merge(
     $posts_search = get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
-      's' => $term
+      's' => $term,
+      'tax_query' => get_collection_arg($args)
     ]),
     get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
       'suppress_filters' => false,
+      'tax_query' => get_collection_arg($args),
       'meta_query' => [
         'relation' => 'OR',
         [
@@ -57,11 +72,11 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
         return $excluded_posts;
       }, [])
     ]),
-    $terms_search = get_terms([
+    $terms_search = (!isset($args['collection']) ? get_terms([
       'number' => 0,
       'search' => $term
-    ]),
-    get_terms([
+    ]) : []),
+    (!isset($args['collection']) ? get_terms([
       'taxonomy' => 'collection',
       'meta_query' => [
         [
@@ -75,7 +90,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
         $excluded_terms[] = $term->term_id;
         return $excluded_terms;
       }, [])
-    ])
+    ]) : [])
  );
 
   $count = isset($args['count']) ? $args['count'] : false;
