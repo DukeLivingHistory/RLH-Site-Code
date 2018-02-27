@@ -25,7 +25,7 @@ add_action('admin_head', function() {
         })
 
         // Explode into sentences
-        var exploded = text.match(/.*?(?:[^A-Z][\.!\?])+\n*/g)
+        var exploded = text.match(/.*?(?:[^A-Z][\.!\?]?)+\n*/g)
 
         // Replace hashed values
         var cleaned = exploded.map(function(value) {
