@@ -40,6 +40,7 @@ const buildCollectionFeed = (
     window.TIMEOUT = setTimeout(() => {
       const term = $(this).val()
       const endpoint = `/wp-json/v1/search/${term}?${qs.stringify(params)}${cachebust(true)}`
+      window.SEARCHTERM = term
 
       $.get(endpoint, ({
         total_hits,
