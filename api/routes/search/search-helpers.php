@@ -11,6 +11,7 @@ function get_matching_lines($all, $term, $timestamp_method) {
   $results = [];
   $timestamp = '';
   $i = 0;
+
   foreach($exploded as $index => $line) {
     // Allow custom timestamp methods based on field name
     switch($timestamp_method) {
@@ -72,5 +73,5 @@ function highlight_term($string, $term) {
  * @return string       Cleaned content
  */
 function clean_vtt($text) {
-  return str_replace(['<v', '>'], '', $text);
+  return preg_replace("/<v (.*?)>(.*?)<\/v>/", "$1 $2", $text);
 }

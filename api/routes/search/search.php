@@ -22,6 +22,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
+      'suppress_filters' => false,
       'meta_query' => [
         'relation' => 'OR',
         [
@@ -36,6 +37,16 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
         ],
         [
           'key' => 'supporting_content_raw',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ],
+        [
+          'key' => 'events_$_title',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ],
+        [
+          'key' => 'events_$_content',
           'value' => $term,
           'compare' => 'LIKE'
         ]
@@ -93,11 +104,10 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
         $nodes = get_field('events', $id);
         $content = '';
         foreach($nodes as $node) {
-          $content .= $node['content'] . "\n";
+          $content .= $node['title'] . ' - ' . strip_tags($node['content']);
         }
         return $content;
       }
-      // TODO: Make supporting content indexable.
     ],
     'collection' => [
       'collection_descripton' => function($term_id) {
@@ -119,10 +129,12 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     foreach($fields[$item->type] as $key => $field) {
       if(is_string($field)) {
         $value = clean_vtt(get_field($field, $item->id));
+        $timestamp_method = $field;
       } else {
         $value = clean_vtt($field($item->id));
+        $timestamp_method = $key;
       }
-      $lines = get_matching_lines($value, $term, $field);
+      $lines = get_matching_lines($value, $term, $timestamp_method);
       $hits = array_merge($hits, $lines);
     }
 
