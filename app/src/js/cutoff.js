@@ -10,6 +10,8 @@ const cutoff = (elem) => {
 
     if($this.data('on')) {
       $target.show()
+      console.log('on')
+      $target.children(':first').focus()
       $this.text($this.data('alttext'))
     }
     else {

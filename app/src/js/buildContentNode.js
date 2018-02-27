@@ -19,7 +19,8 @@ const buildContentNode = function({
       <ul class="content-hits">
         ${hits.slice(0, cutoff).map((hit) => `<li
           class="content-data-sublink"
-          data-sublink=${hit.timestamp}
+          data-sublink="${hit.timestamp}"
+          tabindex="0"
           >${hit.text}</li>
         `).join('')}
       </ul>
@@ -27,7 +28,8 @@ const buildContentNode = function({
         <ul class="content-hits hidden">
           ${hits.map((hit) => `<li
             class="content-data-sublink"
-            data-sublink=${hit.timestamp}
+            data-sublink="${hit.timestamp}"
+            tabindex="0"
             >${hit.text}</li>
           `).join('')}
         </ul>
