@@ -7,7 +7,7 @@
  * @return array                    Array of lines
  */
 function get_matching_lines($all, $term, $timestamp_method) {
-  $exploded = explode("\n", $all);
+  $exploded = explode("\n", clean_vtt($all));
   $results = [];
   $timestamp = '';
   $i = 0;
@@ -74,5 +74,5 @@ function highlight_term($string, $term) {
  * @return string       Cleaned content
  */
 function clean_vtt($text) {
-  return preg_replace("/<v (.*?)>(.*?)<\/v>/", "$1 $2", $text);
+  return preg_replace("/<v (.*?)>/", "$1 $2", $text);
 }

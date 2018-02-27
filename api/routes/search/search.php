@@ -107,9 +107,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
       },
       'transcript_raw',
       'description_raw',
-      'supporting_content_raw' => function($id) {
-
-      }
+      'supporting_content_raw'
      ],
     'timeline' => [
       'introduction' => function($id) {
@@ -126,7 +124,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     ],
     'collection' => [
       'collection_descripton' => function($term_id) {
-        return get_lines_from_sentences(get_field('collection_description', 'collection_'.$id));
+        return get_lines_from_sentences(get_field('collection_description', 'collection_'.$term_id));
       }
     ]
   ];
@@ -154,6 +152,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     }
 
     $item->hits = $hits;
+    $item->title = highlight_term($item->title, $term);
 
     if(count($hits)) {
       $total_hits = $total_hits + count($hits);

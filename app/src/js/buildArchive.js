@@ -23,6 +23,7 @@ const buildArchive = function(
   mediaTypes
 ){
   const isCondensed = hasNav && (Cookies.get('ARCHIVEVIEW') === 'condense')
+  const isSearch = !!total_hits
   const archiveOrder = Cookies.get('ARCHIVEORDER')
 
   let nav, load, subheading
@@ -87,7 +88,7 @@ const buildArchive = function(
   }
 
   // Loader
-  if(items && items.length >= COUNT){
+  if(!isSearch && items && items.length >= COUNT){
     load = `<button data-offset="0" class="content-load">Load More</button>`
   }
 
@@ -98,7 +99,6 @@ const buildArchive = function(
 
   // Construct Page
   const $append = $(`${header}${subheading || ''}${nav || ''}${feed}${load || ''}`)
-
   page.append($append)
 
   // Functionality
@@ -110,7 +110,7 @@ const buildArchive = function(
     const offset = parseInt($load.attr('data-offset')) + COUNT
     const params = {
       order: $order.val(),
-      offset: loadedMore ? offset : 0, // FIXME: Get correct value
+      offset: loadedMore ? offset : 0,
       count: COUNT,
       include: $media ? $media.val() : null
     }
