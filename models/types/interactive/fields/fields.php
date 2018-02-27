@@ -51,10 +51,8 @@ add_action( 'acf/init', function(){
         'name'  => 'transcript_raw',
         'type'  => 'textarea',
         'instructions' => "
-          <p>Use the \"Format No-Media Text\" button with text that's not connected to audio or video.</p>
-          <p>This will format the text as WebVTT with dummy timecodes to enable supporting content and direct links to each sentence.</p>
-          <p>If there is an abbreviation that should not trigger a new timestamp (e.g. 'Dr.'), add it to the \"Whitelisted Abbreviations\" section <a href=\"/wp-admin/admin.php?page=acf-options\"> here</a>.</p>
-          <div style=\"text-align: right; margin-top: 1em;\">
+          <p style=\"width: calc(100% - 180px - 1em); padding-right: 1em; display: inline-block; margin-top: 0;\">The \"Format No-Media Text\" button inserts dummy timecodes to enable supporting content and direct links in text that's not connected to audio/video. The related Whitelisted Abbreviations control is <a href=\"/wp-admin/admin.php?page=acf-options\"> here</a>.</p>
+          <div style=\"display: inline-block; text-align-right; vertical-align: top;\">
             <a href=\"#\" id=\"js-format-interactive\" class=\"button-primary\">
               Format No-Media Text
             </a>
