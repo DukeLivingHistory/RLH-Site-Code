@@ -33,7 +33,7 @@ const buildContentNode = function({
             >${hit.text}</li>
           `).join('')}
         </ul>
-        <button class="content-cutoff" data-cutoff=".hidden" data-alttext="View Less" data-nolink="true">View More</button>
+        <button class="content-cutoff" data-cutoff=".hidden" data-alttext='View Less ${icon('up')}' data-nolink="true">View More ${icon('down')}</button>
       ` : ''}
     `
   }

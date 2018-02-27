@@ -10,13 +10,12 @@ const cutoff = (elem) => {
 
     if($this.data('on')) {
       $target.show()
-      console.log('on')
       $target.children(':first').focus()
-      $this.text($this.data('alttext'))
+      $this.html($this.data('alttext'))
     }
     else {
       $target.hide()
-      $this.text($this.data('orig'))
+      $this.html($this.data('orig'))
     }
   })
 }
