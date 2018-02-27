@@ -1,20 +1,7 @@
 window.Cookies = require('js-cookie')
-var cachebust  = require('./cachebust')
-var icon       = require('./icon')
-
-// do we have a timestamp that matches a hash? if so return it
-const getNodeFromTimestamp = function(){
-  if(window.location.hash){
-    const hash = window.location.hash
-    const match_id = hash.match(/\#(\d*)/)
-    if(match_id && match_id[1].length){
-      if($('[data-start="'+match_id[1]+'"]').length){
-        return $('[data-start="'+match_id[1]+'"]')
-      }
-    }
-  }
-  return false
-}
+const cachebust  = require('./cachebust')
+const icon       = require('./icon')
+const getNodeFromTimestamp = require('./getNodeFromTimestamp')
 
 const syncAblePlayer = function(transcript, id, supp){
   $('body').removeClass('hasAblePlayer')
@@ -197,8 +184,8 @@ const syncAblePlayer = function(transcript, id, supp){
   })
 
   if(getNodeFromTimestamp()){
-    var timestamp = getNodeFromTimestamp()
-    var offset = $('.contentHeaderOuter').outerHeight() + 32
+    const timestamp = getNodeFromTimestamp()
+    const offset = $('.contentHeaderOuter').outerHeight() + 32
     setTimeout(() => {
       $('body, html').scrollTop(timestamp.offset().top - offset)
       timestamp.addClass('able-highlight')

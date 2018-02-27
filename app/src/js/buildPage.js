@@ -10,6 +10,7 @@ const buildOtherInCollection = require('./buildOtherInCollection')
 const buildTranscript        = require('./buildTranscript')
 const buildSupp              = require('./buildSupp')
 const eqHeight               = require('./eqHeight')
+const getNodeFromTimestamp   = require('./getNodeFromTimestamp')
 const socialHighlight        = require('./socialHighlight')
 const stickyHeader           = require('./stickyHeader')
 const syncAblePlayer         = require('./syncAblePlayer')
@@ -88,6 +89,13 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
                 buildOtherInCollection(page, data.id, data.collections[0])
               }
             })
+            if(getNodeFromTimestamp()){
+              const timestamp = getNodeFromTimestamp()
+              const offset = $('.contentHeaderOuter').outerHeight() + 32
+              setTimeout(() => {
+                $('body, html').scrollTop(timestamp.offset().top - offset)
+              })
+            }
           })
         }
         else {
