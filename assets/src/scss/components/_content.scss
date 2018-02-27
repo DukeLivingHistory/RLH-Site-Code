@@ -50,16 +50,18 @@
 }
 
 .content-cutoff {
-  background: $interviews;
-  color: $white;
-  border-radius: none;
+  color: rgba($body, .8);
+  background: none;
   padding: 2px 5px;
   border: none;
   font-family: 'Roboto';
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: .5em 0 1em;
+  &:hover {
+    color: $brand-primary;
+  }
 }
 
 .content-search-result {

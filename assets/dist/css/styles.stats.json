@@ -1,28 +1,27 @@
 {
-  "published": "2018-02-27T14:49:20.965Z",
+  "published": "2018-02-27T16:43:02.593Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 65681,
+  "size": 65707,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12814,
-  "rules": 799,
-  "selectors": 1052,
+  "gzippedSize": 12823,
+  "rules": 800,
+  "selectors": 1053,
   "declarations": 2077,
-  "simplicity": 0.7595057034220533,
-  "averageOfIdentifier": 1.903041825095057,
+  "simplicity": 0.7597340930674265,
+  "averageOfIdentifier": 1.9031339031339032,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .able-wrapper .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.599499374217772,
+  "averageOfCohesion": 2.59625,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
-    ".featherlight-next",
-    ".featherlight-previous"
+    ".transcript-jumpToActive"
   ],
-  "totalUniqueFontSizes": 33,
+  "totalUniqueFontSizes": 32,
   "uniqueFontSizes": [
     "0",
     ".9em",
@@ -41,7 +40,6 @@
     "14pt",
     "16pt",
     "12px",
-    "13px",
     "14px",
     "15px",
     "16px",
@@ -65,9 +63,10 @@
     "Roboto,sans-serif",
     "able"
   ],
-  "totalUniqueColors": 20,
+  "totalUniqueColors": 22,
   "uniqueColors": [
     "#000000",
+    "#0275D8",
     "#0C4D93",
     "#212019",
     "#3870D0",
@@ -86,7 +85,8 @@
     "RED",
     "RGBA(255,255,255,.5)",
     "RGBA(255,255,255,.7)",
-    "RGBA(255,255,255,.8)"
+    "RGBA(255,255,255,.8)",
+    "RGBA(66,64,56,.8)"
   ],
   "totalUniqueBackgroundImages": 1,
   "uniqueBackgroundImages": [
@@ -121,7 +121,7 @@
     },
     {
       "property": "color",
-      "count": 109
+      "count": 110
     },
     {
       "property": "font-size",
