@@ -36,7 +36,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
-      'suppress_filters' => false,
+      // 'suppress_filters' => false,
       'tax_query' => get_collection_arg($args),
       'meta_query' => [
         'relation' => 'OR',
@@ -67,8 +67,8 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
         ]
       ],
       // Prevent duplicate terms from previous query
-      'exclude' => array_reduce($posts_search, function($excluded_terms , $post) {
-        $excluded_posts[] = $post->post_id;
+      'exclude' => array_reduce($posts_search, function($excluded_posts, $post) {
+        $excluded_posts[] = $post->ID;
         return $excluded_posts;
       }, [])
     ]),
