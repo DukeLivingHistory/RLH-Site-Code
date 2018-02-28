@@ -1,4 +1,7 @@
-var highlightTranscript = (transcript, selector, highlight) => {
+const escapeRegex = require('escape-string-regexp')
+
+const highlightTranscript = (transcript, selector, highlight) => {
+  highlight = highlight && escapeRegex(highlight)
   const nodes = transcript.find(selector)
 
   $(nodes).each(function(){

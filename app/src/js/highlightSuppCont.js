@@ -1,7 +1,8 @@
-var respImg = require( './respImg' )
+const respImg = require( './respImg' )
+const escapeRegex = require('escape-string-regexp')
 
-var highlightSuppCont = (nodes, subnodes, highlight) => {
-  const HIGHLIGHT = new RegExp(`(${highlight})`, 'ig')
+const highlightSuppCont = (nodes, subnodes, highlight) => {
+  const HIGHLIGHT = new RegExp(`(${escapeRegex(highlight)})`, 'ig')
   $(nodes).each(function(){
     const $subnodes = $(this).find(subnodes)
     let isMatchAll = false
@@ -11,7 +12,7 @@ var highlightSuppCont = (nodes, subnodes, highlight) => {
       if(isMatch) {
         isMatchAll = true
         $(this).html(text.replace(
-          new RegExp(`(${highlight})`, 'ig'),
+          new RegExp(`(${escapeRegex(escapeRegex(highlight))})`, 'ig'),
       '<span class="transcript-highlight">$1</span>'
         ))
       } else {
