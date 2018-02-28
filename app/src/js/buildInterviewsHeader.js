@@ -30,7 +30,7 @@ const buildInterviewsHeader = (
           ${collections ? buildCollectionsList(collections) : ''}
           ${introduction ? `<div class="contentHeader-introduction">${introduction}</div>` : ''}
           ${related ? `
-            <h3 class="contentHeader-relatedhead">Related to</h3>
+            <h3 class="contentHeader-relatedHead">Related to</h3>
             ${buildConnected(related)}
           ` : ''}
           <span class="contentHeader-selectWrapper" id="selectWrap-${id}" style="display: none;">

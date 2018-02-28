@@ -82,7 +82,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         if(data.no_media) {
           buildTimelineHeader(page, data, 'Interview')
           buildTranscript(page, data.id, (transcript) => {
-            socialHighlight('.transcript')
+            highlighter('.able-transcript')
             buildSupp(page, endpoint, queriedObject, () => {
               if(data.collections.length) {
                 buildOtherInCollection(page, data.id, data.collections[0])

@@ -101,7 +101,11 @@ $(document).ready(function(){
   eqHeight('.js-eqHeight')
 
   // Global Event Handlers
-  $('body').on('mousedown touchend', () => {
-    $('.socialPopup').remove()
+  $('body').on('click', () => {
+    if(!window.SOCIAL_POPUP_IS_OPEN) return
+    setTimeout(() => {
+      $('.socialPopup').remove()
+      window.SOCIAL_POPUP_IS_OPEN = false
+    }, 500)
   })
 })

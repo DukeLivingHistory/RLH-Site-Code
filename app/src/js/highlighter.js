@@ -1,14 +1,16 @@
 const getUrlWithNoHash = require('./getUrlWithNoHash')
+const sharer = require('./sharer')
 
 const highlighter = (target) => {
   const makePopup = (url, title, text, style, className) => {
-    console.log('Popup made!')
+    const shareLinks = sharer(url, title, text, {
+      clipboardText: `${text}\n${url}`,
+      copyText: 'Selected text plus link copied to clipboard!'
+    })
+
     const markup = `
       <span class="socialPopup ${className}" style="${style}">
-        ${sharer(url, title, text, {
-          clipboardText: `${text}\n${url}`,
-          copyText: 'Selected text plus link copied to clipboard!'
-        })}
+        ${shareLinks.render}
       </span>
     `
 
@@ -16,16 +18,23 @@ const highlighter = (target) => {
 
     if($popup.length > 0) {
       $popup.replaceWith(markup)
+      shareLinks.attachHandlers()
     }
     else {
       $('body').append(markup)
+      shareLinks.attachHandlers()
     }
 
-    $('body').find('.socialPopup').on('mousedown touchend', (e) => {
-      console.log('hey')
-      e.preventDefault()
-      e.stopPropagation()
+    $('.socialPopup').on('click', (e) => {
+      window.SOCIAL_POPUP_IS_OPEN = false
+      setTimeout(() => {
+        window.SOCIAL_POPUP_IS_OPEN = true
+      }, 200)
     })
+
+    setTimeout(() => {
+      window.SOCIAL_POPUP_IS_OPEN = true
+    }, 500)
   }
 
   const isInverse = (selection) => {
@@ -63,49 +72,67 @@ const highlighter = (target) => {
     }
   }
 
-  $(target).on('selectionchange', function(e) {
+  const handleChange = (e) => {
     let url = getUrlWithNoHash()
     const selection = document.getSelection()
     const text = selection.toString()
+
+    if(text.length === 0) {
+      $('.socialPopup').remove()
+      return
+    }
+
     const sanitized = text.replace('"', '&quot;')
     const { anchorNode, focusNode } = selection
 
-    if(!anchorNode || !! focusNode) return
-
     const $anchor = $(anchorNode.parentNode)
-    const $focus = $(anchorNode.parentNode)
+    const $focus = $(focusNode.parentNode)
     const $first = $anchor.index() < $focus.index() ? $anchor : $focus
+
+    if(!$focus.parents(target).length) { // Is focused element in container?
+      return
+    }
+
+    if(!$anchor.length || !$focus.length) return
 
     if(
       $anchor.data('highlight') ||
       $focus.data('highlight')
     ) {
-      if($first.data('highlight') === 'next') {
+      if($first.attr('data-highlight') === 'next') {
         const $next = $first.next()
-        const timestamp = $next.data('start') || $next.attr('timestamp')
+        const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
         url = `${url}#${timestamp}`
       }
       else if(
-        $first.data('highlight') === 'transcript' ||
-        $focus.data('highlight' === 'transcript')
+        $first.attr('data-highlight') === 'transcript' ||
+        $focus.attr('data-highlight') === 'transcript'
       ) {
-        const timestamp = $first.data('start') || $first.data('timestamp') || $focus.data('start') || $focus.data('timestamp')
+        const timestamp = $first.attr('data-start') || $first.attr('data-timestamp') || $focus.attr('data-start') || $focus.attr('data-timestamp')
         url = `${url}#${timestamp}`
       }
     }
 
+
     const style = `
       position: absolute;
-      left: ${getLeft(selection)};
-      top: ${getTop(selection)};
+      left: ${getLeft(selection)|0}px;
+      top: ${getTop(selection)|0}px;
+      z-index: 1000000;
     `
 
+    let className = ''
     if(isInverse(selection)) {
       className = 'socialPopup--inverse'
     }
 
-    makePopup(url, document.title, text, style, className)
-  })
+    window.POPUP = setTimeout(() => {
+      makePopup(url, document.title, text, style, className)
+    }, 250)
+  }
+
+  $(document).on('selectionchange', handleChange)
+  $(target).on('mouseup keypress touchend', handleChange)
 }
 
 module.exports = highlighter
