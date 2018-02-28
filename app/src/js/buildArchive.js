@@ -94,7 +94,13 @@ const buildArchive = function(
 
   // Subheading
   if(total_hits && results) {
-    subheading = `<p class="content-subheading">Showing ${total_hits} hits across ${results} files</p>`
+    subheading = `
+      <div>
+        <p class="content-subheading">
+          Showing ${total_hits} hits across ${results} files
+          <button class="content-cutoff" data-cutoff-all data-alttext='Contract All ${icon('up')}'>Expand All ${icon('down')}</button>
+        </p>
+      </div>`
   }
 
   // Construct Page
@@ -182,7 +188,7 @@ const buildArchive = function(
 
   // These are created in buildContentNode
   sublink($append.find('[data-sublink]'))
-  cutoff($append.find('[data-cutoff]'))
+  cutoff($append.find('[data-cutoff]'), $append.find('[data-cutoff-all]'))
 }
 
 module.exports = buildArchive
