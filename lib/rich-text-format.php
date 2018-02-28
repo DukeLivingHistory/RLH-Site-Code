@@ -26,6 +26,7 @@ add_action('admin_head', function() {
 
         // If last character is not punctuation, make it so
         if(!text.match(/[\.\?!]$/)) {
+          console.log('adding period')
           text = text + '.'
         }
 
@@ -34,7 +35,6 @@ add_action('admin_head', function() {
           pattern: ".*?(?<![A-Z])[\\.!\\?]+"
         })
 
-        console.log(data)
 
         // The negative look-behind we need isn't implemented in most JS runtimes,
         // so we call a microservice.
@@ -108,7 +108,7 @@ add_action('admin_head', function() {
 
         $('#js-format-interactive').click(function(){
           var $transcript = $('#acf-transcript_raw')
-          var val = $transcript.val()
+          var val = $transcript.val().trim()
           var cleaned = sanitizeTranscript(val)
           getArrayFromSentences(cleaned, disallowedDelimiters, function(split) {
             var formatted = formatArrayAsTimeStamps(split)
