@@ -11,10 +11,7 @@ const highlightSuppCont = (nodes, subnodes, highlight) => {
       const isMatch = text.match(HIGHLIGHT)
       if(isMatch) {
         isMatchAll = true
-        $(this).html(text.replace(
-          new RegExp(`(${escapeRegex(escapeRegex(highlight))})`, 'ig'),
-      '<span class="transcript-highlight">$1</span>'
-        ))
+        $(this).html(text.replace(HIGHLIGHT, '<span class="transcript-highlight">$1</span>'))
       } else {
         $(this).html(text)
       }

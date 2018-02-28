@@ -107,7 +107,10 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
       },
       'transcript_raw',
       'description_raw',
-      'supporting_content_raw'
+      'supporting_content_raw' => function($id) {
+        $raw = get_field('supporting_content_raw', $id);
+        return $raw;
+      }
      ],
     'timeline' => [
       'introduction' => function($id) {
@@ -165,7 +168,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     $results = array_slice($results, $offset, $count);
   }
 
-  $returns['name'] = 'Search for '.$data['term'];
+  $returns['name'] = 'Search for '.$term;
   $returns['total_hits'] = $total_hits;
   $returns['results'] = $total_results;
   return $returns;
