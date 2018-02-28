@@ -1,53 +1,54 @@
-var buildCollectionsList = require('./buildCollectionsList');
-var buildConnected = require('./buildConnected');
-var icon = require('./icon');
-var respImg = require('./respImg');
-var socialLinks = require('./socialLinks');
+const buildCollectionsList = require('./buildCollectionsList')
+const buildConnected = require('./buildConnected')
+const icon = require('./icon')
+const respImg = require('./respImg')
+const sharer = require('./sharer')
 
-var buildTimelineHeader = function (wrapper, data, type = null){
-  var header = $('<header class="contentHeader contentHeader--timeline"/>');
-  var inner = $('<div class="contentHeader-inner" />');
-  var imgWrapper = $('<div class="contentHeader-imgWrapper" />');
-  if(type !== false){
-    header.append(`
-      <span class="contentHeader-type">
-        ${icon(data.type, 'type')}
-        ${type || 'Timeline'}
-      </span>
-    `);
-  }
-  inner.append('<h2 class="contentHeader-head">'+data.name+'</h2>');
+const buildTimelineHeader = (
+  page,
+  {
+    link,
+    name,
+    image,
+    introduction,
+    related,
+    collections
+  },
+  type = null
+) => {
+  const shareLinks = sharer(link, name, name, {})
 
-  if(data.collections){
-    var collections = buildCollectionsList(data.collections);
-    inner.append(collections);
-  }
+  console.log(buildConnected(related))
 
-  if(data.introduction){
-    inner.append('<div class="contentHeader-introduction">'+data.introduction+'</div>');
-  }
+  const append = `
+    <header class="contentHeader contentHeader--timeline">
+      ${type !== false ? `
+        <span class="contentHeader-type">
+          ${icon(type, 'type')}
+          ${type || 'Timeline'}
+        </span>
+      ` : ''}
+      <div class="contentHeader-inner">
+        <h2 class="contentHeader-head">${name}<?h2>
+        ${collections ? buildCollectionsList(collections) : ''}
+        ${introduction ? `<div class="contentHeader-introduction">${introduction}</div>` : ''}
+        ${related ? `
+          <h3 class="contentHeader-relatedHead">Related to</h3>
+          ${buildConnected(related)}
+        ` : ''}
+      </div>
+      <div class="contentHeader-imgWrapper">
+        ${image ? respImg.markup(image, 'feat_lg', 'respImg contentHeader-img', null, true) : ''}
+        <div class="shareLinks">
+          Share this collection
+          ${shareLinks.render}
+        </div>
+      </div>
+    </header>
+  `
 
-  if(data.related){
-    var related = buildConnected(data.related);
-    inner.append('<h3 class="contentHeader-relatedHead">Related to</h3>');
-    inner.append(related);
-  }
-
-  header.append(inner);
-
-  if(data.image){
-    imgWrapper.append(respImg.markup(data.image, 'feat_lg', 'respImg contentHeader-img', null, true));
-  }
-
-  var intro = data.intro || data.introduction || ''
-  imgWrapper.append('<div class="shareLinks">Share this collection'+socialLinks(
-    data.link,
-    data.title,
-    intro.replace(/(<([^>]+)>)/ig,""),
-    intro.replace(/(<([^>]+)>)/ig,"")
- )+'</div>')
-  header.append(imgWrapper);
-  wrapper.append(header);
+  page.append(append)
+  shareLinks.attachHandlers()
 }
 
-module.exports = buildTimelineHeader;
+module.exports = buildTimelineHeader

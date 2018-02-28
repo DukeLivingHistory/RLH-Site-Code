@@ -1,40 +1,71 @@
-var icon = require('./icon');
-var respImg = require('./respImg');
-var socialLinks = require('./socialLinks');
+const icon = require('./icon')
+const respImg = require('./respImg')
+const sharer = require('./sharer')
 
-var buildTimeline = function ( wrapper, events, intro, callback ){
-  var intro = $( '<div class="content-intro">'+intro+'</div>' );
-  var timeline = $( '<ul class="timeline"/>' );
-  wrapper.append( intro );
-  wrapper.append( timeline );
+const buildTimeline = (
+  page,
+  events,
+  intro,
+  cb
+) => {
+  const shares = []
 
-  $(events).each( function(i){
-    var eventHtml = '';
-    eventHtml += '<li id="'+i+'" class="event" data-start="'+this.event_date+'">';
-    eventHtml += '<span class="event-dot"></span>';
-    eventHtml   += '<date class="event-date">'+this.event_date+'</date>';
-    eventHtml   += '<h3 class="event-head">'+this.title+'</h3>';
-    if( this.image ){
-      eventHtml += '<div class="event-imageWrapper">';
-      eventHtml += respImg.markup( this.image, 'feat_lg', 'respImg', null, true );
-      eventHtml += '</div>'
-    }
-    if( this.content.length ){
-      eventHtml += '<div class="event-content">'+this.content+'</div>';
-    }
-    if( this.content_link ){
-      eventHtml += '<a class="js-internalLink relatedItem relatedItem--'+this.content_link_type+'"';
-      eventHtml += ' data-type="'+this.content_link_type+'s" ';
-      eventHtml += ' data-id="'+this.content_link_id+'" ';
-      eventHtml += 'href="'+this.content_link+'">'+icon( this.content_link_type, 'type' )+' '+this.content_link_text+'</a>';
-    }
-    eventHtml += '<div class="event-social">'+socialLinks( window.location.href.split('#')[0]+'#'+i, this.title, this.content )+'</div>';
-    eventHtml += '</li>';
-    var eventHtml = $( eventHtml );
-    timeline.append( eventHtml );
-    eventHtml.addClass('loaded');
-  } );
-  callback();
+  const append = `
+    <div class="content-intro">${intro}</div>
+    <ul class="timeline">
+      ${events.map(({
+        event_date,
+        title,
+        image,
+        content,
+        content_link,
+        content_link_type,
+        content_link_id,
+        content_link_text,
+      }, index) => {
+        const shareLinks = sharer(
+          window.location.href.split('#')[0]+'#'+index,
+          title,
+          content.replace(/(<([^>]+)>)/ig,''),
+          {}
+        )
+
+        shares.push({
+          id: shareLinks.id,
+          options: shareLinks.options
+        })
+
+        return `
+          <li id="${index}" class="event loaded" data-start="${event_date}">
+            <span class="event-dot"></span>
+            <date class="event-date">${event_date}</date>
+            <h3 class="event-head">${title}</h3>
+            ${image ? `<div class="event-imageWrapper">
+              ${respImg.markup(image, 'feat_lg', 'respImg', null, true)}
+            </div>` : ''}
+            ${content.length ? `<div class="event-content">${content}</div>` : ''}
+            ${content_link ? `
+              <a class="js-internalLink relatedItem relatedItem--${content_link_type}"
+                data-type="${content_link_type}"
+                data-id="${content_link_id}"
+                href=${content_link}
+              >
+                ${icon(content_link_type, 'type')} ${content_link_text}
+              </a>
+            ` : ''}
+            <div class="event-social">
+              ${shareLinks.render}
+            </div>
+          </li>
+        `
+      }
+    ).join(' ')}
+    </ul>
+  `
+
+  page.append(append)
+  shares.forEach(({id, options}) => { sharer().attachHandlers(id, options) })
+  if(cb) cb()
 }
 
-module.exports = buildTimeline;
+module.exports = buildTimeline

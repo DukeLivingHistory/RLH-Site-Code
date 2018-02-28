@@ -1,42 +1,31 @@
-var icon = require( './icon' );
+const icon = require( './icon' );
 
-var scrollIndicator = {
+const scrollIndicator = (ref) => {
+  const render = `<div class="scrollIndicator">${icon('down', 'scrollIndicator')}</div>`
 
-  scrollIndicator: $( '<div class="scrollIndicator">'+icon( 'down', 'scrollIndicator' )+'</div>' ),
-
-  remove: function(){
-    this.scrollIndicator.remove();
-  },
-
-  add: function( ref ){
-    this.toggle( ref );
-    $( window ).on( 'scroll resize', function(){
-      this.toggle( ref );
-    }.bind(this) );
-
-    this.scrollIndicator.click( function(){
-      $( 'body,html' ).animate( {
-        scrollTop: (function(){
-          var offset = 110;
-          return $( ref ).offset().top - offset;
-        })()
-      }, 500 );
-    } );
-
-    return this.scrollIndicator;
-  },
-
-  toggle: function( elem ){
-    if( !$(elem).length ) return;
-    // 33 = padding-top of transcript
-    if( $( window ).scrollTop() + $( window ).height() > $( elem ).offset().top + 33 ){
-      this.scrollIndicator.addClass( 'scrollIndicator--hidden' );
-    } else {
-      this.scrollIndicator.removeClass( 'scrollIndicator--hidden' );
+  const toggle = (elem) => {
+    if(!$(elem).length) return
+    if($(window).scrollTop() + $(window).height() > $(elem).offset().top + 33) {
+      $('.scrollIndicator').addClass('scrollIndicator--hidden')
+    }
+    else {
+      $('.scrollIndicator').removeClass('scrollIndicator--hidden')
     }
   }
 
+  const attachHandlers = () => {
+    toggle(ref)
+    $(window).on('scroll resize', () => { toggle(ref) })
+    $('body').unbind('click.scrollIndicator').on('click.scrollIndicator', '.scrollIndicator', () => {
+      const scrollTop = $(ref).offset().top - 33
+      $('body,html').animate({ scrollTop }, 500)
+    })
+  }
 
+  return {
+    render,
+    attachHandlers: () => { attachHandlers() }
+  }
 }
 
-module.exports = scrollIndicator;
+module.exports = scrollIndicator
