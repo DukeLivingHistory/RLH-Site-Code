@@ -386,7 +386,7 @@
           width: 100%;
         }
         .able-seekbar-wrapper {
-          width: 100%!important;
+          // width: 100%!important;
         }
         .able-seekbar {
           margin: 0 10px;
@@ -395,6 +395,7 @@
           height: 50vw * 9 / 16;
           width: 50vw;
         }
+        .able-controller button,
         .able-status-bar {
           display: none;
         }

@@ -1,22 +1,22 @@
 {
-  "published": "2018-02-27T21:02:50.906Z",
+  "published": "2018-02-28T23:11:40.978Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 65726,
+  "size": 65709,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12825,
-  "rules": 801,
+  "gzippedSize": 12824,
+  "rules": 800,
   "selectors": 1053,
-  "declarations": 2078,
-  "simplicity": 0.7606837606837606,
-  "averageOfIdentifier": 1.9031339031339032,
+  "declarations": 2077,
+  "simplicity": 0.7597340930674265,
+  "averageOfIdentifier": 1.9050332383665718,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .able-wrapper .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.5942571785268416,
+  "averageOfCohesion": 2.59625,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".transcript-jumpToActive"
@@ -96,7 +96,7 @@
   "universalSelectors": 5,
   "unqualifiedAttributeSelectors": 13,
   "javascriptSpecificSelectors": 0,
-  "importantKeywords": 35,
+  "importantKeywords": 34,
   "floatProperties": 32,
   "propertiesCount": [
     {
@@ -112,12 +112,12 @@
       "count": 126
     },
     {
-      "property": "width",
+      "property": "display",
       "count": 115
     },
     {
-      "property": "display",
-      "count": 115
+      "property": "width",
+      "count": 114
     },
     {
       "property": "color",
