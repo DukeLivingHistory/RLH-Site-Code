@@ -10,7 +10,7 @@ add_action('admin_head', function() {
   ?>
   <script>
     (function($){
-      function getArrayFromSentences(text, disallowedDelimiters) {
+      function getArrayFromSentences(text, disallowedDelimiters, cb) {
         // Hash NOTEs
         text = text.replace(/\n\nNOTE\s(.*?)\n\n/g, function(){
           return '[[N:'+arguments[1]+']]'
@@ -24,34 +24,55 @@ add_action('admin_head', function() {
           text = text.split(delimiter).join('[['+i+']]')
         })
 
-        // Explode into sentences
-        var exploded = text.match(/.*?(?:[^A-Z][\.!\?]?)+\n*/g)
+        // If last character is not punctuation, make it so
+        if(!text.match(/[\.\?!]$/)) {
+          text = text + '.'
+        }
 
-        // Replace hashed values
-        var cleaned = exploded.map(function(value) {
-          var paragraph = false
-          var note = false
-          if(value.match(/\[\[P\]\]/)) {
-            value = value.replace(/\[\[P\]\]/g, '')
-            paragraph = true
-          }
-          if(value.match(/\[\[N:(.*?)\]\]/)) {
-            value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
-              note = arguments[1]
-              return ''
-            })
-          }
-          return {
-            item: value.replace(/\[\[(\d+)\]\]/g, function() {
-              var i = arguments[1]
-              return disallowedDelimiters[i]
-            }).trim(),
-            paragraph: paragraph,
-            note: note
-          }
+        var data = JSON.stringify({
+          text: text,
+          pattern: ".*?(?<![A-Z])[\\.!\\?]+"
         })
 
-        return cleaned
+        console.log(data)
+
+        // The negative look-behind we need isn't implemented in most JS runtimes,
+        // so we call a microservice.
+        $.ajax({
+          url: '/wp-json/v1/microservices/nlbaas',
+          type: 'POST',
+          dataType: 'json',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data,
+          success: function(exploded) {
+            // Replace hashed values
+            var cleaned = exploded.map(function(value) {
+              var paragraph = false
+              var note = false
+              if(value.match(/\[\[P\]\]/)) {
+                value = value.replace(/\[\[P\]\]/g, '')
+                paragraph = true
+              }
+              if(value.match(/\[\[N:(.*?)\]\]/)) {
+                value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
+                  note = arguments[1]
+                  return ''
+                })
+              }
+              return {
+                item: value.replace(/\[\[(\d+)\]\]/g, function() {
+                  var i = arguments[1]
+                  return disallowedDelimiters[i]
+                }).trim(),
+                paragraph: paragraph,
+                note: note
+              }
+            })
+            cb(cleaned)
+          }
+        })
       }
 
       function makeTimestamps(secs) {
@@ -89,9 +110,10 @@ add_action('admin_head', function() {
           var $transcript = $('#acf-transcript_raw')
           var val = $transcript.val()
           var cleaned = sanitizeTranscript(val)
-          var split = getArrayFromSentences(cleaned, disallowedDelimiters)
-          var formatted = formatArrayAsTimeStamps(split)
-          $transcript.val(formatted)
+          getArrayFromSentences(cleaned, disallowedDelimiters, function(split) {
+            var formatted = formatArrayAsTimeStamps(split)
+            $transcript.val(formatted)
+          })
         })
       })
     })(jQuery)
