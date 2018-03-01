@@ -2,31 +2,20 @@ const cutoff = (elem, all = null) => {
   const alt = $(elem).data('alt')
   const orig = $(elem).text()
 
-  const handleChange = function(on = null) {
+  const handleChange = function() {
     const $this = $(this)
-    const $target = $this.siblings($this.data('cutoff'))
+    const $target = $($this.data('cutoff'))
     $this.data('orig', $this.data('orig') || $this.html())
 
-    if(on !== null) {
-      $this.data('on', on)
-    } else {
-      $this.data('on', !$this.data('on'))
-    }
+    $this.data('on', !$this.data('on'))
 
     if($this.data('on')) {
       $target.show()
       $this.html($this.data('alttext'))
-      if(on === null) {
-        $target.children(':first').focus()
-        $this.siblings().hover(() => { $(':focus').blur() })
-      }
     }
     else {
       $target.hide()
       $this.html($this.data('orig'))
-      if(on === null) {
-        $this.siblings().unbind('hover')
-      }
     }
   }
 
@@ -41,7 +30,7 @@ const cutoff = (elem, all = null) => {
       $this.data('orig', $this.data('orig') || $this.html())
       $this.html($this.data('on') ? $this.data('alttext') : $this.data('orig'))
       $(elem).each(function() {
-        handleChange.bind(this)($this.data('on'))
+        handleChange.bind(this)()
       })
     })
   }
