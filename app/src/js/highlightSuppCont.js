@@ -2,6 +2,7 @@ const respImg = require( './respImg' )
 const escapeRegex = require('escape-string-regexp')
 
 const highlightSuppCont = (nodes, subnodes, highlight) => {
+  if(!highlight) return
   const HIGHLIGHT = new RegExp(`(${escapeRegex(highlight || '')})`, 'ig')
   $(nodes).each(function(){
     const $subnodes = $(this).find(subnodes)

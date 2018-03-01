@@ -55,7 +55,7 @@ const buildSupp = (
 
             return `
               <li tabindex="0"
-                data-opendefault="${node.open}"
+                ${node.open ? `data-opendefault="true"` :''}
                 data-action="expand"
                 data-supp="${index}"
                 class="suppCont-single suppCont-single--${node.type} ${node.class ? `suppCont-single--${node.class}` : ''}"
@@ -84,6 +84,8 @@ const buildSupp = (
     }
 
     const aside = `<aside class="suppCont">${inner}</aside>`
+
+    console.log(aside)
 
     if(mainContentExists) page.append(aside)
 
