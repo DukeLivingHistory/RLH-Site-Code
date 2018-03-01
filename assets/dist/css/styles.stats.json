@@ -1,22 +1,22 @@
 {
-  "published": "2018-03-01T22:26:21.290Z",
+  "published": "2018-03-01T22:43:10.153Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 66114,
+  "size": 66331,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12862,
-  "rules": 804,
-  "selectors": 1055,
-  "declarations": 2082,
-  "simplicity": 0.762085308056872,
-  "averageOfIdentifier": 1.9109004739336493,
+  "gzippedSize": 12918,
+  "rules": 808,
+  "selectors": 1059,
+  "declarations": 2091,
+  "simplicity": 0.7629839471199245,
+  "averageOfIdentifier": 1.9084041548630784,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .contentHeader-searchwrap .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.58955223880597,
+  "averageOfCohesion": 2.587871287128713,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -106,15 +106,15 @@
     },
     {
       "property": "padding",
-      "count": 128
+      "count": 129
     },
     {
       "property": "margin",
-      "count": 126
+      "count": 128
     },
     {
       "property": "display",
-      "count": 118
+      "count": 119
     },
     {
       "property": "width",
@@ -122,11 +122,11 @@
     },
     {
       "property": "color",
-      "count": 110
+      "count": 111
     },
     {
       "property": "font-size",
-      "count": 103
+      "count": 104
     },
     {
       "property": "background",

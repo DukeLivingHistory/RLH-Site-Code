@@ -207,3 +207,25 @@
   }
 
 }
+
+.blog {
+  &-single {
+    margin: 4em 0 0;
+    padding: 0 2em;
+    border-bottom: 1px solid #fafafa;
+  }
+
+  &-meta {
+    text-transform: uppercase;
+    color: #ccc;
+    letter-spacing: 1px;
+    font-size: 14px;
+  }
+
+  &-excerpt {
+    p {
+      display: inline;
+    }
+    margin: 1em 0 2em;
+  }
+}
