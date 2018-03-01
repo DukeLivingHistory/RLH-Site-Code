@@ -59,8 +59,10 @@ const buildContentNode = function({
         <span class="content-type">${icon(type, 'type')} ${type}</span>
         <h3 class="content-head">
           ${title}
-          ${!hitCount ? '' : `&nbsp<small>(${hitCount} total ${hitCount > 1 ? 'hits' : 'hit'})</small>`}
-          <button class="content-cutoff" data-cutoff="#${uid}" data-alttext='View Less ${icon('up')}' data-nolink="true">Expand ${icon('down')}</button>
+          ${!hitCount ? '' : `
+            &nbsp<small>(${hitCount} total ${hitCount > 1 ? 'hits' : 'hit'})</small>
+            <button class="content-cutoff" data-cutoff="#${uid}" data-alttext='View Less ${icon('up')}' data-nolink="true">Expand ${icon('down')}</button>
+          `}
         </h3>
         <div class="content-excerpt">${hitHtml || excerpt}</div>
         <div class="content-link">View The ${type} ${icon('right', 'link')}</div>
