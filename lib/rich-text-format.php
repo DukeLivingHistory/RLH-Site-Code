@@ -12,7 +12,7 @@ add_action('admin_head', function() {
     (function($){
       function getArrayFromSentences(text, disallowedDelimiters, cb) {
         // Hash NOTEs
-        text = text.replace(/\n\nNOTE\s(.*?)\n\n/g, function(){
+        text = text.replace(/(?:\n\n)?NOTE\s(.*?)\n\n/g, function(){
           return '[[N:'+arguments[1]+']]'
         })
 
@@ -30,8 +30,10 @@ add_action('admin_head', function() {
           text = text + '.'
         }
 
+        console.log('Sent to API: ', text)
+
         var data = JSON.stringify({
-          text: text,
+          text: text.replace('\n', ''),
           pattern: ".*?(?<![A-Z])[\\.!\\?]+"
         })
 
@@ -48,6 +50,7 @@ add_action('admin_head', function() {
           data: data,
           success: function(exploded) {
             // Replace hashed values
+            console.log('Exploded:', exploded)
             var cleaned = exploded.map(function(value) {
               var paragraph = false
               var note = false
@@ -99,6 +102,8 @@ add_action('admin_head', function() {
           })
           .replace(/\s?(?:\d\d)?:\d\d:\d\d\.\d\d\d\s?/g, '')
           .replace(/-->/g, '')
+
+        console.log('Cleaned:\n', cleaned)
 
         return cleaned
       }
