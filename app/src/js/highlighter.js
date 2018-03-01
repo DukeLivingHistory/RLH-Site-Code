@@ -2,45 +2,47 @@ const getUrlWithNoHash = require('./getUrlWithNoHash')
 const sharer = require('./sharer')
 
 const highlighter = (target) => {
-  const makePopup = (url, title, text, style, className) => {
+  const makePopup = (url, title, text, style, className, isChangingFromSelection) => {
     const shareLinks = sharer(url, title, text, {
       clipboardText: `${text}\n${url}`,
       copyText: 'Selected text plus link copied to clipboard!'
     })
 
-    const markup = `
+    const $markup = $(`
       <span class="socialPopup ${className}" style="${style}">
         ${shareLinks.render}
       </span>
-    `
+    `)
 
     const $popup = $('body').find('.socialPopup')
 
     if($popup.length > 0) {
-      $popup.replaceWith(markup)
+      $popup.replaceWith($markup)
       shareLinks.attachHandlers()
     }
     else {
-      $('body').append(markup)
+      $('body').append($markup)
       shareLinks.attachHandlers()
     }
 
-    $('.socialPopup').on('click', (e) => {
-      window.SOCIAL_POPUP_IS_OPEN = false
+    $('.socialPopup').on('mousedown touchstart', (e) => {
+      window.SOCIAL_POPUP_SHOULD_BE_REMOVED = false
       setTimeout(() => {
-        window.SOCIAL_POPUP_IS_OPEN = true
-      }, 200)
+        window.SOCIAL_POPUP_SHOULD_BE_REMOVED = true
+      }, 100)
     })
 
+    if(isChangingFromSelection) return
     setTimeout(() => {
-      window.SOCIAL_POPUP_IS_OPEN = true
-    }, 500)
+      console.log('setting to true')
+      window.SOCIAL_POPUP_SHOULD_BE_REMOVED = true
+    }, 300)
   }
 
   const isInverse = (selection) => {
     const range = selection.getRangeAt(0)
     const rects = range.getClientRects()
-    const offsetBottom = (rects[rects.length-1].bottom + 60) // bottom of last element
+    const offsetBottom = (rects[rects.length-1].bottom) // bottom of last element
     const windowHeight = $(window).height()
     return offsetBottom < windowHeight
   }
@@ -55,15 +57,15 @@ const highlighter = (target) => {
     if(window.IS_TOUCH_SCREEN) { // Always display small screens below to account for device UI
       const range = selection.getRangeAt(0)
       const rects = range.getClientRects()
-      if(rects.length) return rects[0].bottom + $(window).scrollTop()
+      if(rects.length) return rects[rects.length - 1].bottom - 30 + $(window).scrollTop()
     }
     else {
       const range = selection.getRangeAt(0)
       const rects = range.getClientRects()
       const mid = (rects[0].top + rects[0].bottom) / 2
-      const offsetBottom = (rects[rects.length-1].bottom + 60) // bottom of last element
 
       if(isInverse(selection)) { // Below content
+        const offsetBottom = (rects[rects.length-1].bottom - 30) // bottom of last element
         return offsetBottom + $(window).scrollTop()
       }
       else { // Above content
@@ -72,13 +74,13 @@ const highlighter = (target) => {
     }
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e, isChangingFromSelection) => {
     let url = getUrlWithNoHash()
     const selection = document.getSelection()
     const text = selection.toString()
 
     if(text.length === 0) {
-      $('.socialPopup').remove()
+      //$('.socialPopup').remove()
       return
     }
 
@@ -118,21 +120,20 @@ const highlighter = (target) => {
       position: absolute;
       left: ${getLeft(selection)|0}px;
       top: ${getTop(selection)|0}px;
-      z-index: 1000000;
     `
 
     let className = ''
-    if(isInverse(selection)) {
+    if(isInverse(selection) || window.IS_TOUCH_SCREEN) {
       className = 'socialPopup--inverse'
     }
 
     window.POPUP = setTimeout(() => {
-      makePopup(url, document.title, text, style, className)
+      makePopup(url, document.title, text, style, className, isChangingFromSelection)
     }, 250)
   }
 
-  $(document).on('selectionchange', handleChange)
-  $(target).on('mouseup keypress touchend', handleChange)
+  $(document).on('selectionchange', (e) => handleChange(e, true))
+  $(target).on('mouseup touchend', (e) => handleChange(e, false))
 }
 
 module.exports = highlighter

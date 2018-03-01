@@ -101,11 +101,12 @@ $(document).ready(function(){
   eqHeight('.js-eqHeight')
 
   // Global Event Handlers
-  $('body').on('click', () => {
-    if(!window.SOCIAL_POPUP_IS_OPEN) return
+  $('body').on('mousedown touchstart', () => {
+    console.log('Checked value: ', window.SOCIAL_POPUP_SHOULD_BE_REMOVED)
     setTimeout(() => {
+      if(!window.SOCIAL_POPUP_SHOULD_BE_REMOVED) return
       $('.socialPopup').remove()
-      window.SOCIAL_POPUP_IS_OPEN = false
-    }, 500)
+      window.SOCIAL_POPUP_SHOULD_BE_REMOVED = false
+    }, 200)
   })
 })
