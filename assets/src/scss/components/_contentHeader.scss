@@ -377,9 +377,9 @@
         width: 50vw;
         .able-controller {
           display: block;
-          @media(max-width: 544px) {
-            display: none;
-          }
+          // @media(max-width: 544px) {
+          //   display: none;
+          // }
         }
         .able-left-controls,
         .able-right-controls:not(:nth-child(3)) {
