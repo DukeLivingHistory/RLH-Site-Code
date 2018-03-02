@@ -85,8 +85,6 @@ const buildSupp = (
 
     const aside = `<aside class="suppCont">${inner}</aside>`
 
-    console.log(aside)
-
     if(mainContentExists) page.append(aside)
 
     shares.forEach(({id, options}) => { sharer().attachHandlers(id, options) })

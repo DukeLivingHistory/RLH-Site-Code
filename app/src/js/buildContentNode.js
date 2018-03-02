@@ -12,10 +12,10 @@ const buildContentNode = function({
   img_set,
   link
 }){
+  const cutoff = 5
   const uid = shortid.generate()
   let imgHtml = '', hitCount, hitHtml
   if(hits && hits.length > 0) {
-    const cutoff = 5
     hitCount = hits.length
     hitHtml = `
       <ul class="content-hits">
@@ -61,7 +61,9 @@ const buildContentNode = function({
           ${title}
           ${!hitCount ? '' : `
             &nbsp<small>(${hitCount} total ${hitCount > 1 ? 'hits' : 'hit'})</small>
-            <button class="content-cutoff" data-cutoff="#${uid}" data-alttext='View Less ${icon('up')}' data-nolink="true">Expand ${icon('down')}</button>
+            ${hitCount > cutoff ? `
+              <button class="content-cutoff" data-cutoff="#${uid}" data-alttext='View Less ${icon('up')}' data-nolink="true">Expand ${icon('down')}</button>
+            ` : ''}
           `}
         </h3>
         <div class="content-excerpt">${hitHtml || excerpt}</div>
