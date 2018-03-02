@@ -1,24 +1,39 @@
-const cutoff = (elem) => {
+const cutoff = (elem, all = null) => {
   const alt = $(elem).data('alt')
   const orig = $(elem).text()
 
-  $(elem).click(function(e){
+  const handleChange = function() {
     const $this = $(this)
-    const $target = $this.siblings($this.data('cutoff'))
+    const $target = $($this.data('cutoff'))
+    $this.data('orig', $this.data('orig') || $this.html())
+
     $this.data('on', !$this.data('on'))
-    $this.data('orig', $this.data('orig') || $this.text())
 
     if($this.data('on')) {
       $target.show()
-      console.log('on')
-      $target.children(':first').focus()
-      $this.text($this.data('alttext'))
+      $this.html($this.data('alttext'))
     }
     else {
       $target.hide()
-      $this.text($this.data('orig'))
+      $this.html($this.data('orig'))
     }
+  }
+
+  $(elem).click(function() {
+    handleChange.bind(this)()
   })
+
+  if(all) {
+    $(all).click(function(e) {
+      const $this = $(this)
+      $this.data('on', !$this.data('on'))
+      $this.data('orig', $this.data('orig') || $this.html())
+      $this.html($this.data('on') ? $this.data('alttext') : $this.data('orig'))
+      $(elem).each(function() {
+        handleChange.bind(this)()
+      })
+    })
+  }
 }
 
 module.exports = cutoff

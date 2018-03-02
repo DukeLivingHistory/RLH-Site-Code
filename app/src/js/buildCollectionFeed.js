@@ -40,7 +40,8 @@ const buildCollectionFeed = (
     window.TIMEOUT = setTimeout(() => {
       const term = $(this).val()
       const endpoint = `/wp-json/v1/search/${term}?${qs.stringify(params)}${cachebust(true)}`
-      
+      window.SEARCHTERM = term
+
       $.get(endpoint, ({
         total_hits,
         items,
@@ -52,12 +53,15 @@ const buildCollectionFeed = (
           return
         }
 
-        $subhead.text(`Showing ${total_hits} hits across ${results} files`)
+        $subhead.html(`
+          <span>Showing ${total_hits} hits across ${results} files</span>
+          <button class="content-cutoff" data-cutoff-all data-alttext='Contract All ${icon('up')}'>Expand All ${icon('down')}</button>
+        `)
         $feed.html(items.map(buildContentNode).join(' '))
 
         // These are created in buildContentNode
         sublink(page.find('[data-sublink]'))
-        cutoff(page.find('[data-cutoff]'))
+        cutoff(page.find('[data-cutoff]'), page.find('[data-cutoff-all]'))
       })
     }, 200)
   }).submit((e) => { e.preventDefault })

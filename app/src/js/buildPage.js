@@ -11,10 +11,9 @@ const buildTranscript        = require('./buildTranscript')
 const buildSupp              = require('./buildSupp')
 const eqHeight               = require('./eqHeight')
 const getNodeFromTimestamp   = require('./getNodeFromTimestamp')
-const socialHighlight        = require('./socialHighlight')
+const highlighter            = require('./highlighter')
 const stickyHeader           = require('./stickyHeader')
 const syncAblePlayer         = require('./syncAblePlayer')
-const respBg                 = require('./respBg')
 const respImg                = require('./respImg')
 const Cookies                = require('js-cookie')
 
@@ -83,7 +82,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         if(data.no_media) {
           buildTimelineHeader(page, data, 'Interview')
           buildTranscript(page, data.id, (transcript) => {
-            socialHighlight('.transcript')
+            highlighter('.able-transcript')
             buildSupp(page, endpoint, queriedObject, () => {
               if(data.collections.length) {
                 buildOtherInCollection(page, data.id, data.collections[0])
@@ -101,7 +100,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         else {
           buildInterviewsHeader(page, data)
           buildTranscript(page, data.id, (transcript) => {
-            socialHighlight('.transcript')
+            highlighter('.transcript')
             buildSupp(page, endpoint, queriedObject, (supp) => {
               if(data.collections.length){
                 buildOtherInCollection(page, data.id, data.collections[0])
@@ -115,7 +114,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       else if(endpoint === 'interactives') {
         buildTimelineHeader(page, data, false)
         buildTranscript(page, data.id, (transcript) => {
-          socialHighlight('.transcript')
+          highlighter('.transcript')
           buildSupp(page, endpoint, queriedObject, null, !!transcript)
         })
       }

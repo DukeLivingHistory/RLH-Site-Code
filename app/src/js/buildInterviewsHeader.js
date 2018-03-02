@@ -1,62 +1,80 @@
-var buildCollectionsList = require('./buildCollectionsList')
-var buildConnected = require('./buildConnected')
-var icon = require('./icon')
-var scrollIndicator = require('./scrollIndicator')
-var socialLinks = require('./socialLinks')
+const buildCollectionsList = require('./buildCollectionsList')
+const buildConnected = require('./buildConnected')
+const icon = require('./icon')
+const scrollIndicator = require('./scrollIndicator')
+const sharer = require('./sharer')
 
-var buildInterviewsHeader = function(wrapper, data){
-
-  var outer = $('<div class="contentHeaderOuter" />')
-  var header = $('<header class="contentHeader contentHeader--interview"/>')
-  var inner = $('<div class="contentHeader-inner" />')
-  var imgWrapper = $('<div class="contentHeader-imgWrapper" />')
-
-  header.append( '<span class="contentHeader-type">'+icon('interview', 'type')+'Interview</span>')
-
-  inner.append('<h2 class="contentHeader-head">'+data.name+'</h2>')
-
-  if(data.collections){
-    var collections = buildCollectionsList(data.collections)
-    inner.append(collections)
+const buildInterviewsHeader = (
+  page,
+  {
+    id,
+    video_id,
+    name,
+    collections,
+    introduction,
+    related,
+    transcript_url,
+    description_url,
+    link
   }
+) => {
+  const shareLinks = sharer(link, name, introduction.replace(/(<([^>]+)>)/ig,''), {})
+  const indicator = scrollIndicator('.transcript')
 
-  if(data.introduction){
-    inner.append('<div class="contentHeader-introduction">'+data.introduction+'</div>')
-  }
+  const append = `
+    <div class="contentHeaderOuter">
+      <header class="contentHeader contentHeader--interview">
+        <span class="contentHeader-type">${icon('interview', 'type')}Interview</span>
+        <div class="contentHeader-inner">
+          <h2 class="contentHeader-head">${name}</h2>
+          ${collections ? buildCollectionsList(collections) : ''}
+          ${introduction ? `<div class="contentHeader-introduction">${introduction}</div>` : ''}
+          ${related ? `
+            <h3 class="contentHeader-relatedHead">Related to</h3>
+            ${buildConnected(related)}
+          ` : ''}
+          <span class="contentHeader-selectWrapper" id="selectWrap-${id}" style="display: none;">
+            <select class="contentHeader-select" id="select-${id}">
+              <option value="null">Contents</option>
+            </select>
+          </span>
+        </div>
+        <div class="contentHeader-imgWrapper">
+          <span class="contentHeader-toggleVid" data-action="toggle" data-target=".contentHeader-imgWrapper">
+            <label for="toggleVid">Video Display:</label>
+            <select id="toggleVid">
+              <option>Small</option>
+              <option selected>Medium</option>
+              <option>Large</option>
+              <option>Hidden</option>
+            </select>
+          </span>
+          <video
+            data-able-player
+            data-youtube-id="${video_id}"
+            data-youtube-playsinline
+            ${transcript_url ? `data-transcript-src="transcript-${id}"` : ''}
+          >
+            ${transcript_url ? `<track kind="captions src="${transcript_url}">` : ''}
+            ${description_url ? `<track kind="descriptions src="${description_url}">` : ''}
+          </video>
+          <a class="able-fake-pause"></a>
+          <div class="contentHeader-searchwrap">
+            <input class="contentHeader-search" id="video-search" placeholder="Search transcript, annotations & descriptions">
+          </div>
+          <div class="shareLinks">
+            Share this Interview
+            ${shareLinks.render}
+          </div>
+        </div>
+        ${indicator.render}
+      </header>
+    </div>
+  `
 
-  if(data.related){
-    var related = buildConnected(data.related)
-    inner.append('<h3 class="contentHeader-relatedHead">Related to</h3>')
-    inner.append(related)
-  }
-
-  inner.append('<span class="contentHeader-selectWrapper" id="selectwrap-'+data.id+'" style="display:none"><select class="contentHeader-select" id="select-'+data.id+'"><option value="null">Contents</option></select></span>')
-
-  var video = $('<video data-able-player data-youtube-id="'+data.video_id+'" data-youtube-playsinline>')
-
-  if(data.transcript_url){
-    video.attr('data-transcript-src', 'transcript-'+data.id)
-    video.append('<track kind="captions" src="'+data.transcript_url+'"/>')
-  }
-
-  if(data.description_url){
-    video.append('<track kind="descriptions" src="'+data.description_url+'"/>')
-  }
-
-  header.append(inner)
-
-  if(data.video_id){
-    imgWrapper.append('<span class="contentHeader-toggleVid" data-action="toggle" data-target=".contentHeader-imgWrapper"><label for="toggleVid">Video Display:</label><select id="toggleVid"><option>Small</option><option selected>Medium</option><option>Large</option><option>Hidden</option></select></span >')
-    imgWrapper.append(video)
-    imgWrapper.append('<a class="able-fake-pause"></a><div class="contentHeader-searchwrap"><input class="contentHeader-search" id="video-search" placeholder="Search transcript, annotations & descriptions..."></div>')
-  }
-
-  imgWrapper.append('<div class="shareLinks">Share this interview'+socialLinks(data.link, data.title, data.introduction.replace(/(<([^>]+)>)/ig,""), data.introduction.replace(/(<([^>]+)>)/ig,""))+'</div>')
-
-  header.append(imgWrapper)
-  header.append(scrollIndicator.add('.transcript'))
-  outer.append(header)
-  wrapper.append(outer)
+  page.append(append)
+  shareLinks.attachHandlers()
+  indicator.attachHandlers()
 }
 
 module.exports = buildInterviewsHeader

@@ -10,7 +10,8 @@ function add_choices($field){
   if(get_post_type($id) === 'interview' || get_post_type($id) === 'interactive') {
     $transcript = new Transcript($id);
     $contents = $transcript->get_slices_and_breaks(false);
-    foreach($contents as $timestamp) {
+
+    if($contents) foreach($contents as $timestamp) {
       if($timestamp['type'] === 'transcript_node') {
         $start = $timestamp['start'];
         $label = $timestamp['contents'];
@@ -20,7 +21,7 @@ function add_choices($field){
   }
   elseif(get_post_type($id) === 'timeline') {
     $contents = get_field('events');
-    foreach($contents as $timestamp) {
+    if($contents) foreach($contents as $timestamp) {
       $date = $timestamp['date'];
       $field['choices'][$date] = $date;
     }

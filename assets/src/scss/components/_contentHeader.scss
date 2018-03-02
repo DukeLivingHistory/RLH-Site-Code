@@ -377,6 +377,9 @@
         width: 50vw;
         .able-controller {
           display: block;
+          // @media(max-width: 544px) {
+          //   display: none;
+          // }
         }
         .able-left-controls,
         .able-right-controls:not(:nth-child(3)) {
@@ -395,6 +398,7 @@
           height: 50vw * 9 / 16;
           width: 50vw;
         }
+        .able-controller button,
         .able-status-bar {
           display: none;
         }
@@ -411,6 +415,9 @@
         right: 0;
         width: 100vw;
       }
+      .able-controller {
+        display: block!important;
+      }
       .able-fake-pause {
         width: 100vw;
         height: 100vw * 9 / 16;
@@ -420,9 +427,9 @@
     .contentHeader-imgWrapper--small {
       .contentHeader-searchwrap,
       .able-wrapper {
-        right: 0;
+        right: -67vw;
         width: 33vw;
-        .able-controller,
+        // .able-controller,
         .able-status-bar {
           display: none;
         }

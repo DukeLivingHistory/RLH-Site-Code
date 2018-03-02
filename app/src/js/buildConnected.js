@@ -1,14 +1,16 @@
-var icon = require( './icon' );
-var internalLink = require( './internalLink' );
+const icon = require( './icon' );
+const internalLink = require( './internalLink' );
 
-var buildConnected = function( related ){
-  var list = $( '<ul class="relatedItem-wrapper"/>' );
-  for( var i = 0, x = related.length; i < x; i++ ){
-    var listItem = $( '<li class="relatedItem relatedItem--'+related[i].type+'" />');
-    listItem.append( internalLink( related[i], icon( related[i].type, 'type' )+related[i].name ) );
-    list.append( listItem );
-  }
-  return list;
+const buildConnected = (related) => {
+  return `
+    <ul class="relatedItem-wrapper">
+      ${related.map((item) => (`
+        <li class="relatedItem relatedItem--${item.type}">
+          ${internalLink(item, `${icon(item.type, 'type')} ${item.name}`)}
+        </li>
+      `)).join(' ')}
+    </ul>
+  `
 }
 
-module.exports = buildConnected;
+module.exports = buildConnected

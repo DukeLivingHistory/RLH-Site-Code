@@ -36,7 +36,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
-      'suppress_filters' => false,
+      // 'suppress_filters' => false,
       'tax_query' => get_collection_arg($args),
       'meta_query' => [
         'relation' => 'OR',
@@ -67,8 +67,8 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
         ]
       ],
       // Prevent duplicate terms from previous query
-      'exclude' => array_reduce($posts_search, function($excluded_terms , $post) {
-        $excluded_posts[] = $post->post_id;
+      'exclude' => array_reduce($posts_search, function($excluded_posts, $post) {
+        $excluded_posts[] = $post->ID;
         return $excluded_posts;
       }, [])
     ]),
@@ -108,7 +108,8 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
       'transcript_raw',
       'description_raw',
       'supporting_content_raw' => function($id) {
-
+        $raw = get_field('supporting_content_raw', $id);
+        return $raw;
       }
      ],
     'timeline' => [
@@ -126,7 +127,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     ],
     'collection' => [
       'collection_descripton' => function($term_id) {
-        return get_lines_from_sentences(get_field('collection_description', 'collection_'.$id));
+        return get_lines_from_sentences(get_field('collection_description', 'collection_'.$term_id));
       }
     ]
   ];
@@ -154,6 +155,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     }
 
     $item->hits = $hits;
+    $item->title = highlight_term($item->title, $term);
 
     if(count($hits)) {
       $total_hits = $total_hits + count($hits);
@@ -166,7 +168,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     $results = array_slice($results, $offset, $count);
   }
 
-  $returns['name'] = 'Search for '.$data['term'];
+  $returns['name'] = 'Search for '.$term;
   $returns['total_hits'] = $total_hits;
   $returns['results'] = $total_results;
   return $returns;

@@ -7,7 +7,6 @@ $(document).ready(function(){
 
   window.HASPAGE = false // set to true upon first page build. this way we can check to see if we have a page before popping state
   window.TRANSITIONTIME = 500 // should match CSS values
-  window.SOCIALINIT = false // only add social event handlers once, see socialLinks.js
   window.DESCRIPTION = '' // used in sharing links
   window.JUMPTOACTIVE = false // set ableplayer polling as a window-scoped object so it can be overwritten
   window.SEARCHTERM = '' // On searching, cache value for use later
@@ -101,4 +100,13 @@ $(document).ready(function(){
 
   eqHeight('.js-eqHeight')
 
+  // Global Event Handlers
+  $('body').on('mousedown touchstart', () => {
+    console.log('Checked value: ', window.SOCIAL_POPUP_SHOULD_BE_REMOVED)
+    setTimeout(() => {
+      if(!window.SOCIAL_POPUP_SHOULD_BE_REMOVED) return
+      $('.socialPopup').remove()
+      window.SOCIAL_POPUP_SHOULD_BE_REMOVED = false
+    }, 200)
+  })
 })

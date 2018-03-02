@@ -175,6 +175,10 @@ add_action('admin_head', function(){ ?>
       color: white;
       cursor: pointer;
     }
+
+    label[for="acf-transcript_raw"] {
+      display: none!important;
+    }
   </style>
 
   <?php // remote timestamp picking logic ?>

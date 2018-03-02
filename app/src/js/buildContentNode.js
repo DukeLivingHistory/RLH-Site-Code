@@ -1,6 +1,7 @@
-const icon = require('./icon');
-const internalLink = require('./internalLink');
-const respImg = require('./respImg');
+const icon = require('./icon')
+const internalLink = require('./internalLink')
+const respImg = require('./respImg')
+const shortid = require('shortid')
 
 const buildContentNode = function({
   type,
@@ -11,9 +12,10 @@ const buildContentNode = function({
   img_set,
   link
 }){
+  const cutoff = 5
+  const uid = shortid.generate()
   let imgHtml = '', hitCount, hitHtml
   if(hits && hits.length > 0) {
-    const cutoff = 5
     hitCount = hits.length
     hitHtml = `
       <ul class="content-hits">
@@ -25,7 +27,7 @@ const buildContentNode = function({
         `).join('')}
       </ul>
       ${hitCount > cutoff ? `
-        <ul class="content-hits hidden">
+        <ul class="content-hits hidden" id="${uid}">
           ${hits.map((hit) => `<li
             class="content-data-sublink"
             data-sublink="${hit.timestamp}"
@@ -33,7 +35,6 @@ const buildContentNode = function({
             >${hit.text}</li>
           `).join('')}
         </ul>
-        <button class="content-cutoff" data-cutoff=".hidden" data-alttext="View Less" data-nolink="true">View More</button>
       ` : ''}
     `
   }
@@ -58,7 +59,12 @@ const buildContentNode = function({
         <span class="content-type">${icon(type, 'type')} ${type}</span>
         <h3 class="content-head">
           ${title}
-          ${!hits ? '' : `&nbsp;<small>(${hitCount} total hits)</small>`}
+          ${!hitCount ? '' : `
+            &nbsp<small>(${hitCount} total ${hitCount > 1 ? 'hits' : 'hit'})</small>
+            ${hitCount > cutoff ? `
+              <button class="content-cutoff" data-cutoff="#${uid}" data-alttext='View Less ${icon('up')}' data-nolink="true">Expand ${icon('down')}</button>
+            ` : ''}
+          `}
         </h3>
         <div class="content-excerpt">${hitHtml || excerpt}</div>
         <div class="content-link">View The ${type} ${icon('right', 'link')}</div>
@@ -70,7 +76,7 @@ const buildContentNode = function({
     id,
     type,
     link
-  }, content);
-};
+  }, content)
+}
 
 module.exports = buildContentNode

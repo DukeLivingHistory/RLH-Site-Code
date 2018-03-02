@@ -1,25 +1,42 @@
-var icon = require('./icon');
-var respBg = require('./respBg');
-var respImg = require('./respImg');
-var socialLinks = require('./socialLinks');
-var eqHeight = require('./eqHeight');
+const icon = require('./icon');
+const respBg = require('./respBg');
+const respImg = require('./respImg');
+const sharer = require('./sharer')
 
-var buildCollectionHeader = function( page, data ){
-  var header = $('<header class="contentHeader contentHeader--collection" />');
-  var hero = $('<figure class="heroImg js-respBg" data-set="hero" data-id="'+data.image+'">');
-  var inner = $('<div class="contentHeader-inner contentHeader-inner--hasBottom" />');
-  var bottom = $('<div class="contentHeader-bottom" />');
-  var imgWrapper = $('<div class="contentHeader-imgWrapper" />');
-  header.append( hero );
-  bottom.append( '<span class="contentHeader-type contentHeader-type--collection">'+icon( 'collection', 'type' )+'Collection</span>')
-  bottom.append( '<h2 class="collection-head">'+data.name+'</h2>' );
-  inner.append( bottom );
-  imgWrapper.append( respImg.markup( data.image, 'feat_lg', 'respImg contentHeader-img', null, true ) );
-  imgWrapper.append( '<div class="shareLinks">Share this collection'+socialLinks( data.link, data.title, data.description.replace(/(<([^>]+)>)/ig,""), data.description.replace(/(<([^>]+)>)/ig,"") )+'</div>')
-  header.append( inner );
-  header.append( imgWrapper );
-  page.append( header );
-  respBg( hero );
-};
+const buildCollectionHeader = (
+  page,
+  {
+    link,
+    name,
+    image
+  }
+) => {
+  const shareLinks = sharer(link, name, name, {})
 
-module.exports = buildCollectionHeader;
+  console.log(image)
+
+  const append = `
+    <header class="contentHeader contentHeader--collection">
+      <figure class="heroImg js-respBg" data-set="hero" data-id="${image}"/>
+      <div class="contentHeader-inner contentHeader-inner--hasBottom">
+        <div class="contentHeader-bottom">
+          <span class="contentHeader-type contentHeader-type--collection">${icon('collection', 'type')}Collection</span>
+          <h2 class="collection-head">${name}</h2>
+        </div>
+      </div>
+      <div class="contentHeader-imgWrapper">
+        ${respImg.markup({image}, 'feat_lg', 'respImg contentHeader-img', null, true)}
+        <div class="shareLinks">
+          Share this collection
+          ${shareLinks.render}
+        </div>
+      </div>
+    </header>
+  `
+
+  page.append(append)
+  shareLinks.attachHandlers()
+  respBg(page.find('.heroImg'))
+}
+
+module.exports = buildCollectionHeader

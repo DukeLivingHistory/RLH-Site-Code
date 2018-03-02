@@ -39,9 +39,11 @@
   padding: 0;
   li {
     margin: 0 0 5px;
-    &:hover,
-    &:focus {
+    &:hover {
       background: rgba($linkLight, .3);
+    }
+    &:focus {
+      background: $suppGrey;
     }
   }
   &.hidden {
