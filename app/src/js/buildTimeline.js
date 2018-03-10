@@ -39,7 +39,7 @@ const buildTimeline = (
           <li id="${index}" class="event loaded" data-start="${event_date}">
             <span class="event-dot"></span>
             <date class="event-date">${event_date}</date>
-            <h3 class="event-head">${title}</h3>
+            <h3 class="event-head"><a href="#${index}">${title}</a></h3>
             ${image ? `<div class="event-imageWrapper">
               ${respImg.markup(image, 'feat_lg', 'respImg', null, true)}
             </div>` : ''}
