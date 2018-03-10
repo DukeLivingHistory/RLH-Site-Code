@@ -226,6 +226,41 @@
     p {
       display: inline;
     }
-    margin: 1em 0 2em;
+  }
+
+  &-pagination {
+    text-align: center;
+  }
+
+  &-article-head {
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover {
+        color: lighten($body, 10);
+      }
+    }
+  }
+
+  &-content {
+    width: 75%;
+    float: left;
+  }
+
+  &-category {
+    display: inline-block;
+    text-transform: uppercase;
+    color: #ccc;
+    letter-spacing: 1px;
+    font-size: 14px;
+    margin: 10px 1em 2em 0;
+    ul {
+      padding: 0;
+      list-style: none;
+      display: inline;
+    }
+    li {
+      display: inline;
+    }
   }
 }
