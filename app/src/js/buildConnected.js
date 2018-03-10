@@ -1,10 +1,10 @@
 const icon = require( './icon' );
 const internalLink = require( './internalLink' );
 
-const buildConnected = (related) => {
+const buildConnected = (related = []) => {
   return `
     <ul class="relatedItem-wrapper">
-      ${related.map((item) => (`
+      ${(related || []).map((item) => (`
         <li class="relatedItem relatedItem--${item.type}">
           ${internalLink(item, `${icon(item.type, 'type')} ${item.name}`)}
         </li>

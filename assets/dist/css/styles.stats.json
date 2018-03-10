@@ -1,22 +1,22 @@
 {
-  "published": "2018-03-10T17:48:05.462Z",
+  "published": "2018-03-10T18:05:56.475Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 66388,
+  "size": 66407,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12990,
+  "gzippedSize": 12994,
   "rules": 814,
   "selectors": 1068,
-  "declarations": 2099,
+  "declarations": 2100,
   "simplicity": 0.7621722846441947,
   "averageOfIdentifier": 1.901685393258427,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .contentHeader-searchwrap .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.578624078624079,
+  "averageOfCohesion": 2.57985257985258,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",

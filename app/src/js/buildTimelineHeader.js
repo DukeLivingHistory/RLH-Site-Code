@@ -18,8 +18,6 @@ const buildTimelineHeader = (
 ) => {
   const shareLinks = sharer(link, name, name, {})
 
-  console.log(buildConnected(related))
-
   const append = `
     <header class="contentHeader contentHeader--timeline">
       ${type !== false ? `
