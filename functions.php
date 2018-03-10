@@ -50,3 +50,12 @@ function my_acf_init() {
 	acf_update_setting('google_api_key', get_field('maps_client_id', 'options'));
 }
 add_action('acf/init', 'my_acf_init');
+
+// add widgets
+add_action('widgets_init', function() {
+  register_sidebar([
+    'name' => 'Blog',
+    'before_widget' => '<div class="blog-sidebar">',
+    'after_widget' => '</div>'
+  ]);
+});

@@ -1,22 +1,22 @@
 {
-  "published": "2018-03-02T15:34:12.809Z",
+  "published": "2018-03-10T17:48:05.462Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 66062,
+  "size": 66388,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12898,
-  "rules": 807,
-  "selectors": 1058,
-  "declarations": 2089,
-  "simplicity": 0.7627599243856332,
-  "averageOfIdentifier": 1.9035916824196597,
+  "gzippedSize": 12990,
+  "rules": 814,
+  "selectors": 1068,
+  "declarations": 2099,
+  "simplicity": 0.7621722846441947,
+  "averageOfIdentifier": 1.901685393258427,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .contentHeader-searchwrap .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.5885997521685256,
+  "averageOfCohesion": 2.578624078624079,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -64,7 +64,7 @@
     "Roboto,sans-serif",
     "able"
   ],
-  "totalUniqueColors": 22,
+  "totalUniqueColors": 23,
   "uniqueColors": [
     "#000000",
     "#0275D8",
@@ -72,6 +72,7 @@
     "#212019",
     "#3870D0",
     "#424038",
+    "#5E5B4F",
     "#5F8950",
     "#666666",
     "#696C73",
@@ -98,7 +99,7 @@
   "unqualifiedAttributeSelectors": 13,
   "javascriptSpecificSelectors": 0,
   "importantKeywords": 36,
-  "floatProperties": 32,
+  "floatProperties": 33,
   "propertiesCount": [
     {
       "property": "position",
@@ -106,7 +107,7 @@
     },
     {
       "property": "padding",
-      "count": 129
+      "count": 130
     },
     {
       "property": "margin",
@@ -114,15 +115,15 @@
     },
     {
       "property": "display",
-      "count": 118
+      "count": 121
     },
     {
       "property": "width",
-      "count": 115
+      "count": 116
     },
     {
       "property": "color",
-      "count": 111
+      "count": 114
     },
     {
       "property": "font-size",
