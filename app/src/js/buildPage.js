@@ -16,6 +16,7 @@ const stickyHeader           = require('./stickyHeader')
 const syncAblePlayer         = require('./syncAblePlayer')
 const respImg                = require('./respImg')
 const Cookies                = require('js-cookie')
+const highlightTranscript = require('./highlightTranscript')
 
 const buildPage = function(wrapper, endpoint, queriedObject, dir){
   $('[data-action="jumpToActive"], .socialPopup').remove()
@@ -69,7 +70,10 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       DESCRIPTION = data.description
       if(endpoint === 'timelines'){
         buildTimelineHeader(page, data)
-        buildTimeline(page, data.events, data.intro, () => {
+        buildTimeline(page, data.events, data.intro, (page) => {
+          if(window.SEARCHTERM) {
+            highlightTranscript(page.find('.timeline'), '[data-node]', window.SEARCHTERM)
+          }
           if(window.location.hash){
             const hash = window.location.hash
             setTimeout(function(){

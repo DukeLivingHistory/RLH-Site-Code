@@ -4,9 +4,12 @@ const highlightTranscript = (transcript, selector, highlight) => {
   highlight = highlight && escapeRegex(highlight)
   const nodes = transcript.find(selector)
 
+  console.log(nodes, highlight)
+
   $(nodes).each(function(){
     const text = $(this).attr('data-node')
     const html = $(this).html()
+      console.log(html)
 
     if(!highlight){
       $(this).html(text)

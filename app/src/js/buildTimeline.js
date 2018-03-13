@@ -39,11 +39,14 @@ const buildTimeline = (
           <li id="${index}" class="event loaded" data-start="${event_date}">
             <span class="event-dot"></span>
             <date class="event-date">${event_date}</date>
-            <h3 class="event-head"><a href="#${index}">${title}</a></h3>
+            <h3 class="event-head" data-node="<a href='#${index}'>${title}</a>"><a href="#${index}">${title}</a></h3>
             ${image ? `<div class="event-imageWrapper">
               ${respImg.markup(image, 'feat_lg', 'respImg', null, true)}
             </div>` : ''}
-            ${content.length ? `<div class="event-content">${content}</div>` : ''}
+            ${content.length ?
+              `<div class="event-content" data-node="${content}">${content}</div>` :
+              ''
+            }
             ${content_link ? `
               <a class="js-internalLink relatedItem relatedItem--${content_link_type}"
                 data-type="${content_link_type}"
@@ -65,7 +68,7 @@ const buildTimeline = (
 
   page.append(append)
   shares.forEach(({id, options}) => { sharer().attachHandlers(id, options) })
-  if(cb) cb()
+  if(cb) cb(page)
 }
 
 module.exports = buildTimeline
