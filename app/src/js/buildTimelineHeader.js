@@ -38,7 +38,7 @@ const buildTimelineHeader = (
       <div class="contentHeader-imgWrapper">
         ${image ? respImg.markup(image, 'feat_lg', 'respImg contentHeader-img', null, true) : ''}
         <div class="shareLinks">
-          Share this collection
+          Share
           ${shareLinks.render}
         </div>
       </div>

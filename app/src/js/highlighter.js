@@ -34,7 +34,6 @@ const highlighter = (target) => {
 
     if(isChangingFromSelection) return
     setTimeout(() => {
-      console.log('setting to true')
       window.SOCIAL_POPUP_SHOULD_BE_REMOVED = true
     }, 300)
   }
@@ -110,7 +109,14 @@ const highlighter = (target) => {
         $first.attr('data-highlight') === 'transcript' ||
         $focus.attr('data-highlight') === 'transcript'
       ) {
-        const timestamp = $first.attr('data-start') || $first.attr('data-timestamp') || $focus.attr('data-start') || $focus.attr('data-timestamp')
+        const timestamp = $first.attr('data-start') ||
+          $first.attr('data-timestamp') ||
+          $focus.attr('data-start') ||
+          $focus.attr('data-timestamp')
+          $first.parent().attr('data-start') ||
+          $first.parent().attr('data-timestamp') ||
+          $focus.parent().attr('data-start') ||
+          $focus.parent().attr('data-timestamp')
         url = `${url}#${timestamp}`
       }
     }
