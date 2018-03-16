@@ -34,7 +34,7 @@ add_action('admin_head', function() {
 
         var data = JSON.stringify({
           text: text.replace('\n', ''),
-          pattern: ".*?(?<![A-Z])[\\.!\\?]+"
+          pattern: ".*?(?<![A-Z])[\\.!\\?]+\s"
         })
 
 
