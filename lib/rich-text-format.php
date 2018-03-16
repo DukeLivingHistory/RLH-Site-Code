@@ -33,8 +33,8 @@ add_action('admin_head', function() {
         console.log('Sent to API: ', text)
 
         var data = JSON.stringify({
-          text: text.replace('\n', ''),
-          pattern: ".*?(?<![A-Z])[\\.!\\?]+\s"
+          text: text.replace('\n', '')+' ',
+          pattern: ".*?(?<![A-Z])[\\.!\\?]+\\s+"
         })
 
 
