@@ -43,7 +43,7 @@ const highlighter = (target) => {
     const rects = range.getClientRects()
     const offsetBottom = (rects[rects.length-1].bottom) // bottom of last element
     const windowHeight = $(window).height()
-    return offsetBottom < windowHeight
+    return offsetBottom > windowHeight
   }
 
   const getLeft = (selection) => {
@@ -105,6 +105,16 @@ const highlighter = (target) => {
         const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
         url = `${url}#${timestamp}`
       }
+      else if($first.attr('data-highlight') === 'parent') {
+        const $next = $first.parent()
+        const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
+        url = `${url}#${timestamp}`
+      }
+      else if($focus.attr('data-highlight') === 'parent') {
+        const $next = $focus.parent()
+        const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
+        url = `${url}#${timestamp}`
+      }
       else if(
         $first.attr('data-highlight') === 'transcript' ||
         $focus.attr('data-highlight') === 'transcript'
@@ -113,10 +123,6 @@ const highlighter = (target) => {
           $first.attr('data-timestamp') ||
           $focus.attr('data-start') ||
           $focus.attr('data-timestamp')
-          $first.parent().attr('data-start') ||
-          $first.parent().attr('data-timestamp') ||
-          $focus.parent().attr('data-start') ||
-          $focus.parent().attr('data-timestamp')
         url = `${url}#${timestamp}`
       }
     }
