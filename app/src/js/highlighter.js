@@ -96,6 +96,8 @@ const highlighter = (target) => {
 
     if(!$anchor.length || !$focus.length) return
 
+    console.log($anchor, $focus)
+
     if(
       $anchor.data('highlight') ||
       $focus.data('highlight')
@@ -104,16 +106,25 @@ const highlighter = (target) => {
         const $next = $first.next()
         const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
         url = `${url}#${timestamp}`
+        window.TEMPURL = url
+      }
+      else if($focus.attr('data-highlight') === 'next') {
+        const $next = $focus.next()
+        const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
+        url = `${url}#${timestamp}`
+        window.TEMPURL = url
       }
       else if($first.attr('data-highlight') === 'parent') {
         const $next = $first.parent()
         const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
         url = `${url}#${timestamp}`
+        window.TEMPURL = url
       }
       else if($focus.attr('data-highlight') === 'parent') {
         const $next = $focus.parent()
         const timestamp = $next.attr('data-start') || $next.attr('data-timestamp')
         url = `${url}#${timestamp}`
+        window.TEMPURL = url
       }
       else if(
         $first.attr('data-highlight') === 'transcript' ||
@@ -124,6 +135,10 @@ const highlighter = (target) => {
           $focus.attr('data-start') ||
           $focus.attr('data-timestamp')
         url = `${url}#${timestamp}`
+        window.TEMPURL = url
+      }
+      else {
+        url = window.TEMPURL
       }
     }
 

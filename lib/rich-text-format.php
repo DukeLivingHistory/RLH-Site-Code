@@ -19,6 +19,12 @@ add_action('admin_head', function() {
         // Hash new lines
         text = text.replace(/\n{2,}/g, '[[P]]')
 
+        // Hash HTML
+        text = text.replace(/<.*?>/g, function(){
+          console.log(arguments)
+          return '[[HTML:'+arguments[0]+']]'
+        })
+
         // Hash protected words
         disallowedDelimiters.forEach(function(delimiter, i) {
           text = text.split(delimiter).join('[['+i+']]')
@@ -34,7 +40,7 @@ add_action('admin_head', function() {
 
         var data = JSON.stringify({
           text: text.replace('\n', '')+' ',
-          pattern: ".*?(?<![A-Z])[\\.!\\?]+\\s+"
+          pattern: ".*?(?<![A-Z])[\\.!:\\?]+\\s+"
         })
 
 
@@ -62,6 +68,12 @@ add_action('admin_head', function() {
                 value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
                   note = arguments[1]
                   return ''
+                })
+              }
+              if(value.match(/\[\[HTML:(.*?)\]\]/)) {
+                value = value.replace(/\[\[HTML:(.*?)\]\]/g, function() {
+                  console.log(arguments[1])
+                  return arguments[1]
                 })
               }
               return {
