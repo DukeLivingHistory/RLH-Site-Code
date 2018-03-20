@@ -17,13 +17,7 @@ add_action('admin_head', function() {
         })
 
         // Hash new lines
-        text = text.replace(/\n{2,}/g, '[[P]]')
-
-        // Hash HTML
-        text = text.replace(/<.*?>/g, function(){
-          console.log(arguments)
-          return '[[HTML:'+arguments[0]+']]'
-        })
+        text = text.replace(/\n{2,}/g, ' [[P]]')
 
         // Hash protected words
         disallowedDelimiters.forEach(function(delimiter, i) {
@@ -36,13 +30,12 @@ add_action('admin_head', function() {
           text = text + '.'
         }
 
-        console.log('Sent to API: ', text)
-
         var data = JSON.stringify({
-          text: text.replace('\n', '')+' ',
-          pattern: ".*?(?<![A-Z])[\\.!:\\?]+\\s+"
+          text: text.replace('\n', ' '),
+          pattern: ".*?(?<![A-Z])[.!:?]+[\\s'\"]"
         })
 
+        console.log(data)
 
         // The negative look-behind we need isn't implemented in most JS runtimes,
         // so we call a microservice.
@@ -68,12 +61,6 @@ add_action('admin_head', function() {
                 value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
                   note = arguments[1]
                   return ''
-                })
-              }
-              if(value.match(/\[\[HTML:(.*?)\]\]/)) {
-                value = value.replace(/\[\[HTML:(.*?)\]\]/g, function() {
-                  console.log(arguments[1])
-                  return arguments[1]
                 })
               }
               return {

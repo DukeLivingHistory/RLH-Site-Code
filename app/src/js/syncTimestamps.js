@@ -123,12 +123,14 @@ var syncTimestamps = function( supp, node, transcript ){
     $(this).closest( '[data-action="expand"] ').removeClass( 'expand' );
     $(this).find( 'use' ).attr( 'xlink:href', '#expand' );
     $('.suppCont-single').attr('style', '')
+    setTimeout(position, 500)
   } );
 
   $('body').on( 'click', '.expand [data-action="close-type"]', function(e){
     e.stopPropagation();
     $(this).closest( '[data-action="expand"] ').removeClass( 'expand' );
     $('.suppCont-single').attr('style', '')
+    setTimeout(position, 500)
   } );
 
   $( 'body' ).on( 'click', '[data-action="expand"]', function(){
