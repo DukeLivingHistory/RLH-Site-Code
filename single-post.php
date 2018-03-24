@@ -7,8 +7,12 @@ while( have_posts() ){
       <h2><?php the_title(); ?></h2>
     </header>
     <aside class="researchMenu">
-      <button class="researchMenu-toggle">Expand Menu <?= icon( 'down', 'link' ); ?></button>
-      <?php dynamic_sidebar('blog'); ?>
+      <button class="researchMenu-toggle">
+        Expand Menu <?= icon( 'down', 'link' ); ?>
+      </button>
+      <?php if(!get_field('hide_sidebar')): ?>
+        <?php dynamic_sidebar('posts'); ?>
+      <?php endif; ?>
     </aside>
     <section class="blog-content">
       <h3 class="blog-article-head"><?php the_title(); ?></h3>
