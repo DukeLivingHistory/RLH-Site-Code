@@ -285,3 +285,52 @@
     text-transform: uppercase;
   }
 }
+
+/* ----------------
+ * Navbar
+ * ---------------*/
+
+ .sub-menu {
+   padding: 10px 10px 0;;
+   font-size: .9em;
+ }
+
+@media (min-width: 992px) {
+  .header-nav {
+    height: auto!important;
+    position: relative;
+    z-index: 10000000;
+    padding: 0!important;
+    &Inner {
+      top: 0;
+    }
+  }
+
+  .header .menu {
+    padding: 0;
+    &-item {
+      display: inline-block;
+      position: relative;
+      padding: 9px 0;
+      &:hover {
+        .sub-menu {
+          display: block;
+        }
+      }
+    }
+  }
+  .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -10px;
+    background: $interviewsLight;
+    padding: 10px;
+    li {
+      display: block!important;
+      margin: 0!important;
+      white-space: nowrap;
+      text-align: left;
+    }
+  }
+}
