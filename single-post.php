@@ -10,7 +10,9 @@ while( have_posts() ){
       <button class="researchMenu-toggle">
         Expand Menu <?= icon( 'down', 'link' ); ?>
       </button>
-      <?php dynamic_sidebar('posts'); ?>
+      <?php if(get_field('hide_sidebar')): ?>
+        <?php dynamic_sidebar('posts'); ?>
+      <?php endif; ?>
     </aside>
     <section class="blog-content">
       <h3 class="blog-article-head"><?php the_title(); ?></h3>

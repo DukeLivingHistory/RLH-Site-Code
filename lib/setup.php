@@ -15,3 +15,27 @@ add_action('widgets_init', function() {
     'after_widget' => '</div>'
   ]);
 });
+
+if( function_exists('acf_add_local_field_group') ):
+  acf_add_local_field_group(array(
+  	'key' => 'blog',
+  	'title' => 'Blog',
+  	'fields' => array(
+  		array(
+  			'key' => 'hide_sidebar',
+  			'label' => 'Hide Sidebar',
+  			'name' => 'hide_sidebar',
+  			'type' => 'true_false',
+  		),
+  	),
+  	'location' => array(
+  		array(
+  			array(
+  				'param' => 'post_type',
+  				'operator' => '==',
+  				'value' => 'post',
+  			),
+  		),
+  	),
+  ));
+endif;
