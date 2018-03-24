@@ -10,7 +10,7 @@ while( have_posts() ){
       <button class="researchMenu-toggle">
         Expand Menu <?= icon( 'down', 'link' ); ?>
       </button>
-      <?php if(get_field('hide_sidebar')): ?>
+      <?php if(!get_field('hide_sidebar')): ?>
         <?php dynamic_sidebar('posts'); ?>
       <?php endif; ?>
     </aside>
