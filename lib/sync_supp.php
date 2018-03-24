@@ -22,7 +22,7 @@ function add_choices($field){
   elseif(get_post_type($id) === 'timeline') {
     $contents = get_field('events');
     if($contents) foreach($contents as $timestamp) {
-      $date = $timestamp['date'];
+      $date = $timestamp['event_date'];
       $field['choices'][$date] = $date;
     }
   }
