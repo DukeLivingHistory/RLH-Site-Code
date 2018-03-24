@@ -102,6 +102,7 @@ add_action('save_post', function( $id ){
     get_post_type($id) !== 'interview' &&
     get_post_type($id) !== 'interactive'
     ) return;
+
   if(!$_POST['acf']['save_from_supp_cont_raw']) return;
   update_field('save_from_supp_cont_raw', 0, $id );
 

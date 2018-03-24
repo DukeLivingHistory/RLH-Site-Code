@@ -13,6 +13,7 @@ $includes = [
   'lib/get_app_part.php',
   'lib/get_og.php',
   'lib/get_supp_cont_fields.php',
+  'lib/hack-supp-cont-save.php',
   'lib/icon.php',
   'lib/images.php',
   'lib/manage_raw_supp.php',

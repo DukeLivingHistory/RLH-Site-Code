@@ -11,6 +11,7 @@ function repeater_search($where) {
   }
 
 	$where = str_replace($keys, $replace, $where);
+  $where = preg_replace("/\{.*?\}/", '%', $where);
 
 	return $where;
 }

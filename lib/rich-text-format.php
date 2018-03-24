@@ -17,7 +17,7 @@ add_action('admin_head', function() {
         })
 
         // Hash new lines
-        text = text.replace(/\n{2,}/g, '[[P]]')
+        text = text.replace(/\n{2,}/g, ' [[P]]')
 
         // Hash protected words
         disallowedDelimiters.forEach(function(delimiter, i) {
@@ -30,13 +30,12 @@ add_action('admin_head', function() {
           text = text + '.'
         }
 
-        console.log('Sent to API: ', text)
-
         var data = JSON.stringify({
-          text: text.replace('\n', ''),
-          pattern: ".*?(?<![A-Z])[\\.!\\?]+"
+          text: text.replace('\n', ' ')+' ',
+          pattern: ".*?(?<![A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
         })
 
+        console.log(data)
 
         // The negative look-behind we need isn't implemented in most JS runtimes,
         // so we call a microservice.

@@ -37,7 +37,10 @@ function handle_save($alias){
 }
 
 add_action('save_post', function($id){
-  if(get_post_type($id) === 'interview') {
+  if(
+    get_post_type($id) === 'interview' ||
+    get_post_type($id) === 'interactive'
+  ) {
     handle_save('transcript');
     handle_save('description');
   }

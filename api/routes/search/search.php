@@ -13,6 +13,8 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     ];
   }
 
+
+
   function get_collection_arg($args) {
     if(isset($args['collection'])) {
       return [
@@ -36,7 +38,7 @@ $search = new Route('/search/(?P<term>.*)', 'GET', function($data){
     get_posts([
       'post_type' => [ 'timeline', 'interview' ],
       'posts_per_page' => -1,
-      // 'suppress_filters' => false,
+      'suppress_filters' => false,
       'tax_query' => get_collection_arg($args),
       'meta_query' => [
         'relation' => 'OR',

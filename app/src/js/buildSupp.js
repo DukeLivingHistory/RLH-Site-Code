@@ -125,7 +125,7 @@ const buildSupp = (
       page.append(unmatchedWrapper)
     }
 
-    if(endpoint === 'interviews'){
+    if(endpoint === 'interviews' || endpoint === 'interactives'){
       syncTimestamps('.suppCont-inner', '.transcript-node', '.transcript')
     }
     else if(endpoint === 'timelines'){

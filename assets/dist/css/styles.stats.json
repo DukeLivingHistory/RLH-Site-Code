@@ -1,22 +1,22 @@
 {
-  "published": "2018-03-10T17:48:05.462Z",
+  "published": "2018-03-18T15:54:29.461Z",
   "paths": [
     "/Users/eth/Local Sites/rlh/app/public/wp-content/themes/rlh/assets/dist/css/styles.min.css"
   ],
   "stylesheets": 1,
   "styleElements": 0,
-  "size": 66388,
+  "size": 66449,
   "dataUriSize": 0,
   "ratioOfDataUriSize": 0,
-  "gzippedSize": 12990,
-  "rules": 814,
-  "selectors": 1068,
-  "declarations": 2099,
-  "simplicity": 0.7621722846441947,
-  "averageOfIdentifier": 1.901685393258427,
+  "gzippedSize": 13005,
+  "rules": 815,
+  "selectors": 1070,
+  "declarations": 2101,
+  "simplicity": 0.7616822429906542,
+  "averageOfIdentifier": 1.9018691588785046,
   "mostIdentifier": 6,
   "mostIdentifierSelector": ".contentHeaderOuter--sticky .contentHeader-imgWrapper .contentHeader-searchwrap .able-right-controls:not(:nth-child(3))",
-  "averageOfCohesion": 2.578624078624079,
+  "averageOfCohesion": 2.577914110429448,
   "lowestCohesion": 14,
   "lowestCohesionSelector": [
     ".featherlight-next",
@@ -123,7 +123,7 @@
     },
     {
       "property": "color",
-      "count": 114
+      "count": 115
     },
     {
       "property": "font-size",

@@ -13,8 +13,6 @@ const buildCollectionHeader = (
 ) => {
   const shareLinks = sharer(link, name, name, {})
 
-  console.log(image)
-
   const append = `
     <header class="contentHeader contentHeader--collection">
       <figure class="heroImg js-respBg" data-set="hero" data-id="${image}"/>

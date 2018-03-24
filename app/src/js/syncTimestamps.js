@@ -8,6 +8,7 @@ var syncTimestamps = function( supp, node, transcript ){
     if( $(window).width() > 568 ){ // from bootstrap
       // $( '[data-action="expand"]' ).removeClass( 'expand' )
       //   .find( '[data-action="close"] use' ).attr( 'xlink:href', '#expand' );
+      $('.suppCont-single').attr('style', '')
       target.addClass( 'expand' );
       target.find( '[data-action="close"] use' ).attr( 'xlink:href', '#contract');
       var img = target.find( '.respImg-defer' );
@@ -65,6 +66,7 @@ var syncTimestamps = function( supp, node, transcript ){
 
       $(this).css( {
         marginTop: newTop,
+        marginBottom: '70px',
         transform: 'translateY(-15px)',
         left: 0,
         right: 0
@@ -120,15 +122,21 @@ var syncTimestamps = function( supp, node, transcript ){
     e.stopPropagation();
     $(this).closest( '[data-action="expand"] ').removeClass( 'expand' );
     $(this).find( 'use' ).attr( 'xlink:href', '#expand' );
+    $('.suppCont-single').attr('style', '')
+    setTimeout(position, 500)
   } );
 
   $('body').on( 'click', '.expand [data-action="close-type"]', function(e){
     e.stopPropagation();
     $(this).closest( '[data-action="expand"] ').removeClass( 'expand' );
+    $('.suppCont-single').attr('style', '')
+    setTimeout(position, 500)
   } );
 
   $( 'body' ).on( 'click', '[data-action="expand"]', function(){
-    expand( $(this) );
+    const target = $(this)
+    expand(target);
+    setTimeout(position, 500)
   } );
 
 }
