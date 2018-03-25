@@ -22,12 +22,16 @@ $posts = new WP_Query([
       <h3 class="blog-article-head"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
       <div class="blog-meta">Posted <?php the_date(); ?> by <?php the_author(); ?></div>
       <div class="blog-excerpt"><?php the_excerpt(); ?><a href="<?php the_permalink(); ?>">Read More</a></div>
+      <?php if(get_the_category_list()): ?>
       <div class="blog-category">
         Posted in <?= get_the_category_list(); ?>
       </div>
+      <?php endif; ?>
+      <?php if(get_the_tag_list()): ?>
       <div class="blog-category">
         Tagged <?= get_the_tag_list(); ?>
       </div>
+    <?php endif; ?>
     </article>
   <?php endwhile; ?>
   <div class="blog-pagination">
