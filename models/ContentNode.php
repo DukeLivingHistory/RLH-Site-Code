@@ -12,8 +12,8 @@ class ContentNode {
       $this->date = $is_taxonomy ? $this->get_term_date($the_term) : get_the_date('Ymd', $id);
 
       $this->excerpt = $is_taxonomy ?
-        get_field('collection_description', 'collection_'.$id) :
-        $the_post->post_excerpt;
+        $this->limit_words(get_field('collection_description', 'collection_'.$id), 80) :
+        $this->limit_words($the_post->post_excerpt, 80);
 
       $this->img = $is_taxonomy ?
         get_field($the_term->taxonomy.'_img', $the_term->taxonomy.'_'.$id) :
