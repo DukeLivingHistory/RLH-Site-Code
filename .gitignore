@@ -4,3 +4,4 @@ app/node_modules
 .DS_Store
 ex.vtt
 *.stats.json
+styles.stats.json
