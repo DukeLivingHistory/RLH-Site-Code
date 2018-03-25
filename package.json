@@ -39,6 +39,6 @@
 		"build": "npm run build:css && npm run build:js",
 		"build:watch": "watch 'npm run npmbuild' src/*",
 		"deploy:staging": "git checkout dev && git pull origin dev && git push deploy dev",
-		"deploy:prod": "git checkout master && git pull origin master && git push deploy master",
+		"deploy:prod": "git checkout master && git pull origin master && git push deploy master"
 	}
 }
