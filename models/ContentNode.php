@@ -12,8 +12,8 @@ class ContentNode {
       $this->date = $is_taxonomy ? $this->get_term_date($the_term) : get_the_date('Ymd', $id);
 
       $this->excerpt = $is_taxonomy ?
-        $this->limit_words(get_field('collection_description', 'collection_'.$id), 45) :
-        $this->limit_words($the_post->post_excerpt, 45);
+        get_field('collection_description', 'collection_'.$id) :
+        $the_post->post_excerpt;
 
       $this->img = $is_taxonomy ?
         get_field($the_term->taxonomy.'_img', $the_term->taxonomy.'_'.$id) :
@@ -153,7 +153,7 @@ class ContentNodeCollection extends ContentNode
                 $timeline_count++;
             }
         }
-        
+
         $this->interview_count = $interview_count;
         $this->timeline_count = $timeline_count;
     }
