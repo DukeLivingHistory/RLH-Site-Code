@@ -122,7 +122,8 @@ config.js = {
     outputFilename: 'scripts.min.js',
     browserify: {
         entries: [
-            `${src}/js/app.js`
+            `${src}/js/site/site.js`,
+            `${src}/js/app/app.js`
         ],
         debug: true
     }

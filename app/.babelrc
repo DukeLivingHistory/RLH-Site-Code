@@ -1,9 +1,0 @@
-{
-    "plugins": [],
-    "presets": [
-        "env"
-    ],
-    "ignore": [],
-    "sourceMaps": true,
-    "comments": false
-}
