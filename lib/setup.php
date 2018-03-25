@@ -39,3 +39,7 @@ if( function_exists('acf_add_local_field_group') ):
   	),
   ));
 endif;
+
+add_filter('excerpt_length', function() {
+  return 70;
+}, 999);
