@@ -23,6 +23,7 @@ $includes = [
   'lib/rich-text-format.php',
   'lib/sanitize_timestamp.php',
   'lib/save_txt_from_vtt.php',
+  'lib/setup.php',
   'lib/site_options.php',
   'lib/supp_vtt.php',
   'lib/sync_supp.php',
@@ -51,12 +52,3 @@ function my_acf_init() {
 	acf_update_setting('google_api_key', get_field('maps_client_id', 'options'));
 }
 add_action('acf/init', 'my_acf_init');
-
-// add widgets
-add_action('widgets_init', function() {
-  register_sidebar([
-    'name' => 'Blog',
-    'before_widget' => '<div class="blog-sidebar">',
-    'after_widget' => '</div>'
-  ]);
-});
