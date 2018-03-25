@@ -1,57 +1,42 @@
 {
-  "name": "fireshell",
-  "title": "Front-end boilerplate using Gulp, SASS and Babel/Browserify",
-  "url": "https://github.com/adamcbrewer/fireshell",
-  "author": "Adam Brewer",
-  "copyright": "2015",
-  "version": "0.0.1",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/adamcbrewer/fireshell.git"
-  },
-  "devDependencies": {
-    "babel-core": "^6.1.21",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.1.18",
-    "babelify": "^7.2.0",
-    "browser-sync": "^2.10.0",
-    "browserify": "^12.0.1",
-    "chai": "^3.4.1",
-    "del": "^1.1.1",
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^2.2.0",
-    "gulp-bump": "^0.3.1",
-    "gulp-git": "^2.4.2",
-    "gulp-if": "^2.0.0",
-    "gulp-imagemin": "^2.2.1",
-    "gulp-minify-css": "^1.1.0",
-    "gulp-mocha": "^2.2.0",
-    "gulp-modernizr": "^1.0.0-alpha",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace-task": "^0.11.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-sequence": "^0.3.2",
-    "gulp-size": "^1.2.1",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-stylestats": "^1.0.1",
-    "gulp-svgstore": "^5.0.5",
-    "gulp-tag-version": "^1.2.1",
-    "gulp-uglify": "^1.2.0",
-    "gulp-util": "^3.0.4",
-    "jquery": "^3.0.0",
-    "require-dir": "^0.3.2",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.1"
-  },
-  "dependencies": {
-    "clipboard": "^1.7.1",
-    "escape-string-regexp": "^1.0.5",
-    "facebook-share-link": "^1.0.0",
-    "js-cookie": "^2.2.0",
-    "query-string": "^5.1.0",
-    "shortid": "^2.2.8"
-  },
-  "scripts": {}
+	"name": "RLH-Build",
+	"title": "Front-end build tools for RLH",
+	"url": "https://github.com/adamcbrewer/fireshell",
+	"author": "Ethan Butler",
+	"copyright": "2018",
+	"version": "0.0.1",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DukeLivingHistory/RLH-Site-Code"
+	},
+	"devDependencies": {
+		"autoprefixer": "^8.2.0",
+		"babel-core": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-es2015": "^6.24.1",
+		"babelify": "^8.0.0",
+		"browserify": "^16.1.1",
+		"cssnano": "^3.5.2",
+		"jshint": "^2.9.1",
+		"node-sass": "^4.8.3",
+		"postcss": "^6.0.21",
+		"postcss-cli": "^5.0.0",
+		"watch": "^1.0.2"
+	},
+	"dependencies": {
+		"clipboard": "^1.7.1",
+		"escape-string-regexp": "^1.0.5",
+		"facebook-share-link": "^1.0.0",
+		"js-cookie": "^2.2.0",
+		"query-string": "^6.0.0",
+		"shortid": "^2.2.8"
+	},
+	"scripts": {
+		"prebuild:css": "node-sass assets/src/scss/main.scss assets/dist/css/main.css",
+		"build:css": "postcss --use autoprefixer -b 'last 2 versions' < assets/dist/css/main.css | postcss --use cssnano > assets/dist/css/styles.min.css && mkdir assets/dist/fonts && cp assets/vendor/fonts/able.ttf assets/dist/fonts/able.ttf",
+		"build:js": "rm -rf assets/dist/js && mkdir assets/dist/js && browserify assets/src/js/site/site.js assets/src/js/app/app.js > assets/dist/js/bundle.js -t [ babelify --presets env ]",
+		"build": "npm run build:css && npm run build:js",
+		"build:watch": "watch 'npm run build' src/*"
+	}
 }
