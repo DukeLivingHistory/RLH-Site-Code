@@ -22,5 +22,4 @@
     <link rel="alternate" type="application/rss+xml" title="<?= get_bloginfo('name'); ?> Feed" href="<?= esc_url(get_feed_link()); ?>">
     <link rel="apple-touch-icon-precomposed" href="/apple-icon-152x152.png">
     <?php wp_head(); ?>
-    <?php get_app_part( '/app/head.html' ); ?>
   </head>

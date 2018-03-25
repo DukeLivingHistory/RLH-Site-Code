@@ -1,7 +1,3 @@
 node_modules
-bower_components
-app/node_modules
+assets/dist
 .DS_Store
-ex.vtt
-*.stats.json
-styles.stats.json
