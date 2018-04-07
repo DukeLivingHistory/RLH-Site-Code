@@ -307,6 +307,24 @@ $listViewIconSize: 32px;
   max-height: 800px;
 }
 
+.researchMenu-search {
+  padding: 15px 0;
+  input {
+    background: none;
+    border: none;
+    padding: 5px 0;
+    font-family: 'Roboto';
+    border-bottom: 2px solid $interviews;
+  }
+  button {
+    background: none;
+    border: none;
+  }
+  svg {
+    fill: $interviews;
+  }
+}
+
 .menu--research,
 .menu--research ul {
   list-style: none;
