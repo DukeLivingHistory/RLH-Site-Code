@@ -15,7 +15,7 @@ function body_attr(){
 
   // sanitize the slug for "collection"
   $request = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : false;
-  $is_collection_archive = $request === '/collection' ||  $request === '/collections/';
+  $is_collection_archive = $request === '/collections' ||  $request === '/collections/';
 
   $attr = 'data-endpoint="';
   if( $is_collection_archive ){

@@ -34,6 +34,13 @@ add_action( 'acf/init', function(){
         'type' => 'true_false',
         'instructions' => 'If selected, this content will not be displayed on the home page or any archive pages. This content may still be referenced via Related Content relationships or through menus, such as the Research menu.'
       ],
+      [
+        'key' => 'hide_from_collections',
+        'label' => 'Hide from collections?',
+        'name' => 'hide_from_collections',
+        'type' => 'true_false',
+        'instructions' => 'If selected, this content will not appear as a collection.'
+      ],
   		[
   			'key' => 'tab_events',
   			'label' => 'Events',
