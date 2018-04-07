@@ -86,44 +86,31 @@ if( $curated_count < $total_results ){
 
   <article class="homeFeat">
     <header class="post-header">
-      <div class="post-type"><?= icon( $feat_cont->type, 'type' ); ?><?= ucfirst( $feat_cont->type ); ?></div>
+      <div class="post-type"><?php e('Blog'); ?></div>
     </header>
-    <div class="homeFeat-inner">
-      <?php if( $feat_cont->type === 'collection' ){ ?>
-        <i class="post-meta-label">A collection of</i>
-        <dl class="post-meta">
-          <dt class="sr-only">Number of interviews:</dt>
-          <dd>
-            <?= icon( 'interview', 'type' ); ?>
-            <?= $feat_cont->interview_count; ?> interviews
-          </dd>
-          <dt class="sr-only">Number of timelines:</dt>
-          <dd>
-            <?= icon( 'timeline', 'type' ); ?>
-            <?= $feat_cont->timeline_count; ?> timelines
-          </dd>
-        </dl>
-      <?php } ?>
-      <h2 class="post-title"><?= $feat_cont->title; ?></h2>
+    <div class="homeFeat-inner">=
+      <h2 class="post-title"><?= $post->post_title; ?></h2>
       <div class="post-image js-img" data-showcredit data-img="<?= $feat_cont->img; ?>">
         <a href="<?= $feat_cont->link; ?>">
           <?= wp_get_attachment_image( $feat_cont->img, 'feat_home' ); ?></div>
         </a>
       <?php if( $feat_cont->excerpt ){ ?>
-        <p class="post-excerpt"><?= $feat_cont->excerpt; ?></p>
+        <p class="post-excerpt"><?= $post->post_excerpt; ?></p>
       <?php } ?>
-      <a class="post-link" href="<?= $feat_cont->link; ?>">View The <?= ucfirst( $feat_cont->type ); ?></a>
+      <a class="post-link" href="<?= get_permalink($post->ID)?>">
+        <?php _e('View Post'); ?>
+      </a>
     </div>
   </article>
 
-  <?php if( count($pieces) > 3 ){ ?>
+  <?php if( count( $pieces ) > 3 ){ ?>
   <section class="postRoll postRoll--featured">
     <div class="postRoll-inner">
       <?php for( $i=0; $i<3; $i++ ){ $pieces[$i]->html( 'js-eqHeight--featured' ); } ?>
     </div>
   </section>
 
-    <?php if( get_field('show_roll_home', 'option') ){ ?>
+    <?php if( get_field('show_roll_blog', 'option') ){ ?>
     <section class="postRoll postRoll--home">
       <div class="postRoll-inner">
         <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html( 'js-eqHeight--roll' ); } ?>
@@ -151,14 +138,10 @@ if( $curated_count < $total_results ){
   </section>
 
   <section class="buckets">
-    <?php $buckets = ['Interviews','Collections','Timelines', 'Blog']; ?>
+    <?php $buckets = ['Interviews','Collections','Timelines']; ?>
     <?php foreach( $buckets as $bucket ){ ?>
       <div class="buckets-bucket buckets-bucket--<?= strtolower($bucket); ?>">
-        <?php
-          $img = wp_get_attachment_image_src(
-            get_field( strtolower($bucket).'_content_image', 'options' )
-          )[0];
-        ?>
+        <?php $img = wp_get_attachment_image_src( get_field( strtolower($bucket).'_content_image', 'options' ) )[0]; ?>
         <figure class="buckets-hero" style="background-image:url(<?= $img; ?>)"></figure>
         <h2 class="buckets-head">
           <?= icon( substr( strtolower($bucket), 0, -1 ), 'type' ); ?> <?= $bucket; ?>

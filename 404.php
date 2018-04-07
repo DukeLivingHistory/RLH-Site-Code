@@ -4,7 +4,7 @@
 $request = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : false;
 $is_collection_archive = $request === '/collections' ||  $request === '/collections/';
 if( $is_collection_archive ){
-  get_app_part( '/app/index.html' );
+  get_app();
 } else { ?>
   <div class="notfound">
     <header class="contentHeader contentHeader--archive">

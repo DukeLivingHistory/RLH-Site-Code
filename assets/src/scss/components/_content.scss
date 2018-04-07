@@ -86,6 +86,10 @@
   background: $richTextBg;
 }
 
+.content--post {
+  background: $blogBg;
+}
+
 .content-inner,
 .content-imgWrapper{
   @include make-col(0);
@@ -301,6 +305,24 @@ $listViewIconSize: 32px;
 
 .researchMenu--expand {
   max-height: 800px;
+}
+
+.researchMenu-search {
+  padding: 15px 0;
+  input {
+    background: none;
+    border: none;
+    padding: 5px 0;
+    font-family: 'Roboto';
+    border-bottom: 2px solid $interviews;
+  }
+  button {
+    background: none;
+    border: none;
+  }
+  svg {
+    fill: $interviews;
+  }
 }
 
 .menu--research,
