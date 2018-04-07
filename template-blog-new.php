@@ -110,11 +110,13 @@ if( $curated_count < $total_results ){
     </div>
   </section>
 
-  <section class="postRoll postRoll--home">
-    <div class="postRoll-inner">
-      <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html( 'js-eqHeight--roll' ); } ?>
-    </div>
-  </section>
+    <?php if( get_field('show_roll_blog', 'option') ){ ?>
+    <section class="postRoll postRoll--home">
+      <div class="postRoll-inner">
+        <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html( 'js-eqHeight--roll' ); } ?>
+      </div>
+    </section>
+    <?php } ?>
   <?php } ?>
 
   <section class="siteDescription">
