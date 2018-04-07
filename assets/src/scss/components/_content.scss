@@ -86,6 +86,10 @@
   background: $richTextBg;
 }
 
+.content--post {
+  background: $blogBg;
+}
+
 .content-inner,
 .content-imgWrapper{
   @include make-col(0);

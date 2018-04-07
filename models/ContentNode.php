@@ -22,6 +22,7 @@ class ContentNode {
       $this->link = $is_taxonomy ? get_term_link($id) : get_permalink($id);
       $this->title = $is_taxonomy ? $the_term->name : $the_post->post_title;
       $this->type = $is_taxonomy ? $the_term->taxonomy : get_post_type($id);
+
       $this->img_set = !$this->img ? null : [
         'caption'  => get_post($this->img)->post_excerpt,
         'original' => wp_get_attachment_image_src($this->img, 'full')[0],

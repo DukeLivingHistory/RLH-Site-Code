@@ -1,22 +1,19 @@
 .buckets {
-  @include make-container(0);
-  margin: 0 -5px 75px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 75px;
 }
 
 .buckets-bucket {
   background-clip: content-box;
   position: relative;
   margin-bottom: 1em;
-  @include make-col(10px);
-  @include media-breakpoint-up(md){
-    margin: 0;
-    @include make-col-span(4);
-  }
+  width: calc(25% - 10px);
 }
 
 .buckets-hero {
   position: absolute;
-  top: 0; right: 5px; left: 5px;
+  top: 0; right: 0; left: 0;
   height: 170px;
   margin: 0;
   padding: 0;
@@ -42,10 +39,10 @@
     font-size: 20px;
   }
   @include media-breakpoint-up(lg){
-    font-size: 28px;
+    font-size: 19px;
   }
   @include media-breakpoint-up(xl){
-    font-size: 33px;
+    font-size: 25px;
   }
 }
 
@@ -74,7 +71,7 @@
   padding: 3px 10px;
   text-transform: uppercase;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   &:hover {
     background: $white;
   }
@@ -115,5 +112,16 @@
   color: $timelines;
   svg {
     fill: $timelines;
+  }
+}
+
+.buckets-bucket--blog {
+  background-color: $blog;
+}
+
+.buckets-bucket--blog .buckets-link:hover {
+  color: $blog;
+  svg {
+    fill: $blog;
   }
 }

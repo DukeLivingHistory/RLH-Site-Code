@@ -22,6 +22,9 @@ function body_attr(){
     $attr .= 'collections';
   } elseif( is_search() ){
     $attr .= 'search';
+    if( $_GET['type'] ) {
+      $attr .= '" data-type="'.$_GET['type'];
+    }
   } elseif( is_tax() ) {
     $attr .= get_taxonomy( get_queried_object()->taxonomy )->rewrite['slug'];
   } elseif( is_singular() || is_archive() ){
