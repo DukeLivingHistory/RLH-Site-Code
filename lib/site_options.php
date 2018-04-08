@@ -13,6 +13,20 @@ if( function_exists('acf_add_local_field_group') ){
   	'key' => 'acf-options',
   	'title' => 'Site Settings',
   	'fields' => [
+			[
+				'key' => 'show_roll_home',
+        'label' => 'Show blog roll on homepage?',
+        'name' => 'show_roll_home',
+        'type' => 'true_false',
+        'default' => 0,
+			],
+			[
+				'key' => 'show_roll_blog',
+        'label' => 'Show blog roll on blog?',
+        'name' => 'show_roll_home',
+        'type' => 'true_false',
+        'default' => 0,
+			],
   		[
   			'key' => 'youtube_client_id',
   			'label' => 'YouTube Client ID',

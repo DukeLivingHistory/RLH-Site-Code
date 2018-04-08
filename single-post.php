@@ -11,6 +11,11 @@ while( have_posts() ){
         Expand Menu <?= icon( 'down', 'link' ); ?>
       </button>
       <?php if(!get_field('hide_sidebar')): ?>
+        <form class="researchMenu-search" method="get" action="<?php bloginfo('url'); ?>/">
+          <input name="s" type="text" placeholder="Search blog">
+          <input name="type" value="blog" type="hidden">
+          <button type="submit"><?= icon( 'search' ); ?></button>
+        </form>
         <?php dynamic_sidebar('posts'); ?>
       <?php endif; ?>
     </aside>

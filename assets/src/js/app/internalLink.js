@@ -3,9 +3,9 @@ const internalLink = function({
   id,
   link
 }, inner){
-  type = type + (type === 'interactive' ? '' : 's') // TODO: Clean this up
+  type = type + (type === 'post' || type === 'interactive' ? '' : 's') // TODO: Clean this up
   return `
-    <a class="js-internalLink"
+    <a class="${type === 'post' ? '' : 'js-internalLink'}"
       data-type=${type}
       data-id="${id}"
       href=${link}

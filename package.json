@@ -34,10 +34,11 @@
 	},
 	"scripts": {
 		"prebuild:css": "node-sass assets/src/scss/main.scss assets/dist/css/main.css",
-		"build:css": "postcss --use autoprefixer -b 'last 2 versions' < assets/dist/css/main.css | postcss --use cssnano > assets/dist/css/styles.min.css && mkdir assets/dist/fonts && cp assets/vendor/fonts/able.ttf assets/dist/fonts/able.ttf",
+		"build:css": "postcss --use autoprefixer -b 'last 2 versions' < assets/dist/css/main.css | postcss --use cssnano > assets/dist/css/styles.min.css",
+		"build:fonts": "rm -rf assets/dist/fonts && mkdir assets/dist/fonts && cp assets/vendor/fonts/able.ttf assets/dist/fonts/able.ttf",
 		"build:js": "rm -rf assets/dist/js && mkdir assets/dist/js && browserify assets/src/js/site/site.js assets/src/js/app/app.js > assets/dist/js/bundle.js -t [ babelify --presets env ]",
-		"build": "npm run build:css && npm run build:js",
-		"build:watch": "watch 'npm run npmbuild' src/*",
+		"build": "npm run build:css && npm run build:js && npm run build:fonts",
+		"build:watch": "watch 'npm run build' ./assets/src",
 		"deploy:staging": "git checkout dev && git pull origin dev && git push deploy dev",
 		"deploy:prod": "git checkout master && git pull origin master && git push deploy master"
 	}

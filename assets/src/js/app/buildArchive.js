@@ -88,7 +88,7 @@ const buildArchive = function(
   }
 
   // Loader
-  if(!isSearch && items && items.length >= COUNT){
+  if(!isSearch && endpoint !== 'collections' && items && items.length >= COUNT){
     load = `<button data-offset="0" class="content-load">Load More</button>`
   }
 
@@ -126,8 +126,6 @@ const buildArchive = function(
       endpoint
 
     const url = `/wp-json/v1/${dest}?${qs.stringify(params)}${cachebust(true)}`
-
-    console.log(url)
 
     $.get(url, ({items}) => {
       if(!items) {
