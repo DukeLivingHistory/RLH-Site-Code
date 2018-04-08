@@ -4,6 +4,7 @@ $includes = [
   'api/api.php',
   'models/models.php',
   'models/site.php',
+  'lib/acf.php',
   'lib/add_confirm_to_delete.php',
   'lib/admin_css.php',
   'lib/alert_unavailable_timestamp.php',
