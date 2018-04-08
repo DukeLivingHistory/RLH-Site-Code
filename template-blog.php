@@ -18,6 +18,9 @@ if($paged) {
     'post_type' => ['post'],
     'offset' => $offset,
   ]);
+  $found_posts = $query->found_posts;
+  if(!$show) $found_posts = $found_posts + $posts_per_page - $offset;
+  $total = ceil($found_posts / $posts_per_page);
   ?>
   <header class="contentHeader contentHeader--archive">
     <h2><?= get_queried_object()->name; ?></h2>
@@ -40,11 +43,6 @@ if($paged) {
       </article>
     <?php endwhile; ?>
     <div class="blog-pagination">
-      <?php
-        $found_posts = $query->found_posts;
-        if(!$show) $found_posts = $found_posts + $posts_per_page - $offset;
-        $total = ceil($found_posts / $posts_per_page);
-      ?>
       <?= paginate_links([
         'total' => $total,
       ]); ?>
@@ -52,11 +50,13 @@ if($paged) {
   </section>
 <?php
 } else {
-
   $fake_query = new WP_Query([
     'post_type' => ['post'],
     'posts_per_page' => $posts_per_page,
   ]);
+  $found_posts = $fake_query->found_posts;
+  if(!$show) $found_posts = $found_posts + $posts_per_page - 4;
+  $total = ceil($found_posts / $posts_per_page);
   $main_query = new WP_Query([
     'post_type' => ['post'],
     'posts_per_page' => $total_results,
@@ -91,6 +91,11 @@ if($paged) {
       <a class="post-link" href="<?= get_permalink($post->ID)?>">
         <?php _e('View Post'); ?>
       </a>
+      <form class="blog-header-search" method="get" action="<?php bloginfo('url'); ?>/">
+        <input name="s" type="text" placeholder="Search blog">
+        <input name="type" value="blog" type="hidden">
+        <button type="submit"><?= icon( 'search' ); ?></button>
+      </form>
     </div>
   </article>
 
@@ -109,7 +114,7 @@ if($paged) {
     <?php endif; ?>
     <div class="blog-pagination">
       <?= paginate_links([
-        'total' => $fake_query->max_num_pages
+        'total' => $total
       ]); ?>
     </div>
     <div class="featured">
