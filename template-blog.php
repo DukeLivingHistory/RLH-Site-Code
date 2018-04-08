@@ -1,6 +1,13 @@
 <?php
 
-$total_results = 12;
+// get featured content
+$curated_items = get_field( 'curated_blog_content', 'options' );
+if($curated_items) foreach( $curated_items as $curated_item ){
+  $in[] = $curated_item[ 'curated_blog' ];
+}
+
+$show = get_field('show_roll_blog', 'option');
+$total_results = $show ? 12 : 4;
 $posts_per_page = get_option('posts_per_page');
 $paged = get_query_var('paged');
 $diff = $total_results - $posts_per_page;
@@ -33,18 +40,18 @@ if($paged) {
       </article>
     <?php endwhile; ?>
     <div class="blog-pagination">
+      <?php
+        $found_posts = $query->found_posts;
+        if(!$show) $found_posts = $found_posts + $posts_per_page - $offset;
+        $total = ceil($found_posts / $posts_per_page);
+      ?>
       <?= paginate_links([
-        'total' => $query->max_num_pages
+        'total' => $total,
       ]); ?>
     </div>
   </section>
 <?php
 } else {
-  // get featured content
-  $curated_items = get_field( 'curated_blog_content', 'options' );
-  if($curated_items) foreach( $curated_items as $curated_item ){
-    $in[] = $curated_item[ 'curated_post' ];
-  }
 
   $fake_query = new WP_Query([
     'post_type' => ['post'],
@@ -54,6 +61,7 @@ if($paged) {
     'post_type' => ['post'],
     'posts_per_page' => $total_results,
     'post__in' => $in,
+    'orderby' => 'post__in'
   ]);
   $secondary_query = new WP_Query([
     'post_type' => ['post'],
@@ -98,12 +106,12 @@ if($paged) {
           <?php $content = new ContentNode( $post->ID ); $content->html(); ?>
         <?php endforeach; ?>
     </section>
+    <?php endif; ?>
     <div class="blog-pagination">
       <?= paginate_links([
         'total' => $fake_query->max_num_pages
       ]); ?>
     </div>
-    <?php endif; ?>
     <div class="featured">
       <?php get_template_part( 'templates/buckets' ); ?>
     </div>

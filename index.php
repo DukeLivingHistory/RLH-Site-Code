@@ -123,9 +123,7 @@ if( $curated_count < $total_results ){
 
     <?php if( get_field('show_roll_home', 'option') ){ ?>
     <section class="postRoll postRoll--home">
-      <div class="postRoll-inner">
-        <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html(); } ?>
-      </div>
+      <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html(); } ?>
     </section>
     <?php } ?>
   <?php } ?>
