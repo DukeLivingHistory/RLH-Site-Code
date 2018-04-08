@@ -240,7 +240,7 @@ acf_add_local_field_group(array(
 					'return_format' => 'id',
 				),
         array(
-					'key' => 'curated_blog',
+					'key' => 'home_curated_blog',
 					'label' => 'Blog',
 					'name' => 'curated_blog',
 					'type' => 'post_object',
