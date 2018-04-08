@@ -1,6 +1,7 @@
 .buckets {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin: 0 0 75px;
 }
 
@@ -8,7 +9,13 @@
   background-clip: content-box;
   position: relative;
   margin-bottom: 1em;
-  width: calc(25% - 10px);
+  width: 100%;
+  @include media-breakpoint-up(md){
+    width: calc(50% - 10px);
+  }
+  @include media-breakpoint-up(lg){
+    width: calc(25% - 10px);
+  }
 }
 
 .buckets-hero {
