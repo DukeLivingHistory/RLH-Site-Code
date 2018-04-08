@@ -23,6 +23,8 @@ class ContentNode {
       $this->title = $is_taxonomy ? $the_term->name : $the_post->post_title;
       $this->type = $is_taxonomy ? $the_term->taxonomy : get_post_type($id);
 
+      if($this->type === 'post') $this->type = 'blog';
+
       $this->img_set = !$this->img ? null : [
         'caption'  => get_post($this->img)->post_excerpt,
         'original' => wp_get_attachment_image_src($this->img, 'full')[0],
@@ -76,6 +78,7 @@ class ContentNode {
     }
 
     public function html($classes = '') {
+      the_post($this->id);
       ?>
       <article class="post post--<?= $this->type; ?> <?= $classes; ?>">
         <a class="post-hyperlink" href="<?= $this->link; ?>">
@@ -111,6 +114,14 @@ class ContentNode {
           <?php if ($this->type !== 'collection') {
               ?>
             <h2 class="post-title"><?= $this->title; ?></h2>
+            <?php if($this->type === 'blog') : ?>
+              <div class="blog-meta">
+                Posted <strong><?php the_date(); ?></strong> by
+                <a href="<?= get_author_posts_url( get_the_author_meta('ID') ); ?>">
+                  <?php the_author(); ?>
+                </a>
+              </div>
+            <?php endif; ?>
           <?php
           } ?>
           <?php if ($this->excerpt) {
@@ -119,6 +130,16 @@ class ContentNode {
           <?php
           } ?>
           <span class="post-link" href="<?= $this->link; ?>">View The <?= ucfirst($this->type); ?></span>
+          <?php if($this->type === 'blog' && get_the_category_list()): ?>
+            <div class="blog-category">
+              Posted in <?= get_the_category_list(); ?>
+            </div>
+          <?php endif; ?>
+          <?php if($this->type === 'blog' && get_the_tag_list()): ?>
+            <div class="blog-category">
+              Tagged <?= get_the_tag_list(); ?>
+            </div>
+          <?php endif; ?>
         </a>
       </article>
     <?php

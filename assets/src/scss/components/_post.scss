@@ -16,29 +16,8 @@
   background-color: $timelinesBg;
 }
 
-.postRoll--featured {
-  @include media-breakpoint-up(md){
-    .post {
-      background-color: none;
-    }
-    .post--interview {
-      @include extendo_clip( $interviewsBg );
-    }
-
-    .post--collection {
-      @include extendo_clip( $collectionsBg );
-    }
-
-    .post--timeline {
-      @include extendo_clip( $timelinesBg );
-    }
-
-    .post:before {
-      left: 9px;
-      right: 9px;
-      bottom: -1000vw;
-    }
-  }
+.post--blog {
+  background-color: $blogBg;
 }
 
 .postRoll--home {
@@ -133,8 +112,20 @@
 .post-image,
 .post-excerpt,
 .post-title,
-.post-link {
+.post-link,
+.post .blog-category,
+.post .blog-meta, {
+  display: block;
   padding: 0 18px;
+}
+
+.blog-meta strong {
+  font-weight: 400;
+  color: mix($greyDark, #ccc);
+}
+
+.post .blog-category + .blog-category {
+  margin-top: -15px;
 }
 
 .post-image img {
@@ -229,7 +220,11 @@
   }
 
   &-pagination {
+    max-width: 500px;
     text-align: center;
+    margin: 10px auto 70px;
+    padding: 10px 0;
+    border-bottom: 2px solid mix($suppGrey, $greyDark);
   }
 
   &-article-head {

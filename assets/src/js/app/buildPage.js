@@ -33,7 +33,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       document.title = 'Search for '+term
       const endpoint = `/wp-json/v1/search/${term}/${type}?count=${COUNT}&offset=0${cachebust(true)}`
       $.get(endpoint, function(data){
-        buildArchive(page, data, endpoint)
+        buildArchive(page, Object.assign({}, data, { isSearch: true }), endpoint)
         animatePage(wrapper, page, dir, function(){
           respImg.load('.respImg')
         })

@@ -11,7 +11,7 @@
       <h2 class="buckets-head">
         <?= icon( preg_replace('/s$/', '', $lc), 'type' ); ?> <?= $bucket; ?>
       </h2>
-      <p class="buckets-text js-eqHeight--bucket">
+      <p class="buckets-text">
         <?= get_field( $lc.'_content_description', 'options' ); ?>
       </p>
       <span class="buckets-linkWrapper">

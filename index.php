@@ -118,15 +118,13 @@ if( $curated_count < $total_results ){
 
   <?php if( count($pieces) > 3 ){ ?>
   <section class="postRoll postRoll--featured">
-    <div class="postRoll-inner">
-      <?php for( $i=0; $i<3; $i++ ){ $pieces[$i]->html( 'js-eqHeight--featured' ); } ?>
-    </div>
+      <?php for( $i=0; $i<3; $i++ ){ $pieces[$i]->html(); } ?>
   </section>
 
     <?php if( get_field('show_roll_home', 'option') ){ ?>
     <section class="postRoll postRoll--home">
       <div class="postRoll-inner">
-        <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html( 'js-eqHeight--roll' ); } ?>
+        <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html(); } ?>
       </div>
     </section>
     <?php } ?>

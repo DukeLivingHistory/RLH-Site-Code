@@ -6,6 +6,9 @@
 }
 
 .buckets-bucket {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-clip: content-box;
   position: relative;
   margin-bottom: 1em;
@@ -54,6 +57,7 @@
 }
 
 .buckets-text {
+  flex-grow: 1;
   margin: 20px 18px 20px;
   color: $white;
   font-size: 14px;
@@ -130,5 +134,13 @@
   color: $blog;
   svg {
     fill: $blog;
+  }
+}
+
+.featured {
+  @include extendo_clip( $suppGrey );
+  padding: 20px 0;
+  .buckets {
+    margin: 0;
   }
 }
