@@ -2,6 +2,10 @@
   @include antialiased;
   @include clearfix;
   box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
+  @media(max-width: 767px) {
+    max-width: none!important;
+    width: 100%!important;
+  }
 }
 
 .home .header {

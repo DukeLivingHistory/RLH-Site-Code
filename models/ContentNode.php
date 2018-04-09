@@ -15,7 +15,7 @@ class ContentNode {
         $this->limit_words(get_field('collection_description', 'collection_'.$id), 80) :
         $this->limit_words($the_post->post_excerpt, 80);
 
-      if(!$this->excerpt) {
+      if(!$this->excerpt || !strlen($this->excerpt)) {
         preg_match_all('/.*\n/', $the_post->post_content, $first_p);
         $this->excerpt = $this->limit_words($first_p[0][0], 80);
       }
