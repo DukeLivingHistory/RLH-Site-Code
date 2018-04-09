@@ -91,12 +91,12 @@ if($paged) {
       <a class="post-link" href="<?= get_permalink($post->ID)?>">
         <?php _e('View Post'); ?>
       </a>
-      <form class="blog-header-search" method="get" action="<?php bloginfo('url'); ?>/">
-        <input name="s" type="text" placeholder="Search blog">
-        <input name="type" value="blog" type="hidden">
-        <button type="submit"><?= icon( 'search' ); ?></button>
-      </form>
     </div>
+    <form class="blog-header-search" method="get" action="<?php bloginfo('url'); ?>/">
+      <input name="s" type="text" placeholder="Search blog">
+      <input name="type" value="blog" type="hidden">
+      <button type="submit"><?= icon( 'search' ); ?></button>
+    </form>
   </article>
 
   <section class="postRoll postRoll--featured">

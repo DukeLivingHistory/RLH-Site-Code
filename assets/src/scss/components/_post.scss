@@ -177,7 +177,11 @@
 .homeFeat-inner {
   position: relative;
   overflow: hidden;
-  margin: 12px 0 80px;
+//  margin: 12px 0 80px;
+  margin: 12px 0;
+  .post-link {
+    margin: 0;
+  }
 }
 
 .homeFeat-inner .post-excerpt {
@@ -188,7 +192,7 @@
 
   .homeFeat-inner {
     padding-right: 50%;
-    min-height: 20rem;
+    //min-height: 20rem;
   }
 
   .homeFeat .post-image {
@@ -261,9 +265,8 @@
 }
 
 .blog-header-search {
-  position: absolute;
-  bottom: 0;
-  right: 12px;
+  text-align: right;
+  margin: 0 0 60px;
   input {
     background: rgba($white, .1);
     width: 20em;
