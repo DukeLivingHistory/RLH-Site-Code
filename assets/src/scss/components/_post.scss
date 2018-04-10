@@ -170,6 +170,9 @@
     font-size: 33px;
     margin-top: 15px;
     margin-bottom: 12px;
+    @include media-breakpoint-up(md){
+      width: 50%;
+    }
   }
 
 }
@@ -191,14 +194,15 @@
 @include media-breakpoint-up(md){
 
   .homeFeat-inner {
-    padding-right: 50%;
+    // padding-right: 50%;
     //min-height: 20rem;
   }
 
   .homeFeat .post-image {
-    position: absolute;
-    top: 0; right: 0;
+    // position: absolute;
+    // top: 0; right: 0;
     width: 50%;
+    float: right;
   }
 
 }

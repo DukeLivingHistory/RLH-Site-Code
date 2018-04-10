@@ -146,10 +146,19 @@ acf_add_local_field_group(array(
 			'label' => 'Curated Home Content',
 			'name' => 'curated_home_content',
 			'type' => 'repeater',
-			'instructions' => 'Select between zero and seven pieces of content to feature on the homepage. (If less than 7 are selected, the homepage will be padded out with the most recently published content.)',
+			'instructions' => 'Select between zero and eleven pieces of content to feature on the homepage, with the first three being featured. (If less than 11 are selected, the homepage will be padded out with the most recently published content.)',
 			'min' => 0,
-			'max' => 7,
+			'max' => 11,
 			'layout' => 'block',
+			'conditional_logic' => array(
+				array(
+					array(
+						'field' => 'show_roll_home',
+						'operator' => '==',
+						'value' => 1,
+					),
+				),
+			),
 			'button_label' => 'Add Item',
 			'sub_fields' => array(
 				array(
@@ -428,9 +437,15 @@ acf_add_local_field_group(array(
 
 	'fields' => array(
 		array(
-      'type' => 'message',
+			'type' => 'message',
 			'key' => 'homepage_instructions',
 			'message' => '<strong>The following fields control what content appears on the blog page.</strong>',
+		),
+		array(
+      'type' => 'text',
+			'key' => 'blog_title',
+			'name' => 'blog_title',
+			'label' => 'Blog Title'
 		),
     [
       'key' => 'show_roll_blog',
