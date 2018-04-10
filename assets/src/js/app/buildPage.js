@@ -28,7 +28,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
   if(queriedObject === 'archive'){
     if(endpoint === 'search'){
       const term = $('body').attr('data-search').replace('+', ' ')
-      const type = $('body').attr('data-type') || null
+      const type = $('body').attr('data-type') || 'any'
       window.SEARCHTERM = term
       document.title = 'Search for '+term
       const endpoint = `/wp-json/v1/search/${term}/${type}?count=${COUNT}&offset=0${cachebust(true)}`

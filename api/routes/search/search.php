@@ -110,6 +110,13 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
   $total_hits = 0;
 
   $fields = [
+    'blog' => [
+      'content' => function($id) {
+        $content = get_post($id)->post_content;
+        $lines = get_lines_from_sentences($content);
+        return $lines;
+      }
+    ],
     'interview' => [
       'introduction' => function($id) {
         $lines = get_lines_from_sentences(get_field('introduction', $id));
@@ -167,8 +174,8 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     $item->hits = $hits;
     $item->title = highlight_term($item->title, $term);
 
-    if(count($hits)) {
-      $total_hits = $total_hits + count($hits);
+    if(count($item->hits)) {
+      $total_hits = $total_hits + count($item->hits);
     }
 
     $returns['items'][] = $item;
