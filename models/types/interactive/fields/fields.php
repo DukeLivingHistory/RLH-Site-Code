@@ -40,6 +40,13 @@ add_action( 'acf/init', function(){
         'wrapper' => [ 'width' => '50' ]
       ],
       [
+        'key' => 'hide_from_blog',
+        'label' => 'Hide from blog?',
+        'name' => 'hide_from_blog',
+        'type' => 'true_false',
+        'instructions' => 'If checked, this interactive page will not display in blog feed.',
+      ],
+      [
         'key' => 'tab_transcript_raw',
         'label' => 'Text (.vtt)',
         'name' => '',
