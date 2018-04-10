@@ -28,7 +28,7 @@ const buildContentNode = function({
       </ul>
       ${hitCount > cutoff ? `
         <ul class="content-hits hidden" id="${uid}">
-          ${hits.map((hit) => `<li
+          ${hits.slice(cutoff).map((hit) => `<li
             class="content-data-sublink"
             data-sublink="${hit.timestamp}"
             tabindex="0"
