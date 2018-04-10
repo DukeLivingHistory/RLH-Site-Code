@@ -1,5 +1,18 @@
 <?php
 
+$meta = [
+  'relation' => 'OR',
+  [
+    'key' => 'hide_from_blog',
+    'value' => 1,
+    'compare' => '!='
+  ],
+  [
+    'key' => 'hide_from_blog',
+    'compare' => 'NOT EXISTS'
+  ],
+];
+
 // get featured content
 $curated_items = get_field( 'curated_blog_content', 'options' );
 if($curated_items) foreach( $curated_items as $curated_item ){
@@ -15,8 +28,9 @@ $offset = ($paged - 1)  * $posts_per_page + $diff;
 
 if($paged) {
   $query = new WP_Query([
-    'post_type' => ['post'],
+    'post_type' => ['post', 'interactive'],
     'offset' => $offset,
+    'meta_query' => $meta,
   ]);
   $found_posts = $query->found_posts;
   if(!$show) $found_posts = $found_posts + $posts_per_page - $offset;
@@ -51,22 +65,25 @@ if($paged) {
 <?php
 } else {
   $fake_query = new WP_Query([
-    'post_type' => ['post'],
+    'post_type' => ['post', 'interactive'],
     'posts_per_page' => $posts_per_page,
+    'meta_query' => $meta,
   ]);
   $found_posts = $fake_query->found_posts;
   if(!$show) $found_posts = $found_posts + $posts_per_page - 4;
   $total = ceil($found_posts / $posts_per_page);
   $main_query = new WP_Query([
-    'post_type' => ['post'],
+    'post_type' => ['post', 'interactive'],
     'posts_per_page' => $total_results,
     'post__in' => $in,
-    'orderby' => 'post__in'
+    'orderby' => 'post__in',
+    'meta_query' => $meta,
   ]);
   $secondary_query = new WP_Query([
-    'post_type' => ['post'],
+    'post_type' => ['post', 'interactive'],
     'posts_per_page' => $total_results - $main_query->found_posts,
     'post__not_in' => $in,
+    'meta_query' => $meta,
   ]);
   $posts = array_merge($main_query->posts, $secondary_query->posts);
   $posts = array_slice($posts, 0, $total_results);

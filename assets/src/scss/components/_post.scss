@@ -4,7 +4,8 @@
   @include make-col(18px);
 }
 
-.post--interview {
+.post--interview,
+.post--interactive {
   background-color: $interviewsBg;
 }
 
