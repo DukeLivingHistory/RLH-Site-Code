@@ -77,14 +77,17 @@ if($paged) {
 ?>
   <article class="homeFeat">
     <header class="post-header">
-      <div class="post-type"><?php _e('Blog'); ?></div>
+      <div class="post-type">
+        <?= ($t = get_field('blog_title', 'option')) ? $t : __('Blog'); ?>
+      </div>
     </header>
     <div class="homeFeat-inner">
       <h2 class="post-title"><?= $feat_cont->title; ?></h2>
       <div class="post-image js-img" data-showcredit data-img="<?= $feat_cont->img; ?>">
         <a href="<?= $feat_cont->link; ?>">
-          <?= wp_get_attachment_image( $feat_cont->img, 'feat_home' ); ?></div>
+          <?= wp_get_attachment_image( $feat_cont->img, 'feat_home' ); ?>
         </a>
+      </div>
       <?php if( $feat_cont->excerpt ){ ?>
         <p class="post-excerpt"><?= $feat_cont->excerpt; ?></p>
       <?php } ?>
@@ -105,7 +108,7 @@ if($paged) {
     <?php endforeach; ?>
   </section>
 
-    <?php if( get_field('show_roll_blog', 'option') ): ?>
+    <?php if( $show ): ?>
     <section class="postRoll postRoll--home postRoll--blog">
         <?php foreach($rest as $post): ?>
           <?php $content = new ContentNode( $post->ID ); $content->html(); ?>
