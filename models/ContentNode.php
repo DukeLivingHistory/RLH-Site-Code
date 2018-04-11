@@ -86,7 +86,7 @@ class ContentNode {
       the_post($this->id);
       ?>
       <article class="post post--<?= $this->type; ?> <?= $classes; ?>">
-        <?php if($this->type === 'blog'){ ?>
+        <?php if($this->type === 'blog' || $this->type === 'interactive'){ ?>
 
         <?php } else { ?>
           <a class="post-hyperlink" href="<?= $this->link; ?>">
@@ -123,14 +123,14 @@ class ContentNode {
           <?php if ($this->type !== 'collection') {
               ?>
             <h2 class="post-title"><?= $this->title; ?></h2>
-            <?php if($this->type === 'blog') : ?>
+              <?php if($this->type === 'blog' || $this->type === 'interactive'){ ?>
               <div class="blog-meta">
                 Posted <strong><?php the_date(); ?></strong> by
                 <a href="<?= get_author_posts_url( get_the_author_meta('ID') ); ?>">
                   <?php the_author(); ?>
                 </a>
               </div>
-            <?php endif; ?>
+            <?php } ?>
           <?php
           } ?>
           <?php if ($this->excerpt) {

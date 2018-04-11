@@ -3,12 +3,12 @@
 $meta = [
   'relation' => 'OR',
   [
-    'key' => 'hide_from_blog',
+    'key' => 'show_in_blog',
     'value' => 1,
-    'compare' => '!='
+    'compare' => '='
   ],
   [
-    'key' => 'hide_from_blog',
+    'key' => 'show_in_blog',
     'compare' => 'NOT EXISTS'
   ],
 ];
@@ -108,7 +108,7 @@ if($paged) {
       <?php if( $feat_cont->excerpt ){ ?>
         <p class="post-excerpt"><?= $feat_cont->excerpt; ?></p>
       <?php } ?>
-      <a class="post-link" href="<?= get_permalink($post->ID)?>">
+      <a class="post-link" href="<?= $feat_cont->link; ?>">
         <?php _e('View Post'); ?>
       </a>
     </div>
