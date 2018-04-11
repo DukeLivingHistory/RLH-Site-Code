@@ -53,3 +53,13 @@ function my_acf_init() {
 	acf_update_setting('google_api_key', get_field('maps_client_id', 'options'));
 }
 add_action('acf/init', 'my_acf_init');
+
+function add_interactives_to_author_archive($query) {
+  if(
+    is_author() &&
+    $query->is_main_query()
+  ) {
+    $query->set('post_type', ['post', 'interactive']);
+  }
+}
+add_action('pre_get_posts','add_interactives_to_author_archive');
