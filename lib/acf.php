@@ -461,7 +461,7 @@ acf_add_local_field_group(array(
 			'label' => 'Curated Blog Content',
 			'name' => 'curated_blog_content',
 			'type' => 'repeater',
-			'instructions' => 'Select between zero and seven pieces of content to feature on the blog. (If less than 7 are selected, the blog will be padded out with the most recently published content.)',
+			'instructions' => 'Select between zero and eleven pieces of content to feature on the homepage, with the first three being featured. (If less than 11 are selected, the homepage will be padded out with the most recently published content.)',
 			'min' => 0,
 			'max' => 7,
 			'layout' => 'block',
