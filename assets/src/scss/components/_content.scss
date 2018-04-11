@@ -86,6 +86,10 @@
   background: $blogBg;
 }
 
+.content--child {
+  margin-left: 2em;
+}
+
 .content-inner,
 .content-imgWrapper{
   @include make-col(0);
