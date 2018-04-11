@@ -475,6 +475,7 @@ acf_add_local_field_group(array(
 					'instructions' => '',
 					'post_type' => array(
 						0 => 'post',
+						1 => 'interactive',
 					),
 					'return_format' => 'id',
 				),
