@@ -10,14 +10,14 @@ const buildContentNode = (item) => {
     title,
     excerpt,
     hits,
+    hit_count,
     img_set,
     link
   }, className) => {
     const cutoff = 5
     const uid = shortid.generate()
-    let imgHtml = '', hitCount, hitHtml
+    let imgHtml = '', hitHtml
     if(hits && hits.length > 0) {
-      hitCount = hits.length
       hitHtml = `
         <ul class="content-hits">
           ${hits.slice(0, cutoff).map((hit) => `<li
@@ -27,7 +27,7 @@ const buildContentNode = (item) => {
             >${hit.text}</li>
           `).join('')}
         </ul>
-        ${hitCount > cutoff ? `
+        ${hits.length > cutoff ? `
           <ul class="content-hits hidden" id="${uid}">
             ${hits.slice(cutoff).map((hit) => `<li
               class="content-data-sublink"
@@ -60,9 +60,9 @@ const buildContentNode = (item) => {
           <span class="content-type">${icon(type, 'type')} ${type}</span>
           <h3 class="content-head">
             ${title}
-            ${!hitCount ? '' : `
-              &nbsp<small>(${hitCount} total ${hitCount > 1 ? 'hits' : 'hit'})</small>
-              ${hitCount > cutoff ? `
+            ${!hit_count ? '' : `
+              &nbsp<small>(${hit_count} total ${hit_count > 1 ? 'hits' : 'hit'})</small>
+              ${hits.length > cutoff ? `
                 <button class="content-cutoff" data-cutoff="#${uid}" data-alttext='View Less ${icon('up')}' data-nolink="true">Expand ${icon('down')}</button>
               ` : ''}
             `}

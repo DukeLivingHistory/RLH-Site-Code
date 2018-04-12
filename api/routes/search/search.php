@@ -169,13 +169,22 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
       }
       $lines = get_matching_lines($value, $term, $timestamp_method);
       $hits = array_merge($hits, $lines);
+
+      foreach($lines as $line) {
+        $hit_count = preg_match_all("/$term/i", $hit['text']);
+        $total_hits = $total_hits + $hit_count;
+      }
     }
 
     $item->hits = $hits;
     $item->title = highlight_term($item->title, $term);
+    $item->hit_count = 0;
 
     if(count($item->hits)) {
-      $total_hits = $total_hits + count($item->hits);
+      foreach($item->hits as $hit) {
+        $item->hit_count = $item->hit_count + preg_match_all("/$term/i", $hit['text']);
+      }
+      $total_hits = $total_hits + $item->hit_count;
     }
 
     $returns['items'][] = $item;
