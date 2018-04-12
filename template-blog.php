@@ -137,6 +137,23 @@ if($paged) {
         'total' => $total
       ]); ?>
     </div>
+    <section class="siteDescription">
+      <h2><?= get_field( 'site_description_header', 'options' ); ?></h2>
+      <?= get_field( 'site_description', 'options' ); ?>
+      <?php $links = get_field( 'site_description_links', 'options' ); ?>
+      <?php if( $links ){ ?>
+        <ul class="siteDescription-links">
+        <?php foreach( $links as $link ){ ?>
+          <li class="siteDescription-link">
+            <a href="<?= get_the_permalink( $link['link'] ); ?>">
+              <?= get_the_title( $link['link'] ); ?>
+              <?= icon( 'right', 'link' ); ?>
+            </a>
+          </li>
+        <?php } ?>
+        </ul>
+      <?php } ?>
+    </section>
     <div class="featured">
       <?php get_template_part( 'templates/buckets' ); ?>
     </div>
