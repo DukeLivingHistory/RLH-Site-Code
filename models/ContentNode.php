@@ -141,9 +141,7 @@ class ContentNode {
 
             <?= $this->type !== 'blog' && $this->type !== 'interactive' ?
               '<span class="post-link">View The ' . ucfirst($this->type) .'<span>':
-              '<a class="post-link" href="'.$this->link.'">' .
-                  ($this->type === 'blog' ? 'View post' : 'View interactive post')
-             .  '</a>';
+              '<a class="post-link" href="'.$this->link.'">View Post</a>';
             ?>
           </span>
           <!--
