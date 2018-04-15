@@ -16,7 +16,7 @@ add_action('p2p_init', function(){
       'title'       => 'Related Content One-way',
       'name'        => 'content_uni',
       'from'        => [ 'interview', 'timeline'],
-      'to'          => [ 'interview', 'timeline'],
+      'to'          => [ 'interview', 'timeline', 'post' ],
       'reciprocal'  => false
   ]);
 

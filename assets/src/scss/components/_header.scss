@@ -1,6 +1,15 @@
 .header {
   @include antialiased;
   @include clearfix;
+  box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
+  @media(max-width: 767px) {
+    max-width: none!important;
+    width: 100%!important;
+  }
+}
+
+.home .header {
+  box-shadow: none;
 }
 
 .header-logo {
@@ -61,7 +70,7 @@
 .header-navLogo {
   width: 200px;
   height: 45px;
-  margin: 0;
+  margin: 5px 0 0;
   float: left;
   text-indent: -9999em;
   position: relative;
@@ -161,6 +170,9 @@
 
 .header-nav {
   @include extendo_clip( $interviews );
+}
+
+.home .header-nav {
   &:before {
     box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
     z-index: -1;
@@ -311,7 +323,7 @@
     &-item {
       display: inline-block;
       position: relative;
-      padding: 9px 0;
+      padding: 14px 0;
       &:hover {
         .sub-menu {
           display: block;

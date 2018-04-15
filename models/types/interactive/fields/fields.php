@@ -40,6 +40,13 @@ add_action( 'acf/init', function(){
         'wrapper' => [ 'width' => '50' ]
       ],
       [
+        'key' => 'show_in_blog',
+        'label' => 'Show in blog?',
+        'name' => 'show_in_blog',
+        'type' => 'true_false',
+        'instructions' => 'If checked, this interactive page will display in blog feeds.',
+      ],
+      [
         'key' => 'tab_transcript_raw',
         'label' => 'Text (.vtt)',
         'name' => '',

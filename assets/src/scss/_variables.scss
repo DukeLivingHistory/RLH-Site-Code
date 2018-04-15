@@ -18,11 +18,8 @@ $timelines :      #5f8950;
 $timelinesBg :    #eff3ed;
 $timelinesAlt :   #cce6a4;
 $blog :           #47256B;
-$blogBg :         #FEFBFD;
-$blogAlt :        #8B49D1;
-$richText :       #C454AA;
-$richTextBg :     #fffafd;
-$richTextAlt :    #F569D4;
+$blogBg :         lighten($suppGrey, 2);
+$blogAlt :        #B875FF;
 $link :           #3870d0;
 $linkLight :      #fdd778; //for use on dark colored backgrounds
 

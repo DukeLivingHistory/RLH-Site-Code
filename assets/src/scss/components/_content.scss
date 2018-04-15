@@ -82,12 +82,12 @@
   background: $collectionsBg;
 }
 
-.content--interactive {
-  background: $richTextBg;
+.content--blog {
+  background: $blogBg;
 }
 
-.content--post {
-  background: $blogBg;
+.content--child {
+  margin-left: 2em;
 }
 
 .content-inner,
@@ -308,8 +308,10 @@ $listViewIconSize: 32px;
 }
 
 .researchMenu-search {
+  display: flex;
   padding: 15px 0;
   input {
+    flex: 1;
     background: none;
     border: none;
     padding: 5px 0;
@@ -386,4 +388,8 @@ $listViewIconSize: 32px;
 .alignright {
   float: right;
   margin-left: 10px;
+}
+
+.blog-pagination {
+  margin: 25px 0 15px;
 }

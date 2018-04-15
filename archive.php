@@ -1,8 +1,14 @@
+<?php global $wp_query; ?>
 <header class="contentHeader contentHeader--archive">
   <h2><?= get_queried_object()->name; ?></h2>
 </header>
 <aside class="researchMenu">
   <button class="researchMenu-toggle">Expand Menu <?= icon( 'down', 'link' ); ?></button>
+  <form class="researchMenu-search" method="get" action="<?php bloginfo('url'); ?>/">
+    <input name="s" type="text" placeholder="Search blog">
+    <input name="type" value="blog" type="hidden">
+    <button type="submit"><?= icon( 'search' ); ?></button>
+  </form>
   <?php dynamic_sidebar('blog'); ?>
 </aside>
 <section class="genericContent genericContent--research">
@@ -15,7 +21,7 @@
   <?php endwhile; ?>
   <div class="blog-pagination">
     <?= paginate_links([
-      'total' => $posts->max_num_pages
+      'total' => $wp_query->max_num_pages
     ]); ?>
   </div>
 </section>

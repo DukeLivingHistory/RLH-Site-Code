@@ -95,13 +95,15 @@ if( $curated_count < $total_results ){
           <dt class="sr-only">Number of interviews:</dt>
           <dd>
             <?= icon( 'interview', 'type' ); ?>
-            <?= $feat_cont->interview_count; ?> interviews
+            <?= $feat_cont->interview_count; ?> interview<?= $feat_cont->interview_count > 1 ? 's' : ''; ?>
           </dd>
+          <?php if($feat_cont->timeline_count): ?>
           <dt class="sr-only">Number of timelines:</dt>
           <dd>
             <?= icon( 'timeline', 'type' ); ?>
-            <?= $feat_cont->timeline_count; ?> timelines
+            <?= $feat_cont->timeline_count; ?> timeline<?= $feat_cont->timeline_count > 1 ? 's' : ''; ?>
           </dd>
+          <?php endif; ?>
         </dl>
       <?php } ?>
       <h2 class="post-title"><?= $feat_cont->title; ?></h2>
@@ -118,16 +120,12 @@ if( $curated_count < $total_results ){
 
   <?php if( count($pieces) > 3 ){ ?>
   <section class="postRoll postRoll--featured">
-    <div class="postRoll-inner">
-      <?php for( $i=0; $i<3; $i++ ){ $pieces[$i]->html( 'js-eqHeight--featured' ); } ?>
-    </div>
+      <?php for( $i=0; $i<3; $i++ ){ $pieces[$i]->html(); } ?>
   </section>
 
     <?php if( get_field('show_roll_home', 'option') ){ ?>
     <section class="postRoll postRoll--home">
-      <div class="postRoll-inner">
-        <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html( 'js-eqHeight--roll' ); } ?>
-      </div>
+      <?php for( $i=3; $i<count($pieces); $i++ ){ $pieces[$i]->html(); } ?>
     </section>
     <?php } ?>
   <?php } ?>
@@ -150,28 +148,4 @@ if( $curated_count < $total_results ){
     <?php } ?>
   </section>
 
-  <section class="buckets">
-    <?php $buckets = ['Interviews','Collections','Timelines', 'Blog']; ?>
-    <?php foreach( $buckets as $bucket ){ ?>
-      <div class="buckets-bucket buckets-bucket--<?= strtolower($bucket); ?>">
-        <?php
-          $img = wp_get_attachment_image_src(
-            get_field( strtolower($bucket).'_content_image', 'options' )
-          )[0];
-        ?>
-        <figure class="buckets-hero" style="background-image:url(<?= $img; ?>)"></figure>
-        <h2 class="buckets-head">
-          <?= icon( substr( strtolower($bucket), 0, -1 ), 'type' ); ?> <?= $bucket; ?>
-        </h2>
-        <p class="buckets-text js-eqHeight--bucket">
-          <?= get_field( strtolower($bucket).'_content_description', 'options' ); ?>
-        </p>
-        <span class="buckets-linkWrapper">
-          <a href="/<?= strtolower( $bucket ); ?>/" class="buckets-link">
-            Browse <?= $bucket; ?>
-            <?= icon( 'right', 'link' ); ?>
-          </a>
-        </span>
-      </div>
-    <?php } ?>
-  </section>
+  <?php get_template_part('templates/buckets'); ?>

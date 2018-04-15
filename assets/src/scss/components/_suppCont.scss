@@ -49,14 +49,6 @@ $suppContArrowWidth : 10px;
   }
 }
 
-
-.suppCont-single--interactive {
-  background: $richTextBg;
-  &:before {
-    border-color: transparent $richTextBg transparent transparent;
-  }
-}
-
 .suppCont-single--timeline {
   background: $timelinesBg;
   &:before {

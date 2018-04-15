@@ -1,14 +1,24 @@
 .buckets {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin: 0 0 75px;
 }
 
 .buckets-bucket {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-clip: content-box;
   position: relative;
   margin-bottom: 1em;
-  width: calc(25% - 10px);
+  width: 100%;
+  @include media-breakpoint-up(md){
+    width: calc(50% - 10px);
+  }
+  @include media-breakpoint-up(lg){
+    width: calc(25% - 10px);
+  }
 }
 
 .buckets-hero {
@@ -47,6 +57,7 @@
 }
 
 .buckets-text {
+  flex-grow: 1;
   margin: 20px 18px 20px;
   color: $white;
   font-size: 14px;
@@ -123,5 +134,13 @@
   color: $blog;
   svg {
     fill: $blog;
+  }
+}
+
+.featured {
+  @include extendo_clip( $suppGrey );
+  padding: 20px 0;
+  .buckets {
+    margin: 0;
   }
 }

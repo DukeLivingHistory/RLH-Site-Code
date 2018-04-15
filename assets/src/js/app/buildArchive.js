@@ -16,14 +16,14 @@ const buildArchive = function(
     total_hits,
     results,
     error,
-    message
+    message,
+    isSearch,
   },
   endpoint,
   hasNav,
   mediaTypes
 ){
   const isCondensed = hasNav && (Cookies.get('ARCHIVEVIEW') === 'condense')
-  const isSearch = !!total_hits
   const archiveOrder = Cookies.get('ARCHIVEORDER')
 
   let nav, load, subheading

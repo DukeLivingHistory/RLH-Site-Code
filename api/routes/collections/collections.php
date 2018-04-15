@@ -3,25 +3,31 @@ include_once( get_template_directory().'/models/ContentNode.php' );
 $route = new Route( '/collections/', 'GET', function($data){
   $collections = get_terms( 'collection' );
 
-  $timelines = get_posts([
-    'post_type' => 'timeline',
-    'posts_per_page' => -1,
-    'meta_query' => [
-      'relation' => 'AND',
-      [
-        'key' => 'hide',
-        'compare' => '!=',
-        'value' => 1
-      ]
-    ]
-  ]);
-
   foreach( $collections as $collection ){
-    $returns[] = new ContentNodeCollection( $collection->term_id, true );
-  }
+    $node = new ContentNodeCollection( $collection->term_id, true );
+    $timelines = get_posts([
+      'post_type' => 'timeline',
+      'posts_per_page' => -1,
+      'tax_query' => [
+        [
+          'taxonomy' => 'collection',
+          'field' => 'id',
+          'terms' => $collection->term_id,
+        ]
+      ],
+      'meta_query' => [
+        [
+          'key' => 'hide',
+          'compare' => '!=',
+          'value' => 1
+        ]
+      ]
+    ]);
+    foreach( $timelines as $timeline ) {
+      $node->children[] = new ContentNode($timeline->ID, false);
+    }
 
-  foreach( $timelines as $timeline ) {
-    $returns[] = new ContentNode($timeline->ID, false);
+    $returns[] = $node;
   }
 
   usort($returns, function($a, $b) {

@@ -15,6 +15,11 @@ class ContentNode {
         $this->limit_words(get_field('collection_description', 'collection_'.$id), 80) :
         $this->limit_words($the_post->post_excerpt, 80);
 
+      if(!$this->excerpt || !strlen($this->excerpt)) {
+        preg_match_all('/.*\n/', $the_post->post_content, $first_p);
+        $this->excerpt = $this->limit_words($first_p[0][0], 80);
+      }
+
       $this->img = $is_taxonomy ?
         get_field($the_term->taxonomy.'_img', $the_term->taxonomy.'_'.$id) :
         get_post_thumbnail_id($id);
@@ -22,6 +27,8 @@ class ContentNode {
       $this->link = $is_taxonomy ? get_term_link($id) : get_permalink($id);
       $this->title = $is_taxonomy ? $the_term->name : $the_post->post_title;
       $this->type = $is_taxonomy ? $the_term->taxonomy : get_post_type($id);
+
+      if($this->type === 'post') $this->type = 'blog';
 
       $this->img_set = !$this->img ? null : [
         'caption'  => get_post($this->img)->post_excerpt,
@@ -76,9 +83,14 @@ class ContentNode {
     }
 
     public function html($classes = '') {
+      the_post($this->id);
       ?>
       <article class="post post--<?= $this->type; ?> <?= $classes; ?>">
-        <a class="post-hyperlink" href="<?= $this->link; ?>">
+        <?php if($this->type === 'blog' || $this->type === 'interactive'){ ?>
+
+        <?php } else { ?>
+          <a class="post-hyperlink" href="<?= $this->link; ?>">
+        <?php } ?>
           <header class="post-header">
             <div class="post-type"><?= icon($this->type, 'type'); ?><?= ucfirst($this->type); ?></div>
             <?php if ($this->type === 'collection') {
@@ -111,6 +123,14 @@ class ContentNode {
           <?php if ($this->type !== 'collection') {
               ?>
             <h2 class="post-title"><?= $this->title; ?></h2>
+              <?php if($this->type === 'blog' || $this->type === 'interactive'){ ?>
+              <div class="blog-meta">
+                Posted <strong><?php the_date(); ?></strong> by
+                <a href="<?= get_author_posts_url( get_the_author_meta('ID') ); ?>">
+                  <?php the_author(); ?>
+                </a>
+              </div>
+            <?php } ?>
           <?php
           } ?>
           <?php if ($this->excerpt) {
@@ -118,8 +138,27 @@ class ContentNode {
             <div class="post-excerpt"><?= $this->excerpt; ?></div>
           <?php
           } ?>
-          <span class="post-link" href="<?= $this->link; ?>">View The <?= ucfirst($this->type); ?></span>
-        </a>
+
+            <?= $this->type !== 'blog' && $this->type !== 'interactive' ?
+              '<span class="post-link">View The ' . ucfirst($this->type) .'<span>':
+              '<a class="post-link" href="'.$this->link.'">View Post</a>';
+            ?>
+          </span>
+          <!--
+          <?php if($this->type === 'blog' && get_the_category_list()): ?>
+            <div class="blog-category">
+              Posted in <?= get_the_category_list(); ?>
+            </div>
+          <?php endif; ?>
+          <?php if($this->type === 'blog' && get_the_tag_list()): ?>
+            <div class="blog-category">
+              Tagged <?= get_the_tag_list(); ?>
+            </div>
+          <?php endif; ?>
+          -->
+        <?php if($this->type !== 'blog'){ ?>
+          </a>
+        <?php } ?>
       </article>
     <?php
   }

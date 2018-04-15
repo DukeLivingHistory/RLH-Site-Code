@@ -4,7 +4,8 @@
   @include make-col(18px);
 }
 
-.post--interview {
+.post--interview,
+.post--interactive {
   background-color: $interviewsBg;
 }
 
@@ -16,29 +17,8 @@
   background-color: $timelinesBg;
 }
 
-.postRoll--featured {
-  @include media-breakpoint-up(md){
-    .post {
-      background-color: none;
-    }
-    .post--interview {
-      @include extendo_clip( $interviewsBg );
-    }
-
-    .post--collection {
-      @include extendo_clip( $collectionsBg );
-    }
-
-    .post--timeline {
-      @include extendo_clip( $timelinesBg );
-    }
-
-    .post:before {
-      left: 9px;
-      right: 9px;
-      bottom: -1000vw;
-    }
-  }
+.post--blog {
+  background-color: $blogBg;
 }
 
 .postRoll--home {
@@ -133,8 +113,20 @@
 .post-image,
 .post-excerpt,
 .post-title,
-.post-link {
+.post-link,
+.post .blog-category,
+.post .blog-meta, {
+  display: block;
   padding: 0 18px;
+}
+
+.blog-meta strong {
+  font-weight: 400;
+  color: mix($greyDark, #ccc);
+}
+
+.post .blog-category + .blog-category {
+  margin-top: -15px;
 }
 
 .post-image img {
@@ -179,6 +171,9 @@
     font-size: 33px;
     margin-top: 15px;
     margin-bottom: 12px;
+    @include media-breakpoint-up(md){
+      width: 50%;
+    }
   }
 
 }
@@ -186,7 +181,11 @@
 .homeFeat-inner {
   position: relative;
   overflow: hidden;
-  margin: 12px 0 80px;
+//  margin: 12px 0 80px;
+  margin: 12px 0;
+  .post-link {
+    margin: 0;
+  }
 }
 
 .homeFeat-inner .post-excerpt {
@@ -196,14 +195,15 @@
 @include media-breakpoint-up(md){
 
   .homeFeat-inner {
-    padding-right: 50%;
-    min-height: 20rem;
+    // padding-right: 50%;
+    //min-height: 20rem;
   }
 
   .homeFeat .post-image {
-    position: absolute;
-    top: 0; right: 0;
+    // position: absolute;
+    // top: 0; right: 0;
     width: 50%;
+    float: right;
   }
 
 }
@@ -211,8 +211,8 @@
 .blog {
   &-single {
     margin: 4em 0 0;
-    padding: 0 2em;
-    border-bottom: 1px solid #fafafa;
+    padding: 0 2em 10px;
+    border-bottom: 1px solid $suppGrey;
   }
 
   &-meta {
@@ -229,7 +229,11 @@
   }
 
   &-pagination {
+    max-width: 500px;
     text-align: center;
+    margin: 10px auto 70px;
+    padding: 10px 0;
+    border-bottom: 2px solid mix($suppGrey, $greyDark);
   }
 
   &-article-head {
@@ -262,5 +266,38 @@
     li {
       display: inline;
     }
+  }
+}
+
+.blog-header-search {
+  text-align: right;
+  margin: 0 0 60px;
+  input {
+    background: rgba($white, .1);
+    width: 20em;
+    padding: 5px 1em;
+    font-size: 16px;
+    font-family: 'Roboto';
+    border: none;
+    color: $white;
+    &:hover {
+      background: rgba($white, .15);
+    }
+  }
+  button {
+    background: none;
+    border: none;
+  }
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: rgba($white, .8);
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: rgba($white, .8);
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: rgba($white, .8);
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: rgba($white, .8);
   }
 }

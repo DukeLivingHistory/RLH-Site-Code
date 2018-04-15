@@ -39,7 +39,7 @@ add_action( 'acf/init', function(){
         'label' => 'Hide from collections?',
         'name' => 'hide_from_collections',
         'type' => 'true_false',
-        'instructions' => 'If selected, this content will not appear as a collection.'
+        'instructions' => 'If selected, this content will not appear in collections.'
       ],
   		[
   			'key' => 'tab_events',
