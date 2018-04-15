@@ -139,7 +139,7 @@ if( $curated_count < $total_results ){
       <?php foreach( $links as $link ){ ?>
         <li class="siteDescription-link">
           <a href="<?= get_the_permalink( $link['home_link'] ); ?>">
-            <?= get_the_title( $link['link'] ); ?>
+            <?= get_the_title( $link['home_link'] ); ?>
             <?= icon( 'right', 'link' ); ?>
           </a>
         </li>
