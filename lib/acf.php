@@ -150,15 +150,6 @@ acf_add_local_field_group(array(
 			'min' => 0,
 			'max' => 11,
 			'layout' => 'block',
-			'conditional_logic' => array(
-				array(
-					array(
-						'field' => 'show_roll_home',
-						'operator' => '==',
-						'value' => 1,
-					),
-				),
-			),
 			'button_label' => 'Add Item',
 			'sub_fields' => array(
 				array(
@@ -464,7 +455,7 @@ acf_add_local_field_group(array(
 			'type' => 'repeater',
 			'instructions' => 'Select between zero and eleven pieces of content to feature on the blog, with the first three being featured. (If less than 11 are selected, the blog roll will be padded out with the most recently published content.)',
 			'min' => 0,
-			'max' => 7,
+			'max' => 11,
 			'layout' => 'block',
 			'button_label' => 'Add Item',
 			'sub_fields' => array(
