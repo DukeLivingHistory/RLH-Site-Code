@@ -95,13 +95,15 @@ if( $curated_count < $total_results ){
           <dt class="sr-only">Number of interviews:</dt>
           <dd>
             <?= icon( 'interview', 'type' ); ?>
-            <?= $feat_cont->interview_count; ?> interviews
+            <?= $feat_cont->interview_count; ?> interview<?= $feat_cont->interview_count > 1 ? 's' : ''; ?>
           </dd>
+          <?php if($feat_cont->timeline_count): ?>
           <dt class="sr-only">Number of timelines:</dt>
           <dd>
             <?= icon( 'timeline', 'type' ); ?>
-            <?= $feat_cont->timeline_count; ?> timelines
+            <?= $feat_cont->timeline_count; ?> timeline<?= $feat_cont->timeline_count > 1 ? 's' : ''; ?>
           </dd>
+          <?php endif; ?>
         </dl>
       <?php } ?>
       <h2 class="post-title"><?= $feat_cont->title; ?></h2>
