@@ -92,7 +92,10 @@ class ContentNode {
           <a class="post-hyperlink" href="<?= $this->link; ?>">
         <?php } ?>
           <header class="post-header">
-            <div class="post-type"><?= icon($this->type, 'type'); ?><?= ucfirst($this->type); ?></div>
+            <div class="post-type">
+              <?= icon($this->type, 'type'); ?>
+              <?= $this->type !== 'interactive' ? ucfirst($this->type) : 'Blog'; ?>
+            </div>
             <?php if ($this->type === 'collection') {
               ?>
               <dl class="post-meta">
