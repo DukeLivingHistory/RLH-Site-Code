@@ -307,9 +307,9 @@ acf_add_local_field_group(array(
 			'button_label' => 'Add Link',
 			'sub_fields' => array(
 				array(
-					'key' => 'link',
+					'key' => 'home_link',
 					'label' => 'Link',
-					'name' => 'link',
+					'name' => 'home_link',
 					'type' => 'post_object',
 					'post_type' => array(
 						0 => 'page',
