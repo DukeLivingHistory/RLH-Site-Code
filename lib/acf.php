@@ -847,4 +847,38 @@ acf_add_local_field_group(array(
 		'description' => '',
 	));
 
+
+	acf_add_local_field_group(array(
+		'key' => 'author',
+		'title' => 'Author',
+		'fields' => array(
+			array(
+				'key' => 'author',
+				'label' => 'Author',
+				'name' => 'author',
+				'type' => 'user',
+				'role' => '',
+				'allow_null' => 1,
+				'multiple' => 0,
+				'return_format' => 'object',
+			),
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'post',
+				),
+			),
+			array(
+				array(
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'interactive',
+				),
+			),
+		),
+	));
+
 endif;
