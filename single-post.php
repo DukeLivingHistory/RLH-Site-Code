@@ -33,21 +33,6 @@ while( have_posts() ){
         Tagged <?= get_the_tag_list(); ?>
       </div>
     <?php endif; ?>
-    <?php if($author = get_field('author')): ?>
-      <div class="author">
-        <a href="<?= get_author_posts_url($author->ID); ?>" class="author-link">
-        <?php if($avatar = get_avatar($author->ID)): ?>
-        <div class="author-thumbnail">
-          <?= $avatar; ?>
-        </div>
-        <?php endif; ?>
-        <div class="author-bio">
-          <strong><?= $author->display_name; ?></strong>
-          <p><?= get_the_author_meta('user_description', $author->ID); ?></p>
-        </div>
-        </a>
-      </div>
-    <?php endif; ?>
     </section>
   </article>
 <?php
