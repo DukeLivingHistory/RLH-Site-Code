@@ -1,6 +1,7 @@
 const cachebust = require('./cachebust')
 const animatePage            = require('./animatePage')
 const buildArchive           = require('./buildArchive')
+const buildAuthor            = require('./buildAuthor')
 const buildCollectionHeader  = require('./buildCollectionHeader')
 const buildCollectionFeed    = require('./buildCollectionFeed')
 const buildTimeline          = require('./buildTimeline')
@@ -119,6 +120,8 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         buildTimelineHeader(page, data, false)
         buildTranscript(page, data.id, (transcript) => {
           highlighter('.transcript')
+          if(!data.author) return
+          buildAuthor(page, data.author)
           buildSupp(page, endpoint, queriedObject, null, !!transcript)
         })
       }
