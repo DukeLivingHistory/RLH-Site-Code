@@ -430,7 +430,7 @@ acf_add_local_field_group(array(
 	'fields' => array(
 		array(
 			'type' => 'message',
-			'key' => 'homepage_instructions',
+			'key' => 'blog_instructions',
 			'message' => '<strong>The following fields control what content appears on the blog page.</strong>',
 		),
 		array(
