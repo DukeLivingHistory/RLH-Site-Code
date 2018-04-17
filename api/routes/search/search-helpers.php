@@ -64,6 +64,7 @@ function get_lines_from_sentences($string) {
  * @return string         HTML for string.
  */
 function highlight_term($string, $term) {
+  if(!$term) return $string;
   $term = preg_quote($term);
   return preg_replace("/${term}/i", "<span class='content-search-result'>\\0</span>", $string);
 }

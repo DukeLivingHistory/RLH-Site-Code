@@ -11,11 +11,13 @@ const buildTimelineHeader = (
     name,
     image,
     introduction,
+    description, // Backwards compatibility for interactives
     related,
     collections
   },
   type = null
 ) => {
+  introduction = introduction || description
   const shareLinks = sharer(link, name, name, {})
 
   const append = `
@@ -27,7 +29,7 @@ const buildTimelineHeader = (
         </span>
       ` : ''}
       <div class="contentHeader-inner">
-        <h2 class="contentHeader-head">${name}<?h2>
+        <h2 class="contentHeader-head">${name}</h2>
         ${collections ? buildCollectionsList(collections) : ''}
         ${introduction ? `<div class="contentHeader-introduction">${introduction}</div>` : ''}
         ${related ? `

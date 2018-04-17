@@ -31,6 +31,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     'posts_per_page' => -1,
     's' => $term,
   ]);
+
   if( $data['type'] === 'blog') {
     $results = $blog_search;
   } else {
@@ -83,7 +84,8 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
       ]),
       $terms_search = (!isset($args['collection']) ? get_terms([
         'number' => 0,
-        'search' => $term
+        'search' => $term,
+        'taxonomy' => 'collection',
       ]) : []),
       (!isset($args['collection']) ? get_terms([
         'taxonomy' => 'collection',

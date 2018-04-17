@@ -24,7 +24,7 @@
     <div class="header-navInner">
       <?php wp_nav_menu( [ 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'menu menu--primary' ] ); ?>
       <form method="get" action="<?php bloginfo('url'); ?>/">
-        <input name="s" type="text" placeholder="Search">
+        <input name="s" type="text" placeholder="Search" value="<?= $_GET['search'] ? $_GET['search'] : ''; ?>">
         <button type="submit"><?= icon( 'search' ); ?></button>
       </form>
       <?php wp_nav_menu( [ 'theme_location' => 'utility', 'container' => '', 'menu_class' => 'menu menu--utility' ] ); ?>
