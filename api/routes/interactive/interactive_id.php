@@ -13,13 +13,13 @@ $route = new Route('/interactives/(?P<id>\d+)', 'GET', function($data){
     }
     $rich_text->collections = $collections_formatted;
   }
-  $author = get_field('author', $data['id']);
+  $author = get_post_field('post_author', $data['id']);
   if($author){
     $rich_text->author = array(
-      'name' => $author->display_name,
-      'link' => get_author_posts_url($author->ID),
-      'avatar' => get_avatar($author->ID),
-      'bio' => get_the_author_meta('user_description', $author->ID),
+      'name' => get_author_name($author),
+      'link' => get_author_posts_url($author),
+      'avatar' => get_avatar($author),
+      'bio' => get_the_author_meta('user_description', $author),
     );
   }
 

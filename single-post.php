@@ -39,17 +39,17 @@ while( have_posts() ){
         Tagged <?= get_the_tag_list(); ?>
       </div>
     <?php endif; ?>
-    <?php if($author = get_field('author')): ?>
+    <?php if($author = get_post_field('post_author')): ?>
       <div class="author">
-        <a href="<?= get_author_posts_url($author->ID); ?>" class="author-link">
-        <?php if($avatar = get_avatar($author->ID)): ?>
+        <a href="<?= get_author_posts_url($author); ?>" class="author-link">
+        <?php if($avatar = get_avatar($author)): ?>
         <div class="author-thumbnail">
           <?= $avatar; ?>
         </div>
         <?php endif; ?>
         <div class="author-bio">
-          <strong><?= $author->display_name; ?></strong>
-          <p><?= get_the_author_meta('user_description', $author->ID); ?></p>
+          <strong><?= get_author_name($author); ?></strong>
+          <p><?= get_the_author_meta('user_description', $author); ?></p>
         </div>
         </a>
       </div>

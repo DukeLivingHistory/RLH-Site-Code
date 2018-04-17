@@ -3,7 +3,7 @@ const buildAuthor = (page, {
   link,
   avatar,
   bio
-}) => { page.append(`
+}) => { if(name) page.append(`
 <div class="author">
   <a href="${link}" class="author-link">
     ${avatar && avatar !== 'null' ? (
