@@ -1,6 +1,3 @@
-window.featherlight = require( './thirdparty/featherlight.min' );
-window.featherlightGallery = require( './thirdparty/featherlight.gallery.min.js' );
-
 var cachebust = require('./cachebust');
 var internalLink = require( './internalLink' );
 

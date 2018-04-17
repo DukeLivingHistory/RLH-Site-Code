@@ -1,3 +1,6 @@
+window.featherlight = require( './thirdparty/featherlight.min' );
+window.featherlightGallery = require( './thirdparty/featherlight.gallery.min.js' );
+
 var buildPage               = require('./buildPage')
 var destroyPage             = require('./destroyPage')
 var eqHeight                = require('./eqHeight')
