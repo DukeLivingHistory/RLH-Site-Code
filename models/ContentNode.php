@@ -127,10 +127,11 @@ class ContentNode {
               ?>
             <h2 class="post-title"><?= $this->title; ?></h2>
               <?php if($this->type === 'blog' || $this->type === 'interactive'){ ?>
+                <?php $author = get_post_field('post_author', $this->id ); ?>
               <div class="blog-meta">
                 Posted <strong><?php the_date(); ?></strong> by
-                <a href="<?= get_author_posts_url( get_the_author_meta('ID') ); ?>">
-                  <?php the_author(); ?>
+                <a href="<?= get_author_posts_url( $author ); ?>">
+                  <?= get_author_name( $author ); ?>
                 </a>
               </div>
             <?php } ?>
