@@ -85,6 +85,10 @@ function get_formatted_supp_cont_cues($vtt){
         $cue['type'] = 'map_location';
         $cue['address'] = $value;
         break;
+      case 'VIDEO':
+        $cue['type'] = 'video';
+        $cue['iframe'] = $value;
+        break;
     }
   }
   $cues[] = $cue;
@@ -131,6 +135,7 @@ add_action('save_post', function( $id ){
             'link_timestamp'   => $slice['link_timestamp'],
             'name'             => $slice['title'],
             'sc_image_img'     => $slice['image'],
+            'iframe'           => $slice['iframe'],
             'location'         => [ // TODO: fix this
               'address' => $slice['address'],
               'lat'     => '36.000180',
