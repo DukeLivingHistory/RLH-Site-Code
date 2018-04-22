@@ -23,6 +23,10 @@ var buildSuppInner = function( content ){
       cont += '</a>';
       content.type = 'link';
       break;
+    case 'video':
+      preview = content.data.title
+      content += `<span data-suppcont="">${content.data.title}</span>`
+      content += `<div class="suppCont-contentIframe">${content.data.iframe}</div>`
     case 'file':
       preview = content.data.title;
       cont += '<span data-suppcont="'+content.data.title+'" class="suppCont-contentTitle">'+content.data.title+'</span>';
