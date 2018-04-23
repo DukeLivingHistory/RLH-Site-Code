@@ -584,6 +584,12 @@ acf_add_local_field_group(array(
         'type' => 'textarea'
       ],
       [
+        'key' => 'interactive_instructions',
+        'label' => 'Interactive Instructions',
+        'name' => 'interactive_instructions',
+        'type' => 'textarea'
+      ],
+      [
         'key'   => 'chapter_message',
         'label' => 'Chapter Indicator Options',
         'name'  => 'chapter_message',
