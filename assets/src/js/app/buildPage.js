@@ -83,6 +83,8 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         })
       }
       else if(endpoint === 'interviews'){
+        window.INSTRUCTIONS = data.instructions
+        console.log(data)
         if(data.no_media) {
           buildTimelineHeader(page, data, 'Interview')
           buildTranscript(page, data.id, (transcript) => {
@@ -116,6 +118,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         }
       }
       else if(endpoint === 'interactives') {
+        window.INSTRUCTIONS = data.instructions
         buildTimelineHeader(page, data, false)
         buildTranscript(page, data.id, (transcript) => {
           highlighter('.transcript')
