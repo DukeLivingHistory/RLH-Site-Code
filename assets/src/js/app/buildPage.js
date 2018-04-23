@@ -91,7 +91,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
               if(data.collections.length) {
                 buildOtherInCollection(page, data.id, data.collections[0])
               }
-            })
+            }, !!transcript)
             if(getNodeFromTimestamp()){
               const timestamp = getNodeFromTimestamp()
               const offset = $('.contentHeaderOuter').outerHeight() + 32

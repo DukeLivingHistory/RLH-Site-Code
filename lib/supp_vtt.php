@@ -94,6 +94,10 @@ function supp_cont_to_vtt($id, $supp_cont){
           $item_text .= 'TIMESTAMP ' . trim($content['sc_internalink_timestamp']);
         }
         break;
+      case 'video':
+        $item_text .= "\n";
+        $item_text .= 'TITLE ' . trim($content['sc_video_title']);
+        $item_text .= 'VIDEO ' . trim($content['sc_video_iframe']);
       case 'file':
         $item_text .= "\n";
         $item_text .= 'DESCRIPTION ' . trim($content['sc_file_description']);

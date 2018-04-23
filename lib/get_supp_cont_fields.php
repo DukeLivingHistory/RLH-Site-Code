@@ -238,6 +238,28 @@ function get_supp_cont_fields(){
 						]
 					],
           [
+            'key' => 'sc_video',
+            'name' => 'video',
+            'label' => 'Video',
+            'display' => 'block',
+            'sub_fields' => [
+              [
+                'key' => 'sc_video_title',
+                'name' => 'name',
+                'label' => 'Title',
+                'type' => 'text',
+                'required' => 1,
+              ],
+              [
+                'key' => 'sc_video_iframe',
+                'name' => 'iframe',
+                'label' => 'iframe code',
+                'type' => 'textarea',
+                'required' => 1,
+              ],
+            ],
+          ],
+          [
             'key' => 'sc_map',
             'name' => 'map_location',
             'label' => 'Map Location',
