@@ -39,7 +39,8 @@ const buildCollectionFeed = (
   page.find('input').keyup(function(e) {
     window.TIMEOUT = setTimeout(() => {
       const term = $(this).val()
-      const endpoint = `/wp-json/v1/search/${term}?${qs.stringify(params)}${cachebust(true)}`
+      if(term.length < 4) return
+      const endpoint = `/wp-json/v1/search/${term}/any?${qs.stringify(params)}${cachebust(true)}`
       window.SEARCHTERM = term
 
       $.get(endpoint, ({
