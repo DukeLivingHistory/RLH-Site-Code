@@ -26,11 +26,30 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     else return null;
   }
 
-  $blog_search = get_posts([
-    'post_type' => [ 'post' ],
-    'posts_per_page' => -1,
-    's' => $term,
-  ]);
+  $blog_search = array_merge(
+    $orig_search = get_posts([
+      'post_type' => [ 'post', 'interactive' ],
+      'posts_per_page' => -1,
+      's' => $term,
+    ]),
+    get_posts([
+      'post_type' => [ 'interactive' ],
+      'posts_per_page' => -1,
+      'meta_query' => [
+        'relation' => 'OR',
+        [
+          'key' => 'transcript_raw',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ],
+      ],
+      // Prevent duplicate terms from previous query
+      'exclude' => array_reduce($orig_search, function($excluded_posts, $post) {
+        $excluded_posts[] = $post->ID;
+        return $excluded_posts;
+      }, [])
+    ])
+  );
 
   if( $data['type'] === 'blog') {
     $results = $blog_search;
@@ -118,6 +137,9 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
         $lines = get_lines_from_sentences($content);
         return $lines;
       }
+    ],
+    'interactive' => [
+      'transcript_raw',
     ],
     'interview' => [
       'introduction' => function($id) {

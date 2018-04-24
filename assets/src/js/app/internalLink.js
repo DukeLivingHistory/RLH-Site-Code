@@ -3,7 +3,7 @@ const internalLink = function({
   id,
   link,
 }, inner){
-  type = type + (type === 'blog' || type === 'interactive' ? '' : 's') // TODO: Clean this up
+  type = type + (type === 'blog' ? '' : 's') // TODO: Clean this up
   if(window.SEARCHTERM) link = `${link}?search=${window.SEARCHTERM}`
   return `
     <a class="${type === 'blog' ? '' : 'js-internalLink'}"
