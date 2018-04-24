@@ -1,5 +1,4 @@
 <?php
-
 class Collection {
   function __construct( $collection_id ){
     $this->id = $collection_id;
@@ -62,20 +61,12 @@ class Collection {
       ])
     );
 
-
     if($count > 0) {
       $results = array_slice($results, 0, $count);
     }
 
     foreach($results as $result){
-      $result_item = [
-        'id' => $result->ID,
-        'link'=> get_permalink( $result->ID ),
-        'type' => get_post_type( $result->ID ),
-        'title' => $result->post_title,
-        'img' => get_post_thumbnail_id( $result->ID ),
-        'excerpt' => $result->post_excerpt
-      ];
+      $result_item = new ContentNode($result->ID);
       $results_array[] = $result_item;
     }
 
