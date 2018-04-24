@@ -37,7 +37,7 @@ function get_matching_lines($all, $term, $timestamp_method) {
 
     if(stripos($line, $term) !== false) {
       $results[] = [
-        'text' => trim(highlight_term($line, $term)),
+        'text' => trim(highlight_term($line, strip_tags($term))),
         'timestamp' => $timestamp
       ];
     }
