@@ -117,6 +117,41 @@ if($paged) {
       <input name="type" value="blog" type="hidden">
       <button type="submit"><?= icon( 'search' ); ?></button>
     </form>
+    <div class="blog-header-authors">
+    <label class="sr-only" for="author-select">Authors</label>
+    <?php
+    $q = new WP_User_Query([
+      'has_published_posts' => ['post', 'interactive'],
+      'number' => 9999,
+      'fields' => 'ids'
+    ]);
+    $users = $q->get_results();
+    ?>
+    <div class="select-wrap">
+    <select id="author-select">
+      <option value="null">Authors</option>
+    <?php
+    foreach($users as $author):
+    ?>
+      <option value="<?= get_author_posts_url($author); ?>">
+        <?= get_author_name($author); ?>
+      </option>
+    <?php endforeach; ?>
+    <?php $u_list_page = get_posts([
+      'post_type' => 'page',
+      'meta_key' => '_wp_page_template',
+      'meta_value' => 'template-authors.php'
+    ]);
+    if(count($u_list_page)): ?>
+    <option value="<?= get_permalink($u_list_page[0]); ?>">
+      List All Authors
+    </option>
+  <?php endif;
+    ?>
+      </select>
+    </div>
+    </div>
+    </section>
   </article>
 
   <section class="postRoll postRoll--featured">

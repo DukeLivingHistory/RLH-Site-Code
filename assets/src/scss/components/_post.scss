@@ -269,10 +269,13 @@
   }
 }
 
-.blog-header-search {
+.blog-header-search,
+.blog-header-authors {
   text-align: right;
-  margin: 0 0 60px;
+  margin: 0 0 20px;
+  .select-wrap,
   input {
+    display: inline-block;
     background: rgba($white, .1);
     width: 20em;
     padding: 5px 1em;
@@ -280,9 +283,22 @@
     font-family: 'Roboto';
     border: none;
     color: $white;
+    border-radius: 0;
     &:hover {
       background: rgba($white, .15);
     }
+  }
+  .select-wrap {
+    text-align: left;
+    margin-right: 28px;
+  }
+  select {
+    background: none;
+    border: none;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+    font-family: 'Roboto';
   }
   button {
     background: none;
