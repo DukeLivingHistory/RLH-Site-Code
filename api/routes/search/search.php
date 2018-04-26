@@ -139,6 +139,10 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
       }
     ],
     'interactive' => [
+      'introduction' => function($id) {
+        $lines = get_lines_from_sentences(get_field('introduction', $id));
+        return $lines;
+      },
       'transcript_raw',
     ],
     'interview' => [
@@ -180,10 +184,10 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     } else {
       $item = new ContentNodeCollection($result->term_id);
     }
+    $type = $item->original_type ? $item->original_type : $item->type;
 
     $hits = [];
-
-    if($fields[$item->type]) foreach($fields[$item->type] as $key => $field) {
+    if($fields[$type]) foreach($fields[$type] as $key => $field) {
       if(is_string($field)) {
         $value = clean_vtt(get_field($field, $item->id));
         $timestamp_method = $field;

@@ -29,6 +29,10 @@ class ContentNode {
       $this->type = $is_taxonomy ? $the_term->taxonomy : get_post_type($id);
 
       if($this->type === 'post') $this->type = 'blog';
+      if($this->type === 'interactive' && get_field('show_in_blog', $id) ){
+        $this->type = 'blog';
+        $this->original_type = 'interactive';
+      }
 
       $this->img_set = !$this->img ? null : [
         'caption'  => get_post($this->img)->post_excerpt,
