@@ -129,7 +129,7 @@ if($paged) {
     ?>
     <div class="select-wrap">
     <select id="author-select">
-      <option value="null">Authors</option>
+      <option value="null">Blog Authors</option>
     <?php
     foreach($users as $author):
     ?>
