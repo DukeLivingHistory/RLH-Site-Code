@@ -31,7 +31,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       const type = $('body').attr('data-type') || 'any'
       window.SEARCHTERM = term
       document.title = 'Search for '+term
-      const endpoint = `/wp-json/v1/search/${term}/${type}?count=${COUNT}&offset=0${cachebust(true)}`
+      const endpoint = `/wp-json/v1/search/${term}/${type}?count=${window.COUNT}&offset=0${cachebust(true)}`
       $.get(endpoint, function(data){
         buildArchive(page, Object.assign({}, data, { isSearch: true }), endpoint)
         animatePage(wrapper, page, dir, function(){
@@ -42,7 +42,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
     else {
       if(endpoint === 'interviews'){
         const order = Cookies.get('ARCHIVEORDER') || 'abc'
-        const url = `/wp-json/v1/interviews?order=${order}&count=${COUNT}&include=all`+cachebust(true)
+        const url = `/wp-json/v1/interviews?order=${order}&count=${window.COUNT}&include=all`+cachebust(true)
 
         $.get(url, function(data){
           buildArchive(page, data, endpoint, true, [
@@ -57,7 +57,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         })
 
       } else {
-        const url = '/wp-json/v1/'+endpoint+'?count='+COUNT+'&offset=0'+cachebust(true)
+        const url = '/wp-json/v1/'+endpoint+'?count='+window.COUNT+'&offset=0'+cachebust(true)
         $.get(url, function(data){
           buildArchive(page, data, endpoint, false, false)
           animatePage(wrapper, page, dir, function(){
@@ -83,6 +83,8 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         })
       }
       else if(endpoint === 'interviews'){
+        window.INSTRUCTIONS = data.instructions
+        console.log(data)
         if(data.no_media) {
           buildTimelineHeader(page, data, 'Interview')
           buildTranscript(page, data.id, (transcript) => {
@@ -91,7 +93,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
               if(data.collections.length) {
                 buildOtherInCollection(page, data.id, data.collections[0])
               }
-            })
+            }, !!transcript)
             if(getNodeFromTimestamp()){
               const timestamp = getNodeFromTimestamp()
               const offset = $('.contentHeaderOuter').outerHeight() + 32
@@ -116,6 +118,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         }
       }
       else if(endpoint === 'interactives') {
+        window.INSTRUCTIONS = data.instructions
         buildTimelineHeader(page, data, false)
         buildTranscript(page, data.id, (transcript) => {
           highlighter('.transcript')

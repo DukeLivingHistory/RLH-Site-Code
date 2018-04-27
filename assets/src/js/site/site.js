@@ -19,4 +19,10 @@ $( document ).ready( function(){
 
   img( '.js-img' );
 
+  $('#author-select').change(function(){
+    const value = $(this).val()
+    if(!value) return
+    window.location.href = value
+  })
+
 } );

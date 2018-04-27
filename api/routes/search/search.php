@@ -31,12 +31,32 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     else return null;
   }
 
-  $blog_search = get_posts([
-    'post_type' => [ 'post' ],
-    'posts_per_page' => -1,
-    's' => $term,
-    'tax_query' => get_collection_arg($args)
-  ]);
+  $blog_search = array_merge(
+    $orig_search = get_posts([
+      'post_type' => [ 'post', 'interactive' ],
+      'posts_per_page' => -1,
+      's' => $term,
+      'tax_query' => get_collection_arg($args),
+    ]),
+    get_posts([
+      'post_type' => [ 'interactive' ],
+      'posts_per_page' => -1,
+      'tax_query' => get_collection_arg($args),
+      'meta_query' => [
+        'relation' => 'OR',
+        [
+          'key' => 'transcript_raw',
+          'value' => $term,
+          'compare' => 'LIKE'
+        ],
+      ],
+      // Prevent duplicate terms from previous query
+      'exclude' => array_reduce($orig_search, function($excluded_posts, $post) {
+        $excluded_posts[] = $post->ID;
+        return $excluded_posts;
+      }, [])
+    ])
+  );
 
   if( $data['type'] === 'blog') {
     $results = $blog_search;
@@ -125,6 +145,13 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
         return $lines;
       }
     ],
+    'interactive' => [
+      'introduction' => function($id) {
+        $lines = get_lines_from_sentences(get_field('introduction', $id));
+        return $lines;
+      },
+      'transcript_raw',
+    ],
     'interview' => [
       'introduction' => function($id) {
         $lines = get_lines_from_sentences(get_field('introduction', $id));
@@ -164,11 +191,11 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     } else {
       $item = new ContentNodeCollection($result->term_id);
     }
+    $type = $item->original_type ? $item->original_type : $item->type;
 
     if(!$ignore):
     $hits = [];
-
-    if($fields[$item->type]) foreach($fields[$item->type] as $key => $field) {
+    if($fields[$type]) foreach($fields[$type] as $key => $field) {
       if(is_string($field)) {
         $value = clean_vtt(get_field($field, $item->id));
         $timestamp_method = $field;

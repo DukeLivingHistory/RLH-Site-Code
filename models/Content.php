@@ -123,6 +123,12 @@ class Content {
           'title' => $img['title']
         ];
         break;
+      case 'video':
+        $returns['data'] = [
+          'title' => $content['name'],
+          'iframe' => $content['iframe']
+        ];
+        break;
       case 'text':
         $returns['data'] = [
           'content' => $content['content']

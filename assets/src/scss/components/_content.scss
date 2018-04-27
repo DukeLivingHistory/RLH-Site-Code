@@ -70,6 +70,7 @@
   background: $linkLight;
 }
 
+.content--interactive,
 .content--interview {
   background: $interviewsBg;
 }
@@ -82,6 +83,7 @@
   background: $collectionsBg;
 }
 
+// .content--interactive,
 .content--blog {
   background: $blogBg;
 }
@@ -392,4 +394,32 @@ $listViewIconSize: 32px;
 
 .blog-pagination {
   margin: 25px 0 15px;
+}
+
+
+.author {
+  clear: both;
+  background: $blogBg;
+  padding: 15px;
+  margin: 0 0 30px;
+
+  &-link {
+    color: inherit;
+    display: flex;
+    text-decoration: none;
+  }
+
+  &-thumbnail {
+    margin-right: 1em;
+  }
+
+  &-bio {
+    flex-grow: 2;
+    strong {
+      font-size: 1.2em;
+    }
+    p {
+      margin: 0;
+    }
+  }
 }

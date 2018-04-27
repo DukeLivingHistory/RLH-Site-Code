@@ -29,6 +29,10 @@ class ContentNode {
       $this->type = $is_taxonomy ? $the_term->taxonomy : get_post_type($id);
 
       if($this->type === 'post') $this->type = 'blog';
+      if($this->type === 'interactive' && get_field('show_in_blog', $id) ){
+        $this->type = 'blog';
+        $this->original_type = 'interactive';
+      }
 
       $this->img_set = !$this->img ? null : [
         'caption'  => get_post($this->img)->post_excerpt,
@@ -127,10 +131,11 @@ class ContentNode {
               ?>
             <h2 class="post-title"><?= $this->title; ?></h2>
               <?php if($this->type === 'blog' || $this->type === 'interactive'){ ?>
+                <?php $author = get_post_field('post_author', $this->id ); ?>
               <div class="blog-meta">
                 Posted <strong><?php the_date(); ?></strong> by
-                <a href="<?= get_author_posts_url( get_the_author_meta('ID') ); ?>">
-                  <?php the_author(); ?>
+                <a href="<?= get_author_posts_url( $author ); ?>">
+                  <?= get_author_name( $author ); ?>
                 </a>
               </div>
             <?php } ?>

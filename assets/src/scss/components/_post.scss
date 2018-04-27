@@ -269,10 +269,13 @@
   }
 }
 
-.blog-header-search {
+.blog-header-search,
+.blog-header-authors {
   text-align: right;
-  margin: 0 0 60px;
+  margin: 0 0 20px;
+  .select-wrap,
   input {
+    display: inline-block;
     background: rgba($white, .1);
     width: 20em;
     padding: 5px 1em;
@@ -280,24 +283,42 @@
     font-family: 'Roboto';
     border: none;
     color: $white;
+    border-radius: 0;
     &:hover {
       background: rgba($white, .15);
     }
   }
+  .select-wrap {
+    text-align: left;
+    padding: 4px 1em;
+    margin-right: 28px;
+  }
+  select {
+    background: none;
+    border: none;
+    width: 100%;
+    color: rgba($white, .6);
+    font-size: 16px;
+    font-family: 'Roboto';
+    margin-left: -4px;
+  }
   button {
     background: none;
     border: none;
+    width: 28px;
+    margin-left: -.25em;
   }
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: rgba($white, .8);
+    color: rgba($white, .6);
   }
   ::-moz-placeholder { /* Firefox 19+ */
-    color: rgba($white, .8);
+    color: rgba($white, .6);
+    opacity: 1;
   }
   :-ms-input-placeholder { /* IE 10+ */
-    color: rgba($white, .8);
+    color: rgba($white, .6);
   }
   :-moz-placeholder { /* Firefox 18- */
-    color: rgba($white, .8);
+    color: rgba($white, .6);
   }
 }
