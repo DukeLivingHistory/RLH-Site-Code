@@ -75,7 +75,6 @@ const buildContentNode = (item) => {
     `
   }
 
-  console.log(item)
   const content = `
     ${renderContent(item)}
     ${(item.children || []).map((child) => renderContent(child, 'content--child'))}

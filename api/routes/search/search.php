@@ -13,6 +13,11 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     ];
   }
 
+  if($term === 'null') {
+    $ignore = true;
+    $term = '';
+  }
+
   function get_collection_arg($args) {
     if(isset($args['collection'])) {
       return [
@@ -31,10 +36,12 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
       'post_type' => [ 'post', 'interactive' ],
       'posts_per_page' => -1,
       's' => $term,
+      'tax_query' => get_collection_arg($args),
     ]),
     get_posts([
       'post_type' => [ 'interactive' ],
       'posts_per_page' => -1,
+      'tax_query' => get_collection_arg($args),
       'meta_query' => [
         'relation' => 'OR',
         [
@@ -186,6 +193,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     }
     $type = $item->original_type ? $item->original_type : $item->type;
 
+    if(!$ignore):
     $hits = [];
     if($fields[$type]) foreach($fields[$type] as $key => $field) {
       if(is_string($field)) {
@@ -214,6 +222,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
       }
       $total_hits = $total_hits + $item->hit_count;
     }
+  endif;
 
     $returns['items'][] = $item;
   }
@@ -222,8 +231,10 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     $results = array_slice($results, $offset, $count);
   }
 
-  $returns['name'] = 'Search for '.$term;
-  $returns['total_hits'] = $total_hits;
-  $returns['results'] = $total_results;
+  if(!$ignore) {
+    $returns['name'] = 'Search for '.$term;
+    $returns['total_hits'] = $total_hits;
+    $returns['results'] = $total_results;
+  }
   return $returns;
 });

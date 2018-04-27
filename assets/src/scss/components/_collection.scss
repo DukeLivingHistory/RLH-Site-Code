@@ -13,8 +13,9 @@
 }
 
 .collection-intro {
-  @include clearfix;
-  position: relative;
+  @include media-breakpoint-up(md){
+    display: flex;
+  }
   padding: 22px 0 0;
   margin: 0 0 40px;
 }
@@ -30,21 +31,14 @@
 
 .collection-introBottom {
   padding: 1em 0 0;
-  @include media-breakpoint-up(md){
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 67%;
-    padding: 0;
-  }
+  flex: 1;
+  align-self: flex-end;
 }
 
 .collection-description {
   color: $body;
-  @include media-breakpoint-up(md){
-    @include make-col();
-    @include make-col-span(8);
-  }
+  flex: 2;
+  padding-right: 15px;
 }
 
 .collection-searchLabel {
