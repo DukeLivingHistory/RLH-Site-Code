@@ -38,8 +38,8 @@ const buildCollectionFeed = (
   const $subhead = page.find('.content-subheading')
   page.find('input').keyup(function(e) {
     window.TIMEOUT = setTimeout(() => {
-      const term = $(this).val()
-      const endpoint = `/wp-json/v1/search/${term}?${qs.stringify(params)}${cachebust(true)}`
+      const term = $(this).val().length > 3 ? $(this).val() : 'null'
+      const endpoint = `/wp-json/v1/search/${term}/any?${qs.stringify(params)}${cachebust(true)}`
       window.SEARCHTERM = term
 
       $.get(endpoint, ({
@@ -53,10 +53,14 @@ const buildCollectionFeed = (
           return
         }
 
-        $subhead.html(`
-          <span>Showing ${total_hits} hits across ${results} files</span>
-          <button class="content-cutoff" data-cutoff-all data-alttext='Contract All ${icon('up')}'>Expand All ${icon('down')}</button>
-        `)
+        if(term !== 'null') {
+          $subhead.html(`
+            <span>Showing ${total_hits} hits across ${results} files</span>
+            <button class="content-cutoff" data-cutoff-all data-alttext='Contract All ${icon('up')}'>Expand All ${icon('down')}</button>
+          `)
+        } else {
+          $subhead.text('')
+        }
         $feed.html(items.map(buildContentNode).join(' '))
 
         // These are created in buildContentNode
