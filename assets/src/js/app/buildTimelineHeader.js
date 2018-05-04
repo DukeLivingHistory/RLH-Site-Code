@@ -7,6 +7,7 @@ const sharer = require('./sharer')
 const buildTimelineHeader = (
   page,
   {
+    id,
     link,
     name,
     image,
@@ -36,6 +37,13 @@ const buildTimelineHeader = (
           <h3 class="contentHeader-relatedHead">Related to</h3>
           ${buildConnected(related)}
         ` : ''}
+        ${type === 'interactive' ? (
+          `<span class="contentHeader-selectWrapper" id="selectWrap-${id}" style="display: none;">
+            <select class="contentHeader-select" id="select-${id}">
+              <option value="null">Contents</option>
+            </select>
+          </span>`
+        ) : null}
       </div>
       <div class="contentHeader-imgWrapper">
         ${image ? respImg.markup(image, 'feat_lg', 'respImg contentHeader-img', null, true) : ''}

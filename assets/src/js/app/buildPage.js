@@ -86,7 +86,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         window.INSTRUCTIONS = data.instructions
         console.log(data)
         if(data.no_media) {
-          buildTimelineHeader(page, data, 'Interview')
+          buildTimelineHeader(page, data, 'interview')
           buildTranscript(page, data.id, (transcript) => {
             highlighter('.able-transcript')
             buildSupp(page, endpoint, queriedObject, () => {
@@ -119,7 +119,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       }
       else if(endpoint === 'interactives') {
         window.INSTRUCTIONS = data.instructions
-        buildTimelineHeader(page, data, false)
+        buildTimelineHeader(page, data, 'interactive')
         buildTranscript(page, data.id, (transcript) => {
           highlighter('.transcript')
           buildSupp(page, endpoint, queriedObject, null, !!transcript)
