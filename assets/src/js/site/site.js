@@ -13,7 +13,7 @@ $( document ).ready( function(){
     label.text( label.text() === 'Menu' ? 'Close' : 'Menu' );
   } );
 
-  $( '.researchMenu-toggle' ).click( function(){
+  $('body').on('click', '.researchMenu-toggle', function(){
     toggleNav( '.researchMenu' );
   } );
 

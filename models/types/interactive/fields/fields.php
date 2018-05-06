@@ -45,6 +45,15 @@ add_action( 'acf/init', function(){
         'name' => 'show_in_blog',
         'type' => 'true_false',
         'instructions' => 'If checked, this interactive page will display in blog feeds.',
+        'wrapper' => [ 'width' => '50' ]
+      ],
+      [
+        'key' => 'show_menu',
+        'label' => 'Display menu?',
+        'name' => 'show_menu',
+        'type' => 'true_false',
+        'instructions' => 'If checked, the "Interactive" menu will display on page.',
+        'wrapper' => [ 'width' => '50' ]
       ],
       [
         'key' => 'tab_transcript_raw',
