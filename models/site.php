@@ -10,6 +10,7 @@ function register_menus() {
   register_nav_menu( 'blog', __( 'Blog Menu', 'blog' ) );
   register_nav_menu( 'standard', __( 'Standard Menu', 'standard' ) );
   register_nav_menu( 'extra', __( 'Extra Menu', 'extra' ) );
+  register_nav_menu( 'interactive', __('Interactive Menu', 'interactive') );
 }
 
 add_action( 'admin_menu', 'add_collections_item' );

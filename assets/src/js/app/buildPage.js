@@ -3,6 +3,7 @@ const animatePage            = require('./animatePage')
 const buildArchive           = require('./buildArchive')
 const buildCollectionHeader  = require('./buildCollectionHeader')
 const buildCollectionFeed    = require('./buildCollectionFeed')
+const buildMenu = require('./buildMenu')
 const buildTimeline          = require('./buildTimeline')
 const buildTimelineHeader    = require('./buildTimelineHeader')
 const buildInterviewsHeader  = require('./buildInterviewsHeader')
@@ -120,6 +121,10 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       else if(endpoint === 'interactives') {
         window.INSTRUCTIONS = data.instructions
         buildTimelineHeader(page, data, 'interactive')
+        console.log(data)
+        if(data.show_menu) {
+          buildMenu(page, window.interactive_menu)
+        }
         buildTranscript(page, data.id, (transcript) => {
           highlighter('.transcript')
           buildSupp(page, endpoint, queriedObject, null, !!transcript)

@@ -11,4 +11,7 @@ add_action( 'wp_enqueue_scripts', function(){
   wp_enqueue_script( 'featherlight-js', get_stylesheet_directory_uri().'/assets/vendor/js/featherlight.min.js', null, null, true );
   wp_enqueue_script( 'main-js', get_stylesheet_directory_uri().'/assets/dist/js/bundle.js?update=5', null, null, true );
   wp_enqueue_style( 'main-css', get_stylesheet_directory_uri().'/assets/dist/css/styles.min.css?update=5', false, null );
+
+  $menu = wp_get_nav_menu_items('interactive');
+  wp_localize_script('main-js', 'interactive_menu', $menu);
 } );
