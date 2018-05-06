@@ -134,7 +134,7 @@ if($paged) {
     foreach($users as $author):
     ?>
       <option value="<?= get_author_posts_url($author); ?>">
-        <?= get_author_name($author); ?> Posts
+        <?= get_author_name($author); ?>
       </option>
     <?php endforeach; ?>
     <?php $u_list_page = get_posts([

@@ -23,7 +23,7 @@ foreach($users as $author):
     </div>
     <?php endif; ?>
     <div class="author-bio">
-      <strong><?= get_author_name($author); ?></strong>
+      <strong><?= get_author_name($author); ?> posts</strong>
       <p><?= get_the_author_meta('user_description', $author); ?></p>
     </div>
     </a>
