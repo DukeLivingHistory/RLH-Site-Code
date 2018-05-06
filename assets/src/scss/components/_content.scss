@@ -423,3 +423,9 @@ $listViewIconSize: 32px;
     }
   }
 }
+
+.contentHeader + .researchMenu {
+  @media(min-width: 992px) {
+  margin-top: -10px;
+  }
+}

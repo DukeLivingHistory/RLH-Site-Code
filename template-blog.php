@@ -128,13 +128,13 @@ if($paged) {
     $users = $q->get_results();
     ?>
     <div class="select-wrap">
-    <select id="author-select">
-      <option value="null">Blog Authors</option>
+    <select required id="author-select" placeholder="Blog Authors">
+      <option disabled selected value="">Blog Authors</option>
     <?php
     foreach($users as $author):
     ?>
       <option value="<?= get_author_posts_url($author); ?>">
-        <?= get_author_name($author); ?>
+        <?= get_author_name($author); ?> Posts
       </option>
     <?php endforeach; ?>
     <?php $u_list_page = get_posts([

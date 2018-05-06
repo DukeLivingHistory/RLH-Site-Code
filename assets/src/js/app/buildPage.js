@@ -3,6 +3,7 @@ const animatePage            = require('./animatePage')
 const buildArchive           = require('./buildArchive')
 const buildCollectionHeader  = require('./buildCollectionHeader')
 const buildCollectionFeed    = require('./buildCollectionFeed')
+const buildMenu = require('./buildMenu')
 const buildTimeline          = require('./buildTimeline')
 const buildTimelineHeader    = require('./buildTimelineHeader')
 const buildInterviewsHeader  = require('./buildInterviewsHeader')
@@ -86,7 +87,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         window.INSTRUCTIONS = data.instructions
         console.log(data)
         if(data.no_media) {
-          buildTimelineHeader(page, data, 'Interview')
+          buildTimelineHeader(page, data, 'interview')
           buildTranscript(page, data.id, (transcript) => {
             highlighter('.able-transcript')
             buildSupp(page, endpoint, queriedObject, () => {
@@ -119,7 +120,11 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       }
       else if(endpoint === 'interactives') {
         window.INSTRUCTIONS = data.instructions
-        buildTimelineHeader(page, data, false)
+        buildTimelineHeader(page, data, 'interactive')
+        console.log(data)
+        if(data.show_menu) {
+          buildMenu(page, window.interactive_menu)
+        }
         buildTranscript(page, data.id, (transcript) => {
           highlighter('.transcript')
           buildSupp(page, endpoint, queriedObject, null, !!transcript)
