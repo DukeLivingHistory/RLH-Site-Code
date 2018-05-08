@@ -81,7 +81,7 @@ var buildTranscript = function( page, id, cb ){
     wrapper.append( '<div class="transcript-instructions">'+window.INSTRUCTIONS+'</div>' );
     wrapper.append( outer );
     page.append(wrapper)
-    if( callback ) callback( data );
+    if( callback ) callback( data, wrapper );
   } );
 
   // Rebuild on descriptions

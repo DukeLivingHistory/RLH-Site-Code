@@ -88,9 +88,9 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         console.log(data)
         if(data.no_media) {
           buildTimelineHeader(page, data, 'interview')
-          buildTranscript(page, data.id, (transcript) => {
+          buildTranscript(page, data.id, (transcript, wrapper) => {
             highlighter('.able-transcript')
-            buildSupp(page, endpoint, queriedObject, () => {
+            buildSupp(wrapper, endpoint, queriedObject, () => {
               if(data.collections.length) {
                 buildOtherInCollection(page, data.id, data.collections[0])
               }
@@ -106,9 +106,9 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         }
         else {
           buildInterviewsHeader(page, data)
-          buildTranscript(page, data.id, (transcript) => {
+          buildTranscript(page, data.id, (transcript, wrapper) => {
             highlighter('.transcript')
-            buildSupp(page, endpoint, queriedObject, (supp) => {
+            buildSupp(wrapper, endpoint, queriedObject, (supp) => {
               if(data.collections.length){
                 buildOtherInCollection(page, data.id, data.collections[0])
               }
@@ -125,9 +125,9 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         if(data.show_menu) {
           buildMenu(page, window.interactive_menu)
         }
-        buildTranscript(page, data.id, (transcript) => {
+        buildTranscript(page, data.id, (transcript, wrapper) => {
           highlighter('.transcript')
-          buildSupp(page, endpoint, queriedObject, null, !!transcript)
+          buildSupp(wrapper, endpoint, queriedObject, null, !!transcript)
         })
       }
       else if(endpoint === 'collections') {
