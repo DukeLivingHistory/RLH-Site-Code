@@ -4,7 +4,8 @@ var highlightTranscript   = require('./highlightTranscript');
 var highlightSuppCont     = require('./highlightSuppCont');
 var Cookies               = require('js-cookie');
 
-var buildTranscript = function( wrapper, id, cb ){
+var buildTranscript = function( page, id, cb ){
+  var wrapper = $('<div class="transcript-instructions-wrap">')
   var outer = $( '<section class="able-transcript-area transcript" id="transcript-'+id+'">' );
   var transcript = $( '<div id="transcript-inner" class="able-transcript" />' );
   var callback = cb || false;
@@ -79,6 +80,7 @@ var buildTranscript = function( wrapper, id, cb ){
     outer.append( '<div class="able-window-toolbar" />' );
     wrapper.append( '<div class="transcript-instructions">'+window.INSTRUCTIONS+'</div>' );
     wrapper.append( outer );
+    page.append(wrapper)
     if( callback ) callback( data );
   } );
 

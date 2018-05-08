@@ -424,9 +424,15 @@ $listViewIconSize: 32px;
   }
 }
 
-.contentHeader + .researchMenu {
+.researchMenu--app {
   @media(min-width: 992px) {
-  margin-top: -10px;
+    margin-top: -10px;
+
+
+    + .transcript-instructions-wrap {
+      width: 75%;
+      float: left;
+    }
   }
 }
 

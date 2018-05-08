@@ -17,7 +17,7 @@ const buildMenu = (page, items) => {
   }, [])
 
   const menu = `
-  <aside class="researchMenu">
+  <aside class="researchMenu researchMenu--app">
     <button class="researchMenu-toggle">Expand Menu ${icon('down', 'link')}</button>
     <ul class="menu menu--research">
       ${reducedItems.map(item => `
