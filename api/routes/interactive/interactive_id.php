@@ -23,7 +23,7 @@ $route = new Route('/interactives/(?P<id>\d+)', 'GET', function($data){
     );
   }
 
-  $rich_text->show_menu = get_field('show_menu', $data['id']);
+  $rich_text->menu = get_field('show_menu', $data['id']);
 
   return $rich_text;
 });

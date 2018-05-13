@@ -51,8 +51,9 @@ add_action( 'acf/init', function(){
         'key' => 'show_menu',
         'label' => 'Display menu?',
         'name' => 'show_menu',
-        'type' => 'true_false',
-        'instructions' => 'If checked, the "Interactive" menu will display on page.',
+        'type' => 'select',
+        'allow_null' => true,
+        'instructions' => 'The selecte menu will display on the page',
         'wrapper' => [ 'width' => '50' ]
       ],
       [

@@ -120,10 +120,10 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       }
       else if(endpoint === 'interactives') {
         window.INSTRUCTIONS = data.instructions
-        buildTimelineHeader(page, data, 'interactive')
         console.log(data)
-        if(data.show_menu) {
-          buildMenu(page, window.interactive_menu)
+        buildTimelineHeader(page, data, 'interactive')
+        if(data.menu) {
+          buildMenu(page, window[`menu_${data.menu}`] || [])
         }
         buildTranscript(page, data.id, (transcript, wrapper) => {
           highlighter('.transcript')

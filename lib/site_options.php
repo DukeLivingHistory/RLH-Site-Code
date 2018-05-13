@@ -12,3 +12,14 @@ function acf_hide_empty_tax( $args ) {
   return $args;
 }
 add_filter('acf/fields/taxonomy/query', 'acf_hide_empty_tax', 10, 2);
+
+function acf_load_menus( $field ) {
+  $menus = get_registered_nav_menus();
+  foreach($menus as $menu => $description) {
+    $menu_options[$menu] = $menu;
+  }
+  $field['choices'] = $menu_options;
+  return $field;
+}
+
+add_filter('acf/load_field/name=show_menu', 'acf_load_menus');

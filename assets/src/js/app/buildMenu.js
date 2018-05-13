@@ -4,10 +4,9 @@ const buildMenu = (page, items) => {
   const reducedItems = items.reduce((all, one) => {
     if(one.menu_item_parent > 0) {
       return all.map((parent) => {
-        console.log(parent, one.menu_item_parent)
         if(parent.ID == one.menu_item_parent) {
           return Object.assign(parent, {
-            children: parent.children ? parent.children.push(one) : [one]
+            child_items: parent.child_items ? [...parent.child_items, one] : [one]
           })
         }
         return parent
@@ -23,9 +22,9 @@ const buildMenu = (page, items) => {
       ${reducedItems.map(item => `
         <li>
           <a href="${item.url}">${item.title}</a>
-          ${item.children ? `
+          ${item.child_items ? `
               <ul>
-                ${item.children.map(child => `
+                ${item.child_items.map(child => `
                   <li><a href="${child.url}">${child.title}</a></li>
                 `).join('')}
               </ul>
@@ -35,7 +34,6 @@ const buildMenu = (page, items) => {
     </ul>
   </aside>
   `
-  console.log(menu)
   page.append(menu)
 }
 
