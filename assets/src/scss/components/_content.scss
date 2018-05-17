@@ -297,8 +297,8 @@ $listViewIconSize: 32px;
   overflow: hidden;
   transition: max-height .3s ease-in;
   @include media-breakpoint-up(lg){
-    @include make-col();
-    @include make-col-span(3);
+    float: left;
+    width: 15em;
     max-height: none;
     margin-top: -50px; // offset margin from contentHeader
     border-top: 10px solid $interviews;
@@ -427,10 +427,8 @@ $listViewIconSize: 32px;
 .researchMenu--app {
   @media(min-width: 992px) {
     margin-top: -10px;
-
-
     + .transcript-instructions-wrap {
-      width: 75%;
+      width: calc(100% - 15em);
       float: left;
     }
   }
