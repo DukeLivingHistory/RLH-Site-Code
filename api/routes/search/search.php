@@ -236,5 +236,10 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     $returns['total_hits'] = $total_hits;
     $returns['results'] = $total_results;
   }
+
+  usort($returns['items'], function($a, $b) {
+    return strcmp($a->title, $b->title);
+  });
+
   return $returns;
 });
