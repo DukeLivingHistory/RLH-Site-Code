@@ -53,7 +53,7 @@ add_action( 'acf/init', function(){
         'name' => 'show_menu',
         'type' => 'select',
         'allow_null' => true,
-        'instructions' => 'The selecte menu will display on the page',
+        'instructions' => 'The selected menu will display on the page',
         'wrapper' => [ 'width' => '50' ]
       ],
       [

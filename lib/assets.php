@@ -12,9 +12,12 @@ add_action( 'wp_enqueue_scripts', function(){
   wp_enqueue_script( 'main-js', get_stylesheet_directory_uri().'/assets/dist/js/bundle.js?update=5', null, null, true );
   wp_enqueue_style( 'main-css', get_stylesheet_directory_uri().'/assets/dist/css/styles.min.css?update=5', false, null );
 
-  $menus = get_registered_nav_menus();
-  foreach($menus as $menu => $value) {
-    $menu_items = wp_get_nav_menu_items($menu);
-    wp_localize_script('main-js', "menu_$menu", $menu_items);
+  $terms = get_terms([
+    'taxonomy' => 'nav_menu'
+  ]);
+  foreach($terms as $menu) {
+    $slug = str_replace('-', '_', $menu->slug);
+    $menu_items = wp_get_nav_menu_items($menu->slug);
+    wp_localize_script('main-js', "menu_$slug", $menu_items);
   }
 } );
