@@ -237,6 +237,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     $returns['results'] = $total_results;
   }
 
+  if(count($returns['items']))
   usort($returns['items'], function($a, $b) {
     return strcmp($a->title, $b->title);
   });
