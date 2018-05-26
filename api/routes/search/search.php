@@ -1,135 +1,60 @@
 <?php
 include_once(get_template_directory().'/models/ContentNode.php');
 include_once("search-helpers.php");
+include_once("query.php");
 $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
+  global $wpdb;
   $args = $data->get_query_params();
   $term = str_replace('+', ' ', urldecode($data['term']));
-
-  if(strlen($term) < 4) {
-    return [
-      "term" => $term,
-      "error" => "Search term too short.",
-      "message" => "Try a longer search."
-    ];
-  }
 
   if($term === 'null') {
     $ignore = true;
     $term = '';
   }
 
-  function get_collection_arg($args) {
-    if(isset($args['collection'])) {
-      return [
-        [
-          'taxonomy' => 'collection',
-          'field' => 'term_id',
-          'terms' => $args['collection']
-        ]
-      ];
-    }
-    else return null;
-  }
+  // Important!
+  $flags = explode(',', urldecode($args['flags']));
 
-  $blog_search = array_merge(
-    $orig_search = get_posts([
-      'post_type' => [ 'post', 'interactive' ],
-      'posts_per_page' => -1,
-      's' => $term,
-      'tax_query' => get_collection_arg($args),
-    ]),
-    get_posts([
-      'post_type' => [ 'interactive' ],
-      'posts_per_page' => -1,
-      'tax_query' => get_collection_arg($args),
-      'meta_query' => [
-        'relation' => 'OR',
-        [
-          'key' => 'transcript_raw',
-          'value' => $term,
-          'compare' => 'LIKE'
-        ],
-      ],
-      // Prevent duplicate terms from previous query
-      'exclude' => array_reduce($orig_search, function($excluded_posts, $post) {
-        $excluded_posts[] = $post->ID;
-        return $excluded_posts;
-      }, [])
-    ])
-  );
+  $config = [
+    'types' => ['post', 'timeline', 'interactive', 'interview'],
+    'primary_fields' => ['post_content', 'post_title'],
+    'meta_fields' => ['transcript_raw', 'introduction', 'description_raw', 'supporting_content_raw'],
+    'meta_like_fields' => ['events_%_content', 'events_%_title'],
+    'terms' => ['collection'],
+    'term_fields' => ['collection_description'],
+  ];
 
-  if( $data['type'] === 'blog') {
-    $results = $blog_search;
-  } else {
-    $results = array_merge(
-      $blog_search,
-      $posts_search = get_posts([
-        'post_type' => [ 'timeline', 'interview' ],
-        'posts_per_page' => -1,
-        's' => $term,
-        'tax_query' => get_collection_arg($args)
-      ]),
-      get_posts([
-        'post_type' => [ 'timeline', 'interview' ],
-        'posts_per_page' => -1,
-        'suppress_filters' => false,
-        'tax_query' => get_collection_arg($args),
-        'meta_query' => [
-          'relation' => 'OR',
-          [
-            'key' => 'transcript_raw',
-            'value' => $term,
-            'compare' => 'LIKE'
-          ],
-          [
-            'key' => 'description_raw',
-            'value' => $term,
-            'compare' => 'LIKE'
-          ],
-          [
-            'key' => 'supporting_content_raw',
-            'value' => $term,
-            'compare' => 'LIKE'
-          ],
-          [
-            'key' => 'events_$_title',
-            'value' => $term,
-            'compare' => 'LIKE'
-          ],
-          [
-            'key' => 'events_$_content',
-            'value' => $term,
-            'compare' => 'LIKE'
-          ]
-        ],
-        // Prevent duplicate terms from previous query
-        'exclude' => array_reduce($posts_search, function($excluded_posts, $post) {
-          $excluded_posts[] = $post->ID;
-          return $excluded_posts;
-        }, [])
-      ]),
-      $terms_search = (!isset($args['collection']) ? get_terms([
-        'number' => 0,
-        'search' => $term,
-        'taxonomy' => 'collection',
-      ]) : []),
-      (!isset($args['collection']) ? get_terms([
-        'taxonomy' => 'collection',
-        'meta_query' => [
-          [
-            'key' => 'collection_description',
-            'value' => $term,
-            'compare' => 'LIKE'
-          ]
-        ],
-        // Prevent duplicate terms from previous search
-        'exclude' => array_reduce($terms_search, function($excluded_terms , $term) {
-          $excluded_terms[] = $term->term_id;
-          return $excluded_terms;
-        }, [])
-      ]) : [])
+  if($args['collection']) {
+    $statement = generate_collection_query($config, $flags);
+    $query = $wpdb->prepare(
+      $statement,
+      $term,
+      $term,
+      $term,
+      $args['collection']
     );
   }
+  elseif($data['type'] === 'blog') {
+    $config['types'] = ['post', 'interactive'];
+    $statement = generate_blog_query($config, $flags);
+    $query = $wpdb->prepare(
+      $statement,
+      $term
+    );
+  } else {
+    $statement = generate_global_query($config, $flags);
+    $query = $wpdb->prepare(
+      $statement,
+      $term,
+      $term,
+      $term,
+      $term,
+      $term
+    );
+  }
+
+  $query = str_replace(["<<'", "'>>"], '', $query);
+  $results = $wpdb->get_results($query);
 
   $count = isset($args['count']) ? $args['count'] : false;
   $offset = isset($args['offset']) ? $args['offset'] : false;
@@ -186,11 +111,10 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
 
   // Loop over all results
   foreach($results as $result) {
-    if(isset($result->ID)){
-      $item = new ContentNode($result->ID);
-    } else {
-      $item = new ContentNodeCollection($result->term_id);
-    }
+    $item = $result->type === 'term' ?
+      new ContentNodeCollection($result->id) :
+      new ContentNode($result->id);
+
     $type = $item->original_type ? $item->original_type : $item->type;
 
     if(!$ignore):

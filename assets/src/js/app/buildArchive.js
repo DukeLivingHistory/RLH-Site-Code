@@ -88,7 +88,7 @@ const buildArchive = function(
   }
 
   // Loader
-  if(!isSearch && endpoint !== 'collections' && items && items.length >= COUNT){
+  if(!isSearch && endpoint !== 'collections' && items && items.length >= window.COUNT){
     load = `<button data-offset="0" class="content-load">Load More</button>`
   }
 
@@ -113,11 +113,11 @@ const buildArchive = function(
   const handleUpdate = function(loadedMore = false) {
     const $order = $append.find('select[name="list-order"]')
     const $media = $append.find('select[name="media-type"]')
-    const offset = parseInt($load.attr('data-offset')) + COUNT
+    const offset = parseInt($load.attr('data-offset')) + window.COUNT
     const params = {
       order: $order.val(),
       offset: loadedMore ? offset : 0,
-      count: COUNT,
+      count: window.COUNT,
       include: $media ? $media.val() : null
     }
 
@@ -139,7 +139,7 @@ const buildArchive = function(
       `)
 
       if(loadedMore) {
-        if(items.length < COUNT){
+        if(items.length < window.COUNT){
           $load.hide()
         }
         else {
