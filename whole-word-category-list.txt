@@ -1,0 +1,29 @@
+SELECT id FROM (
+SELECT ID as id, 'content' as type from wp_posts
+WHERE post_content
+RLIKE  '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+OR post_title
+RLIKE  '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+AND post_type IN (
+'interview',
+'interactive',
+'timeline',
+'post'
+)
+UNION
+SELECT post_id as id, 'content' as type from wp_postmeta
+WHERE meta_value RLIKE '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+AND (
+meta_key IN (
+'transcript_raw',
+'introduction',
+'description_raw',
+'supporting_content_raw'
+)
+OR meta_key LIKE 'events_%_content'
+OR meta_key LIKE 'events_%_title'
+)
+) AS content
+JOIN wp_term_relationships
+ON wp_term_relationships.object_id = content.id
+AND wp_term_relationships.term_taxonomy_id = 5

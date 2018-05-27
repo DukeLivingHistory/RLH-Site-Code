@@ -13,7 +13,11 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
   }
 
   // Important!
-  $flags = explode(',', urldecode($args['flags']));
+  $flags = [];
+  $flaggable = ['whole_word', 'case_sensitive'];
+  foreach($flaggable as $flag) {
+    if(isset($args[$flag])) $flags[] = $flag;
+  }
 
   $config = [
     'types' => ['post', 'timeline', 'interactive', 'interview'],
@@ -54,6 +58,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
   }
 
   $query = str_replace(["<<'", "'>>"], '', $query);
+
   $results = $wpdb->get_results($query);
 
   $count = isset($args['count']) ? $args['count'] : false;
@@ -117,6 +122,14 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
 
     $type = $item->original_type ? $item->original_type : $item->type;
 
+    if(
+      $result->type === 'content' &&
+      (get_post_status( $result->id ) !== 'publish' ||
+      get_post_type( $result->id ) === 'revision')
+    ) {
+      continue;
+    }
+
     if(!$ignore):
     $hits = [];
     if($fields[$type]) foreach($fields[$type] as $key => $field) {
@@ -127,7 +140,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
         $value = clean_vtt($field($item->id));
         $timestamp_method = $key;
       }
-      $lines = get_matching_lines($value, $term, $timestamp_method);
+      $lines = get_matching_lines($value, $term, $timestamp_method, $flags);
       $hits = array_merge($hits, $lines);
 
       foreach($lines as $line) {

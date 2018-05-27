@@ -25,4 +25,8 @@ $( document ).ready( function(){
     window.location.href = value
   })
 
+  $('#option_toggle').click(function() {
+    $('.header-navInner-options').toggleClass('open')
+  })
+
 } );
