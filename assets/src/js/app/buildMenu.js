@@ -1,6 +1,7 @@
 const icon = require('./icon')
 
 const buildMenu = (page, items) => {
+  console.log(items)
   const reducedItems = items.reduce((all, one) => {
     if(one.menu_item_parent > 0) {
       return all.map((parent) => {
@@ -14,6 +15,8 @@ const buildMenu = (page, items) => {
     }
     return [...all, one]
   }, [])
+
+  console.log(reducedItems)
 
   const menu = `
   <aside class="researchMenu researchMenu--app">

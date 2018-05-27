@@ -151,7 +151,7 @@
   }
 }
 
-.header [type="submit"] svg {
+.header button svg {
   fill: $white;
   width: 1rem;
   height: 1rem;
@@ -218,6 +218,24 @@
   @include media-breakpoint-up(lg){
     top: 12px;
     background: none;
+  }
+
+  &-options {
+    position: absolute;
+    right: -8px;
+    background: $interviewsLight;
+    text-align: right;
+    white-space: nowrap;
+    padding: .5em 1em;
+    font-size: .8em;
+    display: none;
+    color: white;
+    &.open {
+      display: block;
+    }
+    input {
+      margin-right: .5em;
+    }
   }
 }
 

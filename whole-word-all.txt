@@ -1,0 +1,31 @@
+SELECT ID, 'content' as type from wp_posts
+  WHERE post_content
+  RLIKE  '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+  OR post_title
+  RLIKE  '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+  AND post_type IN (
+    'interview',
+    'interactive',
+    'timeline',
+    'post'
+  )
+UNION
+SELECT post_id, 'content' as type from wp_postmeta
+  WHERE meta_value RLIKE '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+  AND (
+    meta_key IN (
+    'transcript_raw',
+    'introduction',
+    'description_raw',
+    'supporting_content_raw'
+    )
+    OR meta_key LIKE 'events_%_content'
+    OR meta_key LIKE 'events_%_title'
+  )
+UNION
+SELECT term_id, 'term' as type from wp_terms
+  WHERE name RLIKE '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+UNION
+SELECT term_id, 'term' as type from wp_termmeta
+  WHERE meta_value RLIKE '([[:blank:][:punct:]]|^)alligator([[:blank:][:punct:]]|$)'
+  AND meta_key IN ('collection_description')

@@ -6,7 +6,7 @@
  * @param  string $timestamp_method Means
  * @return array                    Array of lines
  */
-function get_matching_lines($all, $term, $timestamp_method) {
+function get_matching_lines($all, $term, $timestamp_method, $flags) {
   $exploded = explode("\n", clean_vtt($all));
   $results = [];
   $timestamp = '';
@@ -37,7 +37,7 @@ function get_matching_lines($all, $term, $timestamp_method) {
 
     if(stripos($line, $term) !== false) {
       $results[] = [
-        'text' => trim(highlight_term($line, strip_tags($term))),
+        'text' => trim(highlight_term($line, strip_tags($term), $flags)),
         'timestamp' => $timestamp
       ];
     }
@@ -63,10 +63,14 @@ function get_lines_from_sentences($string) {
  * @param  string $term   Search term
  * @return string         HTML for string.
  */
-function highlight_term($string, $term) {
+function highlight_term($string, $term, $flags = []) {
   if(!$term) return $string;
   $term = preg_quote($term);
-  return preg_replace("/${term}/i", "<span class='content-search-result'>\\0</span>", $string);
+  $replace = in_array('whole_word', $flags) ?
+    "/((?:^${term})|(?<=\s)(?:${term}))(?=\s|[[:punct:]])/" :
+    "/(${term})/";
+  if(!in_array('case_sensitive', $flags)) $replace .= 'i';
+  return preg_replace($replace, "<span class='content-search-result'>\\1</span>", $string);
 }
 
 /**

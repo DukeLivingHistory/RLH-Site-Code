@@ -430,6 +430,9 @@ $listViewIconSize: 32px;
     + .transcript-instructions-wrap {
       width: calc(100% - 15em);
       float: left;
+      .transcript {
+        width: calc(2 / 3 * 100% + 4.5em)
+      }
     }
   }
 }

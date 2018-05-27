@@ -28,6 +28,12 @@
   }
 }
 
+[data-endpoint="interactives"] .transcript {
+  @include media-breakpoint-up(sm) {
+    width: calc(66.6% + 6em);
+  }
+}
+
 .transcript-node {
   text-decoration: none;
   -webkit-user-drag: none;

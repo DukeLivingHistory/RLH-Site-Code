@@ -30,9 +30,10 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
     if(endpoint === 'search'){
       const term = $('body').attr('data-search').replace('+', ' ')
       const type = $('body').attr('data-type') || 'any'
+      const params = window.location.search.replace('?', '')
       window.SEARCHTERM = term
       document.title = 'Search for '+term
-      const endpoint = `/wp-json/v1/search/${term}/${type}?count=${window.COUNT}&offset=0${cachebust(true)}`
+      const endpoint = `/wp-json/v1/search/${term}/${type}?count=${window.COUNT}&offset=0${cachebust(true)}&${params}`
       $.get(endpoint, function(data){
         buildArchive(page, Object.assign({}, data, { isSearch: true }), endpoint)
         animatePage(wrapper, page, dir, function(){
@@ -85,7 +86,6 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       }
       else if(endpoint === 'interviews'){
         window.INSTRUCTIONS = data.instructions
-        console.log(data)
         if(data.no_media) {
           buildTimelineHeader(page, data, 'interview')
           buildTranscript(page, data.id, (transcript, wrapper) => {
@@ -120,7 +120,6 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       }
       else if(endpoint === 'interactives') {
         window.INSTRUCTIONS = data.instructions
-        console.log(data)
         buildTimelineHeader(page, data, 'interactive')
         if(data.menu) {
           buildMenu(page, window[`menu_${data.menu}`] || [])
