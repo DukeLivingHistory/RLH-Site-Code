@@ -12,6 +12,11 @@ function get_matching_lines($all, $term, $timestamp_method, $flags) {
   $timestamp = '';
   $i = 0;
 
+  $pattern = in_array('whole_word', $flags) ?
+    "/((?:^${term})|(?<=\s)(?:${term}))(?=\s|[[:punct:]])/" :
+    "/(${term})/";
+  if(!in_array('case_sensitive', $flags)) $pattern .= 'i';
+
   foreach($exploded as $index => $line) {
     // Allow custom timestamp methods based on field name
     switch($timestamp_method) {
@@ -35,7 +40,7 @@ function get_matching_lines($all, $term, $timestamp_method, $flags) {
         break;
     }
 
-    if(stripos($line, $term) !== false) {
+    if(preg_match($pattern, $line)) {
       $results[] = [
         'text' => trim(highlight_term($line, strip_tags($term), $flags)),
         'timestamp' => $timestamp

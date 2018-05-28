@@ -115,6 +115,11 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
   ];
 
   // Loop over all results
+  $pattern = in_array('whole_word', $flags) ?
+    "/((?:^${term})|(?<=\s)(?:${term}))(?=\s|[[:punct:]])/" :
+    "/(${term})/";
+  if(!in_array('case_sensitive', $flags)) $pattern .= 'i';
+
   foreach($results as $result) {
     $item = $result->type === 'term' ?
       new ContentNodeCollection($result->id) :
@@ -140,11 +145,12 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
         $value = clean_vtt($field($item->id));
         $timestamp_method = $key;
       }
+
       $lines = get_matching_lines($value, $term, $timestamp_method, $flags);
       $hits = array_merge($hits, $lines);
 
       foreach($lines as $line) {
-        $hit_count = preg_match_all("/$term/i", $hit['text']);
+        $hit_count = preg_match_all($pattern, $hit['text']);
         $total_hits = $total_hits + $hit_count;
       }
     }
@@ -155,7 +161,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
 
     if(count($item->hits)) {
       foreach($item->hits as $hit) {
-        $item->hit_count = $item->hit_count + preg_match_all("/$term/i", $hit['text']);
+        $item->hit_count = $item->hit_count + preg_match_all("/content-search-result/", $hit['text']);
       }
       $total_hits = $total_hits + $item->hit_count;
     }
@@ -174,10 +180,11 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     $returns['results'] = $total_results;
   }
 
-  if(count($returns['items']))
-  usort($returns['items'], function($a, $b) {
-    return strcmp($a->title, $b->title);
-  });
+  if(count($returns['items'])) {
+    usort($returns['items'], function($a, $b) {
+      return strcmp($a->title, $b->title);
+    });
+  }
 
   return $returns;
 });

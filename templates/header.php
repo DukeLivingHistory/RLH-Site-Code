@@ -28,10 +28,14 @@
         <button type="submit"><?= icon( 'search' ); ?></button>
         <button type="button" id="option_toggle"><?= icon( 'options' ); ?></button>
         <div class="header-navInner-options <?= $_GET['whole_word'] || $_GET['case_sensitive'] ?   'open' : ''; ?> ">
-          <label for="whole_word">Whole-Word</label>
-          <input id="whole_word" name="whole_word" type="checkbox" <?= $_GET['whole_word'] ? 'checked' : ''; ?> />
-          <label for="case_sensitive">Case-Sensitive</label>
-          <input name="case_sensitive" type="checkbox" <?= $_GET['case_sensitive'] ? 'checked' : ''; ?> />
+          <div>
+            <label for="whole_word">Whole-Word</label>
+            <input id="whole_word" name="whole_word" type="checkbox" <?= $_GET['whole_word'] ? 'checked' : ''; ?> />
+          </div>
+          <div>
+            <label for="case_sensitive">Case-Sensitive</label>
+            <input name="case_sensitive" type="checkbox" <?= $_GET['case_sensitive'] ? 'checked' : ''; ?> />
+          </div>
         </div>
       </form>
       <?php wp_nav_menu( [ 'theme_location' => 'utility', 'container' => '', 'menu_class' => 'menu menu--utility' ] ); ?>
