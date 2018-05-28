@@ -184,7 +184,7 @@
 [data-endpoint="timelines"] .menu-item [href*="timelines"],
 [data-endpoint="collections"] .menu-item [href*="collections"],
 [data-endpoint="interviews"] .menu-item [href*="interviews"],
-.current_page_item a,
+.header .current_page_item a,
 .menu-item a:hover {
   color: $yellow;
 }
@@ -321,7 +321,7 @@
  * Navbar
  * ---------------*/
 
- .sub-menu {
+ .header .sub-menu {
    padding: 10px 10px 0;;
    font-size: .9em;
  }
@@ -350,7 +350,7 @@
       }
     }
   }
-  .sub-menu {
+  .header .sub-menu {
     display: none;
     position: absolute;
     top: 100%;

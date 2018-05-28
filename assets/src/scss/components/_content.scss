@@ -357,7 +357,7 @@ $listViewIconSize: 32px;
   font-weight: 400;
 }
 
-.menu--research .current_page_item a {
+.menu--research .current_page_item > a {
   border-bottom: 2px solid $grey;
   color: $interviews;
 }
