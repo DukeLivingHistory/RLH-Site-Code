@@ -12,6 +12,12 @@ $suppContArrowWidth : 10px;
   }
 }
 
+.transcript-instructions-wrap .suppCont {
+  @include media-breakpoint-up(sm){
+    left: 37px
+  }
+}
+
 .suppCont-inner {
   margin: 0;
   padding: 0;

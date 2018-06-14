@@ -24,8 +24,19 @@
     <div class="header-navInner">
       <?php wp_nav_menu( [ 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'menu menu--primary' ] ); ?>
       <form method="get" action="<?php bloginfo('url'); ?>/">
-        <input name="s" type="text" placeholder="Search" value="<?= $_GET['search'] ? $_GET['search'] : ''; ?>">
+        <input autocomplete="off" name="s" type="text" placeholder="Search" value="<?= $_GET['s'] ? $_GET['s'] : ''; ?>">
         <button type="submit"><?= icon( 'search' ); ?></button>
+        <button type="button" id="option_toggle"><?= icon( 'options' ); ?></button>
+        <div class="header-navInner-options <?= $_GET['whole_word'] || $_GET['case_sensitive'] ?   'open' : ''; ?> ">
+          <div>
+            <label for="whole_word">Whole-Word</label>
+            <input id="whole_word" name="whole_word" type="checkbox" <?= $_GET['whole_word'] ? 'checked' : ''; ?> />
+          </div>
+          <div>
+            <label for="case_sensitive">Case-Sensitive</label>
+            <input name="case_sensitive" type="checkbox" <?= $_GET['case_sensitive'] ? 'checked' : ''; ?> />
+          </div>
+        </div>
       </form>
       <?php wp_nav_menu( [ 'theme_location' => 'utility', 'container' => '', 'menu_class' => 'menu menu--utility' ] ); ?>
     </div>

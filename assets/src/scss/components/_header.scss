@@ -151,7 +151,7 @@
   }
 }
 
-.header [type="submit"] svg {
+.header button svg {
   fill: $white;
   width: 1rem;
   height: 1rem;
@@ -184,7 +184,7 @@
 [data-endpoint="timelines"] .menu-item [href*="timelines"],
 [data-endpoint="collections"] .menu-item [href*="collections"],
 [data-endpoint="interviews"] .menu-item [href*="interviews"],
-.current_page_item a,
+.header .current_page_item a,
 .menu-item a:hover {
   color: $yellow;
 }
@@ -218,6 +218,23 @@
   @include media-breakpoint-up(lg){
     top: 12px;
     background: none;
+  }
+
+  &-options {
+    position: absolute;
+    right: -8px;
+    background: $interviewsLight;
+    text-align: right;
+    white-space: nowrap;
+    padding: .5em 1em;
+    display: none;
+    color: white;
+    &.open {
+      display: block;
+    }
+    input {
+      margin-right: .5em;
+    }
   }
 }
 
@@ -304,7 +321,7 @@
  * Navbar
  * ---------------*/
 
- .sub-menu {
+ .header .sub-menu {
    padding: 10px 10px 0;;
    font-size: .9em;
  }
@@ -333,7 +350,7 @@
       }
     }
   }
-  .sub-menu {
+  .header .sub-menu {
     display: none;
     position: absolute;
     top: 100%;
