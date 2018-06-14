@@ -29,11 +29,11 @@ var buildTranscript = function( page, id, cb ){
   const onEachNode = (node) => {
     window.JUMPTO = $('#select-'+id)
     if(node.type === 'section_break'){
-      JUMPTO.append(`<option value="${node.start}">${node.contents}</option>`)
+      window.JUMPTO.append(`<option value="${node.start}">${node.contents}</option>`)
       if(!JUMPTOINIT){
         window.JUMPTOINIT = true
-        JUMPTO.parent().show()
-        JUMPTO.on( 'change', function(){
+        window.JUMPTO.parent().show()
+        window.JUMPTO.on( 'change', function(){
           var val = $(this).val();
           var offset = 0;
           if( val === 'default' ){
@@ -74,7 +74,8 @@ var buildTranscript = function( page, id, cb ){
       useDescription: getUseDescription(true)
     })
 
-    JUMPTO.append( '<option value="default">Back to top</option>' );
+    if(window.JUMPTO)
+    window.JUMPTO.append( '<option value="default">Back to top</option>' );
     transcript.append( html );
     outer.append( transcript );
     outer.append( '<div class="able-window-toolbar" />' );
