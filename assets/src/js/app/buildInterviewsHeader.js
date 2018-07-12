@@ -53,10 +53,10 @@ const buildInterviewsHeader = (
           <video
             data-able-player
             data-youtube-id="${video_id}"
-            data-youtube-playsinline
+            data-playsinline
             ${transcript_url ? `data-transcript-src="transcript-${id}"` : ''}
           >
-            ${transcript_url ? `<track kind="captions src="${transcript_url}">` : ''}
+            ${transcript_url ? `<track kind="captions" src="${transcript_url}">` : ''}
             ${description_url ? `<track kind="descriptions" src="${description_url}">` : ''}
           </video>
           <a class="able-fake-pause"></a>
