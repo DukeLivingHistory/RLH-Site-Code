@@ -140,13 +140,14 @@ span.transcript-node:hover {
 }
 
 .transcript-description {
-  font-style: italic;
+  //font-style: italic;
   opacity: .5;
   margin: 1em 0;
   &:before {
-    content: '['
+    content: 'Audio Description:';
+    display: block;
   };
   &:after {
-    content: ']';
+    content: '';
   }
 }

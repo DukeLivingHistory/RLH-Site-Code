@@ -9,7 +9,7 @@ class Transcript {
 
   function __construct($id){
     $this->transcript = $this->sanitize_file_paths(get_field('transcript', $id));
-    $this->description = $this->sanitize_file_paths(get_field('description', id));
+    $this->description = $this->sanitize_file_paths(get_field('description', $id));
   }
 
   public function get_slices_and_breaks($include_description){
@@ -77,6 +77,7 @@ class Transcript {
 
     if($include_description){
       preg_match_all($pattern, $this->description, $description_nodes);
+
       for( $i = 0; $i < count($description_nodes[0]); $i++ ){
         $insert = [];
 
