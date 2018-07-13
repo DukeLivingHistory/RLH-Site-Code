@@ -29,8 +29,8 @@ const syncAblePlayer = function(transcript, id, supp){
 
       const body = transcript.filter(node => {
         return (
-          node.type !== 'paragraph_break' &&
-          node.type !== 'description'
+          node.type !== 'paragraph_break'
+          // node.type !== 'description'
        )
       }).map(node => {
         return {
