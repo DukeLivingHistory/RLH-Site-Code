@@ -143,11 +143,4 @@ span.transcript-node:hover {
   //font-style: italic;
   opacity: .5;
   margin: 1em 0;
-  &:before {
-    content: 'Audio Description:';
-    display: block;
-  };
-  &:after {
-    content: '';
-  }
 }

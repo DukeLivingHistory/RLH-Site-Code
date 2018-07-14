@@ -27,17 +27,19 @@ const syncAblePlayer = function(transcript, id, supp){
         }
       })
 
-      const body = transcript.filter(node => {
-        return (
-          node.type !== 'paragraph_break'
-          // node.type !== 'description'
-       )
-      }).map(node => {
-        return {
+      const body = transcript.filter(node => (
+        node.type !== 'paragraph_break' &&
+        node.type !== 'description'
+      )).map(node => ({
+        text: node.contents,
+        start: node.start
+      }))
+
+      const descriptions = transcript.filter(node => node.type === 'description')
+        .map(node => ({
           text: node.contents,
-          start: node.start
-        }
-      })
+          start: node.start,
+        }))
 
       const suppContent = Object.entries(supp.timestamps).map(node => {
         const values = ['content', 'blockquote', 'attribution', 'title', 'description', 'link_text']
@@ -86,31 +88,27 @@ const syncAblePlayer = function(transcript, id, supp){
                 width:   window.SEARCHOPTS.WIDTH   || 1,
                 height:  window.SEARCHOPTS.HEIGHT  || false,
                 display: window.SEARCHOPTS.DISPLAY || 'line',
-              }).then(player => {
+              })
+              .then(player => {
                 ableplayerSearch(player, '#video-search', suppContent, {
                   duration,
                   color:   window.SUPP_CONT_OPTS.COLOR   || '#fff',
                   width:   window.SUPP_CONT_OPTS.WIDTH   || 1,
                   height:  window.SUPP_CONT_OPTS.HEIGHT  || false,
                   display: window.SUPP_CONT_OPTS.DISPLAY || 'line',
-                }).then(player => {
-                  // Hack to trigger search
-                  $('#video-search').val(window.SEARCHTERM).trigger('keyup')
-                  $.ajax({
-                    url: `/wp-json/v1/interviews/${id}/description` + cachebust(),
-                    success: data => {
-                      const { description } = data
-                      if(!description.length) return
-                      ableplayerSearch(player, '#video-search', description, {
-                        duration,
-                        color:   window.SEARCHOPTS.COLOR   || '#fff',
-                        width:   window.SEARCHOPTS.WIDTH   || 1,
-                        height:  window.SEARCHOPTS.HEIGHT  || false,
-                        display: window.SEARCHOPTS.DISPLAY || 'line',
-                      }).then(player => {
-                      }).catch(err => console.log(err))
-                    }
+                })
+                .then(player => {
+                  ableplayerSearch(player, '#video-search', descriptions, {
+                    duration,
+                    color:   window.AUDIOOPTS.COLOR   || '#fff',
+                    width:   window.AUDIOOPTS.WIDTH   || 1,
+                    height:  window.AUDIOOPTS.HEIGHT  || false,
+                    display: window.AUDIOOPTS.DISPLAY || 'line',
                   })
+                  .then(player => {
+                    // Hack to trigger search
+                    $('#video-search').val(window.SEARCHTERM).trigger('keyup')
+                  }).catch(err => console.log(err))
                 }).catch(err => console.log(err))
               }).catch(err => console.log(err))
             }).catch(err => console.log(err))
