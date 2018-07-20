@@ -440,3 +440,113 @@ $listViewIconSize: 32px;
 .contentHeader--timeline .contentHeader-selectWrapper {
   margin-top: 10px;
 }
+
+.content-grid {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  > * {
+    display: block;
+    width: 100%;
+    @media(min-width: 768px) {
+      width: 50%;
+      min-height: 15em;
+    }
+    @media(min-width: 992px) {
+      width: 33.3333%;
+      min-height: 15em;
+    }
+    background: darken($interviews, 15);
+    transition: all 1s ease;
+
+    &:hover {
+      background: black;
+
+      img {
+        opacity: 1;
+
+      }
+
+      .content-gridNode-excerpt {
+        max-height: 6em;
+        opacity: 1;
+        transition: max-height .2s ease, opacity .2s ease .2s;
+      }
+    }
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: lighten;
+    opacity: .8;
+    transition: opacity 1 ease;
+  }
+
+  &Node {
+    position: relative;
+
+    &-inner {
+      position: absolute;
+      bottom: 10px;
+      right: 3px;
+      padding: .5em 1em;
+      max-width: 70%;
+      background: $interviews;
+      color: $white;
+      @include antialiased;
+      transform: all .1s ease;
+    }
+
+    &-collection {
+      text-transform: uppercase;
+      font-size: .7em;
+      letter-spacing: .1em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      margin: 0 0 10px;
+    }
+
+    &-title {
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    &-subtitle {
+      font-size: .9em;
+      opacity: .6;
+      margin: 0;
+    }
+
+    &-excerpt {
+      margin: 5px 0 0;
+      font-size: .7em;
+      font-weight: 300;
+
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .2s ease .2s, opacity .2s ease;
+      opacity: 0;
+    }
+  }
+
+}
+
+[data-endpoint="interviews"][data-id="archive"] {
+  .contentHeader {
+    margin-bottom: 0!important;
+    padding-left: 2em;
+  }
+
+  .main {
+    max-width: none;
+    padding: 0;
+  }
+
+}

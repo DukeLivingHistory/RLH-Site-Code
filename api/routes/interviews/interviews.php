@@ -44,7 +44,11 @@ $route = new Route('/interviews/', 'GET', function($data){
   $interviews = get_posts($query_args);
 
   foreach($interviews as $interview){
-    $returns[] = new ContentNode($interview);
+    $obj = new Interview($interview);
+    $item = new ContentNode($interview);
+    $item->collection = $obj->collections[0] ? get_term($obj->collections[0])->name : null;
+    $item->subtitle = get_field('subtitle', $interview);
+    $returns[] = $item;
   }
 
   return [
