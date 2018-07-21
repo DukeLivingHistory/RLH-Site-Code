@@ -520,7 +520,7 @@ $listViewIconSize: 32px;
       background: $interviews;
       color: $white;
       @include antialiased;
-      transform: all .3s ease;
+      transition: all .3s ease;
     }
 
     &-collection {
