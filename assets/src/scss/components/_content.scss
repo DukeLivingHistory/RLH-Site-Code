@@ -451,12 +451,17 @@ $listViewIconSize: 32px;
   > * {
     display: block;
     width: 100%;
+    border: 10px solid white;
     @media(min-width: 768px) {
       width: 50%;
       min-height: 15em;
     }
     @media(min-width: 992px) {
       width: 33.3333%;
+      min-height: 15em;
+    }
+    @media(min-width: 1400px) {
+      width: 25%;
       min-height: 15em;
     }
     background: darken($interviews, 15);
@@ -470,10 +475,14 @@ $listViewIconSize: 32px;
 
       }
 
+      .content-gridNode-inner {
+        max-width: 65%;
+      }
+
       .content-gridNode-excerpt {
-        max-height: 6em;
+        max-height: 12em;
         opacity: 1;
-        transition: max-height .2s ease, opacity .2s ease .2s;
+        transition: max-height .3s ease, opacity .2s ease .3s;
       }
     }
   }
@@ -487,19 +496,31 @@ $listViewIconSize: 32px;
     transition: opacity 1 ease;
   }
 
+  &Collection {
+    margin: 0 -10px 80px;
+    h2 {
+      margin: 0 10px;
+    }
+  }
+
   &Node {
     position: relative;
+
+    &.left &-inner {
+      left: 3px;
+      right: auto;
+    }
 
     &-inner {
       position: absolute;
       bottom: 10px;
       right: 3px;
       padding: .5em 1em;
-      max-width: 70%;
+      max-width: 50%;
       background: $interviews;
       color: $white;
       @include antialiased;
-      transform: all .1s ease;
+      transform: all .3s ease;
     }
 
     &-collection {
@@ -519,34 +540,23 @@ $listViewIconSize: 32px;
     }
 
     &-subtitle {
-      font-size: .9em;
+      font-size: .8em;
       opacity: .6;
       margin: 0;
+      line-height: 1.1;
     }
 
     &-excerpt {
       margin: 5px 0 0;
       font-size: .7em;
       font-weight: 300;
+      line-height: 1.3;
 
       max-height: 0;
       overflow: hidden;
       transition: max-height .2s ease .2s, opacity .2s ease;
       opacity: 0;
     }
-  }
-
-}
-
-[data-endpoint="interviews"][data-id="archive"] {
-  .contentHeader {
-    margin-bottom: 0!important;
-    padding-left: 2em;
-  }
-
-  .main {
-    max-width: none;
-    padding: 0;
   }
 
 }
