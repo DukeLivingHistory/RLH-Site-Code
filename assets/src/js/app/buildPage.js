@@ -132,6 +132,7 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
             const offset = $('.contentHeader').outerHeight() + 32
             setTimeout(() => {
               $('body, html').scrollTop(timestamp.offset().top - offset)
+              timestamp.addClass('able-highlight')
             })
           }
         })
