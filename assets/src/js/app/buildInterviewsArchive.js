@@ -76,8 +76,8 @@ const buildInterviewsArchive = (
     abc_desc: (a, b) => a.abc_term ? -1 * a.abc_term.localeCompare(b.abc_term) : -1,
     date: (a, b) => a.interview_date - b.interview_date,
     date_desc: (a, b) => -1 * (a.interview_date - b.interview_date),
-    pub: (a, b) => a.publish_date - b.publih_date,
-    pub_desc: (a, b) => -1 * (a.publish_date - b.publih_date),
+    publish: (a, b) => a.publish_date - b.publish_date,
+    publish_desc: (a, b) => -1 * (a.publish_date - b.publish_date),
   }
 
   const nav = (selected) => {
