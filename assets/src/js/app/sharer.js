@@ -63,7 +63,6 @@ const sharer = (
     attachClipboardHandlers(clipboard)
 
     $('body').on('click', `[data-share-id="${_id}"] li`, function(e) {
-      console.log('click')
       const type = $(this).data('soc')
       let link = ''
       switch(type) {

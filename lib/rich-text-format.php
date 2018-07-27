@@ -26,7 +26,6 @@ add_action('admin_head', function() {
 
         // If last character is not punctuation, make it so
         if(!text.match(/[\.\?!]$/)) {
-          console.log('adding period')
           text = text + '.'
         }
 
@@ -34,8 +33,6 @@ add_action('admin_head', function() {
           text: text.replace('\n', ' ')+' ',
           pattern: ".*?(?<![A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
         })
-
-        console.log(data)
 
         // The negative look-behind we need isn't implemented in most JS runtimes,
         // so we call a microservice.
@@ -49,7 +46,6 @@ add_action('admin_head', function() {
           data: data,
           success: function(exploded) {
             // Replace hashed values
-            console.log('Exploded:', exploded)
             var cleaned = exploded.map(function(value) {
               var paragraph = false
               var note = false
@@ -101,8 +97,6 @@ add_action('admin_head', function() {
           })
           .replace(/\s?(?:\d\d)?:\d\d:\d\d\.\d\d\d\s?/g, '')
           .replace(/-->/g, '')
-
-        console.log('Cleaned:\n', cleaned)
 
         return cleaned
       }
