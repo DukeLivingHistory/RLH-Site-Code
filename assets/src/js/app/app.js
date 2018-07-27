@@ -105,7 +105,6 @@ $(document).ready(function(){
 
   // Global Event Handlers
   $('body').on('mousedown touchstart', () => {
-    console.log('Checked value: ', window.SOCIAL_POPUP_SHOULD_BE_REMOVED)
     setTimeout(() => {
       if(!window.SOCIAL_POPUP_SHOULD_BE_REMOVED) return
       $('.socialPopup').remove()

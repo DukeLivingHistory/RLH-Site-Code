@@ -4,7 +4,7 @@ const sharer = require('./sharer')
 const highlighter = (target) => {
   const makePopup = (url, title, text, style, className, isChangingFromSelection) => {
     const shareLinks = sharer(url, title, text, {
-      clipboardText: `${text}\n${url}`,
+      clipboardText: `${text} \n${url}`,
       copyText: 'Selected text plus link copied to clipboard!'
     })
 
@@ -96,8 +96,6 @@ const highlighter = (target) => {
 
     if(!$anchor.length || !$focus.length) return
 
-    console.log($anchor, $focus)
-
     if(
       $anchor.data('highlight') ||
       $focus.data('highlight')
@@ -155,7 +153,7 @@ const highlighter = (target) => {
     }
 
     window.POPUP = setTimeout(() => {
-      makePopup(url, document.title, text, style, className, isChangingFromSelection)
+      makePopup(url, document.title, sanitized, style, className, isChangingFromSelection)
     }, 250)
   }
 
