@@ -127,6 +127,14 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
         buildTranscript(page, data.id, (transcript, wrapper) => {
           highlighter('.transcript')
           buildSupp(wrapper, endpoint, queriedObject, null, !!transcript)
+          if(getNodeFromTimestamp()){
+            const timestamp = getNodeFromTimestamp()
+            const offset = $('.contentHeader').outerHeight() + 32
+            setTimeout(() => {
+              $('body, html').scrollTop(timestamp.offset().top - offset)
+              timestamp.addClass('able-highlight')
+            })
+          }
         })
       }
       else if(endpoint === 'collections') {

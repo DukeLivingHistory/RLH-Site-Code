@@ -18,7 +18,6 @@ const buildInterviewsHeader = (
     link
   }
 ) => {
-  console.log(description_url)
   const shareLinks = sharer(link, name, introduction.replace(/(<([^>]+)>)/ig,''), {})
   const indicator = scrollIndicator('.transcript')
 
@@ -53,7 +52,7 @@ const buildInterviewsHeader = (
           <video
             data-able-player
             data-youtube-id="${video_id}"
-            data-playsinline
+            data-youtube-playsinline
             ${transcript_url ? `data-transcript-src="transcript-${id}"` : ''}
           >
             ${transcript_url ? `<track kind="captions" src="${transcript_url}">` : ''}
@@ -72,8 +71,6 @@ const buildInterviewsHeader = (
       </header>
     </div>
   `
-
-  console.log(append)
 
   page.append(append)
   shareLinks.attachHandlers()

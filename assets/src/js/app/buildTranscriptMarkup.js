@@ -17,7 +17,7 @@ const buildTranscriptMarkup = (data, {
       case 'description':
         if(useDescription){
           markup += paragraphOpen ? '</div>' : '';
-          markup += `<div data-node="Audio Description: [${node.contents}]" class="transcript-description">Audio Description: [${node.contents}]</div>`;
+          markup += `<div data-node="[Audio Description: ${node.contents}]" class="transcript-description">[Audio Description: ${node.contents}]</div>`;
         }
         break;
       case 'paragraph_break':
