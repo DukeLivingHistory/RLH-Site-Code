@@ -22,7 +22,7 @@ Create a separate set of credentials for Google Maps, and paste your Client ID i
 For Facebook sharing functionality (which uses Facebook's SDK) to work, you'll need to set up an application through Facebook and provide the client ID. This is optional for site functionality.
 
 ### Building
-Building assets requires npm or yarn to be installed locally. To compile production ready assets, run `npm run build:js`, `npm run build:css`, or just `npm run build` to compile production-ready assets. (Note that the package.json folder includes scripts for deployment as well, which relies on having a separate repo which can be integrated with whatever CI/CD tool you want. This project uses [DeployHQ](https://www.deployhq.com/) for to push to a number of production and staging servers).
+Building assets requires npm or yarn to be installed locally. To compile production ready assets, run `npm run build:js`, `npm run build:css`, or just `npm run build` to compile production-ready assets. (Note that the package.json file includes scripts for deployment as well, which relies on having a separate repo which can be integrated with whatever CI/CD tool you want. This project uses [DeployHQ](https://www.deployhq.com/) for to push to a number of production and staging servers).
 
 ## Thanks
 * [Able Player](https://github.com/ableplayer/ableplayer)
