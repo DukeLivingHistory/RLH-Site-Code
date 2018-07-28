@@ -31,13 +31,18 @@ const buildInterviewsArchive = (
     img_set,
     link,
     collection,
-    card_alignment,
+    interview_date,
   }) => `
   ${img_set ? `<img src="${img_set.sizes.md}"/>` : ''}
-  <li class="content-gridNode ${excerpt ? 'hasExcerpt' : ''} ${card_alignment || 'right'}">
+  <li class="content-gridNode">
     <div class="content-gridNode-inner">
       <div class="content-gridNode-title">${title}</div>
       ${subtitle ? `<div class="content-gridNode-subtitle">${subtitle}</div>` : ''}
+      ${interview_date ? `<div class="content-gridNode-date">
+        ${new Date(interview_date * 1000).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        })
+      }</div>` : ''}
     </div>
   </li>
   `

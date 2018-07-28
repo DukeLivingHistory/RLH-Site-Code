@@ -50,18 +50,7 @@ add_action( 'acf/init', function(){
         'label' => 'Subtitle',
         'name' => 'subtitle',
         'type' => 'text',
-        'wrapper' => [ 'width' => '50' ]
-      ],
-      [
-        'key' => 'card_alignment',
-        'label' => 'Card Alignment',
-        'name' => 'card_alignment',
-        'type' => 'select',
-        'choices' => [
-          'left' => 'Left',
-          'right' => 'Right',
-        ],
-        'wrapper' => [ 'width' => '50' ]
+        'wrapper' => [ 'width' => '100' ]
       ],
       [
         'key' => 'youtube_id',

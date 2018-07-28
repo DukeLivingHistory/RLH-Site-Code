@@ -48,7 +48,6 @@ $route = new Route('/interviews/', 'GET', function($data){
     $item = new ContentNode($interview);
     $item->collection = $obj->collections[0] ? get_term($obj->collections[0])->name : null;
     $item->subtitle = get_field('subtitle', $interview);
-    $item->card_alignment = get_field('card_alignment', $interview);
     $item->abc_term = get_field('abc_term', $interview);
     $item->interview_date = date('U', strtotime(get_field('interview_date', $interview)));
     $item->publish_date = get_the_date('U', $interview);
