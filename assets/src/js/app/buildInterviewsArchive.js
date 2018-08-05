@@ -47,35 +47,6 @@ const buildInterviewsArchive = (
   </li>
   `
 
-  const collections = items.reduce((groups, item) => {
-    if(item.collection) {
-      const existing = groups[item.collection] || []
-      groups[item.collection] = [...existing, item]
-    } else {
-      groups.ungrouped = [...groups.ungrouped, item]
-    }
-    return groups
-  }, { ungrouped: [] } )
-
-  // const sort = ([a], [b]) => {
-  //   if(a === 'ungrouped') {
-  //     return 1
-  //   }
-  //   if(b === 'ungrouped') {
-  //     return -1
-  //   }
-  //   return a.localeCompare(b)
-  // }
-
-  // const feed = Object.entries(collections).sort(sort).map(([name, items]) => `
-  //   <div class="content-gridCollection">
-  //     ${name !== 'ungrouped' ? `<h2>${name}</h2>` : ''}
-  //     <ul class="content-grid">
-  //       ${items.map(item => internalLink(item, node(item))).join('')}
-  //     </ul>
-  //   </div>
-  // `).join('')
-
   const sorts = {
     abc: (a, b) => a.abc_term ? a.abc_term.localeCompare(b.abc_term) : -1,
     abc_desc: (a, b) => a.abc_term ? -1 * a.abc_term.localeCompare(b.abc_term) : -1,
@@ -92,7 +63,9 @@ const buildInterviewsArchive = (
       { value: 'date_desc', label: 'Date Interviewed' },
       { value: 'date', label: 'Date Interviewed (reverse)' },
       { value: 'publish_desc', label: 'Date Published' },
-      { value: 'publish', label: 'Date Published (reverse)' }
+      { value: 'publish', label: 'Date Published (reverse)' },
+      { value: 'collection', label: 'Collection Name' },
+      { value: 'collection_reverse', label: 'Collection Name (reverse)' },
     ]
 
 
@@ -110,7 +83,11 @@ const buildInterviewsArchive = (
     $nav.on('change', `select`, function(e) {
       e.preventDefault()
       const val = $(this).val()
-      makeFeed(val)
+      if(val === 'collection' || val === 'collection_reverse') {
+        makeCollectionFeed(val)
+      } else {
+        makeFeed(val)
+      }
     })
 
     return $nav
@@ -125,6 +102,38 @@ const buildInterviewsArchive = (
     page.empty()
     page.append(header)
     page.append(nav(sortType))
+    page.append(feed)
+  }
+
+  const makeCollectionFeed = (val) => {
+    const collections = items.reduce((groups, item) => {
+      if(item.collection) {
+        const existing = groups[item.collection] || []
+        groups[item.collection] = [...existing, item]
+      } else {
+        groups.ungrouped = [...groups.ungrouped, item]
+      }
+      return groups
+    }, { ungrouped: [] } )
+
+    const sort = ([a], [b]) => {
+      const reverse = (val === 'collection_reverse') ? -1 : 1
+      if(a === 'ungrouped') return 1
+      if(b === 'ungrouped') return -1
+      return a.localeCompare(b) * reverse
+    }
+
+    const feed = Object.entries(collections).sort(sort).map(([name, items]) => `
+      <div class="content-gridCollection">
+        ${name !== 'ungrouped' ? `<h2>${name}</h2>` : ''}
+        <ul class="content-grid">
+          ${items.map(item => internalLink(item, node(item))).join('')}
+        </ul>
+      </div>
+    `).join('')
+    page.empty()
+    page.append(header)
+    page.append(nav(val))
     page.append(feed)
   }
 
