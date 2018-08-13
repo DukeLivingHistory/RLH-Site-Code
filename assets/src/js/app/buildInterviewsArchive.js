@@ -33,7 +33,7 @@ const buildInterviewsArchive = (
     collection,
     interview_date,
   }) => `
-  ${img_set ? `<img src="${img_set.sizes.md}"/>` : ''}
+  ${img_set ? `<div class="content-gridImg"><img src="${img_set.sizes.md}"/></div>` : ''}
   <li class="content-gridNode">
     <div class="content-gridNode-inner">
       <div class="content-gridNode-title">${title}</div>

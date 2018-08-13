@@ -171,10 +171,6 @@ $listViewIconSize: 32px;
   text-align: right;
   height: $listViewIconSize;
   margin: 0 0 15px;
-  display: none;
-  @include media-breakpoint-up(lg){
-    display: block;
-  }
 }
 
 .listView input {
@@ -286,9 +282,9 @@ $listViewIconSize: 32px;
 
 .genericContent--research {
   @include media-breakpoint-up(lg){
-    @include make-col();
-    @include make-col-span(9);
-    margin-top: -50px;
+    margin-left: 15em;
+    padding: 15px;
+    margin-top: -50px; // offset margin from contentHeader
   }
 }
 
@@ -448,9 +444,14 @@ $listViewIconSize: 32px;
   padding: 0;
   margin: 0;
 
+  @media(min-width: 1800px) {
+    margin: 0 -200px;
+    h2 {
+      margin: 0 0 0 -190px;
+    }
+  }
+
   > * {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     border: 10px solid white;
     text-decoration: none;
@@ -463,11 +464,12 @@ $listViewIconSize: 32px;
     @media(min-width: 1400px) {
       width: 25%;
     }
-    background: darken($interviews, 15);
+    @media(min-width: 1800px) {
+      width: 16.666%;
+    }
     transition: all 1s ease;
 
     &:hover {
-      background: black;
 
       img {
         opacity: 1;
@@ -481,6 +483,10 @@ $listViewIconSize: 32px;
     }
   }
 
+  &Img {
+    background: $black;
+  }
+
   img {
     display: block;
     width:100%;
@@ -490,7 +496,7 @@ $listViewIconSize: 32px;
   }
 
   &Collection {
-    margin: 0 -10px 80px;
+    margin: 0 -10px 40px;
     h2 {
       margin: 0 10px;
     }
@@ -506,9 +512,7 @@ $listViewIconSize: 32px;
     }
 
     &-inner {
-      height: 100%;
       padding: .5em 1em;
-      background: $white;
       color: $body;
       @include antialiased;
       transition: all .3s ease;
