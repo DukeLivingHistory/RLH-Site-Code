@@ -125,7 +125,7 @@ const buildInterviewsArchive = (
 
     const feed = Object.entries(collections).sort(sort).map(([name, items]) => `
       <div class="content-gridCollection">
-        ${name !== 'ungrouped' ? `<h2>${name}</h2>` : ''}
+        ${name !== 'ungrouped' ? `<h2>${name}</h2>` : `<h2>Standalone Interviews</h2>`}
         <ul class="content-grid">
           ${items.map(item => internalLink(item, node(item))).join('')}
         </ul>

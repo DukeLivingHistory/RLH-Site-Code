@@ -445,7 +445,6 @@ $listViewIconSize: 32px;
   margin: 0;
 
   @media(min-width: 1800px) {
-    margin: 0 -200px;
     h2 {
       margin: 0 0 0 -190px;
     }
@@ -543,4 +542,12 @@ $listViewIconSize: 32px;
     }
   }
 
+}
+
+@media (min-width: 1800px) {
+  [data-endpoint="interviews"][data-id="archive"] {
+    .main {
+      max-width: 1500px;
+    }
+  }
 }
