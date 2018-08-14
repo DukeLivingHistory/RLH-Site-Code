@@ -546,6 +546,7 @@ $listViewIconSize: 32px;
 
 @media (min-width: 1800px) {
   [data-endpoint="interviews"][data-id="archive"] {
+    .header,
     .main {
       max-width: 1500px;
     }
