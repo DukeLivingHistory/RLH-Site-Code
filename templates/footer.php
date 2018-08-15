@@ -6,8 +6,8 @@
     </a>
   </figure>
   <nav class="footer-nav">
-    <?php wp_nav_menu( [ 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'menu menu--footer menu--primary' ] ); ?>
-    <?php wp_nav_menu( [ 'theme_location' => 'utility', 'container' => '', 'menu_class' => 'menu menu--footer' ] ); ?>
+    <?php wp_nav_menu( [ 'theme_location' => 'primary', 'depth' => 1, 'container' => '', 'menu_class' => 'menu menu--footer menu--primary' ] ); ?>
+    <?php wp_nav_menu( [ 'theme_location' => 'utility', 'depth' => 1, 'container' => '', 'menu_class' => 'menu menu--footer' ] ); ?>
   </nav>
   <div class="footer-info">
     <?= str_replace( '{{year}}', Date('Y'), get_field( 'address', 'options' ) ); ?>

@@ -1,6 +1,5 @@
-const sublink = (elem) => {  
+const sublink = (elem) => {
   const handleOn = function() {
-    console.log('handleOn')
     const $link = $(this).closest('a')
     const sublink = $(this).attr('data-sublink')
     const href = $link.data('href') || $link.attr('href') // Get original href
@@ -14,9 +13,7 @@ const sublink = (elem) => {
   }
 
   const pseudoClick = function(e) {
-    console.log(e)
     if(e.which !== 13) return
-    console.log('pseudoclick')
     $(this).closest('a').trigger('click')
   }
 

@@ -168,13 +168,9 @@
 $listViewIconSize: 32px;
 
 .listView {
+  text-align: right;
   height: $listViewIconSize;
   margin: 0 0 15px;
-  text-align: right;
-  display: none;
-  @include media-breakpoint-up(lg){
-    display: block;
-  }
 }
 
 .listView input {
@@ -286,9 +282,9 @@ $listViewIconSize: 32px;
 
 .genericContent--research {
   @include media-breakpoint-up(lg){
-    @include make-col();
-    @include make-col-span(9);
-    margin-top: -50px;
+    margin-left: 15em;
+    padding: 15px;
+    margin-top: -50px; // offset margin from contentHeader
   }
 }
 
@@ -439,4 +435,120 @@ $listViewIconSize: 32px;
 
 .contentHeader--timeline .contentHeader-selectWrapper {
   margin-top: 10px;
+}
+
+.content-grid {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  @media(min-width: 1800px) {
+    h2 {
+      margin: 0 0 0 -190px;
+    }
+  }
+
+  > * {
+    width: 100%;
+    border: 10px solid white;
+    text-decoration: none;
+    @media(min-width: 768px) {
+      width: 50%;
+    }
+    @media(min-width: 992px) {
+      width: 33.3333%;
+    }
+    @media(min-width: 1400px) {
+      width: 25%;
+    }
+    @media(min-width: 1800px) {
+      width: 16.666%;
+    }
+    transition: all 1s ease;
+
+    &:hover {
+
+      img {
+        opacity: 1;
+      }
+
+      .content-gridNode-excerpt {
+        max-height: 12em;
+        opacity: 1;
+        transition: max-height .3s ease, opacity .2s ease .3s;
+      }
+    }
+  }
+
+  &Img {
+    background: $black;
+  }
+
+  img {
+    display: block;
+    width:100%;
+    height: auto;
+    transition: opacity .3s ease;
+    opacity: .7;
+  }
+
+  &Collection {
+    margin: 0 -10px 40px;
+    h2 {
+      margin: 0 10px;
+    }
+  }
+
+  &Node {
+    position: relative;
+    height: 100%;
+
+    &.left &-inner {
+      left: 3px;
+      right: auto;
+    }
+
+    &-inner {
+      padding: .5em 1em;
+      color: $body;
+      @include antialiased;
+      transition: all .3s ease;
+    }
+
+    &-title {
+      font-size: 19px;
+      margin: 0 0 5px;
+      line-height: 1.1;
+      color: mix($body, $interviews);
+    }
+
+    &-subtitle {
+      font-size: 15px;
+      opacity: .6;
+      margin: 0;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 300;
+      color: black;
+    }
+
+    &-date {
+      margin: 5px 0 0;
+      font-size: 15px;
+      color: mix($body, $interviews);
+    }
+  }
+
+}
+
+@media (min-width: 1800px) {
+  [data-endpoint="interviews"][data-id="archive"] {
+    .header,
+    .main {
+      max-width: 1500px;
+    }
+  }
 }

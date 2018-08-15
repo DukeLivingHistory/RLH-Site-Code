@@ -6,6 +6,7 @@ const buildCollectionFeed    = require('./buildCollectionFeed')
 const buildMenu = require('./buildMenu')
 const buildTimeline          = require('./buildTimeline')
 const buildTimelineHeader    = require('./buildTimelineHeader')
+const buildInterviewsArchive = require('./buildInterviewsArchive')
 const buildInterviewsHeader  = require('./buildInterviewsHeader')
 const buildOtherInCollection = require('./buildOtherInCollection')
 const buildTranscript        = require('./buildTranscript')
@@ -35,7 +36,11 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
       document.title = 'Search for '+term
       const endpoint = `/wp-json/v1/search/${term}/${type}?count=${window.COUNT}&offset=0${cachebust(true)}&${params}`
       $.get(endpoint, function(data){
-        buildArchive(page, Object.assign({}, data, { isSearch: true }), endpoint)
+        if(type === 'interview') {
+          buildInterviewArchive(page, data)
+        } else {
+          buildArchive(page, Object.assign({}, data, { isSearch: true }), endpoint)
+        }
         animatePage(wrapper, page, dir, function(){
           respImg.load('.respImg')
         })
@@ -44,15 +49,10 @@ const buildPage = function(wrapper, endpoint, queriedObject, dir){
     else {
       if(endpoint === 'interviews'){
         const order = Cookies.get('ARCHIVEORDER') || 'abc'
-        const url = `/wp-json/v1/interviews?order=${order}&count=${window.COUNT}&include=all`+cachebust(true)
+        const url = `/wp-json/v1/interviews?order=${order}&count=-1&include=all`+cachebust(true)
 
         $.get(url, function(data){
-          buildArchive(page, data, endpoint, true, [
-            'Media',
-            'No Media',
-            'All'
-          ])
-
+          buildInterviewsArchive(page, data)
           animatePage(wrapper, page, dir, function(){
             respImg.load('.respImg')
           })

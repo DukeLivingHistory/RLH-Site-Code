@@ -187,12 +187,10 @@ add_action('admin_head', function(){ ?>
     var timestampsById = {};
 
     var updateTimestampOptions = function( elem ){
-      console.log('updatingTimestampOptions')
       var id = jQuery(elem).val();
       var picker = jQuery(elem).closest( '[data-name="content"]' ).find( '[data-name="link_timestamp_picker"] select' );
       if( !id ) return;
       if( !timestampsById[id] ){
-        console.log( '/wp-json/v1/content/'+id+'/timestamps')
         jQuery.get( '/wp-json/v1/content/'+id+'/timestamps', function( data ){
           picker.empty();
           picker.append( '<option value="null">---</option>' );
@@ -215,7 +213,6 @@ add_action('admin_head', function(){ ?>
     } );
 
     jQuery( 'body' ).on( 'change', '[data-name="link"] select', function(){
-      console.log('wut')
         var input = jQuery(this).closest( '[data-name="content"]' ).find( '[data-name="link_timestamp"] input' );
         input.val('');
         updateTimestampOptions(this);

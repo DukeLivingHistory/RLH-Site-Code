@@ -5,7 +5,6 @@ const highlightSuppCont = (nodes, subnodes, highlight) => {
   if(!highlight) return
   const HIGHLIGHT = new RegExp(`(${escapeRegex(highlight || '')})`, 'ig')
   $(nodes).each(function(){
-    console.log(this)
     const $subnodes = $(this).find(subnodes)
     let isMatchAll = false
     $subnodes.each(function(){

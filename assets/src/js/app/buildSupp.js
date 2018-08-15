@@ -36,7 +36,6 @@ const buildSupp = (
       inner = inner + `
         <ul class="suppCont-inner" data-timestamp="${timestamp}">
           ${timestamps[timestamp].map((node) => {
-            console.log(node)
             const { preview, cont } = buildSuppInner(node)
             const url = `${getUrlWithNoHash()}#sc-${index}`
 

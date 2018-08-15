@@ -72,8 +72,6 @@ const buildInterviewsHeader = (
     </div>
   `
 
-  console.log(append)
-
   page.append(append)
   shareLinks.attachHandlers()
   indicator.attachHandlers()

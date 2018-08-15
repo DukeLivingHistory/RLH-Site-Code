@@ -46,6 +46,13 @@ add_action( 'acf/init', function(){
   			'type' => 'message'
   		],
       [
+        'key' => 'subtitle',
+        'label' => 'Subtitle',
+        'name' => 'subtitle',
+        'type' => 'text',
+        'wrapper' => [ 'width' => '100' ]
+      ],
+      [
         'key' => 'youtube_id',
         'label' => 'YouTube Video ID',
         'name' => 'youtube_id',

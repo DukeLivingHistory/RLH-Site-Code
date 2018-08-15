@@ -13,10 +13,8 @@ const respBg = function(elem){
   }
 
   const url = `/wp-json/v1/images/${id}/${set}_${getSize()}${cachebust()}`
-  console.log(url)
 
   $.get(url, (data) => {
-    console.log(data)
     $(elem).css('background-image', 'url('+data.requested+')')
   })
 
