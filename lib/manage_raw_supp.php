@@ -1,20 +1,40 @@
 <?php
+/**
+ * Given a string, determine if it is a timestamp
+ * @param  string  $line Single line of VTT
+ * @return boolean       Whether line is a timestamp
+ */
 function is_timestamp($line){
   $pattern = "/([^\d].+\s)?(?:([\d][\d:\.]+)[ \-\>]+([\d][\d:\.]+).*)/";
   return preg_match($pattern, $line);
 }
 
+/**
+ * Given a string, determine if it indicates a line break
+ * @param  string $string Single line ofVTT
+ * @return boolean        Whether line is a timestamp
+ */
 function is_open($string){
   $string = trim($string);
   return strpos($string, 'NOTE open by default') !== false;
 }
 
+/**
+ * Maps an image url to id. We want users to be able to input URLs, but the data must be stored as the corresponding id.
+ * @param  string $image_url Image URL
+ * @return int               WordPress attachment id
+ */
 function get_image_id_from_url($image_url) {
 	global $wpdb;
 	$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s';", $image_url ));
   return $attachment[0];
 }
 
+/**
+ * Given a transcript file, pull out supporting content nodes.
+ * @param  string $vtt String of VTT text
+ * @return array       Array of nodes, each of which has metadata needed by supporting content storage.
+ */
 function get_formatted_supp_cont_cues($vtt){
   $lines = explode("\n", $vtt);
   $cues = [];
@@ -102,18 +122,25 @@ function get_formatted_supp_cont_cues($vtt){
 }
 
 add_action('save_post', function( $id ){
+  // Early exit if this isn't an inteview or interactive
   if(
     get_post_type($id) !== 'interview' &&
     get_post_type($id) !== 'interactive'
     ) return;
 
+  // Early exit if user didn't indicate content should be used to save
   if(!$_POST['acf']['save_from_supp_cont_raw']) return;
+
+  // Reset value of field
   update_field('save_from_supp_cont_raw', 0, $id );
 
+  // Get formatted cues from content
   $supporting_content = $_POST['acf']['supporting_content_raw'];
   $formatted = get_formatted_supp_cont_cues($supporting_content);
   $insert = [];
 
+  // For each piece of content, create a new ACF repeater node
+  // what's inserted is overloaded - everything needed will be saved, but anything extraneous won't be
   if($formatted){
     foreach($formatted as $slice){
       $insert[] = [
@@ -136,7 +163,7 @@ add_action('save_post', function( $id ){
             'name'             => $slice['title'],
             'sc_image_img'     => $slice['image'],
             'iframe'           => $slice['iframe'],
-            'location'         => [ // TODO: fix this
+            'location'         => [ // FIXME: This is a non-functional demo
               'address' => $slice['address'],
               'lat'     => '36.000180',
               'lng'     => '-78.897299'
@@ -146,8 +173,10 @@ add_action('save_post', function( $id ){
       ];
     }
 
+    // Update ACF field
     update_field('sc_row', $insert, $id);
 
+    // Update each row of wp_post_meta
     $sc_rows = $insert;
     if($sc_rows) foreach($sc_rows as $index => $content) {
       $meta_key = 'sc_row_'.$index.'_timestamp';
@@ -155,6 +184,7 @@ add_action('save_post', function( $id ){
     }
   }
 
+  // If we have supporting content, save it to uploads directory with .vtt extension
   if( strlen( $supporting_content ) > 0){
     $title = preg_replace( '/[^a-zA-Z0-9\s]/', '', $_POST['post_title'] );
     $title = str_replace( ' ', '_', strtolower( $title ) );
