@@ -10,7 +10,7 @@ Code pertaining to this functionality is found in the following places:
 * `assets/src/js/buildSuppInner.js` (constructs markup from structured data)
 
 ## Examples
-###Text
+### Text
 ```
 00:00:00.000 --> 00:00:01.000
 CONTENT Text to be display when expanded
