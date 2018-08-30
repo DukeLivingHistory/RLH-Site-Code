@@ -33,8 +33,19 @@ Data models are located in the `models` directory. This includes utility classes
 
 Miscellaneous PHP helper functions are located in the `lib` directory. These functions range from things like registering menus or custom fields within WordPress, to providing regex for parsing transcripts.
 
-### Documentation
+## Child themes
+Static content for the site (the front page, header, footer, Posts, and Pages) can be overwritten using [standard practices](https://codex.wordpress.org/Child_Themes)
+
+However, because interactive content (interviews, collections, search results, etc) are rendered client-side from JS and CSS compiled with build tools from ES2017 and SCSS, these areas cannot be overwritten with child themes. You can fork this project and make any necessary changes.
+
+If you'd just like to make simple CSS changes, a great place to start would be through a custom CSS plugin [like this one](https://wordpress.org/plugins/simple-custom-css/).
+
+
+## Documentation
 Documentation for the project is a work in progress. If you have any questions about a particular piece of functionality, open an issue.
+
+#### Guides
+* [Adding supporting content as VTT](https://github.com/DukeLivingHistory/RLH-Site-Code/blob/master/docs/editing/EXAMPLE_SUPPORTING_CONTENT_VTT.MD)
 
 ## Thanks
 This project is made possible due to a number of open source products.
