@@ -10,7 +10,7 @@ Code pertaining to this functionality is found in the following places:
 * `assets/src/js/buildSuppInner.js` (constructs markup from structured data)
 
 ## Examples
-###Text
+### Text
 ```
 00:00:00.000 --> 00:00:01.000
 CONTENT Text to be display when expanded
@@ -37,10 +37,12 @@ GALLERY WordPress ID of gallery to display
 DESCRIPTION Description of content
 ```
 
-### Map
+### Map marker
+_(Note: this is not functional, because how we need to store structured data is not easily attainable from human-friendly input. This can be revisited. This is how content should be correctly formatted, though.)_
 ```
 00:00:00.000 --> 00:00:01.000
 TITLE Name of content
+ADDRESS Map address
 ```
 
 ### Internal link
