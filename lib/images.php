@@ -3,7 +3,7 @@
 /* This file registers custom image sizes based on the contents of /img/ */
 
 function registerSizes(){
-	$sizes = file_get_contents( get_stylesheet_directory().'/lib/img/sizes.json' );
+	$sizes = file_get_contents( get_template_directory().'/lib/img/sizes.json' );
   $sizes = json_decode( $sizes );
 	$sets = $sizes->sets;
   $cases = $sizes->cases;

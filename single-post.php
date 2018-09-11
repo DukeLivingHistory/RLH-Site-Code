@@ -1,6 +1,6 @@
 <?php
 global $post;
-require_once(get_stylesheet_directory() . '/api/routes/search/search-helpers.php');
+require_once(get_template_directory() . '/api/routes/search/search-helpers.php');
 while( have_posts() ){
   the_post();
 ?>

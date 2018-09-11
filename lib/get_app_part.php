@@ -4,7 +4,7 @@
  */
 
 function get_app() {
-  $dir = get_stylesheet_directory_uri();
+  $dir = get_template_directory_uri();
   ?>
   <div class="app-wrapper"></div>
   <script src="<?= $dir; ?>/assets/vendor/js/ableplayer.min.js"></script>
