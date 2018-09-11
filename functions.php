@@ -31,7 +31,7 @@ $includes = [
 ];
 
 foreach( $includes as $include ){
-  if ( !$filepath = locate_template($include) ) {
+  if ( !$filepath = get_template_directory() . '/' . $include ) {
     trigger_error( sprintf(__('Error locating %s for inclusion' ), $include ), E_USER_ERROR);
   }
   require_once $filepath;

@@ -2,7 +2,7 @@
 
 /* This file makes the timestamps present in a piece of content available to supporting content */
 
-include_once(get_stylesheet_directory() . '/models/Transcript.php');
+include_once(get_template_directory() . '/models/Transcript.php');
 
 function add_choices($field){
   if(!$id = $_GET['post']) return;
