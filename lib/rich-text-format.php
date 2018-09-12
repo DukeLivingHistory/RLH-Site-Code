@@ -30,7 +30,7 @@ add_action('admin_head', function() {
         }
 
         var data = JSON.stringify({
-          text: text.replace('\n', ' ')+' ',
+          text: text.replace('\n', ' ').replace('??', '@@@?@@@?')+' ',
           pattern: ".*?(?<![A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
         })
 
@@ -46,7 +46,7 @@ add_action('admin_head', function() {
           data: data,
           success: function(exploded) {
             // Replace hashed values
-            var cleaned = exploded.map(function(value) {
+            var cleaned = exploded.map(function(value, i) {
               var paragraph = false
               var note = false
               if(value.match(/\[\[P\]\]/)) {
