@@ -31,7 +31,7 @@ add_action('admin_head', function() {
 
         var data = JSON.stringify({
           text: text.replace('\n', ' ').replace('??', '@@@?@@@?')+' ',
-          pattern: ".*?(?<![A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
+          pattern: ".*?(?<!\\s[A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
         })
 
         // The negative look-behind we need isn't implemented in most JS runtimes,
