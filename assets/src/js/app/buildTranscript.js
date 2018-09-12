@@ -29,7 +29,9 @@ var buildTranscript = function( page, id, cb ){
   const onEachNode = (node) => {
     window.JUMPTO = $('#select-'+id)
     if(node.type === 'section_break'){
-      window.JUMPTO.append(`<option value="${node.start}">${node.contents}</option>`)
+      window.JUMPTO.append(
+        `<option value="${node.start}">${node.note_chapter ? '&nbsp;&nbsp;&nbsp;&nbsp;' : ''}${node.contents}</option>`
+      )
       if(!JUMPTOINIT){
         window.JUMPTOINIT = true
         window.JUMPTO.parent().show()
