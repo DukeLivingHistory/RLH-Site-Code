@@ -46,7 +46,11 @@ $route = new Route('/interviews/', 'GET', function($data){
   foreach($interviews as $interview){
     $obj = new Interview($interview);
     $item = new ContentNode($interview);
-    $item->collection = $obj->collections[0] ? get_term($obj->collections[0])->name : null;
+    $item->collections = gettype($obj->collections) === 'array' ?
+      array_map(function($term) {
+        return get_term($term)->name;
+      }, $obj->collections ):
+      null;
     $item->subtitle = get_field('subtitle', $interview);
     $item->abc_term = get_field('abc_term', $interview);
     $item->abc_term = get_field('abc_term', $interview);
@@ -54,7 +58,9 @@ $route = new Route('/interviews/', 'GET', function($data){
     $item->interview_date = date('U', strtotime($raw_date));
     if(!$item->interview_date) {
       $raw_date = \DateTime::createFromFormat('dmY|', $raw_date);
-      $item->interview_date = date('U', $raw_date->getTimestamp());
+      if($raw_date){
+        $item->interview_date = date('U', $raw_date->getTimestamp());
+      }
     }
     $item->publish_date = get_the_date('U', $interview);
     $returns[] = $item;

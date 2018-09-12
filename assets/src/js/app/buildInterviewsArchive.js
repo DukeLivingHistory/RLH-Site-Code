@@ -107,9 +107,12 @@ const buildInterviewsArchive = (
 
   const makeCollectionFeed = (val) => {
     const collections = items.reduce((groups, item) => {
-      if(item.collection) {
-        const existing = groups[item.collection] || []
-        groups[item.collection] = [...existing, item]
+      console.log(item)
+      if(item.collections) {
+        item.collections.forEach(collection => {
+          const existing = groups[collection] || []
+          groups[collection] = [...existing, item]
+        })
       } else {
         groups.ungrouped = [...groups.ungrouped, item]
       }
