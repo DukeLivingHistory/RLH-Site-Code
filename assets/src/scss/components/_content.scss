@@ -294,7 +294,7 @@ $listViewIconSize: 32px;
   transition: max-height .3s ease-in;
   @include media-breakpoint-up(lg){
     float: left;
-    width: 15em;
+    width: 15rem;
     max-height: none;
     margin-top: -50px; // offset margin from contentHeader
     border-top: 10px solid $interviews;
@@ -424,7 +424,7 @@ $listViewIconSize: 32px;
   @media(min-width: 992px) {
     margin-top: -10px;
     + .transcript-instructions-wrap {
-      width: calc(100% - 15em);
+      width: calc(100% - 15rem);
       float: left;
       .transcript {
         width: calc(2 / 3 * 100% + 4.5em)
@@ -550,5 +550,35 @@ $listViewIconSize: 32px;
     .main {
       max-width: 1500px;
     }
+  }
+}
+
+.researchMenu-search {
+  margin: 0 0 1rem;
+}
+
+.researchMenu-search input {
+  font-size: 1rem;
+}
+
+.blog-content {
+  padding-left: 4rem;
+}
+
+.blog-singlePost {
+  .contentHeader {
+    margin-left: 17rem;
+  }
+
+  .blog-content {
+    padding-left: 4rem;
+  }
+}
+
+.widgettitle {
+  font-size: 16px;
+  margin: 0 0 3px;
+  + ul {
+    margin: 0;
   }
 }
