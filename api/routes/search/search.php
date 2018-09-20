@@ -31,7 +31,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
   if($args['collection']) {
     $statement = generate_collection_query($config, $flags);
     $query = $wpdb->prepare(
-      $statement,
+    $statement,
       $term,
       $term,
       $term,
@@ -43,6 +43,8 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     $statement = generate_blog_query($config, $flags);
     $query = $wpdb->prepare(
       $statement,
+      $term,
+      $term,
       $term
     );
   } else {
@@ -120,7 +122,7 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
     "/(${term})/";
   if(!in_array('case_sensitive', $flags)) $pattern .= 'i';
 
-  foreach($results as $result) {
+  if($results) foreach($results as $result) {
     $item = $result->type === 'term' ?
       new ContentNodeCollection($result->id) :
       new ContentNode($result->id);
@@ -171,7 +173,9 @@ $search = new Route('/search/(?P<term>.*)/(?P<type>.*)', 'GET', function($data){
   }
 
   if($count !== false && $offset !== false){
-    $results = array_slice($results, $offset, $count);
+    if(is_array($results)) {
+      $results = array_slice($results, $offset, $count);
+    }
   }
 
   if(!$ignore) {
