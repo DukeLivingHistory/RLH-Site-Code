@@ -2,16 +2,15 @@
 
 This repository contains a WordPress theme that contains the template files for the project, library code to make the back-end functionality work, and API endpoint setup.
 
-## Dependencies
+## Getting Started
 
-This theme requires the [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/) plugin to work. Note that all necessary fields for client-side functionality are instantiated in the `/models` directory – the exception are the supporting content fields, which are found in `lib/get_supp_cont_fields.php` so that they can be re-used.
+### Dependencies
 
-There are several fields used by the homepage which (on the production site) are set up through the site's dashboard.
+This theme requires the [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/) plugin to work. All fields used by the site are instantiated in various places in the theme.
 
 The theme also requires [Posts2Posts](https://wordpress.org/plugins/posts-to-posts/) to create relationships between pieces of content.
 
-## Getting Started
-
+### Integrations
 First, you'll need to create an application through the [Google Developers' Console](https://console.developers.google.com). This is necessary to for YouTube integration and Google Maps functionality.
 
 Create a set of credentials. Select 'Oauth Client ID' and 'Web application.' Leave the authorized Javascript origins field blank, but add `[YOUR SITE URL]/wp-admin/` to Authorized Redirect URIs.
@@ -20,168 +19,39 @@ Copy and paste your `Client ID` and `Client Secret` into the appropriate fields 
 
 Create a separate set of credentials for Google Maps, and paste your Client ID into the appropriate field.
 
-For Facebook sharing functionality (which uses Facebook's SDK) to work, you'll need to set up an application through Facebook and provide the client ID.
+For Facebook sharing functionality (which uses Facebook's SDK) to work, you'll need to set up an application through Facebook and provide the client ID. This is optional for site functionality.
 
-### Your first interview
+### Building
+Building assets requires npm or yarn to be installed locally. To compile production ready assets, run `npm run build:js`, `npm run build:css`, or just `npm run build` to compile production-ready assets. (Note that the package.json file includes scripts for deployment as well, which relies on having a separate repo which can be integrated with whatever CI/CD tool you want. This project uses [DeployHQ](https://www.deployhq.com/) for to push to a number of production and staging servers).
 
-To add a video and grab the transcript from YouTube, add the 11-character video ID (found in the URL) in the 'YouTube Video ID' field and check the box by 'Pull transcript from YouTube?'. Upon saving the post, you'll be redirected and asked to authenticate through Google's OAuth2 – make sure you do this with the account that owns the video you've added. Upon authenticating, you'll be redirected back to the admin screen, and your transcript will be saved as a WebVTT file in the 'Transcript' field!
+## Structural overview
+Front-end assets for the project are located in the `assets` directory. See **Building** for instructions on compiling assets. The interactive pages of the site are rendered with jQuery, using ES6 template strings to render page content to mimic a single-page application experience.
 
-You can also freely upload your own WebVTT files to interviews – through either a directy file upload, or the drag-and-drop or raw transcript fields. If you'd like to rely on this exclusively for transcripts, there's no need to add Google API credentials. Please note that files should be uploaded in WebVTT format and follow the [standards](https://w3c.github.io/webvtt/).
+The site uses a name of API endpoints in order to expose data to the front-end. API routes are located in the `api` directory. Files are organized with one route per file, with naming and directory conventions based on route parameters. API routes use data models, with some additional data lookups depending on use-case. API response shapes are largely based around data shapes required by site's UI and do not necessarily correspond to REST conventions.
 
-### Updating Interviews
+Data models are located in the `models` directory. This includes utility classes for accessing data, as well as the custom post/taxonomy and ACF field registrations.
 
-To update a transcript, check the appropriate "Update here?" checkbox by the field you're editing and click save. Note that because of the time needed to chunk a transcript and write it to the database, the drag-and-drop contents are deferred. (The code that handles this is in `lib/update_transcript_field.php`).
+Miscellaneous PHP helper functions are located in the `lib` directory. These functions range from things like registering menus or custom fields within WordPress, to providing regex for parsing transcripts.
 
-### Adding supplementary content
+## Child themes
+Static content for the site (the front page, header, footer, Posts, and Pages) can be overwritten using [standard practices](https://codex.wordpress.org/Child_Themes)
 
-After a transcript has been saved, check the "Sync supplementary content?" checkbox and resave. This will cause the timestamps in the transcript to be set as timestamp options for the Supplementary Content metabox – note that this may erase existing content if the current timestamp is not present in the transcript.
+However, because interactive content (interviews, collections, search results, etc) are rendered client-side from JS and CSS compiled with build tools from ES2017 and SCSS, these areas cannot be overwritten with child themes. You can fork this project and make any necessary changes.
 
-## Under The hood
+If you'd just like to make simple CSS changes, a great place to start would be through a custom CSS plugin [like this one](https://wordpress.org/plugins/simple-custom-css/).
 
-The `lib` directory contains several files that make the site's back-end functionality work. A brief overview of what they do is below:
+## Blog
+The theme has support for a blog that also includes author archive pages. In order to use this, add a Page assigned to the "Authors" template. (Note that if you use Yoast SEO, you must manually enable author archives, which are turned off by default. You can get to this setting from SEO > Titles & Meta > Archives.)
 
-* `add_confirm_to_delete.php` – Extends ACF repeater and layout fields to ask for user confirmation before deletion
-* `admin_css.php` – Adds CSS to dashboard to make it more functional/friendly. Also contains scripts necessary to create a timestamp picker that can reference other content.
-* `assets.php` – Enqueues stylesheets and scripts for front-end
-* `body_attr.php` – Returns data attributions needed to be attached to body for JavaScript to work
-* `connections.php` – Instantiates Posts2Posts relationships
-* `fetch_transcript.php` – Includes OAuth2 code needed to retrieve transcripts from YouTube
-* `get_app_part.php` – Helper function to grab static HTML from `app` submodule to include in template file. Contains path rewrites for static resources
-* `get_og.php` – Writes OpenGraph tags to <head>
-* `get_supp_cont_fields.php` – As mentioned above, returns information for ACF to instantiate supporting content fields`
-* `icon.php` – Helper function to write svg icons to page using <use>
-* `images.php` – Creates image sizes for site based on contents of `lib/img`
-* `manage_raw_transcript.php` – Handles saving .vtt transcript and populating drag-and-drop upon edits to raw transcript field
-* `photo_credits.php` – Creates image authorship fields for media library
-* `sanitize_timestamps.php` – Normalizes video timestamps to number of seconds
-* `save_timestamp.php` – Saved timestamps from a transcript as separate meta field so that they can be accessed by supporting content fields
-* `save_sliced_transcript.php` – Calls regex from `models/Transcript.php` to parse a transcript and save it an a format usable by drag-and-drop
-* `save_transcript_from_fields.php` – Creates .vtt transcript upon edits to drag-and-drop interface
-* `save_txt_from_vtt.php` – Creates a plaintext version of .vtt transcripts (without timestamps)
-* `save_vtt_from_fields.php` – Saves .vtt transcript to media library
-* `site_options.php` – Creates ACF fields to site-wide options
-* `sync_supp.php` – Passes timestamp meta to supporting content fields
-* `update_transcript_field.php` – Handles deferred saving for drag-and-drop contents
-* `wrapper.php` – Theme wrapper taken from [Sage](https://roots.io/sage/)
+## Documentation
+Documentation for the project is a work in progress. If you have any questions about a particular piece of functionality, open an issue.
 
-## Endpoints
+#### Guides
+* [Adding supporting content as VTT](https://github.com/DukeLivingHistory/RLH-Site-Code/blob/master/docs/editing/EXAMPLE_SUPPORTING_CONTENT_VTT.MD)
 
-### `/collections`
-
-Returns information about collections template page, and an array of all collections.
-
-```
-{
-  "name": string,
-  "image": id,
-  "items": array
-}
-```
-
-### `/collections/:id`
-
-Returns information about one collection, including an array of interviews or timelines in that collection.
-
-```
-{
-  "id": id,
-  "name": string,
-  "image": id,
-  "description": string,
-  "link": string,
-  "content": array
-}
-```
-
-### `/interviews/` and `/timelines/`
-
-Returns an array of all interviews or timelines. `collections` is an array of collection ids for collections that an interview belongs to. Accepts `count=[int]` and `offset=[int]` query params for the purpose of paginating results.
-
-```
-[
-  {    
-    "id": id
-    "date": string
-    "excerpt": string
-    "img": id
-    "link": string
-    "title": string
-    "type": Interview|Timeline
-  }
-]
-```
-
-### `/interviews/:id`
-
-Returns information about one interview. `video_id` is the YouTube id of a video. `description` is used on other pages, `introduction` is used on the header of the interview itself.
-
-```
-{
-  "id": id
-  "name": string
-  "link": string
-  "image": id
-  "description": string
-  "collections": array
-  "related" array
-  "introduction": string
-  "video_id": string
-  "transcript_url": string
-}
-```
-
-### `/interviews/:id/transcript`
-
-Returns either the url of transcript for a video or the contents.
-
-To return contents, add `?return=contents` query param to your request.
-
-### `/interviews/:id/supp/`
-
-Returns all supplementary content for an interview – see below.
-
-```
-[
-  {
-    "timestamp": timestamp,
-    "type": type,
-    "data": object
-  }
-]
-```
-
-### `/interviews/:id/timestamsp/`
-
-Returns timestamp information about a piece of content – note that this works for both interviews and timelines. This endpoint is used by the back-end of the site for internal links, to link directly to a hash in another piece of content.
-
-```
-[
-  {
-    "hash": int,
-    "title": string
-  }
-]
-```
-
-
-### `/timelines/`
-
-Returns information about one timeline. `video_id` is the YouTube id of a video. `description` is used on other pages, `introduction` is used on the header of the interview itself.
-
-```
-{
-  "id": id
-  "name": string
-  "link": string
-  "image": id
-  "description": string
-  "collections": array
-  "related" array
-  "intro": string
-  "events": array
-}
-```
-
-### `/search/`
-
-Returns information for a site-wide search. Accepts `term`, `offset`, and `count` query params.
+## Thanks
+This project is made possible due to a number of open source products.
+* [Able Player](https://github.com/ableplayer/ableplayer)
+* [Featherlight](https://noelboss.github.io/featherlight/)
+* [Advanced Custom Fields](https://www.advancedcustomfields.com/)
+* [js-cookie](https://github.com/js-cookie/js-cookie)
