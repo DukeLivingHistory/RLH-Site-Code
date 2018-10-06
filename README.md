@@ -41,7 +41,9 @@ However, because interactive content (interviews, collections, search results, e
 If you'd just like to make simple CSS changes, a great place to start would be through a custom CSS plugin [like this one](https://wordpress.org/plugins/simple-custom-css/).
 
 ## Blog
-The theme has support for a blog that also includes author archive pages. In order to use this, add a Page assigned to the "Authors" template. (Note that if you use Yoast SEO, you must manually enable author archives, which are turned off by default. You can get to this setting from SEO > Titles & Meta > Archives.)
+The theme has support for a blog. In order to use this, add a Page assigned to the "Blog" template.
+
+The blog also includes author archive pages. In order to use this, add a Page assigned to the "Authors" template. (Note that if you use Yoast SEO, you must manually enable author archives, which are turned off by default. You can get to this setting from SEO > Titles & Meta > Archives.)
 
 ## Documentation
 Documentation for the project is a work in progress. If you have any questions about a particular piece of functionality, open an issue.
