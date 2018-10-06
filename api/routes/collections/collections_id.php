@@ -8,5 +8,8 @@ $route = new Route( '/collections/(?P<id>\d+)', 'GET', function($data){
   $not = isset( $params['not'] ) ? $params['not'] : 0;
   $collection = new Collection( $data['id'] );
   $collection->content = $collection->get_content_by_type( $type, $search, $count, $not );
+  usort($collection->content, function($a, $b) {
+    return strcmp($a->title, $b->title);
+  });
   return $collection;
 } );

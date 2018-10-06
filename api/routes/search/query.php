@@ -108,7 +108,7 @@ function generate_collection_query($config, $flags) {
   $comparator .= in_array('case_sensitive', $flags) ? 'BINARY ' : '';
   $comparator .= in_array('whole_word', $flags) ?
     "'([[:blank:][:punct:]]|^)%d([[:blank:][:punct:]]|$)'" :
-    "%%%s%%'";
+    "'%%%s%%'";
 
   $query .= "SELECT id, 'content' as type FROM ( ";
   $query .= "SELECT ID as id from wp_posts ";
