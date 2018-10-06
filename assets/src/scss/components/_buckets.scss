@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 0 0 75px;
+  margin: 0 -5px 75px;
 }
 
 .buckets-bucket {
@@ -11,13 +11,14 @@
   justify-content: space-between;
   background-clip: content-box;
   position: relative;
-  margin-bottom: 1em;
   width: 100%;
+  flex: 1;
+  margin: 0 10px 1em;
   @include media-breakpoint-up(md){
-    width: calc(50% - 10px);
+    width: 50%;
   }
   @include media-breakpoint-up(lg){
-    width: calc(25% - 10px);
+    width: 25%;
   }
 }
 

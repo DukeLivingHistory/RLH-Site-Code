@@ -1,5 +1,11 @@
 <section class="buckets">
-  <?php $buckets = ['Interviews','Collections','Timelines', 'Blog']; ?>
+  <?php
+    $buckets = ['Interviews','Collections'];
+    if(count(get_posts(['post_type' => 'timeline']))) {
+      $buckets = array_merge($buckets, ['Timelines']);
+    }
+    $buckets = array_merge($buckets, ['Blog']);
+  ?>
   <?php foreach( $buckets as $bucket ){ $lc = strtolower($bucket); ?>
     <div class="buckets-bucket buckets-bucket--<?= strtolower($bucket); ?>">
       <?php
