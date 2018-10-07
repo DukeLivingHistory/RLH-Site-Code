@@ -61,8 +61,8 @@ add_action('admin_head', function() {
         // Create data to be passed to our negative lookbehind service
         var data = JSON.stringify({
           // Replace newlines with spaces, or else regex won't work
-          text: text.replace('\n', ' ')+' ',
-          pattern: ".*?(?<![A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
+          text: text.replace('\n', ' ').replace('??', '@@@?@@@?')+' ',
+          pattern: '("?.*?(?<!\\W[A-Z])[.!?]+(?!])"?)\\s?'
         })
 
         // The negative look-behind we need isn't implemented in most JS runtimes,
@@ -102,7 +102,6 @@ add_action('admin_head', function() {
                 note: note
               }
             })
-
             // Execute our callback with our mapped content
             cb(cleaned)
           }
