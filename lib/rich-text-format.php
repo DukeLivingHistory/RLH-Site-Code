@@ -35,77 +35,123 @@ add_action('admin_head', function() {
        * @param {function} cb                    Callback to execute upon completion
        */
       function getArrayFromSentences(text, disallowedDelimiters, cb) {
-        // Replace any instance of NOTEs with a hash [[N:<original text>]]
-        // so that they can be converted back into notes after sentences
-        // are parsed.
-        text = text.replace(/(?:\n\n)?NOTE\s(.*?)\n\n/g, function(){
-          return '[[N:'+arguments[1]+']]'
-        })
+        var PUNCTUATION = ['.', '?', '!', '–']
+        var QUOTES = ['"', '“', '”']
+        var chars = text.split('')
+        var sentences = []
+        var currentSentence = ''
+        var openQuotes = false
+        var paragraph = false
+        var currentNote = null
+        var openNote = false
 
-        // Replace any instances of new lines with hash [[P]]
-        // so that they can be converted into paragraph breaks.
-        text = text.replace(/\n{2,}/g, ' [[P]]')
-
-        // Hash any instances of protected words with [[<original text>]]
-        // so that they won't be caught by punctuation parser
-        disallowedDelimiters.forEach(function(delimiter, i) {
-          text = text.split(delimiter).join('[['+i+']]')
-        })
-
-        // If last character is not punctuation, make it so. Otherwise,
-        // it won't be parsed as a sentence.
-        if(!text.match(/[\.\?!]$/)) {
-          text = text + '.'
+        function arrayInclude(arr, thing) {
+          return arr.indexOf(thing) !== -1
         }
 
-        // Create data to be passed to our negative lookbehind service
-        var data = JSON.stringify({
-          // Replace newlines with spaces, or else regex won't work
-          text: text.replace('\n', ' ').replace('??', '@@@?@@@?')+' ',
-          pattern: '("?.*?(?<!\\W[A-Z])[.!?]+(?!])"?)\\s?'
-        })
+        // Move from current sentence to next
+        function stop() {
+          var sentence = {
+            text: currentSentence,
+            paragraph: !currentNote && paragraph,
+            note: currentNote,
+          }
+          sentences.push(sentence)
+          currentSentence = ''
+          paragraph = false
+          currentNote = null
+        }
 
-        // The negative look-behind we need isn't implemented in most JS runtimes,
-        // so we call a microservice.
-        $.ajax({
-          url: '/wp-json/v1/microservices/nlbaas',
-          type: 'POST',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: data,
-          success: function(exploded) {
-            // We map over our results
-            var cleaned = exploded.map(function(value) {
-              var paragraph = false
-              var note = false
-              // Replace paragraph hashes and mark note as being a paragraph
-              if(value.match(/\[\[P\]\]/)) {
-                value = value.replace(/\[\[P\]\]/g, '')
-                paragraph = true
+        // Attach to current note
+        function appendNote() {
+          if (character === '\n') {
+            currentNote = currentNote.replace(/^NOTE/, '').trim()
+            openNote = false
+          } else {
+            currentNote = (currentNote || '') + character
+          }
+        }
+
+        // Attach to previous sentence
+        function append(character) {
+          sentences[sentences.length - 1].text = sentences[sentences.length - 1].text + character
+        }
+
+        // Add to current sentence buffer
+        function print(character) {
+          currentSentence = currentSentence + character
+        }
+
+        // Determin if string is allowed
+        function endsInAllowed(str) {
+          var value = false
+          disallowedDelimiters.forEach(function(term) {
+              if (value) return
+              var pattern = new RegExp(`${term}$`)
+              value = pattern.test(str)
+          })
+          return value
+        }
+
+        chars.forEach(function (character, index) {
+          var nextBy1 = chars[index + 1]
+          var prevBy1 = chars[index - 1]
+          var prevBy2 = chars[index - 2]
+
+          if (character === 'N') {
+            var maybeNote = str.substring(index, index + 4)
+            if (maybeNote === 'NOTE') {
+              openNote = true
+            }
+          }
+
+          if (openNote) {
+            appendNote(character)
+          } else if (character === '\n') {
+            paragraph = true
+          } else if (
+            character === '<' && nextBy1 === 'v' &&
+            arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1])
+          ) {
+            stop()
+            print(character)
+          } else if (arrayInclude(PUNCTUATION, character)) {
+            if (endsInAllowed(currentSentence)) {
+              print(character)
+            }
+            if (
+              arrayInclude(PUNCTUATION, nextBy1) ||
+              (arrayInclude(PUNCTUATION, prevBy2) && !arrayInclude(PUNCTUATION, prevBy1)) ||
+              (nextBy1 === ' ' && (/[A-Z]/).test(prevBy1))
+            ) {
+              print(character)
+            } else if (nextBy1 === ' ' || nextBy1 === '\n' || arrayInclude(QUOTES, nextBy1)) {
+              print(character)
+              stop()
+            } else {
+              print(character)
+            }
+          } else {
+            if (arrayInclude(QUOTES, character)) {
+              if (openQuotes && arrayInclude(PUNCTUATION, prevBy1)) {
+                append(character)
+              } else {
+                print(character)
               }
-              // Replace note hashes and record text on node
-              if(value.match(/\[\[N:(.*?)\]\]/)) {
-                value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
-                  note = arguments[1]
-                  return ''
-                })
-              }
-              // Return note, replacing any protected strings
-              return {
-                item: value.replace(/\[\[(\d+)\]\]/g, function() {
-                  var i = arguments[1]
-                  return disallowedDelimiters[i]
-                }).trim(),
-                paragraph: paragraph,
-                note: note
-              }
-            })
-            // Execute our callback with our mapped content
-            cb(cleaned)
+              openQuotes = !openQuotes
+            } else {
+              print(character)
+            }
           }
         })
+        stop()
+        cb(sentences.map(function(sentence) {
+          return Object.assign(sentence, {
+            text: sentence.text.trim()
+          })
+        }).filter(function(sentence) {
+          return !!sentence.text
+        }))
       }
 
       /**
@@ -136,7 +182,7 @@ add_action('admin_head', function() {
       function formatArrayAsTimeStamps(arr) {
         var i = 1
         return arr.reduce(function(string, sentence) {
-          return `${string}${sentence.paragraph ? 'NOTE paragraph\n\n' : ''}${sentence.note ? 'NOTE '+sentence.note+'\n\n' : ''}${makeTimestamps(i++)} --> ${makeTimestamps(i)}\n${sentence.item}\n\n`
+          return `${string}${sentence.paragraph ? 'NOTE paragraph\n\n' : ''}${sentence.note ? 'NOTE '+sentence.note+'\n\n' : ''}${makeTimestamps(i++)} --> ${makeTimestamps(i)}\n${sentence.text}\n\n`
         }, 'WEBVTT\n\n')
       }
 
