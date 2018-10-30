@@ -22,20 +22,12 @@ add_action('admin_head', function() {
        * This function is responsible for converting plaintext into an array that can
        * be reassembled into a transcript.
        *
-       * In order for certain elements like paragraph breaks and notes to be maintained,
-       * they're replaced with a temporary "hash" which is then replaced with the original
-       * content before being returned.
-       *
-       * This function runs asynchronously. A critical piece of regex is not supported
-       * in most current Javascript engines, so we POST it to an API endpoint provided
-       * by the site's back-end.
-       *
        * @param {string}   text
        * @param {array}    disallowedDelimiters  Array of strings which should _not_ be considered in parsing sentences
        * @param {function} cb                    Callback to execute upon completion
        */
       function getArrayFromSentences(text, disallowedDelimiters, cb) {
-        var PUNCTUATION = ['.', '?', '!', '–']
+        var PUNCTUATION = ['.', '?', '!', '–', '—', '…']
         var QUOTES = ['"', '“', '”']
         var chars = text.split('')
         var sentences = []
@@ -63,7 +55,7 @@ add_action('admin_head', function() {
         }
 
         // Attach to current note
-        function appendNote() {
+        function appendNote(character) {
           if (character === '\n') {
             currentNote = currentNote.replace(/^NOTE/, '').trim()
             openNote = false
@@ -99,7 +91,7 @@ add_action('admin_head', function() {
           var prevBy2 = chars[index - 2]
 
           if (character === 'N') {
-            var maybeNote = str.substring(index, index + 4)
+            var maybeNote = text.substr(index, 4)
             if (maybeNote === 'NOTE') {
               openNote = true
             }
@@ -111,18 +103,22 @@ add_action('admin_head', function() {
             paragraph = true
           } else if (
             character === '<' && nextBy1 === 'v' &&
-            arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1])
+            (
+              arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1]) ||
+              (
+                arrayInclude(QUOTES, currentSentence[currentSentence.length - 1]) &&
+                arrayInclude(QUOTES, currentSentence[currentSentence.length - 2])
+              )
+            )
           ) {
             stop()
             print(character)
           } else if (arrayInclude(PUNCTUATION, character)) {
-            if (endsInAllowed(currentSentence)) {
-              print(character)
-            }
             if (
+              endsInAllowed(currentSentence) ||
               arrayInclude(PUNCTUATION, nextBy1) ||
               (arrayInclude(PUNCTUATION, prevBy2) && !arrayInclude(PUNCTUATION, prevBy1)) ||
-              (nextBy1 === ' ' && (/[A-Z]/).test(prevBy1))
+              (nextBy1 === ' ' && (/[A-Z]/).test(prevBy1) && !(/[A-Z]/).test(prevBy2))
             ) {
               print(character)
             } else if (nextBy1 === ' ' || nextBy1 === '\n' || arrayInclude(QUOTES, nextBy1)) {
