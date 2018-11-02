@@ -36,6 +36,7 @@ add_action('admin_head', function() {
         var paragraph = false
         var currentNote = null
         var openNote = false
+        var currentSentenceEndsInNonStandardPunctuation = false
 
         function arrayInclude(arr, thing) {
           return arr.indexOf(thing) !== -1
@@ -52,6 +53,7 @@ add_action('admin_head', function() {
           currentSentence = ''
           paragraph = false
           currentNote = null
+          currentSentenceEndsInNonStandardPunctuation = false
         }
 
         // Attach to current note
@@ -74,7 +76,7 @@ add_action('admin_head', function() {
           currentSentence = currentSentence + character
         }
 
-        // Determin if string is allowed
+        // Determine if string is allowed
         function endsInAllowed(str) {
           var value = false
           disallowedDelimiters.forEach(function(term) {
@@ -85,11 +87,19 @@ add_action('admin_head', function() {
           return value
         }
 
+        // Determine if string is capitalized
+        function isCapital(char) {
+          return (/[A-Z]/).test(char)
+        }
+
         chars.forEach(function (character, index) {
           var nextBy1 = chars[index + 1]
+          var nextBy2 = chars[index + 2]
+          var nextBy3 = chars[index + 3]
           var prevBy1 = chars[index - 1]
           var prevBy2 = chars[index - 2]
 
+          // Check if we're looking at a NOTE
           if (character === 'N') {
             var maybeNote = text.substr(index, 4)
             if (maybeNote === 'NOTE') {
@@ -98,43 +108,67 @@ add_action('admin_head', function() {
           }
 
           if (openNote) {
+            // If we have an open note, we append to the note instead of the sentence
             appendNote(character)
           } else if (character === '\n') {
+            // If we have a line break, the next sentence should be marked as starting a new praragraph
             paragraph = true
           } else if (
+            // If the next sentence starts <v and is preceded by punctuation or punctuation-quotes, start
+            // a new sentence
             character === '<' && nextBy1 === 'v' &&
             (
               arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1]) ||
               (
                 arrayInclude(QUOTES, currentSentence[currentSentence.length - 1]) &&
-                arrayInclude(QUOTES, currentSentence[currentSentence.length - 2])
+                arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 2])
               )
             )
           ) {
             stop()
             print(character)
           } else if (arrayInclude(PUNCTUATION, character)) {
-            if (
-              endsInAllowed(currentSentence) ||
-              arrayInclude(PUNCTUATION, nextBy1) ||
-              (arrayInclude(PUNCTUATION, prevBy2) && !arrayInclude(PUNCTUATION, prevBy1)) ||
-              (nextBy1 === ' ' && (/[A-Z]/).test(prevBy1) && !(/[A-Z]/).test(prevBy2))
+            // Situations to always end sentences
+            if(
+              // The next character is a quote and the third-to-next character is a lowercase letter
+              (arrayInclude(QUOTES, nextBy1) && isCapital(nextBy3))
             ) {
               print(character)
+              stop()
+            }
+            // Situations to skip punctuation
+            else if (
+              // Sentence ends in a whitelisted abbreviation
+              endsInAllowed(currentSentence) ||
+              // The next character is punctuation
+              arrayInclude(PUNCTUATION, nextBy1) ||
+              // The second-to-last character is punctuation and the previous isn't (e.g. F.B.I.)
+              (arrayInclude(PUNCTUATION, prevBy2) && !arrayInclude(PUNCTUATION, prevBy1)) ||
+              // The next character is a space and the previous character is capitalized and the secont to last charcter isn't (e.g. middle initials)
+              (nextBy1 === ' ' && isCapital(prevBy1) && !isCapital(prevBy2))
+            ) {
+              currentSentenceEndsInNonStandardPunctuation = true
+              print(character)
+              // If the next character is a space, newline, or quote, start a new sentence
             } else if (nextBy1 === ' ' || nextBy1 === '\n' || arrayInclude(QUOTES, nextBy1)) {
               print(character)
               stop()
             } else {
+              // Default to not starting a new sentence
               print(character)
             }
           } else {
+            // If the character is a quote followed by a space and capital letter, append it to previous sentence
             if (arrayInclude(QUOTES, character)) {
-              if (openQuotes && arrayInclude(PUNCTUATION, prevBy1)) {
+              if (
+                arrayInclude(PUNCTUATION, prevBy1) &&
+                isCapital(nextBy2) &&
+                !currentSentenceEndsInNonStandardPunctuation
+              ) {
                 append(character)
               } else {
                 print(character)
               }
-              openQuotes = !openQuotes
             } else {
               print(character)
             }
