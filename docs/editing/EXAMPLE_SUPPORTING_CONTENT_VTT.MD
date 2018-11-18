@@ -51,6 +51,7 @@ _(Note: due to a mistake, the TITLE field for this piece of content was formerly
 00:00:00.000 --> 00:00:01.000
 TITLE Name of content. Optional - defaults to the name of the content.
 INTERNAL_URL URL of page to link to
+DESCRIPTION description of content. Optional - defaults to the description of the content.
 TIMESTAMP Specific timestamp to link to. Optional.
 LINK_TEXT Text to display as link. Optional.
 ```
