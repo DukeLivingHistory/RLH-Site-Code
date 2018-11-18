@@ -82,7 +82,7 @@ function supp_cont_to_vtt($id, $supp_cont){
         $item_text .= "\n";
         if($content['sc_internalink_label']){
           $item_text .= "\n";
-          $item_text .= 'LABEL ' . trim($content['sc_internalink_label']);
+          $item_text .= 'TITLE ' . trim($content['sc_internalink_label']);
         }
         if($content['sc_internalink_description']){
           $item_text .= "\n";
