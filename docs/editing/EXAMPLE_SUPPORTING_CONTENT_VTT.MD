@@ -24,10 +24,10 @@ ATTRIBUTION Source to whom attribution is given. Optional
 ```
 
 ### Image
+_(Note: images will pull titles, captions, alt text, and photographer credits from the metadata attached to the image within the Media Library.)_
 ```
 00:00:00.000 --> 00:00:01.000
 IMAGE URL of image. Must be from the site's media library
-TITLE Name of image
 ```
 
 ### Gallery
@@ -46,12 +46,13 @@ ADDRESS Map address
 ```
 
 ### Internal link
+_(Note: due to a mistake, the TITLE field for this piece of content was formerly output as LABEL when saving from the GUI supporting content editor. In order to provide backwards compatibility for content that was produced as a result of this mistake, the title field of this content type can be provided by LABEL instead. This functionality will not be deprecated.)_
 ```
 00:00:00.000 --> 00:00:01.000
-TITLE Name of content
+TITLE Name of content. Optional - defaults to the name of the content.
 INTERNAL_URL URL of page to link to
 TIMESTAMP Specific timestamp to link to. Optional.
-LINK_TEXT Text to display as link
+LINK_TEXT Text to display as link. Optional.
 ```
 
 ### External link
@@ -59,8 +60,8 @@ LINK_TEXT Text to display as link
 00:00:00.000 --> 00:00:01.000
 TITLE Name of content
 URL URL of page to link to
-DESCRIPTION Description of content. Optional
-LINK_TEXT Text to display as link
+DESCRIPTION Description of content. Optional.
+LINK_TEXT Text to display as link. Optional.
 ```
 
 ### File
