@@ -22,91 +22,166 @@ add_action('admin_head', function() {
        * This function is responsible for converting plaintext into an array that can
        * be reassembled into a transcript.
        *
-       * In order for certain elements like paragraph breaks and notes to be maintained,
-       * they're replaced with a temporary "hash" which is then replaced with the original
-       * content before being returned.
-       *
-       * This function runs asynchronously. A critical piece of regex is not supported
-       * in most current Javascript engines, so we POST it to an API endpoint provided
-       * by the site's back-end.
-       *
        * @param {string}   text
        * @param {array}    disallowedDelimiters  Array of strings which should _not_ be considered in parsing sentences
        * @param {function} cb                    Callback to execute upon completion
        */
       function getArrayFromSentences(text, disallowedDelimiters, cb) {
-        // Replace any instance of NOTEs with a hash [[N:<original text>]]
-        // so that they can be converted back into notes after sentences
-        // are parsed.
-        text = text.replace(/(?:\n\n)?NOTE\s(.*?)\n\n/g, function(){
-          return '[[N:'+arguments[1]+']]'
-        })
+        var PUNCTUATION = ['.', '?', '!', '–', '—', '…']
+        var QUOTES = ['"', '“', '”']
+        var chars = text.split('')
+        var sentences = []
+        var currentSentence = ''
+        var openQuotes = false
+        var paragraph = false
+        var currentNote = null
+        var openNote = false
+        var currentSentenceEndsInNonStandardPunctuation = false
 
-        // Replace any instances of new lines with hash [[P]]
-        // so that they can be converted into paragraph breaks.
-        text = text.replace(/\n{2,}/g, ' [[P]]')
-
-        // Hash any instances of protected words with [[<original text>]]
-        // so that they won't be caught by punctuation parser
-        disallowedDelimiters.forEach(function(delimiter, i) {
-          text = text.split(delimiter).join('[['+i+']]')
-        })
-
-        // If last character is not punctuation, make it so. Otherwise,
-        // it won't be parsed as a sentence.
-        if(!text.match(/[\.\?!]$/)) {
-          text = text + '.'
+        function arrayInclude(arr, thing) {
+          return arr.indexOf(thing) !== -1
         }
 
-        // Create data to be passed to our negative lookbehind service
-        var data = JSON.stringify({
-          // Replace newlines with spaces, or else regex won't work
-          text: text.replace('\n', ' ')+' ',
-          pattern: ".*?(?<![A-Z])[.!?]+(?:[\\s'\"]|<\\/.*?>)+"
-        })
+        // Move from current sentence to next
+        function stop() {
+          var sentence = {
+            text: currentSentence,
+            paragraph: !currentNote && paragraph,
+            note: currentNote,
+          }
+          sentences.push(sentence)
+          currentSentence = ''
+          paragraph = false
+          currentNote = null
+          currentSentenceEndsInNonStandardPunctuation = false
+        }
 
-        // The negative look-behind we need isn't implemented in most JS runtimes,
-        // so we call a microservice.
-        $.ajax({
-          url: '/wp-json/v1/microservices/nlbaas',
-          type: 'POST',
-          dataType: 'json',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: data,
-          success: function(exploded) {
-            // We map over our results
-            var cleaned = exploded.map(function(value) {
-              var paragraph = false
-              var note = false
-              // Replace paragraph hashes and mark note as being a paragraph
-              if(value.match(/\[\[P\]\]/)) {
-                value = value.replace(/\[\[P\]\]/g, '')
-                paragraph = true
-              }
-              // Replace note hashes and record text on node
-              if(value.match(/\[\[N:(.*?)\]\]/)) {
-                value = value.replace(/\[\[N:(.*?)\]\]/g, function() {
-                  note = arguments[1]
-                  return ''
-                })
-              }
-              // Return note, replacing any protected strings
-              return {
-                item: value.replace(/\[\[(\d+)\]\]/g, function() {
-                  var i = arguments[1]
-                  return disallowedDelimiters[i]
-                }).trim(),
-                paragraph: paragraph,
-                note: note
-              }
-            })
+        // Attach to current note
+        function appendNote(character) {
+          if (character === '\n') {
+            currentNote = currentNote.replace(/^NOTE/, '').trim()
+            openNote = false
+          } else {
+            currentNote = (currentNote || '') + character
+          }
+        }
 
-            // Execute our callback with our mapped content
-            cb(cleaned)
+        // Attach to previous sentence
+        function append(character) {
+          sentences[sentences.length - 1].text = sentences[sentences.length - 1].text + character
+        }
+
+        // Add to current sentence buffer
+        function print(character) {
+          currentSentence = currentSentence + character
+        }
+
+        // Determine if string is allowed
+        function endsInAllowed(str) {
+          var value = false
+          disallowedDelimiters.forEach(function(term) {
+              if (value) return
+              var pattern = new RegExp(`${term}$`)
+              value = pattern.test(str)
+          })
+          return value
+        }
+
+        // Determine if string is capitalized
+        function isCapital(char) {
+          return (/[A-Z]/).test(char)
+        }
+
+        chars.forEach(function (character, index) {
+          var nextBy1 = chars[index + 1]
+          var nextBy2 = chars[index + 2]
+          var nextBy3 = chars[index + 3]
+          var prevBy1 = chars[index - 1]
+          var prevBy2 = chars[index - 2]
+
+          // Check if we're looking at a NOTE
+          if (character === 'N') {
+            var maybeNote = text.substr(index, 4)
+            if (maybeNote === 'NOTE') {
+              openNote = true
+            }
+          }
+
+          if (openNote) {
+            // If we have an open note, we append to the note instead of the sentence
+            appendNote(character)
+          } else if (character === '\n') {
+            // If we have a line break, the next sentence should be marked as starting a new praragraph
+            paragraph = true
+          } else if (
+            // If the next sentence starts <v and is preceded by punctuation or punctuation-quotes, start
+            // a new sentence
+            character === '<' && nextBy1 === 'v' &&
+            (
+              arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1]) ||
+              (
+                arrayInclude(QUOTES, currentSentence[currentSentence.length - 1]) &&
+                arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 2])
+              )
+            )
+          ) {
+            stop()
+            print(character)
+          } else if (arrayInclude(PUNCTUATION, character)) {
+            // Situations to always end sentences
+            if(
+              // The next character is a quote and the third-to-next character is a lowercase letter
+              (arrayInclude(QUOTES, nextBy1) && isCapital(nextBy3))
+            ) {
+              print(character)
+              stop()
+            }
+            // Situations to skip punctuation
+            else if (
+              // Sentence ends in a whitelisted abbreviation
+              endsInAllowed(currentSentence) ||
+              // The next character is punctuation
+              arrayInclude(PUNCTUATION, nextBy1) ||
+              // The second-to-last character is punctuation and the previous isn't (e.g. F.B.I.)
+              (arrayInclude(PUNCTUATION, prevBy2) && !arrayInclude(PUNCTUATION, prevBy1)) ||
+              // The next character is a space and the previous character is capitalized and the secont to last charcter isn't (e.g. middle initials)
+              (nextBy1 === ' ' && isCapital(prevBy1) && !isCapital(prevBy2))
+            ) {
+              currentSentenceEndsInNonStandardPunctuation = true
+              print(character)
+              // If the next character is a space, newline, or quote, start a new sentence
+            } else if (nextBy1 === ' ' || nextBy1 === '\n' || arrayInclude(QUOTES, nextBy1)) {
+              print(character)
+              stop()
+            } else {
+              // Default to not starting a new sentence
+              print(character)
+            }
+          } else {
+            // If the character is a quote followed by a space and capital letter, append it to previous sentence
+            if (arrayInclude(QUOTES, character)) {
+              if (
+                arrayInclude(PUNCTUATION, prevBy1) &&
+                isCapital(nextBy2) &&
+                !currentSentenceEndsInNonStandardPunctuation
+              ) {
+                append(character)
+              } else {
+                print(character)
+              }
+            } else {
+              print(character)
+            }
           }
         })
+        stop()
+        cb(sentences.map(function(sentence) {
+          return Object.assign(sentence, {
+            text: sentence.text.trim()
+          })
+        }).filter(function(sentence) {
+          return !!sentence.text
+        }))
       }
 
       /**
@@ -137,7 +212,7 @@ add_action('admin_head', function() {
       function formatArrayAsTimeStamps(arr) {
         var i = 1
         return arr.reduce(function(string, sentence) {
-          return `${string}${sentence.paragraph ? 'NOTE paragraph\n\n' : ''}${sentence.note ? 'NOTE '+sentence.note+'\n\n' : ''}${makeTimestamps(i++)} --> ${makeTimestamps(i)}\n${sentence.item}\n\n`
+          return `${string}${sentence.paragraph ? 'NOTE paragraph\n\n' : ''}${sentence.note ? 'NOTE '+sentence.note+'\n\n' : ''}${makeTimestamps(i++)} --> ${makeTimestamps(i)}\n${sentence.text}\n\n`
         }, 'WEBVTT\n\n')
       }
 

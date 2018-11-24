@@ -75,6 +75,9 @@ function get_formatted_supp_cont_cues($vtt){
         $cue['type'] = 'image';
         $cue['image'] = get_image_id_from_url($value);
         break;
+      case 'LABEL': // Fallback for previous cases of internal links
+        $cue['title'] = $value;
+        break;
       case 'TITLE': // gallery, map
         $cue['title'] = $value;
         break;

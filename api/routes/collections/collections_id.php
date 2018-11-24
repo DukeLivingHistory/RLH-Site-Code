@@ -8,5 +8,12 @@ $route = new Route( '/collections/(?P<id>\d+)', 'GET', function($data){
   $not = isset( $params['not'] ) ? $params['not'] : 0;
   $collection = new Collection( $data['id'] );
   $collection->content = $collection->get_content_by_type( $type, $search, $count, $not );
+  usort($collection->content, function($a, $b) {
+    $a_compare = $a->title;
+    $b_compare = $b->title;
+    if($a_sort_by = get_field('abc_term', $a->id)) $a_compare = $a_sort_by;
+    if($b_sort_by = get_field('abc_term', $b->id)) $b_compare = $b_sort_by;
+    return strcmp($a_compare, $b_compare);
+  });
   return $collection;
 } );

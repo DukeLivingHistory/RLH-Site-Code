@@ -34,15 +34,20 @@ var syncTimestamps = function( supp, node, transcript ){
 
   var expandMultiple = function(target){
     if($(window).width() <= 568) return;
+    console.log('expanding')
     target.addClass('expand');
     target.find( '[data-action="close"] use' ).attr( 'xlink:href', '#contract');
     var img = target.find('.respImg-defer');
     respImg.load(img);
+    setTimeout(() => {
+      position()
+    }, 510) // CSS animation is .5s
   }
 
   expandMultiple($('[data-opendefault="true"]'));
 
   var position = function(){
+    console.log('position')
     var lastBottom = 0;
     $(supp).each( function(i){
 
