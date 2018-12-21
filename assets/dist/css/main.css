@@ -3899,6 +3899,9 @@ div.able-captions-wrapper {
 .icon--social {
   width: 18px;
   height: 18px; }
+  .icon--social.dbl {
+    width: 36px;
+    transform: scale(1.4); }
 
 .socialPopup {
   transform: translate(-50%, 150%);

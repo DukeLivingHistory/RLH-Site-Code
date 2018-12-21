@@ -37,15 +37,17 @@ const sharer = (
     <ul class="social social--inline" data-share-id=${id}>
       ${isFbProvided ? `<li data-soc="fb" tabindex="0"><span>Share on Facebook</span>${icon('facebook', 'social')}</li>` : ''}
       <li data-soc="tw" tabindex="0"><span>Share on Twitter</span>${icon('twitter', 'social')}</li>
-      <li data-clipboard-text="${options.clipboardText}" data-soc="link" tabindex="0"><span>Share on URL</span>${icon('link', 'social')}</li>
+      <li data-full-text data-clipboard-text='${options.clipboardText.replace("'", '’')}' data-soc="link" tabindex="0"><span>Share on URL</span>${icon('link-group', 'social')}</li>
+      <li data-clipboard-text="${url}" data-soc="link" tabindex="0"><span>Share on URL</span>${icon('link', 'social')}</li>
     </ul>
   `
 
   const attachClipboardHandlers = (clipboard) => {
-    clipboard.on('success', () => {
+    clipboard.on('success', (e) => {
+      const text = e.trigger.hasAttribute('data-full-text') ? copyText : 'Link copied to clipboard!'
       $('body').append(`
         <div class="socialCopy socialCopy--success" style="position: fixed; right: 1em; bottom: 1em;">
-          ${copyText || 'Link copied to clipboard!'}
+          ${text}
         </div>
       `)
       setTimeout(() => {
