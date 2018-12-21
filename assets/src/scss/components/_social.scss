@@ -34,6 +34,10 @@
 .icon--social {
   width: 18px;
   height: 18px;
+  &.dbl {
+    width: 36px;
+    transform: scale(1.4);
+  }
 }
 
 .socialPopup {

@@ -47,7 +47,6 @@ var syncTimestamps = function( supp, node, transcript ){
   expandMultiple($('[data-opendefault="true"]'));
 
   var position = function(){
-    console.log('position')
     var lastBottom = 0;
     $(supp).each( function(i){
 
