@@ -4,7 +4,7 @@ const sharer = require('./sharer')
 const highlighter = (target) => {
   const makePopup = (url, title, text, style, className, isChangingFromSelection) => {
     const shareLinks = sharer(url, title, text, {
-      clipboardText: `"${text}" \n${url}`,
+      clipboardText: `${text} \n${url}`,
       copyText: 'Selected text plus link copied to clipboard!'
     })
 

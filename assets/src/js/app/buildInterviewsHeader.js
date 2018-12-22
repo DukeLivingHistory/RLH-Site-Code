@@ -18,7 +18,7 @@ const buildInterviewsHeader = (
     link
   }
 ) => {
-  const shareLinks = sharer(link, name, introduction.replace(/(<([^>]+)>)/ig,''), {})
+  const shareLinks = sharer(link, name, introduction.replace(/(<([^>]+)>)/ig,''), { fullText: false })
   const indicator = scrollIndicator('.transcript')
 
   const append = `

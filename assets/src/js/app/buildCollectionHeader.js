@@ -11,7 +11,7 @@ const buildCollectionHeader = (
     image
   }
 ) => {
-  const shareLinks = sharer(link, name, name, {})
+  const shareLinks = sharer(link, name, name, { fullText: false })
 
   const append = `
     <header class="contentHeader contentHeader--collection">

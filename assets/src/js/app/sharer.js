@@ -9,7 +9,8 @@ const sharer = (
   quote,
   {
     clipboardText,
-    copyText
+    copyText,
+    fullText = true,
   } = {}
 ) => {
   const isFbProvided = !!window.FB_APP_ID
@@ -37,7 +38,7 @@ const sharer = (
     <ul class="social social--inline" data-share-id=${id}>
       ${isFbProvided ? `<li data-soc="fb" tabindex="0"><span>Share on Facebook</span>${icon('facebook', 'social')}</li>` : ''}
       <li data-soc="tw" tabindex="0"><span>Share on Twitter</span>${icon('twitter', 'social')}</li>
-      <li data-full-text data-clipboard-text='${options.clipboardText.replace("'", '’')}' data-soc="link" tabindex="0"><span>Share on URL</span>${icon('link-group', 'social')}</li>
+      ${fullText ? `<li data-full-text data-clipboard-text='${options.clipboardText.replace("'", '’')}' data-soc="link" tabindex="0"><span>Share on URL</span>${icon('link-group', 'social')}</li>` : ''}
       <li data-clipboard-text="${url}" data-soc="link" tabindex="0"><span>Share on URL</span>${icon('link', 'social')}</li>
     </ul>
   `

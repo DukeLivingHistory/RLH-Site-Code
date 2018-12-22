@@ -19,7 +19,7 @@ const buildTimelineHeader = (
   type = null
 ) => {
   introduction = introduction || description
-  const shareLinks = sharer(link, name, name, {})
+  const shareLinks = sharer(link, name, name, { fullText: false })
 
   const append = `
     <header class="contentHeader contentHeader--timeline">
