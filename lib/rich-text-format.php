@@ -114,16 +114,8 @@ add_action('admin_head', function() {
             // If we have a line break, the next sentence should be marked as starting a new praragraph
             paragraph = true
           } else if (
-            // If the next sentence starts <v and is preceded by punctuation or punctuation-quotes, start
-            // a new sentence
-            character === '<' && nextBy1 === 'v' &&
-            (
-              arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1]) ||
-              (
-                arrayInclude(QUOTES, currentSentence[currentSentence.length - 1]) &&
-                arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 2])
-              )
-            )
+            // If the next sentence starts <v, handle it as a new sentence
+            character === '<' && nextBy1 === 'v'
           ) {
             stop()
             print(character)
