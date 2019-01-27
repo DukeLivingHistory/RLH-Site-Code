@@ -22,7 +22,7 @@ const buildTimelineHeader = (
   const shareLinks = sharer(link, name, name, { fullText: false })
 
   const append = `
-    <header class="contentHeader contentHeader--timeline">
+    <header class="contentHeader contentHeader--timeline ${image ? 'contentHeader--hasImg' : 'contentHeader--noImg'}"">
       ${type !== false ? `
         <span class="contentHeader-type">
           ${icon(type, 'type')}

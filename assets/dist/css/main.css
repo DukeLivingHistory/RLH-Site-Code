@@ -2230,11 +2230,6 @@ div.able-captions-wrapper {
       font-size: 15px;
       color: #274766; }
 
-@media (min-width: 1800px) {
-  [data-endpoint="interviews"][data-id="archive"] .header,
-  [data-endpoint="interviews"][data-id="archive"] .main {
-    max-width: 1500px; } }
-
 .researchMenu-search {
   margin: 0 0 3rem; }
 
@@ -2284,6 +2279,12 @@ div.able-captions-wrapper {
   @media (min-width: 569px) {
     .contentHeader {
       margin: 0 -0.9375rem; } }
+  @media (min-width: 992px) {
+    .contentHeader--noImg .contentHeader-inner {
+      width: calc(100% - 150px); }
+    .contentHeader--noImg .contentHeader-imgWrapper {
+      float: right;
+      width: auto; } }
 
 .contentHeader--archive {
   position: relative;

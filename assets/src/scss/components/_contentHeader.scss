@@ -14,6 +14,18 @@
     margin: 0 $grid-gutter-width/-2;
   }
   padding-bottom: 1em;
+
+  &--noImg {
+    @include media-breakpoint-up(lg) {
+      .contentHeader-inner {
+        width: calc(100% - 150px);
+      }
+      .contentHeader-imgWrapper {
+        float: right;
+        width: auto;
+      }
+    }
+  }
 }
 
 .contentHeader--archive {

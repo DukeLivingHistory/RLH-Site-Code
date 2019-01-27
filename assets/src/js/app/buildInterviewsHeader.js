@@ -23,7 +23,7 @@ const buildInterviewsHeader = (
 
   const append = `
     <div class="contentHeaderOuter">
-      <header class="contentHeader contentHeader--interview">
+      <header class="contentHeader contentHeader--interview ${video_id ? 'contentHeader--hasImg' : 'contentHeader--noImg'}">
         <span class="contentHeader-type">${icon('interview', 'type')}Interview</span>
         <div class="contentHeader-inner">
           <h2 class="contentHeader-head">${name}</h2>
