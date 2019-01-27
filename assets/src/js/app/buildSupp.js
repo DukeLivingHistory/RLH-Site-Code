@@ -43,7 +43,7 @@ const buildSupp = (
               url,
               preview,
               preview,
-              { clipboardText: `"${preview}"\n${url}` }
+              { clipboardText: `"${preview}" \n${url}`, copyText: 'Annotation copied to clipboard!' }
             )
 
 
