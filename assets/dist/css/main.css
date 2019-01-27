@@ -60,6 +60,11 @@ select {
     .main,
     .footer {
       max-width: 1140px; } }
+  @media (min-width: 1200px) {
+    .header,
+    .main,
+    .footer {
+      max-width: 95vw; } }
 
 .main {
   position: relative; }
