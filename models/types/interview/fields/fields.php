@@ -38,6 +38,14 @@ add_action( 'acf/init', function(){
         'type' => 'true_false',
         'instructions' => 'Select this box for interviews that do not have a video.',
         'default' => 0,
+        'wrapper' => [ 'width' => '50' ]
+      ],
+      [
+        'key' => 'subtitle',
+        'label' => 'Index Page Subtitle',
+        'name' => 'subtitle',
+        'type' => 'text',
+        'wrapper' => [ 'width' => '50' ]
       ],
   		[
   			'key' => 'transcript_utilities',
@@ -45,13 +53,6 @@ add_action( 'acf/init', function(){
   			'name' => 'transcript_utilities',
   			'type' => 'message'
   		],
-      [
-        'key' => 'subtitle',
-        'label' => 'Subtitle',
-        'name' => 'subtitle',
-        'type' => 'text',
-        'wrapper' => [ 'width' => '100' ]
-      ],
       [
         'key' => 'youtube_id',
         'label' => 'YouTube Video ID',
