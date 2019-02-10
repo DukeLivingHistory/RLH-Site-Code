@@ -156,9 +156,16 @@ add_action('admin_head', function() {
           } else {
             // If the character is a quote followed by a space and capital letter, append it to previous sentence
             if (arrayInclude(QUOTES, character)) {
-              if (
+              if(index === chars.length - 1) {
+                append(character)
+              } else if (
                 arrayInclude(PUNCTUATION, prevBy1) &&
-                isCapital(nextBy2) &&
+                (
+                  isCapital(nextBy2) ||
+                  nextBy1 === '\n' ||
+                  nextBy2 === '\n' ||
+                  arrayInclude(QUOTES, nextBy2)
+                ) &&
                 !currentSentenceEndsInNonStandardPunctuation
               ) {
                 append(character)
