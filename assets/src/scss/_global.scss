@@ -50,7 +50,8 @@ select {
   @include make-container();
   @include make-container-max-widths();
   @media (min-width: 1200px) {
-    max-width: 95vw;
+    width: 1800px;
+    max-width: 90vw;
   }
 }
 

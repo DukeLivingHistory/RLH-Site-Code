@@ -64,7 +64,8 @@ select {
     .header,
     .main,
     .footer {
-      max-width: 95vw; } }
+      width: 1800px;
+      max-width: 90vw; } }
 
 .main {
   position: relative; }
