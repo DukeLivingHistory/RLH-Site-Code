@@ -31,6 +31,12 @@ add_action( 'acf/init', function(){
         'toolbar' => 'full',
         'media_upload' => 0
       ],
+  		[
+  			'key' => 'transcript_utilities',
+  			'label' => 'Transcript Utilities',
+  			'name' => 'transcript_utilities',
+  			'type' => 'message'
+  		],
       [
         'key' => 'no_media',
         'label' => 'No Media',
@@ -47,12 +53,6 @@ add_action( 'acf/init', function(){
         'type' => 'text',
         'wrapper' => [ 'width' => '50' ]
       ],
-  		[
-  			'key' => 'transcript_utilities',
-  			'label' => 'Transcript Utilities',
-  			'name' => 'transcript_utilities',
-  			'type' => 'message'
-  		],
       [
         'key' => 'youtube_id',
         'label' => 'YouTube Video ID',
