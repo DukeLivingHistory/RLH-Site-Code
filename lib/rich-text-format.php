@@ -110,7 +110,11 @@ add_action('admin_head', function() {
           if (openNote) {
             // If we have an open note, we append to the note instead of the sentence
             appendNote(character)
-          } else if (character === '\n') {
+          } else if (
+            character === '\n' &&
+            (nextBy1 !== '<' && nextBy2 !== 'v') &&
+            (nextBy2 !== '<' && nextBy3 !== 'v')
+          ) {
             // If we have a line break, the next sentence should be marked as starting a new praragraph
             paragraph = true
           } else if (
