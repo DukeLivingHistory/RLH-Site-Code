@@ -110,20 +110,16 @@ add_action('admin_head', function() {
           if (openNote) {
             // If we have an open note, we append to the note instead of the sentence
             appendNote(character)
-          } else if (character === '\n') {
+          } else if (
+            character === '\n' &&
+            (nextBy1 !== '<' && nextBy2 !== 'v') &&
+            (nextBy2 !== '<' && nextBy3 !== 'v')
+          ) {
             // If we have a line break, the next sentence should be marked as starting a new praragraph
             paragraph = true
           } else if (
-            // If the next sentence starts <v and is preceded by punctuation or punctuation-quotes, start
-            // a new sentence
-            character === '<' && nextBy1 === 'v' &&
-            (
-              arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 1]) ||
-              (
-                arrayInclude(QUOTES, currentSentence[currentSentence.length - 1]) &&
-                arrayInclude(PUNCTUATION, currentSentence[currentSentence.length - 2])
-              )
-            )
+            // If the next sentence starts <v, handle it as a new sentence
+            character === '<' && nextBy1 === 'v'
           ) {
             stop()
             print(character)
@@ -160,9 +156,16 @@ add_action('admin_head', function() {
           } else {
             // If the character is a quote followed by a space and capital letter, append it to previous sentence
             if (arrayInclude(QUOTES, character)) {
-              if (
+              if(index === chars.length - 1) {
+                append(character)
+              } else if (
                 arrayInclude(PUNCTUATION, prevBy1) &&
-                isCapital(nextBy2) &&
+                (
+                  isCapital(nextBy2) ||
+                  nextBy1 === '\n' ||
+                  nextBy2 === '\n' ||
+                  arrayInclude(QUOTES, nextBy2)
+                ) &&
                 !currentSentenceEndsInNonStandardPunctuation
               ) {
                 append(character)

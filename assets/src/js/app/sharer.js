@@ -9,7 +9,7 @@ const sharer = (
   quote,
   {
     clipboardText,
-    copyText,
+    copyText = 'Text and link copied to clipboard!',
     fullText = true,
   } = {}
 ) => {

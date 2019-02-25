@@ -14,7 +14,7 @@ const buildCollectionHeader = (
   const shareLinks = sharer(link, name, name, { fullText: false })
 
   const append = `
-    <header class="contentHeader contentHeader--collection">
+    <header class="contentHeader contentHeader--collection ${image ? 'contentHeader--hasImg' : 'contentHeader--noImg'}"">
       <figure class="heroImg js-respBg" data-set="hero" data-id="${image}"/>
       <div class="contentHeader-inner contentHeader-inner--hasBottom">
         <div class="contentHeader-bottom">

@@ -31,14 +31,6 @@ add_action( 'acf/init', function(){
         'toolbar' => 'full',
         'media_upload' => 0
       ],
-      [
-        'key' => 'no_media',
-        'label' => 'No Media',
-        'name' => 'no_media',
-        'type' => 'true_false',
-        'instructions' => 'Select this box for interviews that do not have a video.',
-        'default' => 0,
-      ],
   		[
   			'key' => 'transcript_utilities',
   			'label' => 'Transcript Utilities',
@@ -46,11 +38,20 @@ add_action( 'acf/init', function(){
   			'type' => 'message'
   		],
       [
+        'key' => 'no_media',
+        'label' => 'No Media',
+        'name' => 'no_media',
+        'type' => 'true_false',
+        'instructions' => 'Select this box for interviews that do not have a video.',
+        'default' => 0,
+        'wrapper' => [ 'width' => '50' ]
+      ],
+      [
         'key' => 'subtitle',
-        'label' => 'Subtitle',
+        'label' => 'Index Page Subtitle',
         'name' => 'subtitle',
         'type' => 'text',
-        'wrapper' => [ 'width' => '100' ]
+        'wrapper' => [ 'width' => '50' ]
       ],
       [
         'key' => 'youtube_id',
