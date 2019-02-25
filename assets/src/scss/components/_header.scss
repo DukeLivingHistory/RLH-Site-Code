@@ -197,7 +197,7 @@
     clear: both;
     z-index: 10000000;
     text-align: left;
-    margin: 0 calc( ( ( 100vw - #{ map-get( $container-max-widths, md ) } ) / 2 ) * -1 - #{ $grid-gutter-width/2 } );
+    // margin: 0 calc( ( ( 100vw - #{ map-get( $container-max-widths, md ) } ) / 2 ) * -1 - #{ $grid-gutter-width/2 } );
     padding: 0 $grid-gutter-width/2;
     background: $interviews;
     max-height: 0;
@@ -210,7 +210,7 @@
     }
   }
   @include media-breakpoint-down(sm){
-    margin: 0 calc( ( ( 100vw - #{ map-get( $container-max-widths, sm ) } ) / 2 ) * -1 - #{ $grid-gutter-width/2 } );
+    // margin: 0 calc( ( ( 100vw - #{ map-get( $container-max-widths, sm ) } ) / 2 ) * -1 - #{ $grid-gutter-width/2 } );
   }
   @include media-breakpoint-down(xs){
     margin: 0 $grid-gutter-width/-2;

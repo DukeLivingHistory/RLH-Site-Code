@@ -29,43 +29,64 @@ select {
 
 .header,
 .main,
-.footer {
+.footer,
+.contentHeader {
   margin-left: auto;
   margin-right: auto;
   padding-left: 0.9375rem;
   padding-right: 0.9375rem; }
   .header::after,
   .main::after,
-  .footer::after {
+  .footer::after,
+  .contentHeader::after {
     content: "";
     display: table;
     clear: both; }
   @media (min-width: 569px) {
     .header,
     .main,
-    .footer {
+    .footer,
+    .contentHeader {
       max-width: 576px; } }
   @media (min-width: 768px) {
     .header,
     .main,
-    .footer {
+    .footer,
+    .contentHeader {
       max-width: 720px; } }
   @media (min-width: 992px) {
     .header,
     .main,
-    .footer {
+    .footer,
+    .contentHeader {
       max-width: 940px; } }
   @media (min-width: 1200px) {
     .header,
     .main,
-    .footer {
+    .footer,
+    .contentHeader {
       max-width: 1140px; } }
   @media (min-width: 1200px) {
-    .header,
+    [data-endpoint="interviews"] .header,
+    [data-endpoint="interactives"] .header,
+    [data-endpoint="timelines"] .header [data-endpoint="collections"], [data-endpoint="interviews"]
     .main,
-    .footer {
-      width: 1800px;
-      max-width: 90vw; } }
+    [data-endpoint="interactives"]
+    .main,
+    [data-endpoint="timelines"]
+    .main [data-endpoint="collections"], [data-endpoint="interviews"]
+    .footer,
+    [data-endpoint="interactives"]
+    .footer,
+    [data-endpoint="timelines"]
+    .footer [data-endpoint="collections"], [data-endpoint="interviews"]
+    .contentHeader,
+    [data-endpoint="interactives"]
+    .contentHeader,
+    [data-endpoint="timelines"]
+    .contentHeader [data-endpoint="collections"] {
+      width: 1800px !important;
+      max-width: 90vw !important; } }
 
 .main {
   position: relative; }
@@ -3119,7 +3140,6 @@ div.able-captions-wrapper {
       clear: both;
       z-index: 10000000;
       text-align: left;
-      margin: 0 calc( ( ( 100vw - 720px ) / 2 ) * -1 - 0.9375rem);
       padding: 0 0.9375rem;
       background: #0c4d93;
       max-height: 0;
@@ -3129,9 +3149,6 @@ div.able-captions-wrapper {
         padding: 0.9375rem 0.9375rem 0;
         max-height: 300px;
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); } }
-  @media (max-width: 767px) {
-    .header-navInner {
-      margin: 0 calc( ( ( 100vw - 576px ) / 2 ) * -1 - 0.9375rem); } }
   @media (max-width: 568px) {
     .header-navInner {
       margin: 0 -0.9375rem; } }

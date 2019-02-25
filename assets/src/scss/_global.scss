@@ -46,12 +46,19 @@ select {
 
 .header,
 .main,
-.footer {
+.footer,
+.contentHeader {
   @include make-container();
   @include make-container-max-widths();
-  @media (min-width: 1200px) {
-    width: 1800px;
-    max-width: 90vw;
+
+  [data-endpoint="interviews"] &,
+  [data-endpoint="interactives"] &,
+  [data-endpoint="timelines"] &
+  [data-endpoint="collections"] {
+    @media (min-width: 1200px) {
+      width: 1800px!important;
+      max-width: 90vw!important;
+    }
   }
 }
 
