@@ -556,6 +556,10 @@ $listViewIconSize: 32px;
   font-size: 18px;
   padding-left: 4rem;
 
+  > div {
+    width: 100%;
+  }
+
   h2 {
     margin-top: 2em;
     margin-bottom: .25em;
