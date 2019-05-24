@@ -394,19 +394,19 @@ $listViewIconSize: 32px;
 
 
 .author {
+  display: flex;
   clear: both;
   background: $blogBg;
   padding: 15px;
   margin: 0 0 30px;
 
-  &-link {
-    color: inherit;
-    display: flex;
-    text-decoration: none;
-  }
-
   &-thumbnail {
     margin-right: 1em;
+    width: 80px;
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 
   &-bio {
@@ -553,11 +553,33 @@ $listViewIconSize: 32px;
 }
 
 .blog-content {
+  font-size: 18px;
   padding-left: 4rem;
+
+  h2 {
+    margin-top: 2em;
+    margin-bottom: .25em;
+  }
+
+  p {
+    margin: 0 0 1.5em;
+    line-height: 1.6;
+  }
+
+  p > em:only-child {
+    color: mix($body, $white, 90);
+  }
+
+  .wp-caption-text {
+    font-size: .9em;
+    font-weight: 500;
+    color: mix($body, $white, 80);
+  }
 }
 
 .blog-singlePost {
   .contentHeader {
+    padding-left: 0;
     margin-left: 19rem;
   }
 

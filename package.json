@@ -20,7 +20,6 @@
 		"browserify": "^16.1.1",
 		"cssnano": "^3.5.2",
 		"jshint": "^2.9.1",
-		"node-sass": "^4.8.3",
 		"postcss": "^6.0.21",
 		"postcss-cli": "^5.0.0",
 		"watch": "^1.0.2"
@@ -32,6 +31,7 @@
 		"facebook-share-link": "^1.0.0",
 		"hoek": "^5.0.3",
 		"js-cookie": "^2.2.0",
+		"node-sass": "^4.12.0",
 		"query-string": "^6.0.0",
 		"shortid": "^2.2.8"
 	},

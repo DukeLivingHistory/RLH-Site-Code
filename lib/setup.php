@@ -21,6 +21,39 @@ if( function_exists('acf_add_local_field_group') ):
   	'key' => 'blog',
   	'title' => 'Blog',
   	'fields' => array(
+      array(
+  			'key' => 'authors',
+  			'label' => 'Authors',
+  			'name' => 'authors',
+  			'type' => 'repeater',
+  			'required' => 1,
+  			'collapsed' => 'name',
+  			'min' => 1,
+  			'layout' => 'block',
+  			'button_label' => 'Add Author',
+  			'sub_fields' => array(
+          array(
+            'key' => 'name',
+            'label' => 'Name',
+            'name' => 'name',
+            'type' => 'text'
+          ),
+          array(
+            'key' => 'bio',
+            'label' => 'Bio',
+            'name' => 'bio',
+            'type' => 'textarea',
+            'rows' => 3,
+          ),
+          array(
+            'key' => 'avatar',
+            'label' => 'Avatar',
+            'name' => 'avatar',
+            'type' => 'image',
+            'return_format' => 'url',
+          ),
+  			),
+  		),
   		array(
   			'key' => 'hide_sidebar',
   			'label' => 'Hide Sidebar',
