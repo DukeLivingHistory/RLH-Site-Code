@@ -9,7 +9,8 @@ html[lang] {
 body {
   margin: 0;
   background: #0c4d93;
-  line-height: 1.5; }
+  line-height: 1.5;
+  color: #222222; }
 
 main {
   display: block; }
@@ -177,7 +178,7 @@ h5 {
     cursor: pointer;
     background: #333;
     /* IE8 "hack" for nested featherlights */
-    background: transparent; }
+    background: rgba(0, 0, 0, 0); }
   /* support for nested featherlights. Does not work in IE8 (use JS to fix) */
   .featherlight:last-of-type {
     background: rgba(0, 0, 0, 0.8); }
@@ -276,7 +277,7 @@ h5 {
     -ms-user-select: none;
     user-select: none;
     /* IE9 hack, otherwise navigation doesn't appear */
-    background: transparent; }
+    background: rgba(0, 0, 0, 0); }
   .featherlight-previous {
     left: 25px;
     right: 80%; }
@@ -1845,7 +1846,7 @@ div.able-captions-wrapper {
   .content-intro h5,
   .content-intro h6 {
     margin: 0;
-    color: #000000; }
+    color: #222222; }
 
 .content {
   padding: 18px 22px 12px 18px;
@@ -2048,7 +2049,7 @@ div.able-captions-wrapper {
   .genericContent h5,
   .genericContent h6 {
     line-height: 1.1;
-    color: #000000; }
+    color: #222222; }
     .genericContent h1:first-child,
     .genericContent h2:first-child,
     .genericContent h3:first-child,
@@ -2148,16 +2149,17 @@ div.able-captions-wrapper {
   margin: 25px 0 15px; }
 
 .author {
+  display: flex;
   clear: both;
   background: whitesmoke;
   padding: 15px;
   margin: 0 0 30px; }
-  .author-link {
-    color: inherit;
-    display: flex;
-    text-decoration: none; }
   .author-thumbnail {
-    margin-right: 1em; }
+    margin-right: 1em;
+    width: 80px; }
+    .author-thumbnail img {
+      width: 100%;
+      height: auto; }
   .author-bio {
     flex-grow: 2; }
     .author-bio strong {
@@ -2210,7 +2212,7 @@ div.able-captions-wrapper {
       opacity: 1;
       transition: max-height .3s ease, opacity .2s ease .3s; }
   .content-gridImg {
-    background: #000000; }
+    background: #222222; }
   .content-grid img {
     display: block;
     width: 100%;
@@ -2259,9 +2261,23 @@ div.able-captions-wrapper {
   font-size: 1rem; }
 
 .blog-content {
+  font-size: 18px;
   padding-left: 4rem; }
+  .blog-content h2 {
+    margin-top: 2em;
+    margin-bottom: .25em; }
+  .blog-content p {
+    margin: 0 0 1.5em;
+    line-height: 1.6; }
+  .blog-content p > em:only-child {
+    color: #55534c; }
+  .blog-content .wp-caption-text {
+    font-size: .9em;
+    font-weight: 500;
+    color: #686660; }
 
 .blog-singlePost .contentHeader {
+  padding-left: 0;
   margin-left: 19rem; }
 
 .blog-singlePost .blog-content {
@@ -2769,7 +2785,7 @@ div.able-captions-wrapper {
   color: #424038;
   z-index: 2; }
   .event-imageWrapper .respImg-credit a {
-    color: #000000; }
+    color: #222222; }
 
 .event-imageWrapper + .relatedItem {
   margin-top: 1em; }
@@ -3795,7 +3811,7 @@ div.able-captions-wrapper {
 .featherlight .featherlight-close-icon {
   top: 25px;
   right: 25px;
-  color: #000000; }
+  color: #222222; }
   @media (max-width: 1199px) {
     .featherlight .featherlight-close-icon {
       top: 10px;
@@ -3824,7 +3840,7 @@ div.able-captions-wrapper {
       font-size: 2rem; } }
 
 .featherlight .featherlight-close--textarea {
-  color: #000000;
+  color: #222222;
   top: 25px;
   right: 25px; }
 
@@ -3857,7 +3873,7 @@ div.able-captions-wrapper {
 
 .siteDescription h2 {
   font-size: 33px;
-  color: #000000;
+  color: #222222;
   margin-top: 0;
   margin-bottom: 5px;
   font-weight: 500; }

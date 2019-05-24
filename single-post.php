@@ -8,7 +8,7 @@ while( have_posts() ){
     <header class="contentHeader contentHeader--archive">
       <?php $title = highlight_term( $post->post_title, $_GET['search'] ); ?>
       <h2><?= apply_filters('the_title', $title); ?></h2>
-      <div class="blog-meta">Posted <?php the_date(); ?> by <?php the_author(); ?></div>
+      <div class="blog-meta">Posted <?php the_date(); ?></div>
     </header>
     <aside class="researchMenu">
       <button class="researchMenu-toggle">
@@ -36,21 +36,25 @@ while( have_posts() ){
         Tagged <?= get_the_tag_list(); ?>
       </div>
     <?php endif; ?>
-    <?php if($author = get_post_field('post_author')): ?>
-      <div class="author">
-        <a href="<?= get_author_posts_url($author); ?>" class="author-link">
-        <?php if($avatar = get_avatar($author)): ?>
-        <div class="author-thumbnail">
-          <?= $avatar; ?>
-        </div>
-        <?php endif; ?>
-        <div class="author-bio">
-          <strong><?= get_author_name($author); ?></strong>
-          <p><?= get_the_author_meta('user_description', $author); ?></p>
-        </div>
-        </a>
-      </div>
-    <?php endif; ?>
+    <?php
+      $authors = get_field('authors');
+      if(have_rows('authors')):
+        while(have_rows('authors')):
+          the_row();
+    ?>
+          <div class="author">
+            <div class="author-thumbnail">
+              <img src="<?= the_sub_field('avatar'); ?>" />
+            </div>
+            <div class="author-bio">
+              <strong><?= the_sub_field('name'); ?></strong>
+              <p><?= the_sub_field('bio'); ?></p>
+            </div>
+          </div>
+    <?php
+        endwhile;
+      endif;
+    ?>
     </section>
   </article>
 <?php
