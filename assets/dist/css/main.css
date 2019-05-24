@@ -2263,6 +2263,8 @@ div.able-captions-wrapper {
 .blog-content {
   font-size: 18px;
   padding-left: 4rem; }
+  .blog-content > div {
+    width: 100% !important; }
   .blog-content h2 {
     margin-top: 2em;
     margin-bottom: .25em; }
