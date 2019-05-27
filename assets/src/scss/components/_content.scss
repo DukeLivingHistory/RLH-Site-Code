@@ -395,6 +395,7 @@ $listViewIconSize: 32px;
 
 .author {
   display: flex;
+  flex-wrap: wrap;
   clear: both;
   background: $blogBg;
   padding: 15px;
@@ -402,7 +403,7 @@ $listViewIconSize: 32px;
 
   &-thumbnail {
     margin-right: 1em;
-    width: 80px;
+    flex: 0 0 120px;
     img {
       width: 100%;
       height: auto;
@@ -410,7 +411,7 @@ $listViewIconSize: 32px;
   }
 
   &-bio {
-    flex-grow: 2;
+    flex: 4;
     strong {
       font-size: 1.2em;
     }

@@ -2150,18 +2150,19 @@ div.able-captions-wrapper {
 
 .author {
   display: flex;
+  flex-wrap: wrap;
   clear: both;
   background: whitesmoke;
   padding: 15px;
   margin: 0 0 30px; }
   .author-thumbnail {
     margin-right: 1em;
-    width: 80px; }
+    flex: 0 0 120px; }
     .author-thumbnail img {
       width: 100%;
       height: auto; }
   .author-bio {
-    flex-grow: 2; }
+    flex: 4; }
     .author-bio strong {
       font-size: 1.2em; }
     .author-bio p {
