@@ -106,11 +106,12 @@ if( $curated_count < $total_results ){
           <?php endif; ?>
         </dl>
       <?php } ?>
-      <h2 class="post-title"><?= $feat_cont->title; ?></h2>
       <div class="post-image js-img" data-showcredit data-img="<?= $feat_cont->img; ?>">
         <a href="<?= $feat_cont->link; ?>">
-          <?= wp_get_attachment_image( $feat_cont->img, 'feat_home' ); ?></div>
+          <?= wp_get_attachment_image( $feat_cont->img, 'feat_home' ); ?>
         </a>
+      </div>
+      <h2 class="post-title"><?= $feat_cont->title; ?></h2>
       <?php if( $feat_cont->excerpt ){ ?>
         <p class="post-excerpt"><?= $feat_cont->excerpt; ?></p>
       <?php } ?>
