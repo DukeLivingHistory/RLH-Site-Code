@@ -81,7 +81,8 @@ add_action('admin_head', function() {
           var value = false
           disallowedDelimiters.forEach(function(term) {
               if (value) return
-              var pattern = new RegExp(`${term}$`)
+      			  var puncReg = /\.|\?|\!/
+              var pattern = new RegExp(`${term.replace(puncReg, '')}$`)
               value = pattern.test(str)
           })
           return value
