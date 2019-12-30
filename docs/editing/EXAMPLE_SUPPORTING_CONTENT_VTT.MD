@@ -60,8 +60,8 @@ LINK_TEXT Text to display as link. Optional.
 ```
 00:00:00.000 --> 00:00:01.000
 TITLE Name of content
-URL URL of page to link to
 DESCRIPTION Description of content. Optional.
+URL URL of page to link to
 LINK_TEXT Text to display as link. Optional.
 ```
 
