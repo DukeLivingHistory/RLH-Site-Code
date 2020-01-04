@@ -1,3 +1,9 @@
+<?php
+  $s = sanitize_text_field($_GET['s']);
+  $whole_word = sanitize_text_field($_GET['whole_world']);
+  $case_sensitive = sanitize_text_field($_GET['case_sensitive']);
+?>
+
 <header class="header">
   <?php if( is_front_page() ){ ?>
   <div class="header-logo header-logo--top">
@@ -24,17 +30,17 @@
     <div class="header-navInner">
       <?php wp_nav_menu( [ 'theme_location' => 'primary', 'container' => '', 'menu_class' => 'menu menu--primary' ] ); ?>
       <form method="get" action="<?php bloginfo('url'); ?>/">
-        <input autocomplete="off" name="s" type="text" placeholder="Search" value="<?= $_GET['s'] ? $_GET['s'] : ''; ?>">
+        <input autocomplete="off" name="s" type="text" placeholder="Search" value="<?= $s ? $s : ''; ?>">
         <button type="submit"><?= icon( 'search' ); ?></button>
         <button type="button" id="option_toggle"><?= icon( 'options' ); ?></button>
-        <div class="header-navInner-options <?= $_GET['whole_word'] || $_GET['case_sensitive'] ?   'open' : ''; ?> ">
+        <div class="header-navInner-options <?= $whole_word || $case_sensitive ?   'open' : ''; ?> ">
           <div>
             <label for="whole_word">Whole-Word</label>
-            <input id="whole_word" name="whole_word" type="checkbox" <?= $_GET['whole_word'] ? 'checked' : ''; ?> />
+            <input id="whole_word" name="whole_word" type="checkbox" <?= $whole_word ? 'checked' : ''; ?> />
           </div>
           <div>
             <label for="case_sensitive">Case-Sensitive</label>
-            <input name="case_sensitive" type="checkbox" <?= $_GET['case_sensitive'] ? 'checked' : ''; ?> />
+            <input name="case_sensitive" type="checkbox" <?= $case_sensitive ? 'checked' : ''; ?> />
           </div>
         </div>
       </form>
