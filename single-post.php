@@ -3,10 +3,11 @@ global $post;
 require_once(get_template_directory() . '/api/routes/search/search-helpers.php');
 while( have_posts() ){
   the_post();
+  $search = sanitize_text_field($_GET['search']);
 ?>
   <article class="blog-singlePost">
     <header class="contentHeader contentHeader--archive">
-      <?php $title = highlight_term( $post->post_title, $_GET['search'] ); ?>
+      <?php $title = highlight_term( $post->post_title, $search); ?>
       <h2><?= apply_filters('the_title', $title); ?></h2>
       <div class="blog-meta">Posted <?php the_date(); ?></div>
     </header>
@@ -24,7 +25,7 @@ while( have_posts() ){
       <?php endif; ?>
     </aside>
     <section class="blog-content">
-      <?php $content = highlight_term( $post->post_content, $_GET['search'] ); ?>
+      <?php $content = highlight_term( $post->post_content, $search); ?>
       <?= apply_filters('the_content', $content); ?>
       <?php if(get_the_category_list()): ?>
       <div class="blog-category">

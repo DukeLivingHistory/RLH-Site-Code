@@ -17,13 +17,16 @@ function body_attr(){
   $request = isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : false;
   $is_collection_archive = $request === '/collections' ||  $request === '/collections/';
 
+  $type = sanitize_text_field($_GET['type']);
+  $s = sanitize_text_field($_GET['s']);
+
   $attr = 'data-endpoint="';
   if( $is_collection_archive ){
     $attr .= 'collections';
   } elseif( is_search() ){
     $attr .= 'search';
-    if( $_GET['type'] ) {
-      $attr .= '" data-type="'.$_GET['type'];
+    if($type) {
+      $attr .= '" data-type="'.$type;
     }
   } elseif( is_tax() ) {
     $attr .= get_taxonomy( get_queried_object()->taxonomy )->rewrite['slug'];
@@ -39,7 +42,7 @@ function body_attr(){
     $attr .= 'data-id="archive"';
   }
   if( is_search() ){
-    $attr .= ' data-search="'.( !isset( $_GET['s'] ) ?: urlencode($_GET['s']) ).'"';
+    $attr .= ' data-search="'.(!isset($s) ?: urlencode($s)).'"';
   }
 
   return $attr;

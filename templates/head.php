@@ -6,7 +6,8 @@
   } elseif( is_archive() ){
     $title = ucfirst( get_post_type_object( get_post_type() )->rewrite['slug'] );
   } elseif( is_search() ) {
-    $title = 'Search for '.( !isset( $_GET['s'] ) ?: $_GET['s'] );
+    $s = sanitize_text_field($_GET['s']);
+    $title = 'Search for '.(!isset($s) ?: $s);
   } else {
     $title = get_the_title();
   }
